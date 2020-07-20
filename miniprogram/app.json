@@ -1,5 +1,9 @@
 {
     "pages": [
+        "pages/home/home",
+        "pages/profile/profile",
+        "pages/calc/calc",
+        "pages/countdown/countdown",
         "pages/index/index",
         "pages/userConsole/userConsole",
         "pages/storageConsole/storageConsole",
@@ -18,8 +22,23 @@
         "backgroundColor": "#F6F6F6",
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#F6F6F6",
-        "navigationBarTitleText": "云开发 QuickStart",
+        "navigationBarTitleText": "UQ校园通",
         "navigationBarTextStyle": "black"
+    },
+    "tabBar": {
+      "list": [{
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/icons/Be - 首页.jpg",
+        "selectedIconPath": "images/icons/Af- 首页.jpg"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/icons/Be - 我的.jpg",
+        "selectedIconPath": "images/icons/Af- 我的.jpg"
+      }
+    ]
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2"

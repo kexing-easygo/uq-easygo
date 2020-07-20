@@ -1,0 +1,51 @@
+<!--pages/home/home.wxml-->
+<swiper
+ autoplay
+ circular
+ indicator-dots
+ interval="1000"
+>
+	<swiper-item>
+		<image src="{{swiperPlaceholder}}" />
+	</swiper-item>
+	<swiper-item>
+		<image src="{{swiperPlaceholder}}" />
+	</swiper-item>
+	<swiper-item>
+		<!--  mode="widthFix" -->
+		<image src="{{swiperPlaceholder}}" />
+	</swiper-item>
+</swiper>
+
+<view class="nav-icons">
+	<navigator url="/pages/calc/calc">
+		<image src="{{calcIcon}}" />
+	</navigator>
+	<navigator url="/pages/countdown/countdown">
+		<image src="{{countdownIcon}}" />
+	</navigator>
+	<navigator url="/pages/calc/calc">
+		<image src="{{calcIcon}}" />
+	</navigator>
+	<navigator url="/pages/calc/calc">
+		<image src="{{calcIcon}}" />
+	</navigator>
+</view>
+<view class="nav-text">
+	<navigator url="/pages/calc/calc">
+		计算器
+	</navigator>
+	<navigator url="/pages/countdown/countdown">
+		倒计时
+	</navigator>
+	<navigator url="/pages/calc/calc">
+		敬请期待
+	</navigator>
+	<navigator url="/pages/calc/calc">
+		敬请期待
+	</navigator>
+</view>
+<view class="in-coming">
+	功能位置
+</view>
+

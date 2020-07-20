@@ -1,0 +1,44 @@
+/* pages/home/home.wxss */
+swiper {
+    width: 632rpx;
+    /* height: calc(632rpx * 316 / 500); */
+    height: 368rpx;
+    margin: 0 auto;
+    margin-top: 46rpx;
+    overflow: hidden;
+    border-radius: 38rpx;
+}
+swiper image {
+    width: 100%;
+    height: 100%;
+}
+.nav-icons, .nav-text {
+    margin-top: 76rpx;
+    height: 88rpx;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.nav-text {
+    margin-top: 14rpx;
+    height: auto;
+}
+.nav-icons navigator, .nav-text navigator {
+    height: 100%;
+    width: 88rpx;
+    float: left;
+    font-size: 22rpx;
+    text-align: center;
+}
+.nav-icons image {
+    height: 100%;
+    width: 88rpx;
+}
+.in-coming {
+    width: 652rpx;
+    margin: 50rpx auto;
+    height: 330rpx;
+    line-height: 330rpx;
+    text-align: center;
+    border: 1px solid #707070;
+}
