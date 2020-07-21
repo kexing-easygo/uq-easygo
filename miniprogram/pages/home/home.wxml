@@ -48,4 +48,7 @@
 <view class="in-coming">
 	功能位置
 </view>
+<view class="in-coming" style="margin-top: 2rpx;">
+	功能位置
+</view>
 
