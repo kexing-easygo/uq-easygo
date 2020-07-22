@@ -1,11 +1,13 @@
 // pages/getEmail/getEmail.js
 Page({
-
     /**
      * 页面的初始数据
      */
     data: {
-
+        hasEmail: false,
+        userEmail: null,
+        inputEmailValue: '',
+        verificationCode: ''
     },
 
     /**
@@ -14,7 +16,18 @@ Page({
     onLoad: function (options) {
 
     },
+    bindKeyboardInput: function (e) {
+        this.data.inputEmailValue = e.detail.value
+    },
+    /**
+     * 1. 调用发邮件的云函数，发送验证码
+     * 2. 函数内获取云函数返回的验证码
+     * 3. 和用户的验证码相比对
+     * 4. 比对成功，录入数据
+     */
+    getVerificationCode: function () {
 
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

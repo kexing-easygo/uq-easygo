@@ -1,6 +1,6 @@
 // pages/profile/profile.js
 const app = getApp()
-
+// const cloud = require('wx-server-sdk')
 Page({
 
   /**
@@ -26,8 +26,9 @@ Page({
       app.userInfoReadyCallback = res => {
         this.setData({
           userInfo: res.userInfo,
-          hasUserInfo: true
+          hasUserInfo: true,
         })
+        app.globalData.userInfo = res.userInfo
       }
     } else {
       wx.getUserInfo({
@@ -49,11 +50,13 @@ Page({
       hasUserInfo: true
     })
   },
+
+
   /**
    * Lifecycle function--Called when page is initially rendered
    */
   onReady: function () {
-
+    
   },
 
   /**

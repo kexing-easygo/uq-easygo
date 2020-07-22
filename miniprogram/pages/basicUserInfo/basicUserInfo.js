@@ -8,7 +8,11 @@ Page({
      */
     data: {
         userInfo: {},
-        hasUserInfo: false
+        hasUserInfo: false,
+        easygoNickname: null,
+        userGender: null,
+        hasAccountAllocated: false,
+        account: null
     },
 
     /**
@@ -18,7 +22,19 @@ Page({
         if (app.globalData.userInfo) {
             this.setData({
                 userInfo: app.globalData.userInfo,
-                hasUserInfo: true
+                easygoNickname: app.globalData.easygoNickname,
+                hasUserInfo: true,
+            })
+            var gender = null
+            if (this.data.userInfo.gender == "1") {
+                gender = "男"
+            } else if (this.data.userInfo.gender == "2") {
+                gender = "女"
+            } else {
+                gender = "未知"
+            }
+            this.setData({
+                userGender: gender
             })
         }
     },

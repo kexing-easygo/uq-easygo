@@ -1,3 +1,12 @@
 <view>
-<input class="user-input" bindinput="bindKeyboardInput" placeholder="{{userInfo.nickName}}"/>
+    <view>
+        <text>请输入你的新校园通用户名</text>
+    </view>
+	<view>
+		<input class="user-input" bindinput="bindKeyboardInput" placeholder="{{userInfo.nickName}}" />
+	</view>
+    <view>
+        <button type="default" plain="true" bindtap="submitNewNickname">完成</button>
+    </view>
+
 </view>

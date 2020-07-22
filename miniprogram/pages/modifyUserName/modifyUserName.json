@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "backgroundColor": "#F6F6F6",
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#F6F6F6",
+  "navigationBarTitleText": "修改校园通用户名",
+  "navigationBarTextStyle": "black"
 }

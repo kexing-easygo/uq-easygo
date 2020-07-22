@@ -6,10 +6,27 @@ Page({
      * 页面的初始数据
      */
     data: {
-        userInfo: app.globalData.userInfo
+        inputValue: '',
+        easygoNickname: null
     },
+    // 获取用户在输入框输入的内容
     bindKeyboardInput: function(e) {
-
+        this.setData({
+            inputValue: e.detail.value
+        })
+    },
+    // 修改用户的校园通用户名，
+    // 并返回上一页面
+    submitNewNickname: function() {
+        // if (this.data.inputValue.length > 0) {
+            this.data.easygoNickname = this.data.inputValue
+            app.globalData.easygoNickname = this.data.easygoNickname
+            // 返回上一页面
+            wx.navigateTo({
+              url: '/pages/basicUserInfo/basicUserInfo',
+            })
+        // }
+        // console.log(this.data.easygoNickname)
     },
     /**
      * 生命周期函数--监听页面加载

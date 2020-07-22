@@ -1,35 +1,36 @@
 {
-    "pages": [
-        "pages/profile/profile",
-        "pages/basicUserInfo/basicUserInfo",
-        "pages/home/home",
-        "pages/calc/calc",
-        "pages/countdown/countdown",
-        "pages/modifyUserName/modifyUserName",
-        "pages/getEmail/getEmail",
-        "pages/index/index",
-        "pages/userConsole/userConsole",
-        "pages/storageConsole/storageConsole",
-        "pages/databaseGuide/databaseGuide",
-        "pages/addFunction/addFunction",
-        "pages/deployFunctions/deployFunctions",
-        "pages/chooseLib/chooseLib",
-        "pages/openapi/openapi",
-        "pages/openapi/serverapi/serverapi",
-        "pages/openapi/callback/callback",
-        "pages/openapi/cloudid/cloudid",
-        "pages/im/im",
-        "pages/im/room/room"
-    ],
-    "window": {
-        "backgroundColor": "#F6F6F6",
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#F6F6F6",
-        "navigationBarTitleText": "UQ校园通",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-      "list": [{
+  "pages": [
+    "pages/getEmail/getEmail",
+    "pages/profile/profile",
+    "pages/basicUserInfo/basicUserInfo",
+    "pages/modifyUserName/modifyUserName",
+    "pages/home/home",
+    "pages/calc/calc",
+    "pages/countdown/countdown",
+    "pages/index/index",
+    "pages/userConsole/userConsole",
+    "pages/storageConsole/storageConsole",
+    "pages/databaseGuide/databaseGuide",
+    "pages/addFunction/addFunction",
+    "pages/deployFunctions/deployFunctions",
+    "pages/chooseLib/chooseLib",
+    "pages/openapi/openapi",
+    "pages/openapi/serverapi/serverapi",
+    "pages/openapi/callback/callback",
+    "pages/openapi/cloudid/cloudid",
+    "pages/im/im",
+    "pages/im/room/room"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "UQ校园通",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
         "pagePath": "pages/home/home",
         "text": "首页",
         "iconPath": "images/icons/Be - 首页.jpg",
@@ -42,7 +43,7 @@
         "selectedIconPath": "images/icons/Af- 我的.jpg"
       }
     ]
-    },
-    "sitemapLocation": "sitemap.json",
-    "style": "v2"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
 }
