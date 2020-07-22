@@ -1,0 +1,21 @@
+<view>
+    <text>用户名</text>
+    <text wx:if="{{!hasUserInfo}}">未登录</text>
+    <navigator wx:else>{{userInfo.nickName}} >></navigator>
+</view>
+<view>
+    <text>性别</text>
+    
+</view>
+<view>
+    <text>专业</text>
+    
+</view>
+<view>
+    <text>学龄</text>
+    
+</view>
+<view>
+    <text>校园通账号</text>
+    
+</view>

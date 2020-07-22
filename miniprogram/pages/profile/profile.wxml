@@ -1,2 +1,15 @@
-<!--pages/profile/profile.wxml-->
-<text>pages/profile/profile.wxml</text>
+<image src="{{ anonymousPlaceholder }}"></image>
+<button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 登录>> </button>
+<block wx:else>
+	<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
+</block>
+<view class="page-section">
+	<navigator url="/pages/basicUserInfo/basicUserInfo">基本资料</navigator>
+</view>
+<view class="page-section">
+	<navigator>邮箱绑定</navigator>
+</view>
+<view class="page-section">
+	<navigator>其他设置</navigator>
+</view>

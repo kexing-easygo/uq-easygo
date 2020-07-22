@@ -1,0 +1,3 @@
+<view>
+<input class="user-input" bindinput="bindKeyboardInput" placeholder="{{userInfo.nickName}}"/>
+</view>

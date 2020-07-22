@@ -1,9 +1,12 @@
 {
     "pages": [
-        "pages/home/home",
         "pages/profile/profile",
+        "pages/basicUserInfo/basicUserInfo",
+        "pages/home/home",
         "pages/calc/calc",
         "pages/countdown/countdown",
+        "pages/modifyUserName/modifyUserName",
+        "pages/getEmail/getEmail",
         "pages/index/index",
         "pages/userConsole/userConsole",
         "pages/storageConsole/storageConsole",
