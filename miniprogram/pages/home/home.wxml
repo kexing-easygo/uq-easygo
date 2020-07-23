@@ -25,10 +25,10 @@
 		<image src="{{countdownIcon}}" />
 	</navigator>
 	<navigator url="/pages/calc/calc">
-		<image src="{{calcIcon}}" />
+		<image src="{{inComingIcon}}" />
 	</navigator>
 	<navigator url="/pages/calc/calc">
-		<image src="{{calcIcon}}" />
+		<image src="{{inComingIcon}}" />
 	</navigator>
 </view>
 <view class="nav-text">
@@ -46,9 +46,9 @@
 	</navigator>
 </view>
 <view class="in-coming">
-	功能位置
+	<image src="{{inComingHolder}}"/>
 </view>
 <view class="in-coming" style="margin-top: 2rpx;">
-	功能位置
+	<image src="{{inComingHolder}}"/>
 </view>
 

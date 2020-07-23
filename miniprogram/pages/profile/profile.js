@@ -5,7 +5,7 @@ Page({
    * Page initial data
    */
   data: {
-
+    avatarPlaceholder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待Icon.png"
   },
 
   /**

@@ -37,8 +37,7 @@
         "text": "我的",
         "iconPath": "images/icons/Be - 我的.jpg",
         "selectedIconPath": "images/icons/Af- 我的.jpg"
-      }
-    ]
+      }]
     },
     "sitemapLocation": "sitemap.json",
     "style": "v2"

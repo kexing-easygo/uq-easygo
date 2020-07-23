@@ -6,8 +6,10 @@ Page({
    */
   data: {
     swiperPlaceholder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/网上随便找的placeholder.jpg",
-    calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be- 倒计时.jpg",
-    countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be - 计算器.jpg"
+    countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be- 倒计时.jpg",
+    calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be - 计算器.jpg",
+    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
+    inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待Icon.png"
   },
 
   /**

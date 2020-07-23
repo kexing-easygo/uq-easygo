@@ -46,3 +46,7 @@ swiper image {
     text-align: center;
     border: 1px solid #707070;
 }
+.in-coming image {
+    height: 100%;
+    width: 100%;
+}

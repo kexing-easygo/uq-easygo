@@ -1,1 +1,18 @@
 /* pages/profile/profile.wxss */
+.login-area {
+    width: 100%;
+    height: 558rpx;
+    border-bottom: 1px solid #707070;
+}
+.login-area image {
+    height: 184rpx;
+    width: 184rpx;
+    margin: 0 auto;
+    margin-top: 130rpx;
+    display: block;
+}
+.login-area button {
+    margin-top: 42rpx;
+    width: fit-content;
+    height: fit-content;
+}

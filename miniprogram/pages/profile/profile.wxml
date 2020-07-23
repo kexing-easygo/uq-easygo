@@ -1,2 +1,13 @@
 <!--pages/profile/profile.wxml-->
-<text>pages/profile/profile.wxml</text>
+<view class="login-area">
+	<image src="{{avatarPlaceholder}}" />
+	<view class="userinfo-wrapper">
+		<button>登录 ></button>
+	</view>
+</view>
+<view class="setting-area">
+	<navigator>基本资料</navigator>
+	<navigator>手机绑定</navigator>
+	<navigator>基本设置</navigator>
+</view>
+
