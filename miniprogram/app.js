@@ -15,7 +15,10 @@ App({
         env: "uqeasygo1"
       })
     }
-
-    this.globalData = {}
+    // 小程序全局变量
+    this.globalData = {
+      userInfo: null,
+      easygoNickname: null
+    }
   }
 })

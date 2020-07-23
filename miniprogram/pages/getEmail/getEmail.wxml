@@ -1,0 +1,23 @@
+<!--pages/getEmail/getEmail.wxml-->
+<view>
+	<view wx:if="{{hasEmail}}">
+		<view class="left">
+			<text>邮箱</text>
+		</view>
+        <view class="right">
+            <text>{{userEmail}}</text>
+            <navigator>修改</navigator>
+        </view>
+	</view>
+	<view wx: else>
+		<view>
+			<text>请输入你的邮箱（推荐使用学校邮箱）</text>
+		</view>
+		<view>
+			<input class="user-input" bindinput="bindKeyboardInput" />
+		</view>
+		<view>
+			<button type="default" plain="true" bindtap="getVerificationCode">获取验证码</button>
+		</view>
+	</view>
+</view>

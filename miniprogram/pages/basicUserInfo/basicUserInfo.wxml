@@ -1,0 +1,32 @@
+<view>
+	<view class="left">
+		<text>用户名:</text>
+	</view>
+	<view class="right">
+		<text wx:if="{{!hasUserInfo}}">未登录</text>
+		<text wx:elif="{{easygoNickname == null}}">{{userInfo.nickName}}</text>
+		<text wx:elif="{{easygoNickname != null}}">{{easygoNickname}}</text>
+		<navigator wx:if="{{hasUserInfo}}" url="/pages/modifyUserName/modifyUserName"> > </navigator>
+	</view>
+</view>
+<view>
+	<view class="left">
+		<text>性别</text>
+	</view>
+	<view class="right">
+        <text wx:if="{{!hasUserInfo}}">未登录</text>
+        <text wx:else>{{userGender}}</text>
+	</view>
+</view>
+<view>
+	<text>专业</text>
+
+</view>
+<view>
+	<text>学龄</text>
+
+</view>
+<view>
+	<text>校园通账号</text>
+
+</view>

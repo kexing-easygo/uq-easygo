@@ -1,0 +1,8 @@
+/* pages/basicUserInfo/basicUserInfo.wxss */
+view.left {
+    float: left;
+}
+
+view.right {
+    float: right;
+}
