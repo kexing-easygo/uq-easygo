@@ -2,7 +2,6 @@
   "pages": [
     "pages/profile/profile",
     "pages/getEmail/getEmail",
-    
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
     "pages/home/home",
