@@ -17,7 +17,7 @@
 			<input class="user-input" bindinput="bindKeyboardInput" />
 		</view>
 		<view>
-			<button type="default" plain="true" bindtap="getVerificationCode">获取验证码</button>
+			<button type="default" plain="true" bindtap="sendVerificationCode">获取验证码</button>
 		</view>
 	</view>
 </view>

@@ -1,4 +1,8 @@
-// 云函数入口文件
+/* 发送邮件的云函数，调用时需要指明：
+ * 1. 发送给谁
+ * 2. 主题和内容
+ */
+
 const cloud = require('wx-server-sdk')
 cloud.init()
 var nodemailer = require('nodemailer')
@@ -15,12 +19,14 @@ var config = {
 var transporter = nodemailer.createTransport(config)
 // 云函数入口函数
 exports.main = async (event, context) => {
-    console.log(event)
+
+    // return event.type
+    var toAddr = event.toAddr
     var mail = {
-        from: '来自你爹 <uqeasygo@163.com>',
-        subject: '来自你爹的问候',
-        to: '913248383@qq.com',
-        text: 'wtf'
+        from: 'UQ校园通 <uqeasygo@163.com>',
+        subject: event.subject,
+        to: event.toAddr,
+        text: event.content
     }
     transporter.sendMail(mail)
 }
