@@ -12,7 +12,8 @@ Page({
         easygoNickname: null,
         userGender: null,
         hasAccountAllocated: false,
-        account: null
+        account: null,
+        easygoAccount: null
     },
 
     /**
@@ -20,11 +21,30 @@ Page({
      */
     onLoad: function (options) {
         if (app.globalData.userInfo) {
+            // 调用获取用户openid的云函数
+            wx.cloud.callFunction({
+                name: 'login',
+                data: {},
+                success: res => {
+                    console.log('[云函数] [login] user openid: ', res.result.openid)
+                    // 暂时将校园通账户设置为openid
+                    this.setData(
+                        {
+                            easygoAccount: res.result.openid
+                        }
+                    )
+                },
+                fail: err => {
+                    console.error('[云函数] [login] 调用失败', err)
+
+                }
+            })
             this.setData({
                 userInfo: app.globalData.userInfo,
                 easygoNickname: app.globalData.easygoNickname,
                 hasUserInfo: true,
             })
+            console.log(this.data.userInfo.openid)
             var gender = null
             if (this.data.userInfo.gender == "1") {
                 gender = "男"
@@ -36,55 +56,8 @@ Page({
             this.setData({
                 userGender: gender
             })
+
         }
     },
 
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
-    }
 })

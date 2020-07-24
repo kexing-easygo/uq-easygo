@@ -14,19 +14,23 @@
 		<text>性别</text>
 	</view>
 	<view class="right">
-        <text wx:if="{{!hasUserInfo}}">未登录</text>
-        <text wx:else>{{userGender}}</text>
+		<text wx:if="{{!hasUserInfo}}">未登录</text>
+		<text wx:else>{{userGender}}</text>
 	</view>
 </view>
 <view>
-	<text>专业</text>
-
+	<view>
+		<text>专业</text>
+	</view>
+	<view>
+		<input class="user-input" bindinput="bindProgram" />
+	</view>
 </view>
 <view>
-	<text>学龄</text>
-
-</view>
-<view>
-	<text>校园通账号</text>
-
+	<view class="left">
+		<text>校园通账号</text>
+	</view>
+	<view class="right">
+		<text>{{easygoAccount}}</text>
+	</view>
 </view>

@@ -1,9 +1,15 @@
 {
   "pages": [
-    "pages/getEmail/getEmail",
     "pages/profile/profile",
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
+    "pages/setWechatNotification/setWechatNotification",
+    "pages/otherSettings/otherSettings",
+    "pages/getMobile/getMobile",
+    "pages/getEmail/getEmail",
+    "pages/setEmailNotification/setEmailNotification",
+    "pages/setMobileNotification/setMobileNotification",
+    "pages/getStudentAccount/getStudentAccount",
     "pages/home/home",
     "pages/calc/calc",
     "pages/countdown/countdown",

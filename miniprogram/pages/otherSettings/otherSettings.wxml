@@ -1,0 +1,39 @@
+<!--pages/otherSettings/otherSettings.wxml-->
+<view>
+	<view class="left">微信提醒</view>
+	<view class="right">
+		<view class="left">
+			<text>{{wechatNotification}}</text>
+		</view>
+        <view class="right">
+            <navigator url="/pages/setWechatNotification/setWechatNotification"> > </navigator>
+        </view>
+	</view>
+</view>
+<view>
+	<view class="left">邮件提醒</view>
+	<view class="left">
+			<text>{{wechatNotification}}</text>
+		</view>
+        <view class="right">
+            <navigator url="/pages/setEmailNotification/setEmailNotification"> > </navigator>
+        </view>
+</view>
+<view>
+	<view class="left">短信提醒</view>
+	<view class="left">
+			<text>{{emailNotification}}</text>
+		</view>
+        <view class="right">
+            <navigator url="/pages/setMobileNotification/setMobileNotification"> > </navigator>
+        </view>
+</view>
+<view>
+	<view class="left">学生账号</view>
+	<view class="left">
+			<text>{{studengAccount}}</text>
+		</view>
+        <view class="right">
+            <navigator url="/pages/getStudentAccount/getStudentAccount"> > </navigator>
+        </view>
+</view>

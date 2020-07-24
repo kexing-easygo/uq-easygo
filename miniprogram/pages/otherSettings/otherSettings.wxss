@@ -1,0 +1,9 @@
+/* pages/otherSettings/otherSettings.wxss */
+
+.left {
+    float:left;
+}
+
+.right {
+    float: right;
+}
