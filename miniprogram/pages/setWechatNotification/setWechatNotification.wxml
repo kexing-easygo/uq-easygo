@@ -1,0 +1,23 @@
+<!--pages/setWechatNotification/setWechatNotification.wxml-->
+<view>
+	<text>倒计时提醒</text>
+</view>
+
+<view>
+	<view class="left">
+
+		<text>声音提醒</text>
+	</view>
+	<view class="right">
+		<switch checked="{{soundSwitch}}" bindchange="bindSoundSwitch"></switch>
+	</view>
+</view>
+
+<view>
+	<view class="left">
+		<text>震动</text>
+	</view>
+	<view class="right">
+		<switch checked="{{vibrateSwitch}}" bindchange="bindVibrateSwitch"></switch>
+	</view>
+</view>
