@@ -6,32 +6,34 @@
 </block> -->
 <view class="container">
 	<view class="userinfo">
+		<image class="userinfo-avatar" src="{{anonymousPlaceholder}}" />
 		<button
 		 wx:if="{{!hasUserInfo && canIUse}}"
 		 open-type="getUserInfo"
 		 bindgetuserinfo="getUserInfo"
-		> 登录 >>
+		> <view>登录/注册</view><view>></view>
 		</button>
-		<block wx:else class="bl">
+		
+		<!-- <block wx:else class="bl">
 			<image
 			 class="userinfo-avatar"
 			 src="{{userInfo.avatarUrl}}"
 			 mode="cover"
 			></image>
 			<text class="userinfo-nickname">{{userInfo.nickName}}</text>
-		</block>
+		</block> -->
 	</view>
 </view>
 <view class="page-section">
-	<navigator url="/pages/basicUserInfo/basicUserInfo">基本资料</navigator>
+	<navigator url="/pages/basicUserInfo/basicUserInfo">基本资料 ></navigator>
+</view>
+<view class="page-section" style="box-shadow: none; -webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
+	<navigator url="/pages/getMobile/getMobile">手机号绑定 ></navigator>
+</view>
+<view class="page-section" style="margin-top: 0;">
+	<navigator url="/pages/getEmail/getEmail">邮箱绑定 ></navigator>
 </view>
 <view class="page-section">
-	<navigator url="/pages/getMobile/getMobile">手机号绑定</navigator>
-</view>
-<view class="page-section">
-	<navigator url="/pages/getEmail/getEmail">邮箱绑定</navigator>
-</view>
-<view class="page-section">
-	<navigator url="/pages/otherSettings/otherSettings">其他设置</navigator>
+	<navigator url="/pages/otherSettings/otherSettings">其他设置 ></navigator>
 </view>
 
