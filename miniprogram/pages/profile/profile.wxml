@@ -5,35 +5,48 @@
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </block> -->
 <view class="container">
-	<view class="userinfo">
+	<view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo">
 		<image class="userinfo-avatar" src="{{anonymousPlaceholder}}" />
 		<button
-		 wx:if="{{!hasUserInfo && canIUse}}"
 		 open-type="getUserInfo"
 		 bindgetuserinfo="getUserInfo"
-		> <view>登录/注册</view><view>></view>
+		 hover-class="none"
+		>
+			<view>登录/注册</view>
+			<view>></view>
 		</button>
-		
-		<!-- <block wx:else class="bl">
-			<image
-			 class="userinfo-avatar"
-			 src="{{userInfo.avatarUrl}}"
-			 mode="cover"
-			></image>
-			<text class="userinfo-nickname">{{userInfo.nickName}}</text>
-		</block> -->
+	</view>
+	<view wx:else class="userinfo">
+		<image
+		 class="userinfo-avatar"
+		 src="{{userInfo.avatarUrl}}"
+		 mode="cover"
+		></image>
+		<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 	</view>
 </view>
 <view class="page-section">
-	<navigator url="/pages/basicUserInfo/basicUserInfo">基本资料 ></navigator>
+	<navigator url="/pages/basicUserInfo/basicUserInfo">
+		<view style="float: left; width: 80%;">基本资料</view>
+		<view style="float: right; width: 5%;">></view>
+	</navigator>
 </view>
 <view class="page-section" style="box-shadow: none; -webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
-	<navigator url="/pages/getMobile/getMobile">手机号绑定 ></navigator>
+	<navigator url="/pages/getMobile/getMobile">
+		<view style="float: left; width: 80%;">手机号绑定</view>
+		<view style="float: right; width: 5%;">></view>
+	</navigator>
 </view>
 <view class="page-section" style="margin-top: 0;">
-	<navigator url="/pages/getEmail/getEmail">邮箱绑定 ></navigator>
+	<navigator url="/pages/getEmail/getEmail">
+		<view style="float: left; width: 80%;">邮箱绑定</view>
+		<view style="float: right; width: 5%;">></view>
+	</navigator>
 </view>
 <view class="page-section">
-	<navigator url="/pages/otherSettings/otherSettings">其他设置 ></navigator>
+	<navigator url="/pages/otherSettings/otherSettings">
+		<view style="float: left; width: 80%;">其他设定</view>
+		<view style="float: right; width: 5%;">></view>
+	</navigator>
 </view>
 
