@@ -1,4 +1,5 @@
-/* pages/getEmail/getEmail.wxss */
+/* pages/email/email.wxss */
+
 .page-section {
     margin-top: 40rpx;
     height: 100rpx;
@@ -6,11 +7,16 @@
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
     -webkit-box-shadow: 0 5px 5px 1px #cccccc;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.page-section input {
-    min-height: 100rpx;
-    margin-left: 10rpx;
+.page-section navigator {
+    width: 642rpx;
+    margin: 0 auto;
+    height: fit-content;
     display: flex;
     justify-content: space-between;
+}
+.page-section navigator view {
+    float: left;
 }

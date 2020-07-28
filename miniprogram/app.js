@@ -16,9 +16,11 @@ App({
     }
     // 小程序全局变量
     this.globalData = {
+      userInfo: {},
       openid:null,
-      userInfo: null,
-      easygoNickname: null
+      easygoNickname: null,
+      userVerificationCode: '',
+      userEmail: ''
     }
   },
   })

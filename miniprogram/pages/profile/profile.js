@@ -1,6 +1,9 @@
 // pages/profile/profile.js
 const app = getApp()
 // const cloud = require('wx-server-sdk')
+const db = wx.cloud.database()
+const command = db.command
+
 Page({
 
   /**
@@ -36,68 +39,41 @@ Page({
           app.globalData.userInfo = res.userInfo,
             this.setData({
               userInfo: res.userInfo,
-              hasUserInfo: true
             })
         }
       })
     }
+    
+
   },
   getUserInfo: function (e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    // 调用获取用户openid的云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        // 暂时将校园通账户设置为openid
+        app.globalData.openid = res.result.openid
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+    // 将nickName录入数据库
+    db.collection("UserInfo").add(
+      {
+        data: {
+          userNickname: this.data.userInfo.nickName
+        }
+      }
+    ).then(res => {
+      console.log(res)
+    })
   },
-
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady: function () {
-    
-  },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
-  }
 })
