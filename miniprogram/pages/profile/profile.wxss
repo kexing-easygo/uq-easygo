@@ -3,7 +3,7 @@
 .container {
     height: 242rpx;
     width: 100%;
-    background-color: #EC7068;
+    background-color: rgba(236, 112, 104, 0.33);
     margin-top: 4rpx;
     display: flex;
     align-items: center;

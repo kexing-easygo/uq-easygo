@@ -1,5 +1,41 @@
 <!--pages/otherSettings/otherSettings.wxml-->
-<view>
+<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
+	<view class="container">
+		<view>微信提醒</view>
+		<view>
+			<text style="color: #A4A4A4;">允许全部</text>
+			>
+		</view>
+	</view>
+</view>
+<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
+	<view class="container">
+		<view>短信提示</view>
+		<view>
+			<text style="color: #A4A4A4;">部分允许</text>
+			>
+		</view>
+	</view>
+</view>
+<view class="page-section">
+	<view class="container">
+		<view>邮件提醒</view>
+		<view>
+			<text style="color: #A4A4A4;">不允许</text>
+			>
+		</view>
+	</view>
+</view>
+<view class="page-section" style="margin-top: 40rpx;">
+	<view class="container">
+		<view>学生账号</view>
+		<view>
+			<text style="color: #A4A4A4;">未绑定</text>
+			>
+		</view>
+	</view>
+</view>
+<!-- <view>
 	<view class="left">微信提醒</view>
 	<view class="right">
 		<view class="left">
@@ -36,4 +72,5 @@
         <view class="right">
             <navigator url="/pages/getStudentAccount/getStudentAccount"> > </navigator>
         </view>
-</view>
+</view> -->
+

@@ -1,2 +1,11 @@
 <!--pages/mobile/mobile.wxml-->
-<text>pages/mobile/mobile.wxml</text>
+<view class="page-section" style="margin-top: 0;">
+	<navigator url="/pages/getMobile/getMobile">
+		<view>手机号</view>
+		<view>
+			<text style="color: #A4A4A4;">{{hasMobile}}</text>
+			>
+		</view>
+	</navigator>
+</view>
+

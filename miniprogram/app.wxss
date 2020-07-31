@@ -1,10 +1,10 @@
 /**app.wxss**/
-.container {
+/* .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-} 
+}  */
 
 button {
   background: initial;
@@ -154,3 +154,30 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+
+.setting-input-area {
+  height: 100rpx;
+  /* box-shadow: h-shadow v-shadow blur spread color inset; */
+  box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
+  -webkit-box-shadow: 0 3px 5px 1px #cccccc;
+  display: flex;
+  line-height: 100rpx;
+}
+.setting-input-area .setting-input {
+  min-height: 100rpx;
+  padding-left: 52rpx;
+  display: flex;
+  justify-content: space-between;
+}
+.setting-confirm-button {
+  width: 368rpx;
+  height: 80rpx;
+  background-color: #07C160;
+  color: white;
+  border-radius: 0;
+}
+.setting-confirm-button[disabled] {
+  background-color: rgba(7, 193, 96, 0.4) !important;
+  color: white !important;
+}
+  

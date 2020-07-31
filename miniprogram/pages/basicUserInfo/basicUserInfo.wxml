@@ -1,8 +1,43 @@
-<view>
-	<view class="left">
-		<text>用户名:</text>
+<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
+	<view class="container">
+		<view>用户名</view>
+		<view>
+			<text wx:if="{{!hasUserInfo}}" style="color: #A4A4A4;">未登录</text>
+			<text wx:elif="{{easygoNickname == null}}" style="color: #A4A4A4;">{{userInfo.nickName}}</text>
+			<text wx:elif="{{easygoNickname != null}}" style="color: #A4A4A4;">{{easygoNickname}}</text>
+			>
+		</view>
 	</view>
-	<view class="right">
+</view>
+<view class="page-section">
+	<view class="container">
+		<view>性别</view>
+		<view>
+			<text wx:if="{{!hasUserInfo}}" style="color: #A4A4A4;">未登录</text>
+			<text wx:else style="color: #A4A4A4;">{{userGender}}</text>
+			>
+		</view>
+	</view>
+</view>
+<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc; margin-top: 40rpx;">
+	<view class="container">
+		<view>UQEasyGO账号</view>
+		<view>
+			<text style="color: #A4A4A4;">{{easygoAccount}}</text>
+			>
+		</view>
+	</view>
+</view>
+<view class="page-section">
+	<view class="container">
+		<view>学生账号</view>
+		<view>
+			<text style="color: #A4A4A4;">未绑定</text>
+			>
+		</view>
+	</view>
+</view>
+<!-- <view class="right">
 		<text wx:if="{{!hasUserInfo}}">未登录</text>
 		<text wx:elif="{{easygoNickname == null}}">{{userInfo.nickName}}</text>
 		<text wx:elif="{{easygoNickname != null}}">{{easygoNickname}}</text>
@@ -33,4 +68,5 @@
 	<view class="right">
 		<text>{{easygoAccount}}</text>
 	</view>
-</view>
+</view> -->
+

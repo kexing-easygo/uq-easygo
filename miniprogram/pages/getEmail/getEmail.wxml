@@ -1,13 +1,22 @@
 <!--pages/getEmail/getEmail.wxml-->
 
-<view class="page-section" style="margin-top: 0;">
-	<input class="user-input" id="input1" bindinput="bindKeyboardInput" placeholder="请输入邮箱" style="float: left"/>
+<view class="setting-input-area">
+	<input
+	 class="user-input"
+	 id="input1"
+	 bindinput="bindKeyboardInput"
+	 placeholder="请输入邮箱"
+	 class="setting-input"
+	/>
 </view>
-<view style="margin-top: 40rpx">
-	<button type="primary" bindtap="sendVerificationCode" disabled="{{disabledButton}}">获取验证码</button>
+<view style="margin-top: 52rpx;">
+	<button
+	 bindtap="sendVerificationCode"
+	 disabled="{{disabledButton}}"
+	 class="setting-confirm-button"
+	>获取验证码
+	</button>
 </view>
-
-
 
 <!-- <view wx:if="{{verificationCodeSent}}">
 	<text>{{info}}</text>
@@ -20,3 +29,4 @@
 		</view>
 	</view>
 </view> -->
+

@@ -1,8 +1,16 @@
 /* pages/basicUserInfo/basicUserInfo.wxss */
-view.left {
-    float: left;
+.page-section {
+    height: 100rpx;
+    /* box-shadow: h-shadow v-shadow blur spread color inset; */
+    box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
+    -webkit-box-shadow: 0 3px 5px 1px #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-view.right {
-    float: right;
+.page-section .container {
+    width: 646rpx;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
 }

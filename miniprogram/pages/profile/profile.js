@@ -19,35 +19,34 @@ Page({
   /**
    * Lifecycle function--Called when page load
    */
-  onLoad: function (options) {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true,
-        })
-        app.globalData.userInfo = res.userInfo
-      }
-    } else {
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo,
-            this.setData({
-              userInfo: res.userInfo,
-            })
-        }
-      })
-    }
-    
-
-  },
+  // onLoad: function (options) {
+  //   if (app.globalData.userInfo) {
+  //     this.setData({
+  //       userInfo: app.globalData.userInfo,
+  //       hasUserInfo: true
+  //     });
+  //     console.log(app.globalData.userInfo);
+  //   } else if (this.data.canIUse) {
+  //     app.userInfoReadyCallback = res => {
+  //       this.setData({
+  //         userInfo: res.userInfo,
+  //         hasUserInfo: true,
+  //       })
+  //       app.globalData.userInfo = res.userInfo
+  //     }
+  //   } else {
+  //     wx.getUserInfo({
+  //       success: res => {
+  //         app.globalData.userInfo = res.userInfo,
+  //           this.setData({
+  //             userInfo: res.userInfo,
+  //           })
+  //       }
+  //     })
+  //   }
+  // },
   getUserInfo: function (e) {
-    app.globalData.userInfo = e.detail.userInfo
+    app.globalData.userInfo = e.detail.userInfo;
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true

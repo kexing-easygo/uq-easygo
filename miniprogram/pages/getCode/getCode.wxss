@@ -1,17 +1,19 @@
 /* pages/getCode/getCode.wxss */
-.page-section {
+/* .page-section {
     margin-top: 40rpx;
     height: 100rpx;
-    /* box-shadow: h-shadow v-shadow blur spread color inset; */
-    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-    -webkit-box-shadow: 0 5px 5px 1px #cccccc;
+    box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
+    -webkit-box-shadow: 0 3px 5px 1px #cccccc;
     display: flex;
-    
-}
+} */
 
-.page-section input {
+/* .page-section input {
     min-height: 100rpx;
     margin-left: 10rpx;
     display: flex;
     justify-content: space-between;
-}
+} */
+/* button {
+    width: 368rpx;
+    height: 80rpx;
+} */
