@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/home/home",
+    "pages/setWechatNotification/setWechatNotification",
     "pages/profile/profile",
     "pages/mobile/mobile",
     "pages/email/email",
@@ -7,13 +9,11 @@
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
-    "pages/setWechatNotification/setWechatNotification",
     "pages/otherSettings/otherSettings",
     "pages/getMobile/getMobile",
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/getStudentAccount/getStudentAccount",
-    "pages/home/home",
     "pages/calc/calc",
     "pages/countdown/countdown",
     "pages/index/index",
