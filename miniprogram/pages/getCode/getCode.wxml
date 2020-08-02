@@ -1,0 +1,7 @@
+<!--pages/getCode/getCode.wxml-->
+<view class="page-section" style="margin-top: 0;">
+	<input class="user-input" id="input1" bindinput="bindKeyboardInput" placeholder="请输入验证码" style="float: left" />
+</view>
+<view style="margin-top: 40rpx">
+	<button type="primary" bindtap="checkVerificationCode">确定</button>
+</view>

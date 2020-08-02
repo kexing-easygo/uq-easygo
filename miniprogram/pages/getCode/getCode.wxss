@@ -1,4 +1,4 @@
-/* pages/getEmail/getEmail.wxss */
+/* pages/getCode/getCode.wxss */
 .page-section {
     margin-top: 40rpx;
     height: 100rpx;
@@ -6,6 +6,7 @@
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
     -webkit-box-shadow: 0 5px 5px 1px #cccccc;
     display: flex;
+    
 }
 
 .page-section input {

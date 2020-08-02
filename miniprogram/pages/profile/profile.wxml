@@ -38,7 +38,7 @@
 	</navigator>
 </view>
 <view class="page-section" style="margin-top: 0;">
-	<navigator url="/pages/getEmail/getEmail">
+	<navigator url="/pages/email/email">
 		<view style="float: left; width: 80%;">邮箱绑定</view>
 		<view style="float: right; width: 5%;">></view>
 	</navigator>
