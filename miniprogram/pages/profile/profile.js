@@ -1,5 +1,6 @@
 // pages/profile/profile.js
 const app = getApp()
+const db = wx.cloud.database()
 // const cloud = require('wx-server-sdk')
 Page({
 
@@ -17,40 +18,72 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo,
-        hasUserInfo: true
-      })
-    } else if (this.data.canIUse) {
-      app.userInfoReadyCallback = res => {
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true,
-        })
-        app.globalData.userInfo = res.userInfo
-      }
-    } else {
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo,
-            this.setData({
-              userInfo: res.userInfo,
-              hasUserInfo: true
-            })
-        }
-      })
-    }
+    // if (app.globalData.userInfo) {
+    //   this.setData({
+    //     userInfo: app.globalData.userInfo,
+    //     hasUserInfo: true
+    //   })
+    // } else if (this.data.canIUse) {
+    //   app.userInfoReadyCallback = res => {
+    //     this.setData({
+    //       userInfo: res.userInfo,
+    //       hasUserInfo: true,
+    //     })
+    //     app.globalData.userInfo = res.userInfo
+    //   }
+    // } else {
+    //   wx.getUserInfo({
+    //     success: res => {
+    //       app.globalData.userInfo = res.userInfo,
+    //         this.setData({
+    //           userInfo: res.userInfo,
+    //           hasUserInfo: true
+    //         })
+    //     }
+    //   })
+    // }
   },
+  
   getUserInfo: function (e) {
-    console.log(e)
+    //先获取openid
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        app.globalData.openid = res.result.openid
+        console.log("openid获取成功: ", res.result.openid)
+      },
+      fail: err => {
+        console.error('openid获取失败: ', err)
+      }
+    })
+    //从云数据库中检索该openid是否存在
+    db.collection('MainUser').where({
+      _openid: app.globalData.openid
+    }).get().then( 
+      res => {
+        console.log(res)
+        if (res.data.length == 0) { //如果不存在 -> 添加记录
+          db.collection('MainUser').add({
+            data: {
+              userInfo: e.detail.userInfo
+            }
+          })
+        } else { //如果存在 -> 更新已有的记录
+          db.collection('MainUser').doc(res.data[0]._id).update({
+            data: {
+              userInfo: e.detail.userInfo
+            }
+          })
+        }
+    })
+    //部署库中data到界面中
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
   },
-
 
   /**
    * Lifecycle function--Called when page is initially rendered
