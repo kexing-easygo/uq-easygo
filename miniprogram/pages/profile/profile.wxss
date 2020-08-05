@@ -19,8 +19,8 @@
     height: fit-content;
 }
 .userinfo button, .userinfo .userinfo-nickname{
-    padding: 0;
-    margin-left: 20rpx;
+    padding: 0 !important;
+    margin-left: 20rpx !important;
     width: 504rpx;
     height: fit-content;
     display: flex;

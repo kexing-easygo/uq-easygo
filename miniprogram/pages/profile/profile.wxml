@@ -12,8 +12,11 @@
 		 bindgetuserinfo="getUserInfo"
 		 hover-class="none"
 		>
+			<!-- <view class="userinfo-nickname"> -->
 			<view>登录/注册</view>
 			<view>></view>
+			<!-- </view> -->
+
 		</button>
 	</view>
 	<view wx:else class="userinfo">
