@@ -1,2 +1,33 @@
 <!--pages/countdown/countdown.wxml-->
-<text>pages/countdown/countdown.wxml</text>
+<view class = "container">
+  <view class = "header">
+    <view class = "header_subject"> CSSE1001 Assignment1
+    </view>
+    <view class = "remain_day"> 12 </view>
+    <view class = "days"> Days </view>
+    <view class = "searchbar"></view>
+    
+  </view>
+
+  <view class = "countdown">
+    <!-- 每次新增加倒计时事件添加1个 countdown_event block -->
+    <view class = "countdown_event">
+      <view class = "progress-bar">
+        <text class = "subject">CSSE1001 Assignment1</text>
+        <view class = "progress" style="--percent: 50; background-color: #e46a70"></view>
+      </view>
+      <view class = "countdown_days"> 12 days</view>
+    </view> 
+
+    <view class = "countdown_event">
+      <view class = "progress-bar">
+        <text class = "subject">CSSE2002 Assignment1</text>
+        <view class = "progress" style="--percent: 60; background-color: #ACE6D7"></view>
+      </view>
+      <view class = "countdown_days"> 14 days</view>
+    </view> 
+  </view>
+
+  
+
+</view>
