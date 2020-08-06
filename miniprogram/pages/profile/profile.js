@@ -20,33 +20,6 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    // if (app.globalData.userInfo) {
-    //   this.setData({
-    //     userInfo: app.globalData.userInfo,
-    //     hasUserInfo: true
-    //   })
-    // } else if (this.data.canIUse) {
-    //   app.userInfoReadyCallback = res => {
-    //     this.setData({
-    //       userInfo: res.userInfo,
-    //       hasUserInfo: true,
-    //     })
-    //     app.globalData.userInfo = res.userInfo
-    //   }
-    // } else {
-    //   wx.getUserInfo({
-    //     success: res => {
-    //       app.globalData.userInfo = res.userInfo,
-    //         this.setData({
-    //           userInfo: res.userInfo,
-    //           hasUserInfo: true
-    //         })
-    //     }
-    //   })
-    // }
-  },
-  
-  getUserInfo: function (e) {
     //先获取openid
     wx.cloud.callFunction({
       name: 'login',
@@ -62,7 +35,7 @@ Page({
     //从云数据库中检索该openid是否存在
     db.collection('MainUser').where({
       _openid: app.globalData.openid
-    }).get().then( 
+    }).get().then(
       res => {
         console.log(res)
         if (res.data.length == 0) { //如果不存在 -> 添加记录
@@ -78,25 +51,16 @@ Page({
             }
           })
         }
-    })
+      })
+  },
+
+  getUserInfo: function (e) {
+
     //部署库中data到界面中
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-    // 调用获取用户openid的云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        // 暂时将校园通账户设置为openid
-        app.globalData.openid = res.result.openid
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-      }
     })
     // 将nickName录入数据库
     db.collection("UserInfo").add(
@@ -114,7 +78,7 @@ Page({
    * Lifecycle function--Called when page is initially rendered
    */
   onReady: function () {
-    
+
   },
 
   /**
