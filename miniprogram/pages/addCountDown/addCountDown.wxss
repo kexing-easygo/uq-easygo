@@ -58,7 +58,8 @@
   align-items: center;
 }
 .notice_duration switch {
-  margin-left:308rpx;
+  margin-left: auto;
+  margin-right: 80rpx;
 }
 .confirm {
   background-color: #07C160;
