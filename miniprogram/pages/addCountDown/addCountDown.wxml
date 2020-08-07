@@ -1,0 +1,49 @@
+<!--pages/addCountDown/addCountDown.wxml-->
+<view class = "container">
+
+  <view class = "heading">
+    <text>标题:</text>
+    <input class = "input" auto-focus placeholder="CSSE1001 Assignment1"/>
+  </view>
+
+  <view class = "due_date">
+    <text>Due Date:</text>
+    <input class = "input" auto-focus placeholder="10/08/2020"/>
+  </view>
+
+  <view class = "colours">
+    <text style = "margin-right: 154rpx;">设置颜色</text>
+    <view class = "colour_one" 
+    style = "width: 40rpx; height: 40rpx; background-color: #FE5B5B;border-radius: 100rpx; margin-left: 22rpx;"></view>
+    <view class = "colour_two" 
+    style = "width: 40rpx; height: 40rpx; background-color: #FF8FDE;border-radius: 100rpx; margin-left: 22rpx;"></view>
+    <view class = "colour_three" 
+    style = "width: 40rpx; height: 40rpx; background-color: #8877FF;border-radius: 100rpx; margin-left: 22rpx;"></view>
+    <view class = "colour_four" 
+    style = "width: 40rpx; height: 40rpx; background-color: #77D5FF;border-radius: 100rpx; margin-left: 22rpx;"></view>
+    <view class = "colour_five" 
+    style = "width: 40rpx; height: 40rpx; background-color: #9EFF97;border-radius: 100rpx; margin-left: 22rpx;"></view>
+    <view class = "colour_six" 
+    style = "width: 40rpx; height: 40rpx; background-color: #E3FF6E;border-radius: 100rpx; margin-left: 22rpx;"></view>
+  </view>
+
+  <view class = "notice_duration">
+    <view>
+      <text>设置24小时前提醒</text> 
+      <switch type="checkbox"></switch>
+    </view>
+    <view>
+      <text>设置48小时前提醒</text>
+      <switch type="checkbox"></switch>
+    </view>
+    <view>
+      <text>设置72小时前提醒</text>
+      <switch type="checkbox"></switch>
+    </view>
+  </view>
+
+  <view class="confirm">
+    <button><text style="color: #FFFFFF">确认添加</text></button>
+  </view>
+
+</view>

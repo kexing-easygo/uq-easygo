@@ -1,10 +1,13 @@
 // pages/countdown/countdown.js
+const db = wx.cloud.database("MainUser")
 Page({
 
   /**
    * Page initial data
    */
   data: {
+    addCountDown:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
+    notificationSetting:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png"
 
   },
 

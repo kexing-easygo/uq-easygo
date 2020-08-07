@@ -46,6 +46,7 @@
   height: 84rpx;
   background-color: #FFFFFF;
   margin: -40rpx 40rpx 66rpx 66rpx;
+  position: relative;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
 .countdown {
@@ -95,3 +96,11 @@
   margin-left: 16rpx;
   text-align: center;
 }
+.navi-buttons {
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
