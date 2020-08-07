@@ -45,8 +45,9 @@
   width: 619rpx;
   height: 84rpx;
   background-color: #FFFFFF;
-  margin: -40rpx 40rpx 66rpx 66rpx;
+  margin: 0rpx 40rpx 66rpx 66rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  
 }
 .countdown {
   width: 100%;

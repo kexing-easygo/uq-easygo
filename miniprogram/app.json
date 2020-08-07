@@ -1,10 +1,10 @@
 {
   "pages": [
-    "pages/countdown/countdown",
     "pages/profile/profile",
+    "pages/getEmail/getEmail",
+    "pages/countdown/countdown",
     "pages/mobile/mobile",
     "pages/email/email",
-    "pages/getEmail/getEmail",
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",

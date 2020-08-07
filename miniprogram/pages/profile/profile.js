@@ -1,7 +1,6 @@
 // pages/profile/profile.js
 const app = getApp()
 const db = wx.cloud.database()
-// const cloud = require('wx-server-sdk')
 const command = db.command
 
 Page({
@@ -11,7 +10,8 @@ Page({
    */
   data: {
     userInfo: {},
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
+    // canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
     anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg"
   },
@@ -25,30 +25,37 @@ Page({
       name: 'login',
       data: {},
       success: res => {
-        app.globalData.openid = res.result.openid
         console.log("openid获取成功: ", res.result.openid)
+        this.setData({
+          openid: res.result.openid
+        })
+        app.globalData.openid = res.result.openid
       },
       fail: err => {
         console.error('openid获取失败: ', err)
       }
     })
+
     //从云数据库中检索该openid是否存在
     db.collection('MainUser').where({
-      _openid: app.globalData.openid
+      _openid: this.data.openid
     }).get().then(
       res => {
-        console.log(res)
-        if (res.data.length == 0) { //如果不存在 -> 添加记录
-          db.collection('MainUser').add({
-            data: {
-              userInfo: e.detail.userInfo
-            }
-          })
+        // console.log(res.data.length)
+        if (res.data.length == 0) {
+          console.log("No data found.")
         } else { //如果存在 -> 更新已有的记录
+          app.globalData.userID = res.data[0]._id
+          app.globalData.userEmail = res.data[0].email
           db.collection('MainUser').doc(res.data[0]._id).update({
             data: {
-              userInfo: e.detail.userInfo
+              userInfo: res.data[0].userInfo
             }
+          })
+          this.setData({
+            userInfo: res.data[0].userInfo,
+            canIUse: true,
+            hasUserInfo: true
           })
         }
       })
@@ -63,15 +70,14 @@ Page({
       hasUserInfo: true
     })
     // 将nickName录入数据库
-    db.collection("UserInfo").add(
-      {
+    db.collection('MainUser')
+      .add({
         data: {
-          userNickname: this.data.userInfo.nickName
+          userInfo: e.detail.userInfo,
+          userAssignments: []
         }
-      }
-    ).then(res => {
-      console.log(res)
-    })
+      })
+
   },
 
   /**
