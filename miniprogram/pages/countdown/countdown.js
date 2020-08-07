@@ -1,5 +1,6 @@
 // pages/countdown/countdown.js
 const db = wx.cloud.database()
+
 Page({
 
 	/**
@@ -8,6 +9,8 @@ Page({
   data: {
     // 用户所有的作业
     userAssignments: [],
+    addCountDown:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
+    notificationSetting:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
 
     // 最近的一个作业
     headerAssignment: {},

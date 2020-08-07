@@ -37,3 +37,12 @@
 		</view>
 	</view>
 </view>
+  <view class = "navi-buttons">
+    <navigator url="/pages/addCountDown/addCountDown">
+		  <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
+	  </navigator>
+    <navigator url="/pages/notificationSetting/notificationSetting">
+		  <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+	  </navigator>
+  </view>
+</view>
