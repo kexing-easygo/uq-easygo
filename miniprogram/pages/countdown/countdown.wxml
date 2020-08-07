@@ -36,7 +36,6 @@
 			<view class="countdown_days">{{item.countdown}} Days</view>
 		</view>
 	</view>
-</view>
   <view class = "navi-buttons">
     <navigator url="/pages/addCountDown/addCountDown">
 		  <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
