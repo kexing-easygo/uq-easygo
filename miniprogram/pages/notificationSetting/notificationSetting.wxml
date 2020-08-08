@@ -1,0 +1,14 @@
+<!--pages/notificationSetting/notificationSetting.wxml-->
+<view class="container">
+  <view class="notices">
+    <view class="wechatnotice">
+      <text>微信提醒</text>
+      <switch type="switch"></switch>
+    </view>
+    
+    <view class="mailnotice">
+      <text>邮件提醒</text>
+      <switch type="switch"></switch>
+    </view>
+  </view>
+</view>

@@ -1,65 +1,131 @@
 // pages/countdown/countdown.js
+const db = wx.cloud.database()
+
 Page({
 
-  /**
-   * Page initial data
-   */
+	/**
+	 * Page initial data
+	 */
   data: {
+    // 用户所有的作业
+    userAssignments: [],
+    addCountDown:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
+    notificationSetting:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
 
+    // 最近的一个作业
+    headerAssignment: {},
+    recentAssignmentName: "",
+    recentAssignmentDate: ""
   },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
+	/**
+	 * Lifecycle function--Called when page load
+	 */
   onLoad: function (options) {
-
+    // 获取用户所有的assignments
+    var temp = []
+    db.collection('MainUser')
+      .where(
+        {
+          // _openid: app.globalData.openid
+          _openid: "oe4Eh5YxaLF2LksmaAyWbLLvvMiA"
+        }
+      )
+      .get()
+      .then(
+        res => {
+          console.log(res.data)
+          temp = res.data[0].userAssignments
+          // 如果用户有登记过assignment
+          if (res.data.length > 0) {
+            var userAssignments = res.data[0].userAssignments
+            var diffs = []
+            var now = new Date().getTime()
+            for (var i = 0; i < res.data.length; i++) {
+              var d = new Date(userAssignments[i]["date"]).getTime()
+              // 计算两者时间差（和云函数同款）
+              var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+              diffs.push(diff)
+              userAssignments[i]["countdown"] = diff
+              // 计算style中的进度条百分比
+              var percentage = Number(diff / 20 * 100).toFixed(1)
+              if (percentage > 100) {
+                percentage = 0
+              } else {
+                percentage = 100 - percentage
+              }
+              userAssignments[i]["percentage"] = percentage
+            }
+            var minValue = Math.min.apply(null, diffs)
+            // 匹配最近的作业名称
+            for (var i = 0; i < res.data.length; i++) {
+              var d = new Date(userAssignments[i]["date"]).getTime()
+              var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+              if (diff == minValue) {
+                var name = userAssignments[i]["name"]
+                // 决定了header的assignment即为i代表的assignment值
+                this.setData({
+                  userAssignments: temp,
+                  headerAssignment: userAssignments[i],
+                  recentAssignmentName: name,
+                  recentAssignmentDate: minValue
+                })
+                // 不确定是不是要把最近的那项删掉
+                // userAssignments.splice(i, 1)
+                this.setData({
+                  userAssignments:userAssignments,
+                })
+              }
+            }
+          }
+        }
+      )
   },
 
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
+	/**
+	 * Lifecycle function--Called when page is initially rendered
+	 */
   onReady: function () {
 
   },
 
-  /**
-   * Lifecycle function--Called when page show
-   */
+	/**
+	 * Lifecycle function--Called when page show
+	 */
   onShow: function () {
 
   },
 
-  /**
-   * Lifecycle function--Called when page hide
-   */
+	/**
+	 * Lifecycle function--Called when page hide
+	 */
   onHide: function () {
 
   },
 
-  /**
-   * Lifecycle function--Called when page unload
-   */
+	/**
+	 * Lifecycle function--Called when page unload
+	 */
   onUnload: function () {
 
   },
 
-  /**
-   * Page event handler function--Called when user drop down
-   */
+	/**
+	 * Page event handler function--Called when user drop down
+	 */
   onPullDownRefresh: function () {
 
   },
 
-  /**
-   * Called when page reach bottom
-   */
+	/**
+	 * Called when page reach bottom
+	 */
   onReachBottom: function () {
 
   },
 
-  /**
-   * Called when user click on the top right corner to share
-   */
+	/**
+	 * Called when user click on the top right corner to share
+	 */
   onShareAppMessage: function () {
 
   }

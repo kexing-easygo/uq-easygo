@@ -1,1 +1,106 @@
 /* pages/countdown/countdown.wxss */
+.container {
+  color: #707070;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 4rpx;
+  flex-wrap: wrap;
+}
+.header {
+  height: 312rpx;
+  width: 100%;
+  background-color: #FFA9A3;
+  color:#707070;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.header_subject {
+  width: 242rpx;
+  height: fit-content;
+  padding-top: 110rpx;
+  padding-bottom: 114rpx;
+  padding-left: 84rpx;
+}
+.remain_day {
+  width: 178rpx;
+  height: fit-content;
+  font-size: 5rem;
+  margin-left: 60rpx;
+}
+.days {
+  font-size: 28rpx;
+  text-align: center;
+  color:#FFFFFF;
+  width: 80rpx;
+  background-color: #4A4A4A;
+  padding: 5rpx;
+  margin-left: 30rpx;
+  align-self: flex-start;
+  margin-top: 94rpx;
+}
+.searchbar {
+  width: 619rpx;
+  height: 84rpx;
+  background-color: #FFFFFF;
+  margin: -40rpx 40rpx 66rpx 66rpx;
+  position: relative;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+}
+.countdown {
+  width: 100%;
+  height: fit-content;
+  margin-top: 85rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.countdown_event {
+  width: 654 rpx;
+  padding: 18rpx 16rpx;
+  display: flex;
+  margin-top: 10rpx;
+}
+.progress-bar{
+  /* 进度条的槽 */
+  display: flex;
+  flex-direction: column;
+  width:490rpx;
+  height: 72rpx;
+  padding: 18rpx 10rpx;
+  border: 1rpx solid #707070;
+  background-color: #FFFFFF;
+  color: #707070;
+  border-radius: 3px;
+}
+.progress-bar .progress {
+  display: block;
+  width: calc(490rpx * var(--percent) / 100);
+  height: 100%;
+  border-radius: 3px;
+}
+.progress-bar .subject {
+  display: inline-block;
+  position: absolute;
+}
+.countdown_days {
+  width: 140rpx;
+  padding: 18rpx 10rpx;
+  border: 1rpx solid #707070;
+  border-radius: 3px;
+  background-color: #4A4A4A;
+  color: #FFFFFF;
+  margin-left: 16rpx;
+  text-align: center;
+}
+.navi-buttons {
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+

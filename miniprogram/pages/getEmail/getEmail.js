@@ -1,6 +1,6 @@
 // pages/getEmail/getEmail.js
 
-const db = wx.cloud.database()
+
 const app = getApp()
 Page({
     /**
@@ -31,20 +31,24 @@ Page({
         wx.navigateTo({
           url: '/pages/getCode/getCode',
         })
-        // wx.cloud.callFunction({
-        //     name: 'sendEmail',
-        //     data: {
-        //         'toAddr': this.data.inputEmailValue,
-        //         'subject': '来自你爹的问候', // 后续放入用户的学科号
-        //         'content': num,
-        //     },
-        //     success: res => {
+        var content = "您本次的验证码为: "
+        content += num
+        content += "。"
+        content += "打死也不要告诉别人哦！"
+        wx.cloud.callFunction({
+            name: 'sendEmail',
+            data: {
+                'toAddr': this.data.inputEmailValue,
+                'subject': 'UQ校园通', 
+                'content': content,
+            },
+            success: res => {
                 
-        //     },
-        //     fail: err => {
-        //         console.error("发送邮件云函数调用失败。")
-        //     }
-        // })
+            },
+            fail: err => {
+                console.error("发送邮件云函数调用失败。")
+            }
+        })
     },
     /**
      * 获取用户输入的邮箱

@@ -21,3 +21,7 @@
 		<switch checked="{{vibrateSwitch}}" bindchange="bindVibrateSwitch"></switch>
 	</view>
 </view>
+
+<button class="mini-btn" type="primary" size="mini" bindtap="subscribe">按钮1</button>
+<button class="mini-btn" type="primary" size="mini" bindtap="call">按钮2</button>
+<text>{{templateMessageResult}}</text>

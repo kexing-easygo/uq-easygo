@@ -1,5 +1,6 @@
 // pages/getCode/getCode.js
 const app = getApp()
+const db = wx.cloud.database()
 Page({
 
     /**
@@ -37,6 +38,18 @@ Page({
         }
         console.log("输入正确。")
         // 调用数据库，录入用户邮箱
+        db.collection('MainUser')
+        .where(
+            {
+                _openid: app.globalData.openid
+            }
+        )
+        .update({
+            data: {
+              email: app.globalData.userEmail
+            }
+          })
+        console.log("邮箱", app.globalData.userEmail, "绑定成功")
         wx.navigateTo({
             url: '/pages/email/email',
         })
