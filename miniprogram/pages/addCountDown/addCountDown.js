@@ -1,10 +1,21 @@
 // pages/addCountDown/addCountDown.js
+
+const app = getApp()
+const db = wx.cloud.database()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    title: "",
+    dueDate: "2020-01-02",
+    color: "",
+    notificationDate: {},
+    hours24: false,
+    hours48: false,
+    hours72: false,
+    buttonDisabled: false
 
   },
 
@@ -14,53 +25,78 @@ Page({
   onLoad: function (options) {
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  bind24: function (e) {
+    this.setData(
+      {
+        hours24: e.detail.value
+      }
+    )
+  },
+  bind48: function (e) {
+    this.setData(
+      {
+        hours48: e.detail.value
+      }
+    )
+  },
+  bind72: function (e) {
+    this.setData(
+      {
+        hours72: e.detail.value
+      }
+    )
+  },
+  bindTitleInput: function (e) {
+    this.setData(
+      {
+        title: e.detail.value
+      }
+    )
+  },
+  bindDateInput: function (e) {
+    this.setData(
+      {
+        dueDate: e.detail.value
+      }
+    )
+    if (this.data.title.length > 0) {
+      if (e.detail.value.length > 0) {
+        this.setData({
+          buttonDisabled: false
+        })
+      }
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  addCountDown: function () {
+    const _ = db.command
+    db.collection("MainUser")
+      .where({
+        _openid: app.globalData.openid
+      })
+      .update({
+        data: {
+          userAssignments: _.push(
+            {
+              date: this.data.dueDate,
+              name: this.data.title,
+              notification: {
+                "24": this.data.hours24,
+                "48": this.data.hours48,
+                "72": this.data.hours72
+              },
+              color: ""
+            }
+          )
+        }
+      })
+      .then(
+        res => {
+          console.log("更新成功!")
+        }
+      )
+    wx.navigateTo({
+      url: '/pages/countdown/countdown',
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
