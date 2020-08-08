@@ -28,12 +28,46 @@
     </view> 
   </view>
 
-  <view class = "navi-buttons">
+  <!-- <view class = "navi-buttons">
     <navigator url="/pages/addCountDown/addCountDown">
 		  <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
 	  </navigator>
     <navigator url="/pages/notificationSetting/notificationSetting">
 		  <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
 	  </navigator>
-  </view>
+  </view> -->
+
 </view>
+  
+  <view class="menu-switch">   
+    <view class="add-event">  
+        <!--切换按钮-->  
+        <view class="hide{{showView? '' : 'show'}}" bindtap="change">
+          <image style="width: 88rpx; height: 88rpx" src="{{add}}"  />
+        </view>      
+        <view class="hide{{showView? 'show' : ''}}" bindtap="change">
+          <image style="width: 88rpx; height: 88rpx" src="{{add}}"  />
+        </view>      
+    </view>   
+  </view> 
+
+  <view class="hide{{showView?'show':''}}">  
+       <!--遮罩层  -->
+       <view class="shade">  
+           <!--蒙板内部-->
+           <view class="contents">
+              <view>
+              <text>添加倒计时</text>
+              <navigator url="/pages/addCountDown/addCountDown">
+		            <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
+	            </navigator>
+              </view>
+              <view>
+              <text>提醒设置</text>
+              <navigator url="/pages/notificationSetting/notificationSetting">
+		            <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+	            </navigator>
+              </view>
+           </view>   
+       </view>  
+   </view> 
