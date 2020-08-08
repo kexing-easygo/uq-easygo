@@ -5,7 +5,7 @@
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </block> -->
 <view class="container">
-	<view wx:if="{{!hasUserInfo && canIUse}}" class="userinfo">
+	<view wx:if="{{!hasUserInfo}}" class="userinfo">
 		<image class="userinfo-avatar" src="{{anonymousPlaceholder}}" />
 		<button
 		 open-type="getUserInfo"
@@ -52,4 +52,3 @@
 		<view style="float: right; width: 5%;">></view>
 	</navigator>
 </view>
-

@@ -5,25 +5,57 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log(event)
-  switch (event.action) {
-    case 'requestSubscribeMessage': {
-      return requestSubscribeMessage(event)
-    }
-    case 'sendSubscribeMessage': {
-      return sendSubscribeMessage(event)
-    }
-    case 'getWXACode': {
-      return getWXACode(event)
-    }
-    case 'getOpenData': {
-      return getOpenData(event)
-    }
-    default: {
-      return
-    }
+  console.log(event.action)
+  // const { OPENID } = cloud.getWXContext()
+  try {
+    const result = await cloud.openapi.subscribeMessage.send({
+      touser: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8',
+      lang: 'zh_CN',
+      data: {
+        thing10: {
+          value: '2310'
+        },
+        date2: {
+          value: '2020年08月02日'
+        },
+        date8: {
+          value: '2029年08月05日'
+        },
+        thing3: {
+          value: '你该交作业了'
+        },
+        thing9: {
+          value: 'None'
+        }
+      },
+      templateId: 'YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI',
+      miniprogramState: 'developer'
+    })
+    return result
+  } catch (err) {
+    return err
   }
 }
+// exports.main = async (event, context) => {
+//   console.log(event)
+//   switch (event.action) {
+//     case 'requestSubscribeMessage': {
+//       return requestSubscribeMessage(event)
+//     }
+//     case 'sendSubscribeMessage': {
+//       return sendSubscribeMessage(event)
+//     }
+//     case 'getWXACode': {
+//       return getWXACode(event)
+//     }
+//     case 'getOpenData': {
+//       return getOpenData(event)
+//     }
+//     default: {
+//       return
+//     }
+//   }
+// }
 
 async function requestSubscribeMessage(event) {
   // 此处为模板 ID，开发者需要到小程序管理后台 - 订阅消息 - 公共模板库中添加模板，

@@ -1,5 +1,6 @@
 <!--pages/getEmail/getEmail.wxml-->
 
+<<<<<<< HEAD
 <view class="setting-input-area">
 	<input
 	 class="user-input"
@@ -8,6 +9,10 @@
 	 placeholder="请输入邮箱"
 	 class="setting-input"
 	/>
+=======
+<view class="page-section" style="margin-top: 40rpx;">
+	<input class="user-input" id="input1" bindinput="bindKeyboardInput" placeholder="913248383@qq.com" style="float: left"/>
+>>>>>>> lewis
 </view>
 <view style="margin-top: 52rpx;">
 	<button
@@ -17,6 +22,7 @@
 	>获取验证码
 	</button>
 </view>
+<<<<<<< HEAD
 
 <!-- <view wx:if="{{verificationCodeSent}}">
 	<text>{{info}}</text>
@@ -30,3 +36,5 @@
 	</view>
 </view> -->
 
+=======
+>>>>>>> lewis
