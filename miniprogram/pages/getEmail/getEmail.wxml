@@ -1,18 +1,13 @@
 <!--pages/getEmail/getEmail.wxml-->
 
-<<<<<<< HEAD
-<view class="setting-input-area">
+<view class="page-section" style="margin-top: 40rpx;">
 	<input
 	 class="user-input"
 	 id="input1"
 	 bindinput="bindKeyboardInput"
-	 placeholder="请输入邮箱"
-	 class="setting-input"
+	 placeholder="913248383@qq.com"
+	 style="float: left"
 	/>
-=======
-<view class="page-section" style="margin-top: 40rpx;">
-	<input class="user-input" id="input1" bindinput="bindKeyboardInput" placeholder="913248383@qq.com" style="float: left"/>
->>>>>>> lewis
 </view>
 <view style="margin-top: 52rpx;">
 	<button
@@ -22,19 +17,4 @@
 	>获取验证码
 	</button>
 </view>
-<<<<<<< HEAD
 
-<!-- <view wx:if="{{verificationCodeSent}}">
-	<text>{{info}}</text>
-	<view class="container">
-		<view>
-			<input class="user-input" id="input2"  bindinput="bindKeyboardInput2" />
-		</view>
-		<view>
-			<button type="default" plain="true" bindtap="checkVerificationCode">确定</button>
-		</view>
-	</view>
-</view> -->
-
-=======
->>>>>>> lewis
