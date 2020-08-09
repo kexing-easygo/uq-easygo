@@ -1,7 +1,5 @@
 {
   "pages": [  
-    "pages/addCountDown/addCountDown",
-    "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
     "pages/profile/profile",
     "pages/mobile/mobile",
@@ -18,6 +16,9 @@
     "pages/getStudentAccount/getStudentAccount",
     "pages/home/home",
     "pages/calc/calc",
+    
+    "pages/addCountDown/addCountDown",
+    "pages/notificationSetting/notificationSetting",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",

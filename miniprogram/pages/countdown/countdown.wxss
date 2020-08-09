@@ -104,3 +104,61 @@
   flex-direction: column;
 }
 
+/* +号菜单样式 */
+.menu-switch {   
+  display: flex;  
+  flex-direction: row;  
+  z-index: 2;
+  position: fixed;   
+  bottom: 150rpx;
+  right: 30rpx; 
+  }  
+.add_event{   
+  display: inline-block;   
+  height: 80rpx;   
+  width: 80rpx;   
+}  
+/*遮罩层 */  
+.shade{   
+  width:100%;   
+  height:100%;   
+  top:0;   
+  background:rgba(247, 247, 247, 0.7);   
+  overflow: hidden;   
+  z-index: 1;   
+  position: absolute;  
+  }   
+  
+/*显示与隐藏的内容即点击核算后所展示的详细内容 */  
+.contents { 
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column; 
+  position: fixed;
+  bottom: 245rpx;
+  right: 30rpx; 
+}  
+
+.contents view {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16rpx;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.contents view image {
+  margin-left: 15rpx;
+  vertical-align: middle;
+}
+    
+/*显示整个conts */  
+.show{   
+  display: block;  
+  }  
+/*隐藏整个conts */  
+.hide{   
+  display: none;  
+  }  
+  
+

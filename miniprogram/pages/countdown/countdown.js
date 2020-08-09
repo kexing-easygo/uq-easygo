@@ -11,11 +11,25 @@ Page({
     userAssignments: [],
     addCountDown:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
     notificationSetting:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
+    add:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
+    showTrue: false
+  },
 
-    // 最近的一个作业
-    headerAssignment: {},
-    recentAssignmentName: "",
-    recentAssignmentDate: ""
+
+  // 用于实现点击“核算”时，来显示与隐藏整个“conts”，这一部分其实是利用了面板的显示与隐藏功能  
+  change: function () {
+    let that = this;
+    that.setData({
+      showView: (!that.data.showView)
+    })
+  },
+  // 通过点击“conts”区域里右上角的关闭按钮来关闭整个“conts”，当然了，你可以把该事件作用于“conts”上，此时点击“conts”  
+  // 的任意一个地方，都会使得这个“conts”关闭  
+  close: function () {
+    let that = this;
+    that.setData({
+      showView: (!that.data.showView)
+    })
   },
 	/**
 	 * Lifecycle function--Called when page load
