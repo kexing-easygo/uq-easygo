@@ -1,12 +1,12 @@
 <!--pages/getEmail/getEmail.wxml-->
 
-<view class="page-section" style="margin-top: 40rpx;">
+<view class="setting-input-area">
 	<input
 	 class="user-input"
 	 id="input1"
 	 bindinput="bindKeyboardInput"
-	 placeholder="913248383@qq.com"
-	 style="float: left"
+	 placeholder="请输入邮箱"
+	 class="setting-input"
 	/>
 </view>
 <view style="margin-top: 52rpx;">

@@ -1,5 +1,6 @@
 // pages/countdown/countdown.js
 const db = wx.cloud.database()
+const app = getApp()
 
 Page({
 
@@ -40,8 +41,8 @@ Page({
     db.collection('MainUser')
       .where(
         {
-          // _openid: app.globalData.openid
-          _openid: "oe4Eh5YxaLF2LksmaAyWbLLvvMiA"
+          _openid: app.globalData.openid
+          // _openid: "oe4Eh5YxaLF2LksmaAyWbLLvvMiA"
         }
       )
       .get()

@@ -21,7 +21,7 @@
 .userinfo button, .userinfo .userinfo-nickname{
     padding: 0 !important;
     margin-left: 20rpx !important;
-    width: 504rpx;
+    width: 504rpx !important;
     height: fit-content;
     display: flex;
     align-items: center;
