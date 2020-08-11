@@ -3,17 +3,13 @@
  autoplay
  circular
  indicator-dots
- interval="1000"
+ interval="2000"
 >
 	<swiper-item>
-		<image src="{{swiperPlaceholder}}" />
+		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
 	<swiper-item>
-		<image src="{{swiperPlaceholder}}" />
-	</swiper-item>
-	<swiper-item>
-		<!--  mode="widthFix" -->
-		<image src="{{swiperPlaceholder}}" />
+		<image src="{{swiperPlaceholderTwo}}" />
 	</swiper-item>
 </swiper>
 
@@ -39,16 +35,17 @@
 		倒计时
 	</navigator>
 	<navigator url="/pages/calc/calc">
-		敬请期待
+		未开发
 	</navigator>
 	<navigator url="/pages/calc/calc">
-		敬请期待
+		未开发
 	</navigator>
 </view>
+
 <view class="in-coming">
 	<image src="{{inComingHolder}}"/>
 </view>
-<view class="in-coming" style="margin-top: 2rpx;">
+<view class="in-coming">
 	<image src="{{inComingHolder}}"/>
 </view>
 
