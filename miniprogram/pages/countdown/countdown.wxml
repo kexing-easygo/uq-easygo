@@ -8,26 +8,15 @@
 		<view class="searchbar"></view>
 
 	</view>
-
-	<!-- 每次新增加倒计时事件添加1个 countdown_event block -->
-	<!-- <view class="countdown">
+	<view class="countdown" wx:for="{{userAssignments}}" wx:key="name" >
 		<view class="countdown_event">
-			<view class="progress-bar">
-				<text class = "subject">CSSE1001 Assignment1</text>
-				<view class="progress" style="--percent: 50; background-color: #e46a70"></view>
+			<view wx:if="{{item}}" class="progress-bar">
+				<text class="subject">{{item.name}}</text>
+				<view class="progress" style="--percent: {{item.percentage}}; background-color: #e46a70"></view>
 			</view>
-			<view class="countdown_days"> 12 days</view>
+			<view class="countdown_days">{{item.countdown}} Days</view>
 		</view>
-
-  <!-- <view class = "navi-buttons">
-    <navigator url="/pages/addCountDown/addCountDown">
-		  <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
-	  </navigator>
-    <navigator url="/pages/notificationSetting/notificationSetting">
-		  <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
-	  </navigator>
-  </view> -->
-
+	</view>
 </view>
   
   <view class="menu-switch">   

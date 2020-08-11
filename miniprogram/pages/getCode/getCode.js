@@ -56,7 +56,7 @@ Page({
         )
         .update({
             data: {
-              email: app.globalData.userEmail
+              userEmail: app.globalData.userEmail
             }
           })
         console.log("邮箱", app.globalData.userEmail, "绑定成功")

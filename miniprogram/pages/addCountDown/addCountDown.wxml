@@ -8,7 +8,7 @@
 
 	<view class="due_date">
 			<text>Due Date:</text>
-			<input class="input" auto-focus bindinput="bindDateInput" placeholder="2020/08/10" />
+			<input class="input" auto-focus bindinput="bindDateInput" placeholder="2020-08-10" />
 			<!-- <picker mode="date" value="{{dueDate}}" start="2020-01-01" end="2020-12-12" bindchange="bindDateChange"></picker> -->
 	</view>
 

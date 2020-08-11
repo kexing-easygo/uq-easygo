@@ -1,7 +1,20 @@
-<!--pages/otherSettings/otherSettings.wxml-->
+<!-- <view class="container">
+  <view class="notices">
+    <view class="wechatnotice">
+      <text>微信提醒</text>
+      <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
+    </view>
+    
+    <view class="mailnotice">
+      <text>邮件提醒</text>
+      <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
+    </view>
+  </view>
+</view> -->
+
 <view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
 	<view class="container">
-		<view>微信提醒</view>
+		<view>倒计时提醒</view>
 		<view>
 			<text style="color: #A4A4A4;">允许全部</text>
 			>
@@ -10,14 +23,23 @@
 </view>
 <view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
 	<view class="container">
-		<view>短信提示</view>
+		<view>出分提醒</view>
 		<view>
 			<text style="color: #A4A4A4;">部分允许</text>
 			>
 		</view>
 	</view>
 </view>
-<view class="page-section">
+<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
+	<view class="container">
+		<view>上课提醒</view>
+		<view>
+			<text style="color: #A4A4A4;">部分允许</text>
+			>
+		</view>
+	</view>
+</view>
+<!-- <view class="page-section">
 	<view class="container">
 		<view>邮件提醒</view>
 		<view>
@@ -25,8 +47,8 @@
 			>
 		</view>
 	</view>
-</view>
-<view class="page-section" style="margin-top: 40rpx;">
+</view> -->
+<!-- <view class="page-section" style="margin-top: 40rpx;">
 	<view class="container">
 		<view>学生账号</view>
 		<view>
@@ -34,43 +56,5 @@
 			>
 		</view>
 	</view>
-</view>
-<!-- <view>
-	<view class="left">微信提醒</view>
-	<view class="right">
-		<view class="left">
-			<text>{{wechatNotification}}</text>
-		</view>
-        <view class="right">
-            <navigator url="/pages/setWechatNotification/setWechatNotification"> > </navigator>
-        </view>
-	</view>
-</view>
-<view>
-	<view class="left">邮件提醒</view>
-	<view class="left">
-			<text>{{wechatNotification}}</text>
-		</view>
-        <view class="right">
-            <navigator url="/pages/setEmailNotification/setEmailNotification"> > </navigator>
-        </view>
-</view>
-<view>
-	<view class="left">短信提醒</view>
-	<view class="left">
-			<text>{{emailNotification}}</text>
-		</view>
-        <view class="right">
-            <navigator url="/pages/setMobileNotification/setMobileNotification"> > </navigator>
-        </view>
-</view>
-<view>
-	<view class="left">学生账号</view>
-	<view class="left">
-			<text>{{studengAccount}}</text>
-		</view>
-        <view class="right">
-            <navigator url="/pages/getStudentAccount/getStudentAccount"> > </navigator>
-        </view>
 </view> -->
 

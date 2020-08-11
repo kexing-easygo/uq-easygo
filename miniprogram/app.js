@@ -21,7 +21,10 @@ App({
       userID: null,
       easygoNickname: null,
       userVerificationCode: '',
-      userEmail: ''
+      userEmail: '',
+      userAssignments: [],
+      wechatNotification: false,
+      emailNotification: false
     }
   },
   })

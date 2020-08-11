@@ -26,23 +26,41 @@ Page({
 
   },
   bind24: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
     this.setData(
       {
-        hours24: e.detail.value
+        hours24: temp
       }
     )
   },
   bind48: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
     this.setData(
       {
-        hours48: e.detail.value
+        hours48: temp
       }
     )
   },
   bind72: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
     this.setData(
       {
-        hours72: e.detail.value
+        hours72: temp
       }
     )
   },
@@ -59,16 +77,16 @@ Page({
         dueDate: e.detail.value
       }
     )
-    if (this.data.title.length > 0) {
-      if (e.detail.value.length > 0) {
-        this.setData({
-          buttonDisabled: false
-        })
-      }
-    }
   },
 
   addCountDown: function () {
+    // wx.cloud.callFunction({
+    //   name: 'sendEmail',
+    //   data: {},
+    // }).then((res) => {
+    //   console.log(res.result)
+    // })
+    //   .catch(console.error)
     const _ = db.command
     db.collection("MainUser")
       .where({
@@ -85,6 +103,7 @@ Page({
                 "48": this.data.hours48,
                 "72": this.data.hours72
               },
+              // color是颜色板选择的颜色
               color: ""
             }
           )
