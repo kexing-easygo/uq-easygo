@@ -1,9 +1,10 @@
 {
   "pages": [  
+    "pages/profile/profile",
+    "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
     "pages/notificationSetting/notificationSetting",
-    "pages/countdown/countdown",
-    "pages/profile/profile",
+    
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
