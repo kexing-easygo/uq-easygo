@@ -5,11 +5,13 @@ Page({
    * Page initial data
    */
   data: {
-    swiperPlaceholder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/网上随便找的placeholder.jpg",
-    countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be- 倒计时.jpg",
-    calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Be - 计算器.jpg",
-    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
-    inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待Icon.png"
+    swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图上线了.png",
+    swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图倒计时功能.png",
+    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图敬请期待.png",
+    calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
+    countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
+    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图敬请期待.png",
+    inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png"
   },
 
   /**
