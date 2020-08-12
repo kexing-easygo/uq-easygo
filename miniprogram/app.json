@@ -1,20 +1,13 @@
 {
   "pages": [  
-<<<<<<< HEAD
     "pages/profile/profile",
-    "pages/addCountDown/addCountDown",
-    "pages/notificationSetting/notificationSetting",
-    "pages/countdown/countdown",
-=======
     "pages/home/home",
-    "pages/profile/profile",
     "pages/otherSettings/otherSettings",
     "pages/setWechatNotification/setWechatNotification",
     "pages/setEmailNotification/setEmailNotification",
     "pages/countdown/countdown",
     "pages/notificationSetting/notificationSetting",
     "pages/addCountDown/addCountDown",
->>>>>>> lewis
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",

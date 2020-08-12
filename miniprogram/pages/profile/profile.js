@@ -26,44 +26,41 @@ Page({
       data: {},
       success: res => {
         console.log("openid获取成功: ", res.result.openid)
-        this.setData({
-          openid: res.result.openid
-        })
-        app.globalData.openid = res.result.openid
+        //从云数据库中检索该openid是否存在
+        db.collection('MainUser')
+          .where({
+            _openid: res.result.openid
+          })
+          .get().then(
+            res => {
+              if (res.data.length == 0) {
+                console.log("No data found.")
+              //如果存在 -> 更新已有的记录
+              } else { 
+                app.globalData.userID = res.data[0]._id
+                app.globalData.userEmail = res.data[0].userEmail
+                app.globalData.userAssignments = res.data[0].userAssignments
+                db.collection('MainUser')
+                  .doc(res.data[0]._id).update({
+                    data: {
+                      userInfo: res.data[0].userInfo
+                    }
+                  })
+                this.setData({
+                  userInfo: res.data[0].userInfo,
+                  canIUse: true,
+                  hasUserInfo: true
+                })
+              }
+            })
       },
       fail: err => {
         console.error('openid获取失败: ', err)
       }
     })
-
-    //从云数据库中检索该openid是否存在
-    db.collection('MainUser').where({
-      _openid: this.data.openid
-    }).get().then(
-      res => {
-        if (res.data.length == 0) {
-          console.log("No data found.")
-        } else { //如果存在 -> 更新已有的记录
-          app.globalData.userID = res.data[0]._id
-          app.globalData.userEmail = res.data[0].userEmail
-          app.globalData.userAssignments = res.data[0].userAssignments
-          db.collection('MainUser')
-            .doc(res.data[0]._id).update({
-              data: {
-                userInfo: res.data[0].userInfo
-              }
-            })
-          this.setData({
-            userInfo: res.data[0].userInfo,
-            canIUse: true,
-            hasUserInfo: true
-          })
-        }
-      })
   },
 
   getUserInfo: function (e) {
-
     //部署库中data到界面中
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
