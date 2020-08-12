@@ -1,10 +1,16 @@
 {
   "pages": [  
     "pages/profile/profile",
+<<<<<<< HEAD
     "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
     "pages/notificationSetting/notificationSetting",
     
+=======
+    "pages/addCountDown/addCountDown",
+    "pages/notificationSetting/notificationSetting",
+    "pages/countdown/countdown",
+>>>>>>> master
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
