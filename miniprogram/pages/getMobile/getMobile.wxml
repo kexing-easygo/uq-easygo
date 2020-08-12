@@ -1,23 +1,19 @@
 <!--pages/getMobile/getMobile.wxml-->
-<view>
-	<view wx:if="{{hasMobile}}">
-		<view class="left">
-			<text>手机号</text>
-		</view>
-        <view class="right">
-            <text>{{userMobile}}</text>
-            <navigator>修改</navigator>
-        </view>
-	</view>
-	<view wx: else>
-		<view>
-			<text>请输入你的手机号</text>
-		</view>
-		<view>
-			<input class="user-input" bindinput="bindKeyboardInput" />
-		</view>
-		<view>
-			<button type="default" plain="true" bindtap="getMobileNumber">获取验证码</button>
-		</view>
-	</view>
+<view class="setting-input-area">
+	<input
+	 class="user-input"
+	 id="input1"
+	 bindinput="bindKeyboardInput"
+	 placeholder="请输入手机号码"
+	 class="setting-input"
+	/>
 </view>
+<view style="margin-top: 52rpx;">
+	<button
+	 bindtap="sendVerificationCode"
+	 disabled="{{disabledButton}}"
+	 class="setting-confirm-button"
+	>获取验证码
+	</button>
+</view>
+

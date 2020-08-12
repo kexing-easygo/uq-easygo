@@ -7,7 +7,7 @@ Page({
      * 页面的初始数据
      */
     data: {
-        hasEmail: ''
+        hasEmail: '未绑定'
     },
 
     /**
@@ -25,8 +25,7 @@ Page({
                 {
                     hasEmail: app.globalData.userEmail
                 }
-            )
+            );
         }
     }
-
 })

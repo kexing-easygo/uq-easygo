@@ -1,7 +1,19 @@
 <!--pages/getCode/getCode.wxml-->
-<view class="page-section" style="margin-top: 0;">
-	<input class="user-input" id="input1" bindinput="bindKeyboardInput" placeholder="请输入验证码" style="float: left" />
+<view class="setting-input-area">
+	<input
+	 class="user-input"
+	 id="input1"
+	 bindinput="bindKeyboardInput"
+	 placeholder="请输入4位验证码"
+	 class="setting-input"
+	/>
 </view>
-<view style="margin-top: 40rpx">
-	<button type="primary" bindtap="checkVerificationCode">确定</button>
+<view style="margin-top: 52rpx;">
+	<button
+	 disabled="{{disabledButton}}"
+	 bindtap="checkVerificationCode"
+	 class="setting-confirm-button"
+	>确定
+	</button>
 </view>
+

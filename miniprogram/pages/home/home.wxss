@@ -1,6 +1,6 @@
 /* pages/home/home.wxss */
 swiper {
-    width: 600rpx;
+    width: 654rpx;
     /* height: calc(632rpx * 316 / 500); */
     height: 274rpx;
     margin: 0 auto;
@@ -20,18 +20,17 @@ swiper image {
     justify-content: space-between;
 }
 .nav-icons {
-    margin-top: 72rpx;
+    margin-top: 40rpx;
 }
 .nav-text {
     margin-top: 14rpx;
     height: 48rpx;
-    margin-bottom: 60rpx;
 }
 .nav-icons navigator, .nav-text navigator {
     height: 100%;
     width: 88rpx;
     float: left;
-    font-size: 22rpx;
+    font-size: 26rpx;
     text-align: center;
 }
 .nav-icons image {
@@ -39,12 +38,12 @@ swiper image {
     width: 88rpx;
 }
 .in-coming {
-    width: 642rpx;
+    width: 654rpx;
     margin: 0 auto;
-    height: 342rpx;
+    margin-top: 40rpx;
+    height: 274rpx;
     line-height: 330rpx;
     text-align: center;
-    border: 1px solid #707070;
 }
 .in-coming image {
     height: 100%;

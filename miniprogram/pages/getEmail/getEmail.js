@@ -38,9 +38,10 @@ Page({
         wx.cloud.callFunction({
             name: 'sendEmail',
             data: {
-                'toAddr': this.data.inputEmailValue,
-                'subject': 'UQ校园通', 
-                'content': content,
+                "type": "sendEmail",
+                "toAddr": this.data.inputEmailValue,
+                "subject": "UQ校园通", 
+                "content": content,
             },
             success: res => {
                 

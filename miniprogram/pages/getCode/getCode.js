@@ -8,7 +8,8 @@ Page({
      */
     data: {
         inputCodeValue: '',
-        verificationCode: ''
+        verificationCode: '',
+        disabledButton: true
     },
 
     /**
@@ -25,7 +26,16 @@ Page({
      * 获取用户输入的验证码
      */
     bindKeyboardInput: function (e) {
-        this.data.inputCodeValue = e.detail.value
+        this.data.inputCodeValue = e.detail.value;
+        if (e.detail.value.length >= 1) {
+            this.setData({
+                disabledButton: false,
+            });
+        } else {
+            this.setData({
+                disabledButton: true,
+            });
+        }
     },
     checkVerificationCode: function (e) {
         var userInput = this.data.inputCodeValue
@@ -46,7 +56,7 @@ Page({
         )
         .update({
             data: {
-              email: app.globalData.userEmail
+              userEmail: app.globalData.userEmail
             }
           })
         console.log("邮箱", app.globalData.userEmail, "绑定成功")
