@@ -1,6 +1,5 @@
 {
   "pages": [  
-<<<<<<< HEAD
     "pages/home/home",
     "pages/profile/profile",
     "pages/otherSettings/otherSettings",
@@ -9,13 +8,6 @@
     "pages/countdown/countdown",
     "pages/notificationSetting/notificationSetting",
     "pages/addCountDown/addCountDown",
-=======
-    "pages/profile/profile",
-    "pages/countdown/countdown",
-    "pages/addCountDown/addCountDown",
-    "pages/notificationSetting/notificationSetting",
-    
->>>>>>> LCBP
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
