@@ -10,6 +10,7 @@
     "license": "ISC",
     "dependencies": {
         "nodemailer": "^6.4.10",
+        "request": "^2.88.2",
         "wx-server-sdk": "~2.1.2"
     }
 }

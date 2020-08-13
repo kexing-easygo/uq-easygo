@@ -2,14 +2,24 @@
   "pages": [  
     "pages/profile/profile",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    "pages/home/home",
+    "pages/otherSettings/otherSettings",
+    "pages/setWechatNotification/setWechatNotification",
+    "pages/setEmailNotification/setEmailNotification",
+>>>>>>> master
     "pages/countdown/countdown",
-    "pages/addCountDown/addCountDown",
     "pages/notificationSetting/notificationSetting",
+<<<<<<< HEAD
     
 =======
     "pages/addCountDown/addCountDown",
     "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
+>>>>>>> master
+=======
+    "pages/addCountDown/addCountDown",
 >>>>>>> master
     "pages/mobile/mobile",
     "pages/email/email",
@@ -17,14 +27,11 @@
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
-    "pages/setWechatNotification/setWechatNotification",
-    "pages/otherSettings/otherSettings",
     "pages/getMobile/getMobile",
-    "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/getStudentAccount/getStudentAccount",
-    "pages/home/home",
     "pages/calc/calc",
+    
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",

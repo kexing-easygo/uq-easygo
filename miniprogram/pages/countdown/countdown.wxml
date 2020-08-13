@@ -8,25 +8,6 @@
 		<view class="searchbar"></view>
 
 	</view>
-
-	<!-- 每次新增加倒计时事件添加1个 countdown_event block -->
-	<!-- <view class="countdown">
-		<view class="countdown_event">
-			<view class="progress-bar">
-				<text class = "subject">CSSE1001 Assignment1</text>
-				<view class="progress" style="--percent: 50; background-color: #e46a70"></view>
-			</view>
-			<view class="countdown_days"> 12 days</view>
-		</view>
-
-		<view class="countdown_event">
-			<view class="progress-bar">
-				<text class = "subject">CSSE2002 Assignment1</text>
-				<view class="progress" style="--percent: 60; background-color: #ACE6D7"></view>
-			</view>
-			<view class="countdown_days"> 14 days</view>
-		</view>
-	</view> -->
 	<view class="countdown" wx:for="{{userAssignments}}" wx:key="name" >
 		<view class="countdown_event">
 			<view wx:if="{{item}}" class="progress-bar">
@@ -36,12 +17,37 @@
 			<view class="countdown_days">{{item.countdown}} Days</view>
 		</view>
 	</view>
-  <view class = "navi-buttons">
-    <navigator url="/pages/addCountDown/addCountDown">
-		  <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
-	  </navigator>
-    <navigator url="/pages/notificationSetting/notificationSetting">
-		  <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
-	  </navigator>
-  </view>
 </view>
+  
+  <view class="menu-switch">   
+    <view class="add-event">  
+        <!--切换按钮-->  
+        <view class="hide{{showView? '' : 'show'}}" bindtap="change">
+          <image style="width: 88rpx; height: 88rpx" src="{{add}}"  />
+        </view>      
+        <view class="hide{{showView? 'show' : ''}}" bindtap="change">
+          <image style="width: 88rpx; height: 88rpx" src="{{add}}"  />
+        </view>      
+    </view>   
+  </view> 
+
+  <view class="hide{{showView?'show':''}}">  
+       <!--遮罩层  -->
+       <view class="shade">  
+           <!--蒙板内部-->
+           <view class="contents">
+              <view>
+              <text>添加倒计时</text>
+              <navigator url="/pages/addCountDown/addCountDown">
+		            <image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
+	            </navigator>
+              </view>
+              <view>
+              <text>提醒设置</text>
+              <navigator url="/pages/notificationSetting/notificationSetting">
+		            <image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+	            </navigator>
+              </view>
+           </view>   
+       </view>  
+   </view> 

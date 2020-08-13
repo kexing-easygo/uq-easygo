@@ -1,7 +1,11 @@
 <!--pages/email/email.wxml-->
 <view class="page-section" style="margin-top: 0;">
 	<navigator url="/pages/getEmail/getEmail">
-		<view style="float: left; width: 20%;">邮箱</view>
-		<view style="float: right; width: 20%;">{{hasEmail}} ></view>
+		<view>邮箱</view>
+		<view>
+			<text style="color: #A4A4A4;">{{hasEmail}}</text>
+			>
+		</view>
 	</navigator>
 </view>
+

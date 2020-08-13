@@ -12,8 +12,11 @@
 		 bindgetuserinfo="getUserInfo"
 		 hover-class="none"
 		>
+			<!-- <view class="userinfo-nickname"> -->
 			<view>登录/注册</view>
 			<view>></view>
+			<!-- </view> -->
+
 		</button>
 	</view>
 	<view wx:else class="userinfo">
@@ -32,7 +35,7 @@
 	</navigator>
 </view>
 <view class="page-section" style="box-shadow: none; -webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
-	<navigator url="/pages/getMobile/getMobile">
+	<navigator url="/pages/mobile/mobile">
 		<view style="float: left; width: 80%;">手机号绑定</view>
 		<view style="float: right; width: 5%;">></view>
 	</navigator>
@@ -45,7 +48,7 @@
 </view>
 <view class="page-section">
 	<navigator url="/pages/otherSettings/otherSettings">
-		<view style="float: left; width: 80%;">其他设定</view>
+		<view style="float: left; width: 80%;">其他设置</view>
 		<view style="float: right; width: 5%;">></view>
 	</navigator>
 </view>

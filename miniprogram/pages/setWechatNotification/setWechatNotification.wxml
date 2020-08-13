@@ -9,7 +9,7 @@
 		<text>声音提醒</text>
 	</view>
 	<view class="right">
-		<switch checked="{{soundSwitch}}" bindchange="bindSoundSwitch"></switch>
+		<switch type="switch" checked="{{soundSwitch}}" bindchange="bindSoundSwitch"></switch>
 	</view>
 </view>
 
@@ -18,10 +18,10 @@
 		<text>震动</text>
 	</view>
 	<view class="right">
-		<switch checked="{{vibrateSwitch}}" bindchange="bindVibrateSwitch"></switch>
+		<switch type="switch" checked="{{vibrateSwitch}}" bindchange="bindVibrateSwitch"></switch>
 	</view>
 </view>
-
+<!-- 
 <button class="mini-btn" type="primary" size="mini" bindtap="subscribe">按钮1</button>
 <button class="mini-btn" type="primary" size="mini" bindtap="call">按钮2</button>
-<text>{{templateMessageResult}}</text>
+<text>{{templateMessageResult}}</text> -->

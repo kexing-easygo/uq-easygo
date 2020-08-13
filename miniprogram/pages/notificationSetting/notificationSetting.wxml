@@ -3,12 +3,12 @@
   <view class="notices">
     <view class="wechatnotice">
       <text>微信提醒</text>
-      <switch type="switch"></switch>
+      <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
     </view>
     
     <view class="mailnotice">
       <text>邮件提醒</text>
-      <switch type="switch"></switch>
+      <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
     </view>
   </view>
 </view>

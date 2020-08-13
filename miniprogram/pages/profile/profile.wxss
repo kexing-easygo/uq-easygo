@@ -3,7 +3,7 @@
 .container {
     height: 242rpx;
     width: 100%;
-    background-color: #EC7068;
+    background-color: rgba(236, 112, 104, 0.33);
     margin-top: 4rpx;
     display: flex;
     align-items: center;
@@ -19,9 +19,9 @@
     height: fit-content;
 }
 .userinfo button, .userinfo .userinfo-nickname{
-    padding: 0;
-    margin-left: 20rpx;
-    width: 504rpx;
+    padding: 0 !important;
+    margin-left: 20rpx !important;
+    width: 504rpx !important;
     height: fit-content;
     display: flex;
     align-items: center;
