@@ -1,19 +1,13 @@
 {
   "pages": [  
+    "pages/home/home",
+    "pages/calc/calc",
     "pages/profile/profile",
-<<<<<<< HEAD
-    "pages/countdown/countdown",
-    "pages/addCountDown/addCountDown",
-    "pages/notificationSetting/notificationSetting",
-    
-=======
-    "pages/addCountDown/addCountDown",
-    "pages/notificationSetting/notificationSetting",
-    "pages/countdown/countdown",
->>>>>>> master
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
+    "pages/nonfunction1/nonfunction1",
+    "pages/nonfunction2/nonfunction2",
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
@@ -23,8 +17,6 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/getStudentAccount/getStudentAccount",
-    "pages/home/home",
-    "pages/calc/calc",
     "pages/index/index",
     "pages/userConsole/userConsole",
     "pages/storageConsole/storageConsole",
@@ -57,8 +49,8 @@
       {
         "pagePath": "pages/profile/profile",
         "text": "我的",
-        "iconPath": "images/icons/Be - 我的.jpg",
-        "selectedIconPath": "images/icons/Af- 我的.jpg"
+        "iconPath": "images/icons/个人中心前.png",
+        "selectedIconPath": "images/icons/个人中心后.png"
       }]
     },
     "sitemapLocation": "sitemap.json",

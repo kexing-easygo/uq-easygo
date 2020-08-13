@@ -34,10 +34,10 @@
 	<navigator url="/pages/countdown/countdown">
 		倒计时
 	</navigator>
-	<navigator url="/pages/calc/calc">
+	<navigator url="/pages/nonfunction/nonfunction">
 		未开发
 	</navigator>
-	<navigator url="/pages/calc/calc">
+	<navigator url="/pages/nonfunction/nonfunction">
 		未开发
 	</navigator>
 </view>
