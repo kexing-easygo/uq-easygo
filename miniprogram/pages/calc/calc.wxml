@@ -1,2 +1,4 @@
 <!--pages/calc/calc.wxml-->
-<text>pages/calc/calc.wxml</text>
+<view class="in-coming">
+	<image src="{{InComingImage}}"/>
+</view>
