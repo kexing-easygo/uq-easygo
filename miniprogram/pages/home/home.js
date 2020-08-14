@@ -68,5 +68,10 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  navigateToWaiting: function() {
+    wx.navigateTo({
+      url: '/pages/waiting/waiting',
+    })
   }
 })

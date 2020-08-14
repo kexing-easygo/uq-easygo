@@ -15,7 +15,9 @@
     "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
     "pages/setMobileNotification/setMobileNotification",
-    "pages/calc/calc"
+    "pages/calc/calc",
+    "pages/offline/offline",
+    "pages/waiting/waiting"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
