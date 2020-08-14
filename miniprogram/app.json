@@ -1,6 +1,7 @@
 {
   "pages": [  
     "pages/home/home",
+    "pages/mobile/mobile",
     "pages/notificationSetting/notificationSetting",
     "pages/otherSettings/otherSettings",
     "pages/getEmail/getEmail",
@@ -9,7 +10,6 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
-    "pages/mobile/mobile",
     "pages/email/email",
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",

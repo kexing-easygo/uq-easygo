@@ -10,7 +10,7 @@ Page({
    */
   data: {
     userInfo: {},
-    openid: app.globalData.openid,
+    openid: '',
     // canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
     anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg"
@@ -26,6 +26,9 @@ Page({
       data: {},
       success: res => {
         console.log("openid获取成功: ", res.result.openid)
+        this.setData({
+          openid: res.result.openid
+        })
         //从云数据库中检索该openid是否存在
         db.collection('MainUser')
           .where({
@@ -37,6 +40,7 @@ Page({
                 console.log("No data found.")
               //如果存在 -> 更新已有的记录
               } else { 
+                app.globalData.openid = res.data[0]._openid
                 app.globalData.userID = res.data[0]._id
                 app.globalData.userEmail = res.data[0].userEmail
                 app.globalData.userAssignments = res.data[0].userAssignments
@@ -49,7 +53,7 @@ Page({
                 this.setData({
                   userInfo: res.data[0].userInfo,
                   canIUse: true,
-                  hasUserInfo: true
+                  hasUserInfo: true,
                 })
               }
             })
@@ -63,6 +67,7 @@ Page({
   getUserInfo: function (e) {
     //部署库中data到界面中
     app.globalData.userInfo = e.detail.userInfo
+    app.globalData.openid = this.data.openid
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
@@ -75,9 +80,6 @@ Page({
           userAssignments: [],
           userEmail: ""
         }
-      })
-      .then(res => {
-        console.log(res)
       })
 
   },
