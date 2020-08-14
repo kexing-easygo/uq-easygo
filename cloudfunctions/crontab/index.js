@@ -74,7 +74,7 @@ async function getAllData() {
                             "userAssignments.name": name
                         })
                         .update({
-                            // 表示将 done 字段置为 true
+                            // 将提醒设置为false
                             "userAssignments.$.notification.24": false
                         })
                         .then(res => {
@@ -102,8 +102,8 @@ async function getAllData() {
                             "userAssignments.name": name
                         })
                         .update({
-                            // 表示将 done 字段置为 true
-                            "userAssignments.$.notification.24": false
+                            // 将提醒设置为false
+                            "userAssignments.$.notification.48": false
                         })
                         .then(res => {
                             console.log(res.data)
@@ -130,8 +130,8 @@ async function getAllData() {
                             "userAssignments.name": name
                         })
                         .update({
-                            // 表示将 done 字段置为 true
-                            "userAssignments.$.notification.24": false
+                            // 将提醒设置为false
+                            "userAssignments.$.notification.72": false
                         })
                         .then(res => {
                             console.log(res.data)

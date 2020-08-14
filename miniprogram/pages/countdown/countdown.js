@@ -38,8 +38,6 @@ Page({
 	 */
   onLoad: function (options) {
     // 如果用户没登录，会提示弹窗
-    // 但是弹窗跳转不到profile和home
-    // 我很迷惑
     if (app.globalData.openid == null) {
       wx.showModal({
         title: '温馨提示',
