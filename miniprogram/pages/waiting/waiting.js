@@ -1,4 +1,4 @@
-// pages/getMobile/getMobile.js
+// pages/waiting/waiting.js
 Page({
 
     /**

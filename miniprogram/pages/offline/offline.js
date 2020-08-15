@@ -1,4 +1,4 @@
-// pages/getMobile/getMobile.js
+// pages/offline/offline.js
 Page({
 
     /**

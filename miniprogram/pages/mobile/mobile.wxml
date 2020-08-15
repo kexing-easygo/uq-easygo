@@ -1,11 +1,3 @@
 <!--pages/mobile/mobile.wxml-->
-<view class="page-section" style="margin-top: 0;">
-	<navigator url="/pages/getMobile/getMobile">
-		<view>手机号</view>
-		<view>
-			<text style="color: #A4A4A4;">{{hasMobile}}</text>
-			>
-		</view>
-	</navigator>
-</view>
+<image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/手机号绑定敬请期待页面.png" mode="widthFix" style="width:100%;"></image>
 
