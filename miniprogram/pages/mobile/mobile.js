@@ -5,7 +5,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        hasMobile: '未绑定'
+        hasMobile: '未绑定',
+        InComingImage:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/手机号绑定敬请期待页面.png"
     },
 
     /**

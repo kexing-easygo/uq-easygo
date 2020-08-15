@@ -20,3 +20,16 @@
 .page-section navigator view {
     float: left;
 }
+
+.in-coming {
+    width: 654rpx;
+    margin: 0 auto;
+    margin-top: 40rpx;
+    height: 1200rpx;
+    line-height: 330rpx;
+    text-align: center;
+  }
+  .in-coming image {
+    height: 100%;
+    width: 100%;
+  }

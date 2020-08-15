@@ -3,7 +3,7 @@
   width: 654rpx;
   margin: 0 auto;
   margin-top: 40rpx;
-  height: 1100rpx;
+  height: 1200rpx;
   line-height: 330rpx;
   text-align: center;
 }
