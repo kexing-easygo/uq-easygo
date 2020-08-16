@@ -13,7 +13,7 @@ Page({
     openid: '',
     // canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
-    anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg"
+    // anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg"
   },
 
   /**
@@ -40,10 +40,12 @@ Page({
                 console.log("No data found.")
               //如果存在 -> 更新已有的记录
               } else { 
+                // 将读取到的所有用户的信息均更新至全局变量中
                 app.globalData.openid = res.data[0]._openid
-                app.globalData.userID = res.data[0]._id
+                // app.globalData.userID = res.data[0]._id
                 app.globalData.userEmail = res.data[0].userEmail
                 app.globalData.userAssignments = res.data[0].userAssignments
+                app.globalData.userInfo = res.data[0].userInfo
                 db.collection('MainUser')
                   .doc(res.data[0]._id).update({
                     data: {

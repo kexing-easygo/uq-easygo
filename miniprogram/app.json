@@ -1,5 +1,6 @@
 {
   "pages": [  
+    "pages/basicUserInfo/basicUserInfo",
     "pages/home/home",
     "pages/calc/calc",
     "pages/profile/profile",
@@ -8,7 +9,6 @@
     "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
     "pages/getCode/getCode",
-    "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",
     "pages/otherSettings/otherSettings",

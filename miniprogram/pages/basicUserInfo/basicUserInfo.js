@@ -21,7 +21,6 @@ Page({
      */
     onLoad: function (options) {
         if (app.globalData.userInfo) {
-            
             this.setData({
                 userInfo: app.globalData.userInfo,
                 easygoNickname: app.globalData.easygoNickname,
