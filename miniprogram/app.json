@@ -1,20 +1,21 @@
 {
   "pages": [  
-    "pages/basicUserInfo/basicUserInfo",
+    "pages/addCountDown/addCountDown",
+    "pages/countdown/countdown",
     "pages/home/home",
-    "pages/calc/calc",
+    "pages/getCode/getCode",
     "pages/profile/profile",
+    "pages/basicUserInfo/basicUserInfo",
+    "pages/calc/calc",
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
-    "pages/getCode/getCode",
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",
     "pages/otherSettings/otherSettings",
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification"
-    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

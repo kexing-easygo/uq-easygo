@@ -17,6 +17,7 @@ App({
     // 小程序全局变量
     this.globalData = {
       userInfo: {},
+      hasUserInfo: false,
       openid: null,
       userID: null,
       easygoNickname: null,

@@ -43,6 +43,7 @@ Page({
                 // 将读取到的所有用户的信息均更新至全局变量中
                 app.globalData.openid = res.data[0]._openid
                 // app.globalData.userID = res.data[0]._id
+                app.globalData.hasUserInfo = true
                 app.globalData.userEmail = res.data[0].userEmail
                 app.globalData.userAssignments = res.data[0].userAssignments
                 app.globalData.userInfo = res.data[0].userInfo
@@ -70,6 +71,7 @@ Page({
     //部署库中data到界面中
     app.globalData.userInfo = e.detail.userInfo
     app.globalData.openid = this.data.openid
+    app.globalData.hasUserInfo = true
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
