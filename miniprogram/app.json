@@ -1,10 +1,11 @@
 {
-  "pages": [  
-    "pages/addCountDown/addCountDown",
-    "pages/countdown/countdown",
-    "pages/home/home",
-    "pages/getCode/getCode",
+  "pages": [
     "pages/profile/profile",
+    "pages/home/home",
+    "pages/countdown/countdown",
+    "pages/searchbar/searchbar",
+    "pages/addCountDown/addCountDown",
+    "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/calc/calc",
     "pages/mobile/mobile",
@@ -37,8 +38,13 @@
         "text": "我的",
         "iconPath": "images/icons/个人中心前.png",
         "selectedIconPath": "images/icons/个人中心后.png"
-      }]
-    },
-    "sitemapLocation": "sitemap.json",
-    "style": "v2"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  }
 }

@@ -6,10 +6,10 @@ const date = new Date()
 const years = []
 const months = []
 const days = []
-for (let i = 1990; i <= date.getFullYear(); i++) {
+for (let i = 2020; i <= date.getFullYear(); i++) {
   years.push(i)
 }
-
+console.log(years)
 for (let i = 1; i <= 12; i++) {
   months.push(i)
 }
@@ -24,22 +24,13 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "2020-01-02",
+    dueDate: "",
     color: "",
     notificationDate: {},
     hours24: false,
     hours48: false,
     hours72: false,
-    buttonDisabled: false,
     years,
-    items: [
-      {value: 'USA', name: '美国'},
-      {value: 'CHN', name: '中国', checked: 'true'},
-      {value: 'BRA', name: '巴西'},
-      {value: 'JPN', name: '日本'},
-      {value: 'ENG', name: '英国'},
-      {value: 'FRA', name: '法国'},
-    ]
   },
   
   /**
@@ -90,29 +81,8 @@ Page({
       }
     )
   },
-  bindTitleInput: function (e) {
-    this.setData(
-      {
-        title: e.detail.value
-      }
-    )
-  },
-  bindDateInput: function (e) {
-    this.setData(
-      {
-        dueDate: e.detail.value
-      }
-    )
-  },
 
   addCountDown: function () {
-    // wx.cloud.callFunction({
-    //   name: 'sendEmail',
-    //   data: {},
-    // }).then((res) => {
-    //   console.log(res.result)
-    // })
-    //   .catch(console.error)
     const _ = db.command
     db.collection("MainUser")
       .where({
@@ -130,7 +100,7 @@ Page({
                 "72": this.data.hours72
               },
               // color是颜色板选择的颜色
-              color: ""
+              color: this.data.color
             }
           )
         }
@@ -144,22 +114,45 @@ Page({
       url: '/pages/countdown/countdown',
     })
   },
+  bindTitleInput: function(e) {
+    // 获取assignment名称
+    this.data.title = e.detail.value
+  },
   bindDateChange: function(e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    // console.log('picker发送选择改变，携带值为', e.detail.value)
+    // 设置due date
     this.setData({
-      date: e.detail.value
+      dueDate: e.detail.value
     })
   },
-  radioChange(e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
-
-    const items = this.data.items
-    for (let i = 0, len = items.length; i < len; ++i) {
-      items[i].checked = items[i].value === e.detail.value
-    }
-
+  bindRed: function() {
     this.setData({
-      items
+      color: "#FE5B5B"
+    })
+  },
+  bindPink: function() {
+    this.setData({
+      color: "#FF8FDE"
+    })
+  },
+  bindLightBlue: function() {
+    this.setData({
+      color: "#77D5FF"
+    })
+  },
+  bindPurple: function() {
+    this.setData({
+      color: "#8877FF"
+    })
+  },
+  bindYellow: function() {
+    this.setData({
+      color: "#E3FF6E"
+    })
+  },
+  bindGreen: function() {
+    this.setData({
+      color: "#9EFF97"
     })
   }
 })

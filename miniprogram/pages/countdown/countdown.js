@@ -9,14 +9,63 @@ Page({
 	 */
   data: {
     // 用户所有的作业
-    userAssignments: app.globalData.userAssignments,
+    // userAssignments: app.globalData.userAssignments,
     addCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
     notificationSetting: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    showTrue: false
+    showTrue: false,
+    inputShowed: false,
+    inputVal: "",
+    userAssignments: [
+      {
+        id: 0,
+        countdown: 10,
+        name: 'CSSE1001',
+        notification: {
+          "24": true
+        }
+      },
+      {
+        id: 1,
+        countdown: 11,
+        name: 'CSSE2002',
+        notification: {
+          "24": true
+        }
+      },
+      {
+        id: 2,
+        countdown: 12,
+        name: 'CSSE3003',
+        notification: {
+          "24": true
+        }
+      }
+    ]
   },
-
-
+  showInput: function () {
+    this.setData({
+        inputShowed: true
+    });
+  },
+  hideInput: function () {
+    this.setData({
+        inputVal: "",
+        inputShowed: false
+    });
+  },
+  // 清空输入框内容
+  clearInput: function () {
+    this.setData({
+        inputVal: ""
+    });
+  },
+  // 获取输入框内容
+  inputTyping: function (e) {
+    this.setData({
+        inputVal: e.detail.value
+    });
+  },
   // 用于实现点击“核算”时，来显示与隐藏整个“conts”，这一部分其实是利用了面板的显示与隐藏功能  
   change: function () {
     let that = this;
@@ -39,23 +88,23 @@ Page({
   onLoad: function (options) {
     // 如果用户没登录，会提示弹窗
     if (app.globalData.openid == null) {
-      wx.showModal({
-        title: '温馨提示',
-        content: '您还没有登录哦',
-        success(res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-            wx.switchTab({
-              url: '/pages/profile/profile',
-            })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-            wx.switchTab({
-              url: '/pages/home/home',
-            })
-          }
-        }
-      })
+      // wx.showModal({
+      //   title: '温馨提示',
+      //   content: '您还没有登录哦',
+      //   success(res) {
+      //     if (res.confirm) {
+      //       console.log('用户点击确定')
+      //       wx.switchTab({
+      //         url: '/pages/profile/profile',
+      //       })
+      //     } else if (res.cancel) {
+      //       console.log('用户点击取消')
+      //       wx.switchTab({
+      //         url: '/pages/home/home',
+      //       })
+      //     }
+      //   }
+      // })
     } else {
       // 获取用户所有的assignments
       var temp = []
@@ -91,6 +140,7 @@ Page({
                 }
                 userAssignments[i]["percentage"] = percentage
               }
+              console.log("用户的作业有：")
               console.log(userAssignments)
               var minValue = Math.min.apply(null, diffs)
               // 匹配最近的作业名称
@@ -119,53 +169,30 @@ Page({
     }
 
   },
-
-	/**
-	 * Lifecycle function--Called when page is initially rendered
-	 */
-  onReady: function () {
-
+  /**
+   * slide-delete 删除产品
+   */
+  handleSlideDelete({ detail: { id } }) {
+    let assignments = this.data.userAssignments
+    let productIndex = assignments.findIndex(item => item.id === id)
+    // this的作用域不适用于showModal内部，需要另一个变量做引用
+    let self = this
+    wx.showModal({
+      title: '删除该项作业',
+      content: '您确定要删除吗？',
+      success(res) {
+        if (res.confirm) {
+          assignments.splice(productIndex, 1)
+          self.setData({
+            userAssignments: assignments
+          })
+          // 数据库删除
+        } else if (res.cancel) {
+        }
+      }
+    })
   },
-
-	/**
-	 * Lifecycle function--Called when page show
-	 */
-  onShow: function () {
-
-  },
-
-	/**
-	 * Lifecycle function--Called when page hide
-	 */
-  onHide: function () {
-
-  },
-
-	/**
-	 * Lifecycle function--Called when page unload
-	 */
-  onUnload: function () {
-
-  },
-
-	/**
-	 * Page event handler function--Called when user drop down
-	 */
-  onPullDownRefresh: function () {
-
-  },
-
-	/**
-	 * Called when page reach bottom
-	 */
-  onReachBottom: function () {
-
-  },
-
-	/**
-	 * Called when user click on the top right corner to share
-	 */
-  onShareAppMessage: function () {
-
+  bindTap: function() {
+    console.log("Tapping on the assignment item.")
   }
 })

@@ -1,4 +1,5 @@
 /* pages/countdown/countdown.wxss */
+.searchbar-result{margin-top:0;font-size:14px}.searchbar-result .weui-cell__bd{padding:2px 0 2px 20px;color:var(--weui-FG-1)}.searchbar-result:before{display:none}
 .container {
   color: #707070;
   height: 100%;
@@ -41,25 +42,39 @@
   align-self: flex-start;
   margin-top: 94rpx;
 }
-.searchbar {
-  width: 619rpx;
-  height: 84rpx;
-  background-color: #FFFFFF;
-  margin: -40rpx 40rpx 66rpx 66rpx;
-  position: relative;
-  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+
+.assignment-list .countdown movable-area {
+  height: 120rpx;
+  width: 700rpx;
 }
+
+.assignment-list .countdown movable-view {
+  height: 120rpx;
+  width: 700rpx;
+  z-index: 999;
+}
+
+.assignment-list .countdown .delete-btn {
+  position: relative;
+  z-index: 1;
+  background: #E66671;
+  text-align: center;
+}
+
+.test {
+  flex-direction: row;
+}
+
 .countdown {
   width: 100%;
   height: fit-content;
   margin-top: 85rpx;
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
 }
 .countdown_event {
-  width: 654 rpx;
+  /* width: 654 rpx; */
+  width: 100%;
   padding: 18rpx 16rpx;
   display: flex;
   margin-top: 10rpx;
@@ -75,7 +90,9 @@
   background-color: #FFFFFF;
   color: #707070;
   border-radius: 3px;
+  float: left;
 }
+
 .progress-bar .progress {
   display: block;
   width: calc(490rpx * var(--percent) / 100);
@@ -85,17 +102,24 @@
 .progress-bar .subject {
   display: inline-block;
   position: absolute;
+  text-align: center;
+  width:80%;
+  color: #FFFFFF;
+  font-size: 25px;
 }
-.countdown_days {
+
+.test .countdown_days {
   width: 140rpx;
-  padding: 18rpx 10rpx;
+  padding: 30rpx 10rpx;
   border: 1rpx solid #707070;
-  border-radius: 3px;
+  border-radius: 10px;
   background-color: #4A4A4A;
   color: #FFFFFF;
-  margin-left: 16rpx;
+  margin-left: 40rpx;
   text-align: center;
+  float: right;
 }
+
 .navi-buttons {
   position: absolute;
   bottom: 20rpx;
@@ -103,7 +127,14 @@
   display: flex;
   flex-direction: column;
 }
-
+.searchbar {
+  width: 619rpx;
+  height: 84rpx;
+  background-color: #FFFFFF;
+  margin: -40rpx 40rpx 66rpx 66rpx;
+  position: relative;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+}
 /* +号菜单样式 */
 .menu-switch {   
   display: flex;  
@@ -155,10 +186,12 @@
 /*显示整个conts */  
 .show{   
   display: block;  
-  }  
+}  
 /*隐藏整个conts */  
 .hide{   
   display: none;  
-  }  
-  
+}  
 
+.page__bd {
+  width: 100%;
+}

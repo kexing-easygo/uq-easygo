@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "slide-delete": "../../components/slide-delete/index"
+  },
   "navigationBarTitleText": "倒计时"
 }
