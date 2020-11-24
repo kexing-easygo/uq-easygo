@@ -1,0 +1,42 @@
+{
+  "name": "wx-js-utils",
+  "version": "1.0.0",
+  "description": "wechat nodejs utils",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "lcxfs1991",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcxfs1991/wx-js-utils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcxfs1991/wx-js-utils/issues"
+  },
+  "homepage": "https://github.com/lcxfs1991/wx-js-utils",
+  "license": "MIT",
+  "dependencies": {
+    "md5": "^2.2.1",
+    "request": "^2.88.0",
+    "tcb-admin-node": "^1.4.3",
+    "uuid": "^3.3.2",
+    "xml2js": "^0.4.19"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.6",
+    "eslint": "^5.4.0",
+    "eslint-config-alloy": "^1.4.2",
+    "jest": "^23.5.0"
+  },
+  "engines": {
+    "node": ">=8.9.0"
+  },
+  "jest": {
+    "testMatch": [
+      "**/test/!(config)/*.js",
+      "**/test/*.js"
+    ],
+    "testEnvironment": "node"
+  }
+}
