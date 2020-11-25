@@ -37,10 +37,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-  bindPrint: function(e) {
-    console.log("1")
+    let that = this
+    const eventChannel = this.getOpenerEventChannel()
+    // 监听acceptDataFromOpenerPage事件
+    // 如果是查看assignment而并非点击加号按钮
+    // 获取上一页面通过eventChannel传送到当前页面的数据
+    eventChannel.on('acceptDataFromOpenerPage', function(e) {
+      // 解码json数据
+      var data = JSON.parse(e)
+      // console.log("从上一页面传递进来的data为" + data)
+      that.setData({
+        title: data.name,
+        dueDate: data.date,
+        color: data.color,
+        notificationDate: data.notification,
+      })
+      // 设置该页面标题为作业名称
+      wx.setNavigationBarTitle({
+        title: data.name,
+      })
+    })
   },
   bind24: function (e) {
     var temp = 0

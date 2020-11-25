@@ -18,6 +18,8 @@ Page({
 
   /**
    * Lifecycle function--Called when page load
+   * 调用getSetting接口判断用户是否已经授权
+   * 
    */
   onLoad: function (options) {
     let that = this
@@ -63,6 +65,14 @@ Page({
             res => {
               if (res.data.length == 0) {
                 console.log("No data found.")
+                db.collection("MainUser")
+                  .add({
+                    data: {
+                      userAssignments: [],
+                      userInfo: this.data.userInfo,
+                      userEmail: ""
+                    }
+                  })
               //如果存在
               } else { 
                 // 将读取到的所有用户的信息均更新至全局变量中

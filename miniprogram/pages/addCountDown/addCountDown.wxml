@@ -2,20 +2,21 @@
 <view class="container">
 
 	<view class="heading">
-		<text>标题:</text>
-		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="CSSE1001 Assignment1" />
+		<text style="margin-left: 50rpx;">标题:</text>
+		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 	</view>
 
 	<view class="due_date">
-		<picker mode="date" value="{{dueDate}}" start="2020-01-01" end="2020-12-12" bindchange="bindDateChange">
+		<text style="margin-left: 50rpx; width:20%">Due date:</text>
+		<picker mode="date" value="{{dueDate}}" start="2020-01-01" end="2020-12-12" bindchange="bindDateChange" style="width:80%;">
 			<view class="picker">
-				点此处设置Due date:      {{dueDate}}
+				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueDate}}</text>
 			</view>
 		</picker>
 	</view>
-
+	
 	<view class="colours">
-		<text style = "margin-right: 154rpx;">设置颜色</text>
+		<text style="margin-right: 54rpx;margin-left: 50rpx;">设置颜色</text>
 		<view>
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FE5B5B;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindRed"></button>
 		</view>
@@ -35,6 +36,14 @@
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #9EFF97;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindGreen"></button>
 		</view>
 	</view>
+
+	<view class="colours">
+		<text style="margin-right: 54rpx;margin-left: 50rpx;">当前颜色</text>
+		<view>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: {{color}};border-radius: 100rpx; margin-left: 22rpx;"></button>
+		</view>
+	</view>
+
 	<view class="notice_duration">
 		<view>
 			<text>设置24小时前提醒</text>
@@ -49,7 +58,6 @@
 			<switch type="checkbox" checked="{{hours72}}" bindchange="bind72"></switch>
 		</view>
 	</view>
-
 	<view class="confirm">
 		<button bindtap="addCountDown"><text style="color: #FFFFFF">确认添加</text></button>
 	</view>
