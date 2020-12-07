@@ -20,14 +20,13 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        if (app.globalData.userInfo) {
-            
+        console.log(app.globalData.userinfo)
+        if (app.globalData.hasUserInfo == true) {
             this.setData({
                 userInfo: app.globalData.userInfo,
                 easygoNickname: app.globalData.easygoNickname,
                 hasUserInfo: true,
             })
-            console.log(this.data.userInfo.openid)
             var gender = null
             if (this.data.userInfo.gender == "1") {
                 gender = "男"
@@ -38,6 +37,17 @@ Page({
             }
             this.setData({
                 userGender: gender
+            })
+        } else {
+            // 如果用户还没有登录，提示未登录
+            // 并跳转至profile页面
+            wx.showToast({
+                title: '你还没有登录哦',
+                icon: 'none',
+                duration: 2000
+            })
+            wx.navigateTo({
+              url: '/pages/profile/profile',
             })
         }
     },

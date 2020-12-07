@@ -1,20 +1,22 @@
 {
-  "pages": [  
+  "pages": [
+    "pages/countdown/countdown",
     "pages/profile/profile",
+    "pages/addCountDown/addCountDown",
     "pages/home/home",
+    "pages/searchbar/searchbar",
+    "pages/getCode/getCode",
+    "pages/basicUserInfo/basicUserInfo",
     "pages/calc/calc",
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
-    "pages/getCode/getCode",
-    "pages/basicUserInfo/basicUserInfo",
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",
     "pages/otherSettings/otherSettings",
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification"
-    
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -36,8 +38,13 @@
         "text": "我的",
         "iconPath": "images/icons/个人中心前.png",
         "selectedIconPath": "images/icons/个人中心后.png"
-      }]
-    },
-    "sitemapLocation": "sitemap.json",
-    "style": "v2"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  }
 }
