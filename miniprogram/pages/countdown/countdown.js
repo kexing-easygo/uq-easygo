@@ -15,35 +15,7 @@ Page({
     showTrue: false,
     inputShowed: false,
     inputVal: "",
-    // userAssignments: [
-    //   {
-    //     id: 0,
-    //     countdown: '2020-12-21',
-    //     name: 'CSSE1001',
-    //     color: '#8877FF',
-    //     notification: {
-    //       n1: true
-    //     }
-    //   },
-    //   {
-    //     id: 1,
-    //     countdown: '2020-12-21',
-    //     name: 'CSSE2002',
-    //     color: '#8877FF',
-    //     notification: {
-    //       n2: true
-    //     }
-    //   },
-    //   {
-    //     id: 2,
-    //     countdown: '2020-12-21',
-    //     name: 'CSSE3003',
-    //     color: '#8877FF',
-    //     notification: {
-    //       n3: true
-    //     }
-    //   }
-    // ],
+    userAssignments: [],
     matchedItems: []
 
   },
@@ -67,7 +39,6 @@ Page({
   // 获取输入框内容
   inputTyping: function (e) {
     var value = e.detail.value
-    let that = this
     var reg = new RegExp(value)
     var userAssignments = this.data.userAssignments
     var matchedItems = []
@@ -81,7 +52,6 @@ Page({
       inputVal: value,
       matchedItems: matchedItems
     })
-    console.log(matchedItems[0].name)
   },
   // 用于实现点击“核算”时，来显示与隐藏整个“conts”，这一部分其实是利用了面板的显示与隐藏功能  
   change: function () {
@@ -104,6 +74,7 @@ Page({
 	 */
   onLoad: function (options) {
     // 如果用户没登录，会提示弹窗
+    let that = this
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
@@ -119,7 +90,6 @@ Page({
             .get()
             .then(
               res => {
-                console.log(res.data)
                 temp = res.data[0].userAssignment
                 // 如果用户有登记过assignment
                 if (res.data.length > 0) {
@@ -142,29 +112,24 @@ Page({
                     }
                     userAssignments[i]["percentage"] = percentage
                   }
-                  console.log("用户的作业有：")
-                  console.log(userAssignments)
                   var minValue = Math.min.apply(null, diffs)
                   // 匹配最近的作业名称
-                  for (var i = 0; i < res.data.length; i++) {
+                  for (var i = 0; i < temp.length; i++) {
+                    temp[i]["id"] = i
                     var d = new Date(userAssignments[i]["date"]).getTime()
                     var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                     if (diff == minValue) {
                       var name = userAssignments[i]["name"]
                       // 决定了header的assignment即为i代表的assignment值
-                      this.setData({
+                      that.setData({
                         userAssignments: temp,
                         headerAssignment: userAssignments[i],
                         recentAssignmentName: name,
                         recentAssignmentDate: minValue
                       })
-                      // 不确定是不是要把最近的那项删掉
-                      // userAssignments.splice(i, 1)
-                      this.setData({
-                        userAssignments: userAssignments,
-                      })
                     }
                   }
+                  
                 }
               }
             )
@@ -189,30 +154,49 @@ Page({
         }
       }
     })
-      
-
   },
   /**
-   * slide-delete 删除产品
+   * 删除用户点击的作业项
    */
   handleSlideDelete({ detail: { id } }) {
+    console.log(id)
+    console.log(this.data.userAssignments)
     let assignments = this.data.userAssignments
     let productIndex = assignments.findIndex(item => item.id === id)
     // this的作用域不适用于showModal内部，需要另一个变量做引用
-    let self = this
-    wx.showModal({
-      title: '删除该项作业',
-      content: '您确定要删除吗？',
-      success(res) {
-        if (res.confirm) {
-          assignments.splice(productIndex, 1)
-          self.setData({
-            userAssignments: assignments
-          })
+    // let self = this
+    // assignments.splice(productIndex, 1)
+    // console.log(assignments)
+    // self.setData({
+    //   userAssignments: assignments
+    // })
+    // wx.showModal({
+      // title: '删除该项作业',
+      // content: '您确定要删除吗？',
+      // success(res) {
+        // if (res.confirm) {
+        //   assignments.splice(productIndex, 1)
+        //   console.log(assignments)
+        //   self.setData({
+        //     userAssignments: assignments
+        //   })
           // 数据库删除
-        }
-      }
-    })
+          // db.collection("MainUser")
+          //   .where({
+          //     _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+          //   })
+          //   .update({
+          //     data: 
+          //     {
+          //       userAssignment: assignments
+          //     }
+          // })
+          // .then((res) => {
+          //   console.log(res.data);
+          // });
+        // }
+      // }
+    // })
   },
   /**
    * 用户点击单项作业时，可以跳转到showCountDown页面

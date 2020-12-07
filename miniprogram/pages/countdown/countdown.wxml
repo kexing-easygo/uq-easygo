@@ -5,10 +5,8 @@
 		</view>
 		<view class="remain_day"> {{recentAssignmentDate}} </view>
 		<view class="days"> Days </view>
-		<view class="searchbar"></view>
-	</view>
-	<view class="page__bd">
-		<view class="weui-search-bar {{inputShowed ? 'weui-search-bar_focusing' : ''}}" id="searchBar">
+		<view class="searchbar">
+			<view class="weui-search-bar {{inputShowed ? 'weui-search-bar_focusing' : ''}}" id="searchBar">
 			<form class="weui-search-bar__form">
 				<view class="weui-search-bar__box">
 					<i class="weui-icon-search"></i>
@@ -17,28 +15,27 @@
 				</view>
 				<label class="weui-search-bar__label" bindtap="showInput">
 					<i class="weui-icon-search"></i>
-                    <span class="weui-search-bar__text">搜索</span>
 				</label>
 			</form>
             <view class="weui-search-bar__cancel-btn" bindtap="hideInput">取消</view>
-		</view>
-		<!--  -->
-		<view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
-			<view class="weui-cell weui-cell_active weui-cell_access" wx:for="{{matchedItems}}">
-				<view class="weui-cell__bd weui-cell_primary">
-					<view>{{item.name}}</view>
+			</view>
+			<view class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
+				<view class="weui-cell weui-cell_active weui-cell_access" wx:for="{{matchedItems}}">
+					<view class="weui-cell__bd weui-cell_primary">
+						<view>{{item.name}}</view>
+					</view>
 				</view>
 			</view>
 		</view>
 	</view>
 	<view class="assignment-list">
 		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:key="name">
-			<view class="countdown_event" bindtap="bindTap" data-index="{{index}}">
+			<view class="countdown_event" data-index="{{index}}">
 					<slide-delete pid="{{item.id}}" bindaction="handleSlideDelete" wx:key="{{item.id}}">
 						<view class="test">
-							<view wx:if="{{item}}" class="progress-bar">
+							<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 								<text class="subject">{{item.name}}</text>
-								<view class="progress" style="--percent: {{item.percentage}}; background-color: #e46a70"></view>
+								<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}"></view>
 							</view>
 							<view class="countdown_days">
 								{{item.countdown}} Days

@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/countdown/countdown",
-    "pages/addCountDown/addCountDown",
     "pages/profile/profile",
+    "pages/addCountDown/addCountDown",
     "pages/home/home",
     "pages/searchbar/searchbar",
     "pages/getCode/getCode",
@@ -16,8 +16,7 @@
     "pages/setWechatNotification/setWechatNotification",
     "pages/otherSettings/otherSettings",
     "pages/setEmailNotification/setEmailNotification",
-    "pages/setMobileNotification/setMobileNotification",
-    "pages/showCountDown/showCountDown"
+    "pages/setMobileNotification/setMobileNotification"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
