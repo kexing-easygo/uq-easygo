@@ -1,12 +1,80 @@
-.in-coming {
-    width: 654rpx;
-    margin: 0 auto;
-    margin-top: 40rpx;
-    height: 1200rpx;
-    line-height: 330rpx;
-    text-align: center;
-}
-.in-coming image {
+/* pages/countdown/countdown.wxss */
+.container {
     height: 100%;
     width: 100%;
-}
+    display: flex;
+    margin-top: 10rpx;
+    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  }
+  
+  .header {
+    height: 312rpx;
+    width: 100%;
+    background-color: #FFA9A3;
+    flex-wrap: wrap;
+    display: flex;
+  }
+  
+  .semester_box {
+      width: 378rpx;
+      height: 60rpx;
+      position: absolute;
+      margin-left: 50rpx;
+      margin-top: 70rpx;
+      background-color: #ffffff;
+      border-radius: 4rpx;
+    }
+  
+  .course_box {
+      width: 378rpx;
+      height: 60rpx;
+      position: absolute;
+      margin-left: 50rpx;
+      margin-top: 150rpx;
+      background-color: #ffffff;
+      border-radius: 4rpx;
+    }
+  
+  .semester {
+      font-size: 100%;
+      text-align: justify;
+      margin-left: 20rpx;
+  }
+  
+  .course {
+      font-size: 100%;
+      text-align: justify;
+      margin-left: 20rpx;
+      color: #B2B2B2;
+  }
+  
+  .prompot {
+    position: absolute;
+    margin-left: 170rpx;
+    margin-top: 240rpx;
+    color: #E64340;
+    font-size: 28rpx;
+  }
+  
+  .body {
+    position: fixed;
+    margin-top: 350rpx;
+    margin-left: 48rpx;
+    height: 654rpx;
+    width: 654rpx;
+    border-radius: 8rpx;
+    background-color: #FFFFFF;
+    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  }
+  
+  .bottom {
+    position: fixed;
+    margin-top: 1044rpx;
+    margin-left: 48rpx;
+    height: 140rpx;
+    width: 654rpx;
+    border-radius: 8rpx;
+    background-color: #FFFFFF;
+    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  }
+  

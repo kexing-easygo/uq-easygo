@@ -1,4 +1,21 @@
 <!--pages/calc/calc.wxml-->
-<view class="in-coming">
-	<image src="{{InComingImage}}"/>
+<view class="container">
+	<view class="header">
+		<view class="semester_box">  
+			<view class="semester"> semester </view>
+		</view>
+		<view class="course_box"> 
+			<view class="course"> course </view>
+	  </view>
+		<view class="prompot">
+			this course is double pass!
+		</view>
+	</view>
+	<view class="body">
+
+	</view>
+	<view class="bottom">
+		<view>Total Score:</view>
+		<view>Total Dropped:</view>
+	</view>
 </view>
