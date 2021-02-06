@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/calc/calc",
     "pages/home/home",
     "pages/countdown/countdown",
     "pages/profile/profile",
@@ -7,7 +8,6 @@
     "pages/searchbar/searchbar",
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
-    "pages/calc/calc",
     "pages/mobile/mobile",
     "pages/email/email",
     "pages/getEmail/getEmail",
