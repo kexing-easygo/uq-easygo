@@ -1,18 +1,46 @@
 <!--pages/calc/calc.wxml-->
 <view class="container">
 	<view class="header">
-		<view class="semester_box">  
-			<view class="semester"> semester </view>
+
+		<view class="semester_box">
+			<view class="semester">
+				Semester 1, 2021
+			</view>
 		</view>
+
 		<view class="course_box"> 
-			<view class="course"> course </view>
-	  </view>
+			<input class = "course" bindinput="bindKeyInput" maxlength="8" placeholder="输入course code"/>
+		</view>
 		<view class="prompot">
 			this course is double pass!
 		</view>
 	</view>
 	<view class="body">
+		<view class="table">
+			<!-- table heading -->
+			<view class="table-tr">
+				<view class="table-th">Assessment</view>
+				<view class="table-th">Weight</view>
+				<view class="table-th">Score</view>
+			</view>
 
+			<!-- assessment blocks -->
+			<view class="table-tr">
+				<!-- assessment name -->
+				<view class="table-td">Assignmen1-12sdfsdfsdfsdfsdf</view>
+				<!-- assessment weight -->
+				<view class="table-td">6.25%</view>
+				<!-- assessment score -->
+				<view class="table-td">
+					<view class="score"> 
+						<input bindinput="bindKeyInput"/>
+						<view>/</view>
+						<input bindinput="bindKeyInput"/>
+					</view>
+				</view>
+			</view>
+
+		</view>
 	</view>
 	<view class="bottom">
 		<view>Total Score:</view>

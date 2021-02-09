@@ -5,6 +5,7 @@
     display: flex;
     margin-top: 10rpx;
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+
   }
   
   .header {
@@ -23,6 +24,7 @@
       margin-top: 70rpx;
       background-color: #ffffff;
       border-radius: 4rpx;
+      position: relative;
     }
   
   .course_box {
@@ -65,8 +67,40 @@
     border-radius: 8rpx;
     background-color: #FFFFFF;
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+    padding: 10rpx;
   }
-  
+
+  .table {
+    display: table;
+    border-collapse: collapse;
+  }
+
+  .table-tr {
+    display: table-row;
+  }
+
+  .table-th {
+    width: 25%;
+    display: table-cell;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10rpx;
+}
+
+  .table-td {
+    font-size: smaller;
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 10rpx;
+}
+
+  .score {
+    display: flex;
+    justify-content: center;
+  }
+
   .bottom {
     position: fixed;
     margin-top: 1044rpx;
@@ -77,4 +111,3 @@
     background-color: #FFFFFF;
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
   }
-  

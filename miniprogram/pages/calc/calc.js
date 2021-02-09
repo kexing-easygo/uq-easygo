@@ -5,9 +5,31 @@ Page({
    * Page initial data
    */
   data: {
-    InComingImage:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器敬请期待页面.png"
-  },
+    InComingImage:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器敬请期待页面.png",
+    selectSemester: true,
+    semester: "select semester",
 
+  },
+  
+  /** 
+   * 获取键盘输入
+   */
+  bindKeyInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
+    })
+  },
+  /** 
+   * 选择器功能
+  */
+
+
+mySelect: function(e) {
+  this.setData({
+    selectSemester: false
+  })
+
+},
   /**
    * Lifecycle function--Called when page load
    */
