@@ -4,7 +4,6 @@
     "pages/profile/profile",
     "pages/addCountDown/addCountDown",
     "pages/home/home",
-    "pages/searchbar/searchbar",
     "pages/getCode/getCode",
     "pages/basicUserInfo/basicUserInfo",
     "pages/calc/calc",

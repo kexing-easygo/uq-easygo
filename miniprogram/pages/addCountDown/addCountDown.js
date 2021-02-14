@@ -9,7 +9,6 @@ const days = []
 for (let i = 2020; i <= date.getFullYear(); i++) {
   years.push(i)
 }
-console.log(years)
 for (let i = 1; i <= 12; i++) {
   months.push(i)
 }
