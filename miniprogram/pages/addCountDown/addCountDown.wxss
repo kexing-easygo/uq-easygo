@@ -78,3 +78,13 @@
   border-radius: 25rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
+.delete {
+  background-color: #c10716;
+  margin-top: 100rpx;
+  margin-left: 40%;
+  margin-right: 30%;
+  width: 50%;
+  border: 1rpx soild #000000;
+  border-radius: 25rpx;
+  /* box-shadow: 0 10rpx 10rpx 2rpx #cccccc; */
+}

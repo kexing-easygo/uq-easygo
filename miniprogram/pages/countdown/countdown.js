@@ -189,7 +189,11 @@ Page({
   bindTap: function(e) {
     var index = e.currentTarget.dataset.index
     // 将数据通过json格式传递到下一个页面
-    var query = JSON.stringify(this.data.userAssignments[index])
+    var query = JSON.stringify(
+      {index: index,
+      data: this.data.userAssignments[index]}
+      
+    )
     wx.navigateTo({
       url: '/pages/addCountDown/addCountDown',
       success: function(res) {

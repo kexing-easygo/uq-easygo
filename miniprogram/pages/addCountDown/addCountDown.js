@@ -25,11 +25,13 @@ Page({
     title: "",
     dueDate: "",
     color: "",
-    notificationDate: {},
-    hours24: false,
-    hours48: false,
-    hours72: false,
+    // hours24: false,
+    // hours48: false,
+    // hours72: false,
     years,
+    showDelete: false,
+    index: 0,
+    buttonText: "确认添加"
   },
   
   /**
@@ -43,90 +45,84 @@ Page({
     // 获取上一页面通过eventChannel传送到当前页面的数据
     eventChannel.on('acceptDataFromOpenerPage', function(e) {
       // 解码json数据
-      var data = JSON.parse(e)
-      // console.log("从上一页面传递进来的data为" + data)
-      that.setData({
-        title: data.name,
-        dueDate: data.date,
-        color: data.color,
-        notificationDate: data.notification,
-      })
-      // 设置该页面标题为作业名称
-      wx.setNavigationBarTitle({
-        title: data.name,
-      })
+      var raw = JSON.parse(e)
+      var data = raw.data
+      if (data != undefined) {
+        // console.log("从上一页面传递进来的data为" + data)
+        that.setData({
+          title: data.name,
+          dueDate: data.date,
+          color: data.color,
+          showDelete: true,
+          index: raw.index,
+          buttonText: "确认"
+        })
+        // 设置该页面标题为作业名称
+        wx.setNavigationBarTitle({
+          title: data.name,
+        })
+      }
     })
   },
-  bind24: function (e) {
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
-    }
-    this.setData(
-      {
-        hours24: temp
-      }
-    )
-  },
-  bind48: function (e) {
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
-    }
-    this.setData(
-      {
-        hours48: temp
-      }
-    )
-  },
-  bind72: function (e) {
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
-    }
-    this.setData(
-      {
-        hours72: temp
-      }
-    )
-  },
-
   addCountDown: function () {
-    const _ = db.command
-    db.collection("MainUser")
-      .where({
-        _openid: app.globalData.openid
-      })
-      .update({
-        data: {
-          userAssignments: _.push(
-            {
-              date: this.data.dueDate,
-              name: this.data.title,
-              notification: {
-                "24": this.data.hours24,
-                "48": this.data.hours48,
-                "72": this.data.hours72
-              },
-              // color是颜色板选择的颜色
-              color: this.data.color
+    // 表明是在修改作业条目
+    if (this.data.buttonText == "确认") {
+      let temp = app.globalData.userAssignments
+      let that = this
+      // 更新指定条目
+      temp[this.data.index] = {
+        date: this.data.dueDate,
+        name: this.data.title,
+        // color是颜色板选择的颜色
+        color: this.data.color
+      }
+      db.collection("MainUser")
+        .where({
+          _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+        })
+        .update({
+          data: {
+            userAssignment: temp
+          }, success: function(res) {
+            if (res.stats.updated > 0) {
+              console.log("作业条目更新成功")
             }
-          )
-        }
-      })
-      .then(
-        res => {
-          console.log("更新成功!")
-        }
-      )
+          }
+        })
+      
+    } else {
+      const _ = db.command
+      db.collection("MainUser")
+        .where({
+          _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+        })
+        .update({
+          data: {
+            userAssignment: _.push(
+              {
+                date: this.data.dueDate,
+                name: this.data.title,
+                // color是颜色板选择的颜色
+                color: this.data.color
+              }
+            )
+          }, success: function(res) {
+            if (res.stats.updated > 0) {
+              console.log("作业条目更新成功")
+            }
+          }
+        })
+    }
+    
     wx.navigateTo({
       url: '/pages/countdown/countdown',
+      success: function (res) {
+        var page = getCurrentPages().pop()
+        if (page == undefined || page == null) return;
+        // 刷新页面
+        page.onLoad()
+        
+      }
     })
   },
   bindTitleInput: function(e) {
@@ -168,6 +164,42 @@ Page({
   bindGreen: function() {
     this.setData({
       color: "#9EFF97"
+    })
+  },
+  deleteCountdown: function() {
+    let temp = app.globalData.userAssignments
+    let that = this
+    wx.showModal({
+      title: "删除作业",
+      content: "是否确定要删除？",
+      success (res) {
+        if (res.confirm) {
+          temp.splice(that.data.index, 1)
+          db.collection("MainUser")
+          .where({
+            _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+          })
+          .update({
+            data: {
+              userAssignment: temp
+            }, success: function(res) {
+              if (res.stats.updated > 0) {
+                console.log("作业条目删除成功")
+              }
+            }
+          })
+          wx.navigateTo({
+            url: '/pages/countdown/countdown',
+            success: function (res) {
+              var page = getCurrentPages().pop()
+              if (page == undefined || page == null) return;
+              // 刷新页面
+              page.onLoad()
+              
+            }
+          })
+        }
+      }
     })
   }
 })

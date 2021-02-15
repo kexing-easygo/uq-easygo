@@ -43,23 +43,28 @@
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: {{color}};border-radius: 100rpx; margin-left: 22rpx;"></button>
 		</view>
 	</view>
-
+<!-- 
 	<view class="notice_duration">
 		<view>
-			<text>设置24小时前提醒</text>
+			<text>一天前提醒</text>
 			<switch type="checkbox" checked="{{hours24}}" bindchange="bind24"></switch>
 		</view>
 		<view>
-			<text>设置48小时前提醒</text>
+			<text>三天前提醒</text>
 			<switch type="checkbox" checked="{{hours48}}" bindchange="bind48"></switch>
 		</view>
 		<view>
-			<text>设置72小时前提醒</text>
+			<text>一周前提醒</text>
 			<switch type="checkbox" checked="{{hours72}}" bindchange="bind72"></switch>
 		</view>
-	</view>
+	</view> -->
 	<view class="confirm">
-		<button bindtap="addCountDown"><text style="color: #FFFFFF">确认添加</text></button>
+		<button bindtap="addCountDown"><text style="color: #FFFFFF">{{buttonText}}</text></button>
+		
+	</view>
+	<view class="delete" wx:if="{{showDelete}}" >
+		<button  type="warn" bindtap="deleteCountdown"><text style="color: #c10716">删除作业</text></button>
+
 	</view>
 	
 </view>
