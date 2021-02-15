@@ -5,10 +5,36 @@
       <text>微信提醒</text>
       <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
     </view>
-    
     <view class="mailnotice">
       <text>邮件提醒</text>
       <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
     </view>
+  </view>
+  <view class="time-zone">
+		<view>
+			<text>中国时间</text>
+			<switch type="checkbox" checked="{{china}}" bindchange="bindChina"></switch>
+		</view>
+		<view>
+			<text>澳洲时间</text>
+			<switch type="checkbox" checked="{{australia}}" bindchange="bindAustralia"></switch>
+		</view>
+  </view>
+  <view class="notice_duration">
+		<view>
+			<text>一天前提醒</text>
+			<switch type="checkbox" checked="{{oneDay}}" bindchange="bindOneDay"></switch>
+		</view>
+		<view>
+			<text>三天前提醒</text>
+			<switch type="checkbox" checked="{{threeDay}}" bindchange="bindThreeDay"></switch>
+		</view>
+		<view>
+			<text>一周前提醒</text>
+			<switch type="checkbox" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch>
+		</view>
+  </view>
+  <view>
+    <button type="confirm" plain="true" bindtap="confirm"><text>确定</text></button>
   </view>
 </view>

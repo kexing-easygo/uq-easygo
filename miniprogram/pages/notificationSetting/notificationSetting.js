@@ -9,6 +9,11 @@ Page({
   data: {
     wechatNotification: app.globalData.wechatNotification,
     emailNotification: app.globalData.emailNotification,
+    oneDay: false,
+    threeDay: false,
+    oneWeek: false,
+    china: false,
+    australia: false
   },
 
   /**
@@ -18,29 +23,120 @@ Page({
 
   },
   bindSwitch1: function (e) {
-    this.wechatNotification = e.detail.value
-    db.collection('MainUser').where({
-      _openid: app.globalData.openid
-    }).update(
-      {
-        data: {
-          wechatNotification: this.data.wechatNotification
-
-        }
-      }
-    )
+    this.setData({
+      wechatNotification: e.detail.value
+    })
   },
 
   bindSwitch2: function (e) {
-    this.emailNotification = e.detail.value
-    db.collection('MainUser').where({
-      _openid: app.globalData.openid
-    }).update(
+    this.setData({
+      emailNotification: e.detail.value
+    })
+  },
+  bindChina: function(e) {
+    this.setData({
+      china: e.detail.value
+    })
+    if (this.data.china == true) {
+      this.setData({
+        australia: false
+      })
+    } else {
+      this.setData({
+        australia: true
+      })
+    }
+  },
+  bindAustralia: function(e) {
+    this.setData({
+      australia: e.detail.value
+    })
+    if (this.data.australia == true) {
+      this.setData({
+        china: false
+      })
+    } else {
+      this.setData({
+        china: true
+      })
+    }
+  },
+  bindOneDay: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
+    this.setData(
       {
-        data: {
-          emailNotification: this.data.emailNotification
-        }
+        oneDay: temp
       }
     )
+  },
+  bindThreeDay: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
+    this.setData(
+      {
+        threeDay: temp
+      }
+    )
+  },
+  bindOneWeek: function (e) {
+    var temp = 0
+    if (e.detail.value == true) {
+      temp = 1
+    } else {
+      temp = 0
+    }
+    this.setData(
+      {
+        oneWeek: temp
+      }
+    )
+  },
+  confirm: function(e) {
+    // 更新数据库
+    let location = ''
+    if (australia == true) {
+      location = "AU"
+    } else {
+      location = "CH"
+    }
+    db.collection("MainUser")
+    .where({
+      _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+    })
+    .update({
+      data: {
+        notification: {
+          location: location,
+          wechatNotification: this.data.wechatNotification,
+          emailNotification: this.data.emailNotification,
+          oneDay: this.data.oneDay,
+          threeDay: this.data.threeDay,
+          oneWeek: this.data.oneWeek
+        }
+      }, success: function(res) {
+        if (res.stats.updated > 0) {
+          console.log("提醒更新成功")
+        }
+      }
+    })
+    wx.navigateTo({
+      url: '/pages/countdown/countdown',
+      success: function (res) {
+        var page = getCurrentPages().pop()
+        if (page == undefined || page == null) return;
+        // 刷新页面
+        page.onLoad() 
+      }
+    })
   }
+
 })
