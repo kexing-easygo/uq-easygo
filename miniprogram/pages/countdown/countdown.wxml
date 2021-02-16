@@ -1,26 +1,31 @@
 <!--pages/countdown/countdown.wxml-->
 <view class="container">
 	<view class="header">
+		
 		<view class="header_subject"> {{recentAssignmentName}}
 		</view>
 		<view class="remain_day"> {{recentAssignmentDate}} </view>
 		<view class="days"> Days </view>
-		<view class="searchbar">
-			<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindclear="clear" search="{{search}}"></mp-searchbar>
-		</view>
+		
 	</view>
+	<view class="searchbar">
+		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindclear="clear" search="{{search}}"></mp-searchbar>
+	</view>
+
+
 	<view class="assignment-list" wx:if="{{showAll}}">
 		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
-				<view class="test">
+				<!-- <view class="test"> -->
 					<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
-						<text class="subject">{{item.name}}</text>
-						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}"></view>
+						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
+							<text class="subject">{{item.name}}</text>
+						</view>
 					</view>
 					<view class="countdown_days">
 						{{item.countdown}} Days
 					</view>
-				</view>
+				<!-- </view> -->
 			</view>
 		</view>
 	</view>
@@ -28,7 +33,7 @@
 		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
 			wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
-				<view class="test">
+				<!-- <view class="test"> -->
 					<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 						<text class="subject">{{item.name}}</text>
 						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}"></view>
@@ -36,7 +41,7 @@
 					<view class="countdown_days">
 						{{item.countdown}} Days
 					</view>
-				</view>
+				<!-- </view> -->
 			</view>
 		</view>
 	</view>

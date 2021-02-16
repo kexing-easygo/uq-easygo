@@ -1,5 +1,6 @@
 /* pages/countdown/countdown.wxss */
 .container {
+  font-size: 16pt;
   color: #707070;
   height: 100%;
   width: 100%;
@@ -14,30 +15,37 @@
   background-color: #FFA9A3;
   color:#707070;
   display: flex;
+  justify-items: center;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 .header_subject {
-  width: 242rpx;
+  width: 35%;
+  padding:0 10%;
+  color: #000000;
+  font-weight: bold;
   height: fit-content;
-  padding-top: 110rpx;
-  padding-bottom: 114rpx;
-  padding-left: 84rpx;
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 1.4em;
+  line-height: 1.2em;
 }
 .remain_day {
-  width: 178rpx;
+  width: 20%;
+  color: #000000;
   height: fit-content;
-  font-size: 5rem;
-  margin-left: 60rpx;
+  text-align: left;
+  font-size: 5em;
 }
 .days {
   font-size: 28rpx;
   text-align: center;
   color:#FFFFFF;
-  width: 80rpx;
+  background-color: yellow;
+  width: 15%;
   background-color: #4A4A4A;
+  border-radius: 5px;
   padding: 5rpx;
-  margin-left: 30rpx;
   align-self: flex-start;
   margin-top: 94rpx;
 }
@@ -47,7 +55,7 @@
 }
 
 .assignment-list .countdown movable-area {
-  height: 120rpx;
+  height: 500rpx;
   width: 700rpx;
 }
 
@@ -67,60 +75,70 @@
 .test {
   flex-direction: row;
 }
+.assignment-list {
+  width: 100%;
+}
 
 .countdown {
-  width: 100%;
+  width: 90%;
   height: fit-content;
-  margin-top: 85rpx;
+  margin:10% 5% 0 5%;
   display: flex;
-  align-items: center;
+  flex-flow: column wrap;
+  justify-content: flex-start;
 }
 .countdown_event {
-  /* width: 654 rpx; */
   width: 100%;
-  padding: 18rpx 16rpx;
   display: flex;
-  margin-top: 10rpx;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
 .progress-bar{
-  /* 进度条的槽 */
-  display: flex;
-  flex-direction: column;
-  width:490rpx;
-  height: 72rpx;
-  padding: 18rpx 10rpx;
+  background-color: white;
+  width: 75%;
   border: 1rpx solid #707070;
-  background-color: #FFFFFF;
+  height: 15%;
   color: #707070;
-  border-radius: 3px;
-  float: left;
+  border-radius: 5px;
+  box-shadow: 5px 2.5px 2px beige;
 }
 
+
 .progress-bar .progress {
-  display: block;
-  width: calc(490rpx * var(--percent) / 100);
+  width: calc(100% * var(--percent) / 100);
+  --barvalue : calc(100% * var(--percent) / 100);
+  /* animation: countdownBar 2s ; */
+  padding: 0;
   height: 100%;
   border-radius: 3px;
 }
-.progress-bar .subject {
-  display: inline-block;
-  position: absolute;
-  text-align: center;
-  width:80%;
-  /* color: #FFFFFF; */
-  font-size: 18px;
+
+@keyframes countdownBar{
+  from {width: 0;}
+  to {width: var(--barvalue)}
 }
 
-.test .countdown_days {
-  width: 140rpx;
-  padding: 30rpx 10rpx;
+.progress-bar .subject {
+  position: relative;
+  left: 10%;
+  text-align: left;
+  width:100%;
+  overflow:show;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size: 1em;
+}
+
+/* .test  */
+
+.countdown_days {
+  width: 20%;
+  padding: 1%;
   border: 1rpx solid #707070;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #4A4A4A;
   color: #FFFFFF;
-  margin-left: 40rpx;
   text-align: center;
-  float: right;
 }
 
 .navi-buttons {
@@ -131,14 +149,12 @@
   flex-direction: column;
 }
 .searchbar {
-  width: 100%;
+  width: 80%;
   height: 84rpx;
   background-color: #FFFFFF;
-  margin-left: 10%;
-  margin-right: 10%;
-  /* margin: -40rpx 40rpx 66rpx 66rpx; */
-  position: relative;
+  margin:-5% 10% 0 10%;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  
 }
 /* +号菜单样式 */
 .menu-switch {   
