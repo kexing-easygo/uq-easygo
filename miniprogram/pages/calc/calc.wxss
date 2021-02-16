@@ -5,72 +5,75 @@
     width: 100%;
     display: flex;
     margin-top: 10rpx;
-    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-
+    justify-content: center;
+    flex-flow: column nowrap;
+    align-items: center;
 }
 
 .header {
   height: 312rpx;
   width: 100%;
-  background-color: #FFA9A3;
-  flex-wrap: wrap;
+  background-color: #ffa9a3;
   display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }
 
 .semester_box {
   width: 378rpx;
   height: 60rpx;
-  position: absolute;
-  margin-left: 50rpx;
+  background-color: #ffffff;
+  border-radius: 10rpx;
   margin-top: 70rpx;
-  background-color: #ffffff;
-  border-radius: 4rpx;
-  position: relative;
-}
-.course_box {
-  width: 378rpx;
-  height: 60rpx;
-  position: absolute;
   margin-left: 50rpx;
-  margin-top: 150rpx;
-  background-color: #ffffff;
-  border-radius: 4rpx;
-  display: flex;
-  flex-direction: row;
 }
 
 .semester {
-    font-size: 100%;
-    text-align: justify;
-    margin-left: 20rpx;
+  font-size: 100%;
+  text-align: justify;
+  margin-left: 20rpx;
+}
+
+.course_box {
+  width: 378rpx;
+  height: 60rpx;
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  margin-top: 20rpx;
+  margin-left: 50rpx;
 }
 
 .course {
     font-size: 100%;
     text-align: justify;
     margin-left: 20rpx;
-    color: #B2B2B2;
 }
-  
-  .prompot {
-    position: absolute;
-    margin-left: 170rpx;
-    margin-top: 240rpx;
+::placeholder {
+  color: #B2B2B2;
+}
+
+.mini-button {
+  height: 60rpx;
+  margin-top: 30rpx;
+  border-radius: 10rpx;
+}
+
+.prompot {
+    margin-top: 50rpx;
+    text-align: center;
     color: #E64340;
     font-size: 28rpx;
-  }
+}
   
-  .body {
-    position: fixed;
-    margin-top: 350rpx;
-    margin-left: 48rpx;
-    height: 654rpx;
-    width: 654rpx;
-    border-radius: 8rpx;
-    background-color: #FFFFFF;
-    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-    padding: 10rpx;
-  }
+.body {
+  width: 654rpx;
+  height: auto;
+  margin-top: 35rpx;
+  border-radius: 8rpx;
+  background-color: #FFFFFF;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  padding: 10rpx;
+}
 
   .table {
     display: table;
@@ -103,7 +106,7 @@
     justify-content: center;
   }
 
-  .bottom {
+  /* .bottom {
     position: fixed;
     margin-top: 1044rpx;
     margin-left: 48rpx;
@@ -112,4 +115,29 @@
     border-radius: 8rpx;
     background-color: #FFFFFF;
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  } */
+
+  .bottom {
+    width: 654rpx;
+    height: auto;
+    border-radius: 8rpx;
+    background-color: #FFFFFF;
+    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+    margin-top: 35rpx;
+    padding: 10rpx;
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
   }
+
+  .scoreStrip {
+    display: flex;
+    width: 100%;
+    font-size: smaller;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scoreStrip view {
+  margin: 5rpx 20rpx;
+}

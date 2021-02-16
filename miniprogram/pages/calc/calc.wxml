@@ -1,5 +1,6 @@
 <!--pages/calc/calc.wxml-->
 <view class="container">
+	
 	<view class="header">
 
 		<view class="semester_box">
@@ -10,13 +11,15 @@
 
 		<view class="course_box"> 
 			<input class = "course" bindinput="bindKeyInput" maxlength="8" placeholder="CSSE1001"/>
-			<button class="mini-btn" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+			<button style="font-size: 30rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
 		</view>
 
 		<view class="prompot" wx:if="{{doublePass}}">
-			this course is double pass!
+			This course is double pass !
 		</view>
+
 	</view>
+
 	<view class="body">
 		<view class="table">
 			<!-- table heading -->
@@ -45,9 +48,20 @@
 
 		</view>
 	</view>
+
 	<view class="bottom">
-		<view>Total Score: {{totalScore}}</view>
-		<view>Total Dropped: {{totalDropped}}</view>
-		<view>Cumulative GPA: {{calculatedGPA}}</view>
+		
+		<view class="scoreStrip">
+			<view>Total Score:</view> <view>{{totalScore}}</view>
+		</view>
+
+		<view class="scoreStrip">
+			<view>Total Dropped:</view> <view>{{totalDropped}}</view>
+		</view>
+
+		<view class="scoreStrip">
+		<view>Cumulative GPA:</view> <view>{{calculatedGPA}}</view>
+		</view>
 	</view>
+
 </view>
