@@ -92,6 +92,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+  align-content: center;
 }
 .progress-bar{
   background-color: white;
@@ -108,7 +109,7 @@
   width: calc(100% * var(--percent) / 100);
   --barvalue : calc(100% * var(--percent) / 100);
   /* animation: countdownBar 2s ; */
-  padding: 0;
+  padding: 1%;
   height: 100%;
   border-radius: 3px;
 }
