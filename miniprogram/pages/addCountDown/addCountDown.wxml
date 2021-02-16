@@ -8,9 +8,14 @@
 
 	<view class="due_date">
 		<text style="margin-left: 50rpx; width:20%">Due date:</text>
-		<picker mode="date" value="{{dueDate}}" start="2020-01-01" end="2020-12-12" bindchange="bindDateChange" style="width:80%;">
+		<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" style="width:40%;">
 			<view class="picker">
 				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueDate}}</text>
+			</view>
+		</picker>
+		<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:40%;">
+			<view class="picker">
+				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueTime}}</text>
 			</view>
 		</picker>
 	</view>

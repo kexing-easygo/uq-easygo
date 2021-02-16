@@ -23,7 +23,8 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "",
+    dueDate: "2021-01-01",
+    dueTime: '23:10',
     color: "",
     // hours24: false,
     // hours48: false,
@@ -134,6 +135,11 @@ Page({
     // 设置due date
     this.setData({
       dueDate: e.detail.value
+    })
+  },
+  bindTimeChange: function(e) {
+    this.setData({
+      dueTime: e.detail.value
     })
   },
   bindRed: function() {

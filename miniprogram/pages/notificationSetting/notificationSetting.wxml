@@ -36,5 +36,6 @@
   </view>
   <view>
     <button type="confirm" plain="true" bindtap="confirm"><text>确定</text></button>
-  </view>
+	</view>
 </view>
+<!-- <button type="confirm" plain="true" bindtap="testCrontab"><text>调试云函数</text></button> -->
