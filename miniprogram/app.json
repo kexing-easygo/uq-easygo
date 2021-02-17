@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/calc/calc",
+    "pages/circle/circle",
     "pages/home/home",
     "pages/countdown/countdown",
     "pages/profile/profile",

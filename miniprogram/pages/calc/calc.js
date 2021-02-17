@@ -87,12 +87,12 @@ Page({
    * 选择器功能
   */
 
-
   mySelect: function(e) {
     this.setData({
       selectSemester: false
     })
   },
+
   /**
    * Lifecycle function--Called when page load
    */
