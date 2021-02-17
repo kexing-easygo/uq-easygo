@@ -88,3 +88,37 @@
   border-radius: 25rpx;
   /* box-shadow: 0 10rpx 10rpx 2rpx #cccccc; */
 }
+
+/* 必写提示，右上角星号 */
+.red-star {
+  padding:0;
+  color: red;
+}
+
+/* checkbox style */
+/*checkbox 整体大小  */
+checkbox{
+  margin-left: auto;
+  margin-right: 80rpx;
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+}
+/*checkbox 选项框大小  */
+ checkbox .wx-checkbox-input {
+  background-color: rgb(233, 227, 227);
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  margin-top: -20rpx;
+  top: 50%;
+  border-radius: 50%;
+  border-color: transparent; 
+}
+
+
+
+
+
+  

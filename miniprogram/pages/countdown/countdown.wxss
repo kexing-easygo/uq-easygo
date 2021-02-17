@@ -21,7 +21,7 @@
 }
 .header_subject {
   width: 35%;
-  padding:0 10%;
+  padding:0 7.5%;
   color: #000000;
   font-weight: bold;
   height: fit-content;
@@ -35,7 +35,8 @@
   color: #000000;
   height: fit-content;
   text-align: left;
-  font-size: 5em;
+  font-size: 3em;
+  padding-right: 5%;
 }
 .days {
   font-size: 28rpx;
@@ -45,7 +46,7 @@
   width: 15%;
   background-color: #4A4A4A;
   border-radius: 5px;
-  padding: 5rpx;
+  padding: 5rpx 0;
   align-self: flex-start;
   margin-top: 94rpx;
 }

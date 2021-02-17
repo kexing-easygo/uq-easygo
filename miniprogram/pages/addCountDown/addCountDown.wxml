@@ -2,12 +2,12 @@
 <view class="container">
 
 	<view class="heading">
-		<text style="margin-left: 50rpx;">标题:</text>
+		<text style="margin-left: 50rpx;">标题名称<text class="red-star">*</text></text>
 		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 	</view>
 
 	<view class="due_date">
-		<text style="margin-left: 50rpx; width:20%">Due date:</text>
+		<text style="margin-left: 50rpx; width: 21%;">Due Date<text class="red-star">*</text></text>
 		<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" style="width:40%;">
 			<view class="picker">
 				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueDate}}</text>
@@ -48,21 +48,27 @@
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: {{color}};border-radius: 100rpx; margin-left: 22rpx;"></button>
 		</view>
 	</view>
-<!-- 
+
 	<view class="notice_duration">
 		<view>
+			<text style="color:gainsboro;font-size:0.8em;">提醒时间为澳洲时间，用户可以在设置中更改时区</text>
+		</view>
+		<view>
 			<text>一天前提醒</text>
-			<switch type="checkbox" checked="{{hours24}}" bindchange="bind24"></switch>
+			<!-- <switch type="checkbox" checked="{{hours24}}" bindchange="bind24"></switch> -->
+			<checkbox checked="{{hours24}}" bindchange="bind24"></checkbox>
 		</view>
 		<view>
 			<text>三天前提醒</text>
-			<switch type="checkbox" checked="{{hours48}}" bindchange="bind48"></switch>
+			<!-- <switch type="checkbox" checked="{{hours48}}" bindchange="bind48"></switch> -->
+			<checkbox checked="{{hours48}}" bindchange="bind48"></checkbox>
 		</view>
 		<view>
 			<text>一周前提醒</text>
-			<switch type="checkbox" checked="{{hours72}}" bindchange="bind72"></switch>
+			<!-- <switch type="checkbox" checked="{{hours72}}" bindchange="bind72"></switch> -->
+			<checkbox checked="{{hours72}}" bindchange="bind72"></checkbox>
 		</view>
-	</view> -->
+	</view> 
 	<view class="confirm">
 		<button bindtap="addCountDown"><text style="color: #FFFFFF">{{buttonText}}</text></button>
 		
