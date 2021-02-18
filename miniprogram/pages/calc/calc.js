@@ -94,9 +94,40 @@ Page({
   },
 
   /**
+   * 圆形动态进度条：绘制底层白色圆环
+   */
+  drawCirclebg: function() {
+    var circle = wx.createCanvasContext('canvasProgressbg')
+    circle.setLineWidth(5);
+    circle.setStrokeStyle("#000000");
+    circle.setLineCap("butt");
+    circle.beginPath();
+    circle.arc(50, 50, 45, 0, 2 * Math.PI, false);
+    circle.stroke();
+    circle.draw();
+  },
+
+  /**
+   * 圆形动态进度条：绘制上层蓝色圆环
+   */
+  drawCirclefront: function(score) {
+    var circle = wx.createCanvasContext('canvasProgress');
+    circle.setLineWidth(8);
+    circle.setStrokeStyle("#ffffff");
+    circle.setLineCap("round");
+    circle.beginPath();
+    circle.arc(50, 50, 45, 0 * Math.PI, (0.9*2) * Math.PI, false);
+    circle.stroke();
+    circle.draw();
+  },
+
+  /**
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
+    var score = this.data.totalScore/100;
+    this.drawCirclebg(); 
+    this.drawCirclefront(score);
   },
 
   searchCourse: function() {

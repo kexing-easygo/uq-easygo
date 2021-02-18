@@ -14,6 +14,19 @@
 			<button style="font-size: 30rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
 		</view>
 
+		<!-- 动态圆形进度条 -->
+		<view class='progress_box'>
+			<!-- 两个圆的canvas -->
+			<canvas class="progress_bg" canvas-id="canvasProgressbg"></canvas> 
+			<canvas class="progress_canvas"   canvas-id="canvasProgress"></canvas> 
+			<!-- 文字 -->
+			<view class="progress_text">
+					<text class='progress_info'>{{totalScore}}</text>
+					<view class='line'></view>
+					<text class="text">GPA : {{calculatedGPA}}</text>
+			</view>   
+    </view>
+
 		<view class="prompot" wx:if="{{doublePass}}">
 			This course is double pass !
 		</view>
