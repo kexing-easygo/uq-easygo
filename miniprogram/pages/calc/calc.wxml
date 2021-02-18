@@ -10,7 +10,7 @@
 		</view>
 
 		<view class="course_box"> 
-			<input class = "course" bindinput="bindKeyInput" maxlength="8" placeholder="CSSE1001"/>
+			<input class="course" bindinput="bindCourseInput" maxlength="8" value="CSSE1001"/>
 			<button style="font-size: 30rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
 		</view>
 
@@ -42,7 +42,7 @@
 				<view class="table-th">Score</view>
 			</view>
 			<!-- assessment blocks -->
-			<view class="table-tr"  wx:for="{{assessments}}" wx:for-index="index" wx:key="name">
+			<view class="table-tr" wx:for="{{assessments}}" wx:for-index="index" wx:for-item="item">
 				<!-- assessment name -->
 				<!-- <view class="table-td">Assignmen1-12sdfsdfsdfsdfsdf</view> -->
 				<view class="table-td">{{item.name}}</view>
@@ -52,9 +52,9 @@
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
-						<input type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
+						<input type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}" value="{{item.score1}}"/>
 						<view>/</view>
-						<input type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
+						<input type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}" value="{{item.score2}}"/>
 					</view>
 				</view>
 			</view>

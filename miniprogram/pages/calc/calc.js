@@ -12,26 +12,32 @@ Page({
     selectSemester: true,
     semester: "select semester",
     // 测试数据
-    assessments: [
-      {name: "Online Problems", weight: 10},
-      {name: "Assignment 1", weight: 10},
-      {name: "Assignment 2", weight: 15},
-      {name: "Assignment 3", weight: 20},
-      {name: "Final exam", weight: 45},
-      // doublepass: true, 
-      // hurdle: 45, 
-    ],
-    result: "",
+    // assessments: [
+    //   {name: "Online Problems", weight: 10},
+    //   {name: "Assignment 1", weight: 10},
+    //   {name: "Assignment 2", weight: 15},
+    //   {name: "Assignment 3", weight: 20},
+    //   {name: "Final exam", weight: 45},
+    //   // doublepass: true, 
+    //   // hurdle: 45, 
+    // ],
+    assessments: [],
+    course: "",
     // 获得总分
     totalScore: 0,
     // 丢失总分
     totalDropped: 0,
     // 是否为doublePass
     doublePass: true,
-    calculatedGPA: 0
+    calculatedGPA: 0,
+    // 历史数据
+    historyData: {},
+    userLoggedIn: false
 
   },
-  
+  bindCourseInput: function(e) {
+    this.setData({course: e.detail.value})
+  },
   /** 
    * 获取键盘输入的作业实际得分
    * 和总分数。批量化管理所有输入框
@@ -69,6 +75,8 @@ Page({
       totalDropped: totalDropped,
       calculatedGPA: this.calculateGPA(totalScore)
     })
+    this.drawCirclebg(); 
+    this.drawCirclefront(totalScore);
   },
   calculateGPA: function(score) {
     if (score >= 50 && score < 64) {
@@ -116,7 +124,7 @@ Page({
     circle.setStrokeStyle("#ffffff");
     circle.setLineCap("round");
     circle.beginPath();
-    circle.arc(50, 50, 45, 0 * Math.PI, (0.9*2) * Math.PI, false);
+    circle.arc(50, 50, 45, 0 * Math.PI, ((score / 100)*2) * Math.PI, false);
     circle.stroke();
     circle.draw();
   },
@@ -125,29 +133,89 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    var score = this.data.totalScore/100;
+    // var score = this.data.totalScore/100;
     this.drawCirclebg(); 
-    this.drawCirclefront(score);
+    this.drawCirclefront(0);
+    let that = this
+    // let openid = app.globalData.openid
+    let openid = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+    // 检查用户登录
+    if (openid != null && openid != undefined) {
+      // 如果用户登录过
+      // 数据库搜索
+      that.setData({
+        userLoggedIn: true
+      })
+      db.collection("MainUser")
+      .where({
+        _openid: openid,
+        "history.calculator": _.neq([]) 
+      }).get({
+        success: function(res) {
+          // 如果拿到了，去拿history
+          if (res.data != null) {
+            var historyData = res.data[0].history.calculator
+            that.setData({historyData: historyData})
+          }
+        }
+      })
+    }
   },
-
+  /**
+   * 点击搜索按钮，搜索课程信息。
+   * 如果数据库内没有该课程，弹窗提示查无此课。
+   * 如果有，进一步检查是否登录
+   */
   searchCourse: function() {
-    let value = this.data.result
+    let value = this.data.course
+    // let value = "CSSE1001"
     let _this = this
-    // if (value.length == 8) {
-    //   // 数据库搜索
-    //   db.collection("Courses").where({
-    //     name: db.RegExp({
-    //       regexp: '^' + value
-    //     })
-    //   }).get({
-    //     success: function(res) {
-    //       console.log(res.data[0].assessment)
-    //       _this.setData({
-    //         assessments: res.data[0].assessment
-    //       })
-    //     }
-    //   })
-    // }
+    // 数据库搜索
+    db.collection("Courses").where({
+      name: db.RegExp({
+        regexp: '^' + value
+      })
+    }).get({
+      success: function(res) {
+        var assessments = res.data[0].assessment
+        if (_this.data.userLoggedIn && _this.data.historyData) {
+          var historyData = []
+          for (var i = 0; i < _this.data.historyData.length; i++) {
+            var item = _this.data.historyData[i]
+            if (item.name == value) {
+              historyData = item.data
+            }
+          }
+          console.log(historyData)
+          for (var j = 0; j < historyData.length; j++) {
+            assessments[j]["score1"] = historyData[j].score1
+            assessments[j]["score2"] = historyData[j].score2
+          }
+          _this.setData({
+            historyData: historyData,
+            assessments: assessments
+          })
+        }
+      }
+    })
+    // 只有当用户登录并且有历史记录的时候
+    // 才询问是否加载历史记录
+    
+      // this.setData({assessments: assessments})
+      // wx.showModal({
+      //   title: '温馨提示',
+      //   content: '检测到您有使用过计算器，是否需要为您加载历史记录呢？',
+      //   success(res) {
+      //     if (res.confirm) {
+      //       
+      //       }
+      //     } else if (res.cancel) {
+            
+      //     }
+      //   }
+      // })
+    
+    
   },
 
   /**
