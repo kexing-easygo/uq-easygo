@@ -149,7 +149,8 @@ Page({
       }).get({
         success: function(res) {
           // 如果拿到了，去拿history
-          if (res.data != null) {
+          console.log(res.data.length)
+          if (res.data.length > 0) {
             var historyData = res.data[0].history.calculator
             that.setData({historyData: historyData})
           }
@@ -173,7 +174,7 @@ Page({
     }).get({
       success: function(res) {
         var assessments = res.data[0].assessment
-        if (_this.data.userLoggedIn && _this.data.historyData) {
+        if (_this.data.userLoggedIn == true && _this.data.historyData.length > 0) {
           // 只有当用户登录并且有历史记录的时候
           // 才询问是否加载历史记录
           wx.showModal({
@@ -196,14 +197,15 @@ Page({
                   historyData: historyData,
                 })
               }
-              _this.setData({
-                assessments: assessments
-              })
-              _this.calculateScore(_this.data.assessments)
+              
             }
           })
           
         }
+        _this.setData({
+          assessments: assessments
+        })
+        _this.calculateScore(_this.data.assessments)
       }
     })
     
