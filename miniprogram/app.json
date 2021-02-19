@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/calc/calc",
     "pages/home/home",
+    "pages/calc/calc",
     "pages/countdown/countdown",
     "pages/profile/profile",
     "pages/addCountDown/addCountDown",

@@ -11,16 +11,6 @@ Page({
     InComingImage:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器敬请期待页面.png",
     selectSemester: true,
     semester: "select semester",
-    // 测试数据
-    // assessments: [
-    //   {name: "Online Problems", weight: 10},
-    //   {name: "Assignment 1", weight: 10},
-    //   {name: "Assignment 2", weight: 15},
-    //   {name: "Assignment 3", weight: 20},
-    //   {name: "Final exam", weight: 45},
-    //   // doublepass: true, 
-    //   // hurdle: 45, 
-    // ],
     assessments: [],
     course: "",
     // 获得总分
@@ -44,39 +34,45 @@ Page({
    */
   bindKeyInput: function (e) {
     var key = e.currentTarget.id
+    var assessments = this.data.assessments
     var scoreType = e.currentTarget.dataset.model
-    var item = this.data.assessments[key]
+    var item = assessments[key]
     // 根据输入框类型更新数值
     if (scoreType == "score1") {
-      item["score1"] = e.detail.value
+      item["score1"] = parseFloat(e.detail.value)
     }
     if (scoreType == "score2") {
-      item["score2"] = e.detail.value
-    }
-    // 如果两个输入框都有分数
-    // 且满足条件，开始计算分数
-    var percentage = item["score1"] / item["score2"]
-    if (percentage <= 1 && percentage >= 0) {
-      var mark = item["score1"] / item["score2"] * item.weight
-      // 更新已获得百分比和丢失百分比
-      item["score"] = mark
-      item["dropped"] = item.weight - mark
-    }
-    var totalScore = 0
-    var totalDropped = 0
-    for (var i = 0; i < this.data.assessments.length; i++) {
-      if (this.data.assessments[i]["score"] >= 0) {
-        totalScore += this.data.assessments[i]["score"]
-      }
-      totalDropped = 100 - totalScore
+      item["score2"] = parseFloat(e.detail.value)
     }
     this.setData({
-      totalScore: totalScore,
-      totalDropped: totalDropped,
-      calculatedGPA: this.calculateGPA(totalScore)
+      assessments: assessments
     })
+    this.calculateScore(this.data.assessments)
+    
+  },
+  calculateScore: function(assessments) {
+    var score = 0
+    for (var i = 0; i < assessments.length; i++) {
+      var item = assessments[i]
+      var score1 = item.score1
+      var score2 = item.score2
+      var weight = item.weight
+      // score += 
+      if (score1 >= 0 && score2 > 0) {
+        score += (score1 / score2) * weight
+      }
+    }
+    score = parseFloat(score.toFixed(2))
+    var drop = 100 - score
+    var gpa = this.calculateGPA(score)
+    this.setData({
+      totalDropped: drop,
+      totalScore: score,
+      calculatedGPA: gpa
+    })
+
     this.drawCirclebg(); 
-    this.drawCirclefront(totalScore);
+    this.drawCirclefront(score);
   },
   calculateGPA: function(score) {
     if (score >= 50 && score < 64) {
@@ -168,7 +164,6 @@ Page({
    */
   searchCourse: function() {
     let value = this.data.course
-    // let value = "CSSE1001"
     let _this = this
     // 数据库搜索
     db.collection("Courses").where({
@@ -179,41 +174,39 @@ Page({
       success: function(res) {
         var assessments = res.data[0].assessment
         if (_this.data.userLoggedIn && _this.data.historyData) {
-          var historyData = []
-          for (var i = 0; i < _this.data.historyData.length; i++) {
-            var item = _this.data.historyData[i]
-            if (item.name == value) {
-              historyData = item.data
+          // 只有当用户登录并且有历史记录的时候
+          // 才询问是否加载历史记录
+          wx.showModal({
+            title: '温馨提示',
+            content: '检测到您有使用过计算器，是否需要为您加载历史记录呢？',
+            success(res) {
+              if (res.confirm) {
+                var historyData = []
+                for (var i = 0; i < _this.data.historyData.length; i++) {
+                  var item = _this.data.historyData[i]
+                  if (item.name == value) {
+                    historyData = item.data
+                  }
+                }
+                for (var j = 0; j < historyData.length; j++) {
+                  assessments[j]["score1"] = historyData[j].score1
+                  assessments[j]["score2"] = historyData[j].score2
+                }
+                _this.setData({
+                  historyData: historyData,
+                })
+              }
+              _this.setData({
+                assessments: assessments
+              })
+              _this.calculateScore(_this.data.assessments)
             }
-          }
-          console.log(historyData)
-          for (var j = 0; j < historyData.length; j++) {
-            assessments[j]["score1"] = historyData[j].score1
-            assessments[j]["score2"] = historyData[j].score2
-          }
-          _this.setData({
-            historyData: historyData,
-            assessments: assessments
           })
+          
         }
       }
     })
-    // 只有当用户登录并且有历史记录的时候
-    // 才询问是否加载历史记录
     
-      // this.setData({assessments: assessments})
-      // wx.showModal({
-      //   title: '温馨提示',
-      //   content: '检测到您有使用过计算器，是否需要为您加载历史记录呢？',
-      //   success(res) {
-      //     if (res.confirm) {
-      //       
-      //       }
-      //     } else if (res.cancel) {
-            
-      //     }
-      //   }
-      // })
     
     
   },
@@ -241,9 +234,37 @@ Page({
 
   /**
    * Lifecycle function--Called when page unload
+   * 当用户退出该页面的时候，
    */
   onUnload: function () {
-
+    // 用户退出时保存所有历史信息
+    let _this = this
+    let name = "CSSE1001"
+    var assessments = _this.data.assessments
+    var d = []
+    for (var i = 0; i < assessments.length; i++) {
+      var item = assessments[i]
+      var temp = {}
+      if (item.score1) {
+        temp["score1"] = item.score1
+      }
+      if (item.score2) {
+        temp["score2"] = item.score2
+      }
+      if (Object.keys(temp).length != 0) {
+        d.push(temp)
+      }
+    }
+    var updated = [{data: d, name: name}]
+    db.collection("MainUser").where({
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+    }).update({
+      data: {
+        "history.calculator": updated
+      }, success: function(res) {
+        console.log(res)
+      }
+    })
   },
 
   /**
