@@ -150,20 +150,42 @@ Page({
     })
   },
   testCrontab: function() {
-    wx.cloud.callFunction({
-      name: 'crontab',
-      // data: {
-      //     "toAddr": this.data.inputEmailValue,
-      //     "subject": "UQ校园通", 
-      //     "content": content,
-      // },
-      success: res => {
-          console.log(res)
-      },
-      fail: err => {
-          console.error("发送邮件云函数调用失败。")
+    // wx.requestSubscribeMessage({
+    //   tmplIds: ['YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI'],
+    //   success (res) {
+    //     console.log(res)
+    //   }
+    // })
+    // wx.cloud.callFunction({
+    //   name: 'sendTemplate',
+    //   // data: {
+    //   //     "toAddr": this.data.inputEmailValue,
+    //   //     "subject": "UQ校园通", 
+    //   //     "content": content,
+    //   // },
+    //   success: res => {
+    //       console.log(res)
+    //   },
+    //   fail: err => {
+    //       console.error("模版云函数调用失败。")
+    //       console.error(err)
+    //   }
+    // })
+    wx.getSetting({
+      withSubscriptions: true,
+      success (res) {
+        console.log(res.subscriptionsSetting)
+        // res.subscriptionsSetting = {
+        //   mainSwitch: true, // 订阅消息总开关
+        //   itemSettings: {   // 每一项开关
+        //     SYS_MSG_TYPE_INTERACTIVE: 'accept', // 小游戏系统订阅消息
+        //     SYS_MSG_TYPE_RANK: 'accept'
+        //     zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: 'reject', // 普通一次性订阅消息
+        //     ke_OZC_66gZxALLcsuI7ilCJSP2OJ2vWo2ooUPpkWrw: 'ban',
+        //   }
+        // }
       }
-  })
+    })
   }
 
 })
