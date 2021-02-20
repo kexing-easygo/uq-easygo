@@ -1,15 +1,15 @@
 {
   "pages": [
-    "pages/countdown/countdown",
     "pages/profile/profile",
+    "pages/email/email",
+    "pages/basicUserInfo/basicUserInfo",
+    "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
     "pages/home/home",
     "pages/searchbar/searchbar",
     "pages/getCode/getCode",
-    "pages/basicUserInfo/basicUserInfo",
     "pages/calc/calc",
     "pages/mobile/mobile",
-    "pages/email/email",
     "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
     "pages/modifyUserName/modifyUserName",

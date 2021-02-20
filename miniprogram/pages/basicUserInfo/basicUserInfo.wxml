@@ -24,7 +24,7 @@
 	<view class="container">
 		<view>学生账号</view>
 		<view>
-			<text style="color: #A4A4A4;">未绑定</text>
+			<text style="color: #A4A4A4;">暂未上线</text>
 			>
 		</view>
 	</view>
