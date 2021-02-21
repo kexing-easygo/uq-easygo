@@ -1,4 +1,7 @@
 /* pages/profile/profile.wxss */
+.wrapper {
+    background-color: #E5EAF4;
+}
 
 .container {
     height: 242rpx;
@@ -12,9 +15,7 @@
 
 .userinfo {
     display: flex;
-    /* flex-direction: column; */
     align-items: center;
-    /* align-content: space-between; */
     width: 642rpx;
     height: fit-content;
 }
@@ -27,8 +28,9 @@
     align-items: center;
     justify-content: space-between;
     color: #FFFFFF;
-    font-weight: normal;
-    font-size: 34rpx;
+    font-weight: bolder;
+    font-size: 44rpx;
+    
 }
 .userinfo-avatar {
     width: 100rpx;
@@ -36,23 +38,47 @@
     border-radius: 50%;
 }
 
-.page-section {
+.line {
+    height: 2rpx;
+    background-color: #EDEDED;
+}
+
+.icon {
+    width: 68rpx;
+    height: 68rpx;
+}
+
+.page-block {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
     margin-top: 40rpx;
     height: 100rpx;
-    /* box-shadow: h-shadow v-shadow blur spread color inset; */
     box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-    -webkit-box-shadow: 0 4px 4px 1px #cccccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #FFFFFF;
 }
-.page-section navigator {
-    width: 642rpx;
-    margin: 0 auto;
+
+.img {
+    width: 15%;
+    display: flex;
+    margin-left: 50rpx;
+}
+
+.txt {
+    width: 80%;
+    display: flex;
+    margin-right: 70rpx;
+    justify-content: space-between;
+    font-size: 34rpx;
+    color: rgba(0, 0, 0, 0.9);
+}
+
+.page-block navigator {
+    width: 100%;
     height: fit-content;
     display: flex;
-    justify-content: space-between;
-}
-.page-section navigator view {
-    float: left;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-items: center;
 }

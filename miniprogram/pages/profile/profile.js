@@ -14,6 +14,10 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
     // anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg"
+    basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本信息.png",
+    basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本设置.png",
+    bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/邮箱绑定.png",
+    bindingPhoneIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/手机绑定.png",
   },
 
   /**
