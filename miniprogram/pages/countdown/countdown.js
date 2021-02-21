@@ -21,20 +21,19 @@ Page({
       selectedAssignments: [],
       showResult: "",
       history: [],
-      showHistory: "display:none",
+      showHistory: false,
     },
   //显示搜索记录
   showHistory: function (value) {
-
     this.setData({
-      showHistory: "display:block",
+      showHistory: true,
     })
   },
   //用户点击搜索记录的时候，跳转到对应界面
   historyTap: function (value) {
     //
     this.setData({
-      showHistory: "display:none",
+      showHistory: false,
     })
     var history = value['target']['dataset']['historytag'];
     var temp = [];
@@ -115,6 +114,12 @@ Page({
 
   },
 
+  hideHistory: function(e) {
+    this.setData({
+      showHistory: false,
+    });
+  },
+
   // 用于实现点击“核算”时，来显示与隐藏整个“conts”，这一部分其实是利用了面板的显示与隐藏功能  
   change: function () {
     let that = this;
@@ -157,15 +162,18 @@ Page({
               )
               .get({
                     success: function (res) {
-                      console.log("122222");
-                      temp = res.data[0].userAssignment
+                      temp = res.data[0].userAssignments;
+                      
                       // 如果用户有登记过assignment
                       if (res.data.length > 0) {
-                        var userAssignments = res.data[0].userAssignment
+                        
+                        var userAssignments = res.data[0].userAssignments;
                         app.globalData.userAssignments = userAssignments;
+                        
                         var diffs = []
                         var now = new Date().getTime()
                         for (var i = 0; i < userAssignments.length; i++) {
+                          
                           var d = new Date(userAssignments[i]["date"]).getTime()
                           // 计算两者时间差（和云函数同款）
                           var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
@@ -197,6 +205,7 @@ Page({
                               history: res.data[0].history.countdown,
 
                             })
+                            
                           }
                         }
                       }

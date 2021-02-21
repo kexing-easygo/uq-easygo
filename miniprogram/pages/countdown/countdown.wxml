@@ -9,19 +9,19 @@
 
 	</view>
 	<view class="searchbar">
-		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="showHistory"
-					  bindclear="clear" search="{{search}}"></mp-searchbar>
-	</view>
-
-	<view class="history" style="{{showHistory}}">
-		<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
-			<image class="hisIcon" src="{{historyIcon}}"></image>
-			<text class="hisContent">{{item}}</text>
+		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="showHistory" bindclear="clear" search="{{search}}"></mp-searchbar>
+		<view class="history hide{{showHistory ? 'show' : '' }}" >
+			<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
+				<image class="hisIcon" src="{{historyIcon}}"></image>
+				<text class="hisContent">{{item}}</text>
+			</view>
 		</view>
 	</view>
 
+	
 
-	<view class="assignment-list" wx:if="{{showAll}}">
+
+	<view class="assignment-list"  wx:if="{{showAll}}">
 		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
 				<!-- <view class="test"> -->
@@ -69,7 +69,7 @@
 	</view>
 </view>
 
-<view class="hide{{showView?'show':''}}">
+<view class="hide{{showView?'show':''}}" bindtap="hideHistory"> 
 	<!--遮罩层  -->
 	<view class="shade">
 		<!--蒙板内部-->
@@ -89,3 +89,6 @@
 		</view>
 	</view>
 </view>
+
+
+<view class="shade hide{{showHistory?'show':''}}" bindtap="hideHistory"></view>

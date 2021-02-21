@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
+    "pages/notificationSetting/notificationSetting",
     "pages/addCountDown/addCountDown",
     "pages/profile/profile",
     "pages/home/home",
