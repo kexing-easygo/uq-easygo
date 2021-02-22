@@ -1,13 +1,6 @@
 {
   "pages": [
     "pages/profile/profile",
-<<<<<<< HEAD
-=======
-    "pages/email/email",
-    "pages/basicUserInfo/basicUserInfo",
-    "pages/countdown/countdown",
-    "pages/addCountDown/addCountDown",
->>>>>>> 370f6e363142ca77a13afc9ce43900a07dcc511f
     "pages/home/home",
     "pages/otherSettings/otherSettings",
     "pages/basicUserInfo/basicUserInfo",

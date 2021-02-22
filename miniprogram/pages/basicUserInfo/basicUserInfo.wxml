@@ -12,7 +12,6 @@
 		</view>
 	</view>
 
-<<<<<<< HEAD
 	<view class="page-section">
 		<view class="container">
 			<view>UQ EasyGo 账号</view>
@@ -20,14 +19,6 @@
 				<text>未绑定</text>
 				>
 			</view>
-=======
-<view class="page-section">
-	<view class="container">
-		<view>学生账号</view>
-		<view>
-			<text style="color: #A4A4A4;">暂未上线</text>
-			>
->>>>>>> 370f6e363142ca77a13afc9ce43900a07dcc511f
 		</view>
 	</view>
 
