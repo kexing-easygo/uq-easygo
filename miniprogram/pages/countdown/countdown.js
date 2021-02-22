@@ -149,10 +149,10 @@ Page({
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
-
         if (res.authSetting['scope.userInfo']) {
-
+          
           // 获取用户所有的assignments
+          console.log("?")
           var temp = []
           db.collection('MainUser')
               .where(
@@ -160,57 +160,56 @@ Page({
                     _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
                   }
               )
-              .get({
-                    success: function (res) {
-                      temp = res.data[0].userAssignments;
+              .get(
+                {
+                  success: function (res) {
+                    temp = res.data[0].userAssignments
+                    // 如果用户有登记过assignment
+                    if (temp.length > 0) {
+                      var userAssignments = res.data[0].userAssignments
+                      app.globalData.userAssignments = userAssignments;
                       
-                      // 如果用户有登记过assignment
-                      if (res.data.length > 0) {
+                      var diffs = []
+                      var now = new Date().getTime()
+                      for (var i = 0; i < userAssignments.length; i++) {
                         
-                        var userAssignments = res.data[0].userAssignments;
-                        app.globalData.userAssignments = userAssignments;
-                        
-                        var diffs = []
-                        var now = new Date().getTime()
-                        for (var i = 0; i < userAssignments.length; i++) {
-                          
-                          var d = new Date(userAssignments[i]["date"]).getTime()
-                          // 计算两者时间差（和云函数同款）
-                          var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                          diffs.push(diff)
-                          userAssignments[i]["countdown"] = diff
-                          // 计算style中的进度条百分比
-                          var percentage = Number(diff / 20 * 100).toFixed(1)
-                          if (percentage > 100) {
-                            percentage = 0
-                          } else {
-                            percentage = 100 - percentage
-                          }
-                          userAssignments[i]["percentage"] = percentage
+                        var d = new Date(userAssignments[i]["date"]).getTime()
+                        // 计算两者时间差（和云函数同款）
+                        var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                        diffs.push(diff)
+                        userAssignments[i]["countdown"] = diff
+                        // 计算style中的进度条百分比
+                        var percentage = Number(diff / 20 * 100).toFixed(1)
+                        if (percentage > 100) {
+                          percentage = 0
+                        } else {
+                          percentage = 100 - percentage
                         }
-                        var minValue = Math.min.apply(null, diffs)
-                        // 匹配最近的作业名称
-                        for (var i = 0; i < temp.length; i++) {
-                          temp[i]["id"] = i
-                          var d = new Date(userAssignments[i]["date"]).getTime()
-                          var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                          if (diff == minValue) {
-                            var name = userAssignments[i]["name"]
-                            // 决定了header的assignment即为i代表的assignment值
-                            that.setData({
-                              userAssignments: temp,
-                              headerAssignment: userAssignments[i],
-                              recentAssignmentName: name,
-                              recentAssignmentDate: minValue,
-                              history: res.data[0].history.countdown,
+                        userAssignments[i]["percentage"] = percentage
+                      }
+                      var minValue = Math.min.apply(null, diffs)
+                      // 匹配最近的作业名称
+                      for (var i = 0; i < temp.length; i++) {
+                        temp[i]["id"] = i
+                        var d = new Date(userAssignments[i]["date"]).getTime()
+                        var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                        if (diff == minValue) {
+                          var name = userAssignments[i]["name"]
+                          // 决定了header的assignment即为i代表的assignment值
+                          that.setData({
+                            userAssignments: temp,
+                            headerAssignment: userAssignments[i],
+                            recentAssignmentName: name,
+                            recentAssignmentDate: minValue,
+                            history: res.data[0].history.countdown,
 
-                            })
-                            
-                          }
+                          })
+                          
                         }
                       }
-
                     }
+
+                  }
                   }
               )
 

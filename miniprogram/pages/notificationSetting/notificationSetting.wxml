@@ -16,13 +16,13 @@
 		</view>
 		<view>
 			<text>中国时间</text>
-			<!-- <switch type="checkbox" checked="{{china}}" bindchange="bindChina"></switch> -->
-			<checkbox checked="{{china}}" bindchange="bindChina"></checkbox>
+			<switch type="switch" checked="{{china}}" bindchange="bindChina"></switch>
+			<!-- <checkbox checked="{{china}}" bindchange="bindChina"></checkbox> -->
 		</view>
 		<view>
 			<text>澳洲时间</text>
-			<!-- <switch type="checkbox" checked="{{australia}}" bindchange="bindAustralia"></switch> -->
-			<checkbox checked="{{australia}}" bindchange="bindAustralia"></checkbox>
+			<switch type="switch" checked="{{australia}}" bindchange="bindAustralia"></switch>
+			<!-- <checkbox checked="{{australia}}" bindchange="bindAustralia"></checkbox> -->
 		</view>
   </view>
   <view class="notice_duration">
@@ -31,18 +31,15 @@
 		</view>
 		<view>
 			<text>一天前提醒</text>
-			<!-- <switch type="checkbox" checked="{{oneDay}}" bindchange="bindOneDay"></switch> -->
-			<checkbox checked="{{oneDay}}" bindchange="bindOneDay"></checkbox>
+			<switch type="switch" checked="{{oneDay}}" bindchange="bindOneDay"></switch>
 		</view>
 		<view>
 			<text>三天前提醒</text>
-			<!-- <switch type="checkbox" checked="{{threeDay}}" bindchange="bindThreeDay"></switch> -->
-			<checkbox checked="{{threeDay}}" bindchange="bindThreeDay"></checkbox>
+			<switch type="switch" checked="{{threeDay}}" bindchange="bindThreeDay"></switch>
 		</view>
 		<view>
 			<text>一周前提醒</text>
-			<!-- <switch type="checkbox" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch> -->
-			<checkbox checked="{{oneWeek}}" bindchange="bindOneWeek"></checkbox>
+			<switch type="switch" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch>
 		</view>
   </view>
   <view>

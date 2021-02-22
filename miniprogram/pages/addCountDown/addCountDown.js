@@ -23,12 +23,9 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "2021-01-01",
-    dueTime: '23:10',
+    dueDate: "",
+    dueTime: '',
     color: "",
-    // hours24: false,
-    // hours48: false,
-    // hours72: false,
     years,
     showDelete: false,
     index: 0,
@@ -53,6 +50,7 @@ Page({
         that.setData({
           title: data.name,
           dueDate: data.date,
+          dueTime: data.time,
           color: data.color,
           showDelete: true,
           index: raw.index,
@@ -75,7 +73,8 @@ Page({
         date: this.data.dueDate,
         name: this.data.title,
         // color是颜色板选择的颜色
-        color: this.data.color
+        color: this.data.color,
+        time: this.data.dueTime
       }
       db.collection("MainUser")
         .where({
@@ -83,7 +82,7 @@ Page({
         })
         .update({
           data: {
-            userAssignment: temp
+            userAssignments: temp
           }, success: function(res) {
             if (res.stats.updated > 0) {
               console.log("作业条目更新成功")
@@ -99,12 +98,13 @@ Page({
         })
         .update({
           data: {
-            userAssignment: _.push(
+            userAssignments: _.push(
               {
                 date: this.data.dueDate,
                 name: this.data.title,
                 // color是颜色板选择的颜色
-                color: this.data.color
+                color: this.data.color,
+                time: this.data.dueTime
               }
             )
           }, success: function(res) {
@@ -187,7 +187,7 @@ Page({
           })
           .update({
             data: {
-              userAssignment: temp
+              userAssignments: temp
             }, success: function(res) {
               if (res.stats.updated > 0) {
                 console.log("作业条目删除成功")
