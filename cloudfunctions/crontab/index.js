@@ -11,15 +11,18 @@ cloud.init({
     env: cloud.DYNAMIC_CURRENT_ENV
 })
 
-async function template(title, time, duetime, content, notes) {
+async function template(title, time, duetime) {
+    var tt = String(duetime.getFullYear()) + "年" + String(duetime.getMonth() + 1) + "月" + String(duetime.getDate()) + "日"
+    var content = "您的" + title + "作业将"
+    content += "due."
     var res = await cloud.callFunction({
         name: "sendTemplate",
         data: {
             "作业标题": title,
-            "时间": time,
-            "截止时间": duetime,
+            "时间": String(time.getFullYear()) + "年" + String(time.getMonth() + 1) + "月" + String(time.getDate()) + "日",
+            "截止时间": tt,
             "提醒内容": content,
-            "备注": notes
+            "备注": "UQ校园通团队"
         }
     })
     console.log(res)
@@ -81,6 +84,15 @@ function dateDiff(date1, date2, location) {
     var diff = parseInt((new2 - new1) / (1000 * 60 * 60 * 24))
     return diff
 }
+
+function processDateTime(date, time) {
+    // var d = new Date("2021-02-02T23:10:00")
+    // console.log(d.getDate())
+    var string = date + "T" + time + ":00"
+    return new Date(string)
+}
+
+
 async function getAllData() {
     const MAX_LIMIT = 100
     const dataCount = await db.collection("MainUser").count()
@@ -132,46 +144,46 @@ async function getAllData() {
         // 第二次循环，获取每个用户的所有作业
         for (let j = 0; j < userAssignments.length; j++) {
             const ass = userAssignments[j]
-            const dueDate = new Date(ass.date)
+            const date = ass.date
+            const time = ass.time
+            var dueDate = processDateTime(date, time)
             const name = ass.name
             // 忽视due的时间，只计算日期
             var dayDiff = dateDiff(now, dueDate, location)
-            console.log(dayDiff)
             // 检查是否相差正数天
             if (dayDiff >= 0) {
-                // if (emailNotification == true && email != '') {
-                //     if (dayDiff <= 1 && oneDay == 1) {
-                //         send(email, name, "oneDay")
-                //         // 设置已经提醒过，提醒过不再二次提醒
-                //         update(openid, name, "oneDay")
-                //     }
-                //     if (dayDiff <= 3 && threeDay == 1) {
-                //         send(email, name, "threeDay")
-                //         // 设置已经提醒过，提醒过不再二次提醒
-                //         update(openid, name, "threeDay")
-                //     }
-                //     if (dayDiff <= 7 && oneWeek == 1) {
-                //         send(email, name, "oneWeek")
-                //         // 设置已经提醒过，提醒过不再二次提醒
-                //         update(openid, name, "oneWeek")
-                //     }
-                // }
-                if (wechatNotification == true) {
+                if (emailNotification == true && email != '') {
                     if (dayDiff <= 1 && oneDay == 1) {
-                        template(name, now, dueDate, "内容", "无")
+                        send(email, name, "oneDay")
                         // 设置已经提醒过，提醒过不再二次提醒
-                        update(openid, name, "oneDay")
+                        // update(openid, name, "oneDay")
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
-                        template(name, now, dueDate, "内容", "无")
+                        send(email, name, "threeDay")
                         // 设置已经提醒过，提醒过不再二次提醒
-                        update(openid, name, "threeDay")
+                        // update(openid, name, "threeDay")
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
-                        console.log("OK")
-                        template(name, now, dueDate, "内容", "无")
+                        send(email, name, "oneWeek")
                         // 设置已经提醒过，提醒过不再二次提醒
-                        update(openid, name, "oneWeek")
+                        // update(openid, name, "oneWeek")
+                    }
+                }
+                if (wechatNotification == true) {
+                    if (dayDiff <= 1 && oneDay == 1) {
+                        template(name, now, dueDate)
+                        // 设置已经提醒过，提醒过不再二次提醒
+                        // update(openid, name, "oneDay")
+                    }
+                    if (dayDiff <= 3 && threeDay == 1) {
+                        template(name, now, dueDate)
+                        // 设置已经提醒过，提醒过不再二次提醒
+                        // update(openid, name, "threeDay")
+                    }
+                    if (dayDiff <= 7 && oneWeek == 1) {
+                        template(name, now, dueDate)
+                        // 设置已经提醒过，提醒过不再二次提醒
+                        // update(openid, name, "oneWeek")
                     }
                 }
             }

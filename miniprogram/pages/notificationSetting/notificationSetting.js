@@ -20,18 +20,28 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (!wx.cloud) {
-      console.error('请使用 2.2.3 或以上的基础库以使用云能力')
-    } else {
-      wx.cloud.init({
-        // env 参数说明：
-        //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
-        //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
-        //   如不填则使用默认环境（第一个创建的环境）
-        env: 'uqeasygo1',
-        traceUser: true,
-      })
-    }
+    db.collection("MainUser").
+    where({
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+    }).get().then(res => {
+      if (res.data.length > 0) {
+        var notification = res.data[0].notification
+        this.setData(
+          {
+            emailNotification: notification.emailNotification,
+            wechatNotification: notification.wechatNotification,
+            oneDay: notification.oneDay,
+            threeDay: notification.threeDay,
+            oneWeek: notification.oneWeek
+          }
+        )
+        if (notification.location == "CH") {
+          this.setData({china: true})
+        } else if (notification.location == "AU") {
+          this.setData({australia: true})
+        }
+      }
+    })
   },
   bindSwitch1: function (e) {
     this.setData({
@@ -73,7 +83,7 @@ Page({
         oneDay: temp
       }
     )
-    if (this.wechatNotification == true) {
+    if (this.data.wechatNotification == true) {
       this.requestSubscribe()
     }
   },
@@ -89,7 +99,7 @@ Page({
         threeDay: temp
       }
     )
-    if (this.wechatNotification == true) {
+    if (this.data.wechatNotification == true) {
       this.requestSubscribe()
     }
   },
@@ -105,7 +115,7 @@ Page({
         oneWeek: temp
       }
     )
-    if (this.wechatNotification == true) {
+    if (this.data.wechatNotification == true) {
       this.requestSubscribe()
     }
   },

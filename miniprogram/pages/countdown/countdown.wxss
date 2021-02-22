@@ -143,6 +143,16 @@
   text-align: center;
 }
 
+/* .countdown_days_red {
+  width: 20%;
+  padding: 1%;
+  border: 1rpx solid #707070;
+  border-radius: 5px;
+  background-color: #E66671;
+  color: #FFFFFF;
+  text-align: center;
+} */
+
 .navi-buttons {
   position: absolute;
   bottom: 20rpx;

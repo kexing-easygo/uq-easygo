@@ -22,6 +22,7 @@ Page({
       showResult: "",
       history: [],
       showHistory: false,
+      style: "countdown_days"
     },
   //显示搜索记录
   showHistory: function (value) {
@@ -140,7 +141,6 @@ Page({
 	 * Lifecycle function--Called when page load
 	 */
   onLoad: function (options) {
-
       // 如果用户没登录，会提示弹窗
     this.setData({
       search: this.search.bind(this)
@@ -150,9 +150,7 @@ Page({
       withSubscriptions: true,
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
-          
           // 获取用户所有的assignments
-          console.log("?")
           var temp = []
           db.collection('MainUser')
               .where(
@@ -164,16 +162,26 @@ Page({
                 {
                   success: function (res) {
                     temp = res.data[0].userAssignments
+                    if (res.data[0].history) {
+                      that.setData({
+                        history: res.data[0].history.countdown,
+                      })
+                    }
                     // 如果用户有登记过assignment
                     if (temp.length > 0) {
                       var userAssignments = res.data[0].userAssignments
                       app.globalData.userAssignments = userAssignments;
-                      
                       var diffs = []
                       var now = new Date().getTime()
+                      if (res.data[0].notification.location == "AU") {
+                        // 转化为澳洲时间计算
+                        now += 2 * 60 * 60 * 1000
+                      } 
                       for (var i = 0; i < userAssignments.length; i++) {
-                        
-                        var d = new Date(userAssignments[i]["date"]).getTime()
+                        var date = userAssignments[i]["date"]
+                        var time = userAssignments[i]["time"]
+                        var string = date + "T" + time + ":00"
+                        var d = new Date(string).getTime()
                         // 计算两者时间差（和云函数同款）
                         var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                         diffs.push(diff)
@@ -197,20 +205,18 @@ Page({
                           var name = userAssignments[i]["name"]
                           // 决定了header的assignment即为i代表的assignment值
                           that.setData({
-                            userAssignments: temp,
                             headerAssignment: userAssignments[i],
                             recentAssignmentName: name,
                             recentAssignmentDate: minValue,
-                            history: res.data[0].history.countdown,
-
+                            userAssignments: temp,
+                            
                           })
-                          
                         }
                       }
-                    }
 
+                    }
                   }
-                  }
+                }
               )
 
         } else {

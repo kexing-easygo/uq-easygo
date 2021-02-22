@@ -13,9 +13,9 @@
 				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueDate}}</text>
 			</view>
 		</picker>
-		<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:40%;">
+		<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:20%;">
 			<view class="picker">
-				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueTime}}</text>
+				<text style="margin-left: 10rpx; margin-right: 20rpx;">{{dueTime}}</text>
 			</view>
 		</picker>
 	</view>

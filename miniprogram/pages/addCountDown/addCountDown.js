@@ -23,8 +23,8 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "",
-    dueTime: '',
+    dueDate: "2020-02-02",
+    dueTime: '11:11',
     color: "",
     years,
     showDelete: false,
@@ -44,8 +44,10 @@ Page({
     eventChannel.on('acceptDataFromOpenerPage', function(e) {
       // 解码json数据
       var raw = JSON.parse(e)
+      console.log(raw)
       var data = raw.data
-      if (data != undefined) {
+      
+      if (Object.keys(data).length > 0) {
         // console.log("从上一页面传递进来的data为" + data)
         that.setData({
           title: data.name,
@@ -60,6 +62,8 @@ Page({
         wx.setNavigationBarTitle({
           title: data.name,
         })
+      } else {
+        console.log("?")
       }
     })
   },
@@ -89,7 +93,6 @@ Page({
             }
           }
         })
-      
     } else {
       const _ = db.command
       db.collection("MainUser")

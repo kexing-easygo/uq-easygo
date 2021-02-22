@@ -22,7 +22,7 @@
 
 
 	<view class="assignment-list"  wx:if="{{showAll}}">
-		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:key="name">
+		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:for-item="item">
 			<view class="countdown_event" data-index="{{index}}">
 				<!-- <view class="test"> -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
@@ -47,7 +47,7 @@
 						<text class="subject">{{item.name}}</text>
 					</view>
 				</view>
-					<view class="countdown_days">
+					<view class="{{countdown_days}}">
 						{{item.countdown}} Days
 					</view>
 				<!-- </view> -->
