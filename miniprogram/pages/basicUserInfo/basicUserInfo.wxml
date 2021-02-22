@@ -14,13 +14,11 @@
 
 	<view class="page-section">
 		<view class="container">
-			<view>UQ EasyGo 账号</view>
-			<view class="txt">
-				<text>未绑定</text>
+			<view>学生账号</view>
+			<view>
+				<text style="color: #A4A4A4;">暂未上线</text>
 				>
 			</view>
 		</view>
 	</view>
-
 </view>
-

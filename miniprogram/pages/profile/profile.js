@@ -32,6 +32,7 @@ Page({
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
+        // console.log(res.authSetting)
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
             success: async (res) => {
@@ -39,11 +40,7 @@ Page({
                 userInfo: res.userInfo,
                 hasUserInfo: true
               })
-              // app.globalData.openid = res.data[0]._openid
-              // app.globalData.hasUserInfo = true
-              // app.globalData.userEmail = res.data[0].userEmail
-              // app.globalData.userAssignments = res.data[0].userAssignments
-              // app.globalData.userInfo = res.data[0].userInfo
+              this.login()
             }
           })
         }
@@ -62,7 +59,7 @@ Page({
       data: {},
       success: res => {
         console.log("openid获取成功: ", res.result.openid)
-        this.setData({
+        that.setData({
           openid: res.result.openid
         })
         //从云数据库中检索该openid是否存在
@@ -77,13 +74,12 @@ Page({
                   .add({
                     data: {
                       userAssignments: [],
-                      userInfo: this.data.userInfo,
+                      userInfo: that.data.userInfo,
                       userEmail: ""
                     }
                   })
               //如果存在
               } else { 
-                // console.log(res.data)
                 // 将读取到的所有用户的信息均更新至全局变量中
                 app.globalData.openid = res.data[0]._openid
                 app.globalData.hasUserInfo = true
@@ -92,18 +88,22 @@ Page({
                 app.globalData.userInfo = res.data[0].userInfo
                 // 更新用户的开放信息
                 db.collection('MainUser')
-                  .doc(res.data[0]._id)
+                  .where(
+                    {
+                      _openid: res.data[0]._openid
+                    }
+                  )
                   .update({
                     data: {
-                      userInfo: res.data[0].userInfo
+                      userInfo: that.data.userInfo
                     }, 
-                    success: function(res) {
-                      console.log(res)
-                      // if (res.status.updated > 0) {
-                      //   console.log("更新成功")
-                      // } else {
-                      //   console.err("更新失败")
-                      // }
+                    success: function(s) {
+                      console.log(s)
+                      if (s.stats.updated > 0) {
+                        console.log("更新成功")
+                      } else {
+                        console.err("更新失败")
+                      }
                     }
                   })
               }
