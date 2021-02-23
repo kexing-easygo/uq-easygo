@@ -22,12 +22,15 @@ Page({
       showResult: "",
       history: [],
       showHistory: false,
+      searchFocus: false,
+      searchBarValue: "",
       style: "countdown_days"
     },
   //显示搜索记录
   showHistory: function (value) {
     this.setData({
       showHistory: true,
+      
     })
   },
   //用户点击搜索记录的时候，跳转到对应界面
@@ -51,6 +54,8 @@ Page({
         showResult: "hidden",
         recentAssignmentName: temp[0].name,
         recentAssignmentDate: temp[0].countdown,
+        searchBarValue: temp[0].name,
+        searchFocus:false,
       })
     }
 
@@ -64,7 +69,7 @@ Page({
           {
             showAll: false,
             showResult: true,
-            showHistory: "display:none",
+            showHistory: false,
           }
       )
       var reg = new RegExp(value)
@@ -104,17 +109,19 @@ Page({
     )
   },
   clear: function(e) {
-    this.setData(
-        {
-          showAll: true,
-          selectMatchedItem: false,
-          selectedAssignments: [],
-          matchedItems: [],
-          showResult: "",
-          showHistory: "display:none",
-        }
-    )
+    // this.setData(
+    //     {
+    //       showAll: true,
+    //       selectMatchedItem: false,
+    //       selectedAssignments: [],
+    //       matchedItems: [],
+    //       showResult: "",
+    //       showHistory: false,
+    //       searchFocus: false,
+    //     }
+    // );
 
+    this.onLoad();
   },
 
   hideHistory: function(e) {
@@ -164,11 +171,6 @@ Page({
                 {
                   success: function (res) {
                     temp = res.data[0].userAssignments
-                    if (res.data[0].history) {
-                      that.setData({
-                        history: res.data[0].history.countdown,
-                      })
-                    }
                     // 如果用户有登记过assignment
                     if (temp.length > 0) {
                       var userAssignments = res.data[0].userAssignments
@@ -212,6 +214,13 @@ Page({
                             recentAssignmentDate: minValue,
                             userAssignments: temp,
                             history: res.data[0].history.search,
+                            showAll: true,
+                            selectMatchedItem: false,
+                            selectedAssignments: [],
+                            matchedItems: [],
+                            showResult: "",
+                            showHistory: false,
+                            searchFocus: false,
                           })
                         }
                       }

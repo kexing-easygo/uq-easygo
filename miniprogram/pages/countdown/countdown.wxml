@@ -9,7 +9,7 @@
 
 	</view>
 	<view class="searchbar">
-		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="showHistory" bindclear="clear" search="{{search}}"></mp-searchbar>
+		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="showHistory" bindclear="clear" focus= "{{searchFocus}}" value="{{searchBarValue}}" search="{{search}}"></mp-searchbar>
 		<view class="history hide{{showHistory ? 'show' : '' }}" >
 			<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
 				<image class="hisIcon" src="{{historyIcon}}" data-historyTag="{{item}}" bindtap="historyTap"></image>
