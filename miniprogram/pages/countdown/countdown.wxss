@@ -143,6 +143,10 @@
   text-align: center;
 }
 
+.red_day {
+  background-color: red;
+}
+
 /* .countdown_days_red {
   width: 20%;
   padding: 1%;

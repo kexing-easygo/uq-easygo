@@ -48,7 +48,9 @@ Page({
         selectMatchedItem: true,
         selectedAssignments: temp,
         showAll: false,
-        showResult: "hidden"
+        showResult: "hidden",
+        recentAssignmentName: temp[0].name,
+        recentAssignmentDate: temp[0].countdown,
       })
     }
 
@@ -209,7 +211,7 @@ Page({
                             recentAssignmentName: name,
                             recentAssignmentDate: minValue,
                             userAssignments: temp,
-                            
+                            history: res.data[0].history.search,
                           })
                         }
                       }
