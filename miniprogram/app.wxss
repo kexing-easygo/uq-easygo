@@ -1,7 +1,5 @@
 /**app.wxss**/
-@import 'weui.wxss';
-
-
+/* @import 'weui-styles/weui-wxss/dist/style/weui.wxss'; */
 button {
   background: initial;
 }

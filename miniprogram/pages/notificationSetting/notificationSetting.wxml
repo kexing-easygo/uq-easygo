@@ -5,10 +5,47 @@
       <text>微信提醒</text>
       <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
     </view>
-    
     <view class="mailnotice">
       <text>邮件提醒</text>
       <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
     </view>
   </view>
+  <view class="time-zone">
+		<view>
+			<text style="color:gainsboro;font-size:0.8em;">地区选择，会影响提醒时间</text>
+		</view>
+		<view>
+			<text>中国时间</text>
+			<switch type="switch" checked="{{china}}" bindchange="bindChina"></switch>
+			<!-- <checkbox checked="{{china}}" bindchange="bindChina"></checkbox> -->
+		</view>
+		<view>
+			<text>澳洲时间</text>
+			<switch type="switch" checked="{{australia}}" bindchange="bindAustralia"></switch>
+			<!-- <checkbox checked="{{australia}}" bindchange="bindAustralia"></checkbox> -->
+		</view>
+  </view>
+  <view class="notice_duration">
+		<view>
+			<text style="color:gainsboro;font-size:0.8em;">提醒时间为澳洲时间</text>
+		</view>
+		<view>
+			<text>一天前提醒</text>
+			<switch type="switch" checked="{{oneDay}}" bindchange="bindOneDay"></switch>
+		</view>
+		<view>
+			<text>三天前提醒</text>
+			<switch type="switch" checked="{{threeDay}}" bindchange="bindThreeDay"></switch>
+		</view>
+		<view>
+			<text>一周前提醒</text>
+			<switch type="switch" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch>
+		</view>
+  </view>
+  <view>
+    <button  type="confirm" plain="true" bindtap="confirm" style="background-color:#17c783;margin-top:20%;border:none;">
+			<text style="color:white">确定</text>
+		</button>
+	</view>
 </view>
+<button type="confirm" plain="true" bindtap="testCrontab"><text>调试云函数</text></button>
