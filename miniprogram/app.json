@@ -1,12 +1,11 @@
 {
   "pages": [
-    "pages/profile/profile",
     "pages/home/home",
+    "pages/profile/profile",
     "pages/otherSettings/otherSettings",
     "pages/basicUserInfo/basicUserInfo",
     "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
-    "pages/searchbar/searchbar",
     "pages/getCode/getCode",
     "pages/calc/calc",
     "pages/mobile/mobile",
