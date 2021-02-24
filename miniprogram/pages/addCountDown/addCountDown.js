@@ -82,7 +82,7 @@ Page({
       }
       db.collection("MainUser")
         .where({
-          _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+          _openid: app.globalData._openid
         })
         .update({
           data: {
@@ -97,7 +97,7 @@ Page({
       const _ = db.command
       db.collection("MainUser")
         .where({
-          _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+          _openid: app.globalData._openid
         })
         .update({
           data: {
@@ -186,7 +186,7 @@ Page({
           temp.splice(that.data.index, 1)
           db.collection("MainUser")
           .where({
-            _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+            _openid: app.globalData._openid
           })
           .update({
             data: {

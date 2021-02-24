@@ -29,22 +29,22 @@ async function template(title, time, duetime) {
 }
 
 async function send(email, name, type) {
-    var content = "您的" + name + "将于"
+    var content = name + "还有"
     if (type == "oneDay") {
-        content += "一天之后due。"
+        content += "1天"
     } else if (type == "threeDay") {
-        content += "三天之后due。"
+        content += "3天"
     } else if (type == "oneWeek") {
-        content = content + "一周之后due。"
+        content = content + "1周"
     }
-    content += "请妥善处理您的有关事宜。\n\nUQ校园通团队"
+    content += "就due啦！要抓紧写哦！！！\n\nUQ校园通团队"
     var res = await cloud.callFunction({
         // 要调用的云函数名称
         name: 'sendEmail',
         // 传递给云函数的参数
         data: {
             "toAddr": email,
-            "subject": "UQ校园通",
+            "subject": "作业提醒",
             "content": content
         }
     })
@@ -155,37 +155,46 @@ async function getAllData() {
                 if (emailNotification == true && email != '') {
                     if (dayDiff <= 1 && oneDay == 1) {
                         send(email, name, "oneDay")
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "oneDay")
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
                         send(email, name, "threeDay")
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "threeDay")
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
                         send(email, name, "oneWeek")
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "oneWeek")
                     }
                 }
-                if (wechatNotification == true) {
-                    if (dayDiff <= 1 && oneDay == 1) {
-                        template(name, now, dueDate)
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "oneDay")
+                wx.getSetting({
+                    withSubscriptions: true,
+                    success (res) {
+                        var settings = res.subscriptionsSetting
+                        if (settings.itemSettings["'YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI'"] == 'accept') {
+                            // 用户接收订阅
+                            if (wechatNotification == true) {
+                                if (dayDiff <= 1 && oneDay == 1) {
+                                    template(name, now, dueDate)
+                                }
+                                if (dayDiff <= 3 && threeDay == 1) {
+                                    template(name, now, dueDate)
+                                }
+                                if (dayDiff <= 7 && oneWeek == 1) {
+                                    template(name, now, dueDate)
+                                }
+                            }
+                        } else {
+                            await cloud.callFunction({
+                                // 要调用的云函数名称
+                                name: 'sendEmail',
+                                // 传递给云函数的参数
+                                data: {
+                                    "toAddr": email,
+                                    "subject": "订阅消息异常提醒",
+                                    "content": "我们尝试给您的微信推送订阅消息通知，但系统显示您的订阅消息已过期或未授权，请打开小程序设置以设置订阅消息，这样才能接收到我们的订阅通知哦！"
+                                }
+                            })
+                        }
                     }
-                    if (dayDiff <= 3 && threeDay == 1) {
-                        template(name, now, dueDate)
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "threeDay")
-                    }
-                    if (dayDiff <= 7 && oneWeek == 1) {
-                        template(name, now, dueDate)
-                        // 设置已经提醒过，提醒过不再二次提醒
-                        // update(openid, name, "oneWeek")
-                    }
-                }
+                })
+                
             }
         }
     }
