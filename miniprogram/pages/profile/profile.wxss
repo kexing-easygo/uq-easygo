@@ -70,8 +70,6 @@
     display: flex;
     margin-right: 70rpx;
     justify-content: space-between;
-    font-size: 34rpx;
-    color: rgba(0, 0, 0, 0.9);
 }
 
 .page-block navigator {

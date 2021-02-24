@@ -35,7 +35,7 @@
 		<view class="img">
 			<image class="icon" src="{{basicInfoIcon}}" mode="aspectFill"></image>
 		</view>
-		<view class="txt">
+		<view class="txt seventeen-pt blacknine">
 			<view>基本资料</view>
 			<view>></view>
 		</view>
@@ -47,7 +47,7 @@
 		<view class="img">
 			<image class="icon" src="{{bindingPhoneIcon}}" mode="aspectFill"></image>
 		</view>
-		<view class="txt">
+		<view class="txt seventeen-pt blacknine">
 			<view>手机号绑定</view>
 			<view>></view>
 		</view>
@@ -61,7 +61,7 @@
 		<view class="img">
 			<image class="icon" src="{{bindingEmailIcon}}" mode="aspectFill"></image>
 		</view>
-		<view class="txt">
+		<view class="txt seventeen-pt blacknine">
 			<view>邮箱绑定</view>
 			<view>></view>
 		</view>
@@ -73,7 +73,7 @@
 		<view class="img">
 			<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
 		</view>
-		<view class="txt">
+		<view class="txt seventeen-pt blacknine">
 			<view>其他设置</view>
 			<view>></view>
 		</view>

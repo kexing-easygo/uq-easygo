@@ -176,4 +176,29 @@ page {
   background-color: rgba(7, 193, 96, 0.4) !important;
   color: white !important;
 }
+
+/* text style setting */
+
+/* text-font */
+.twentytwo-pt{
+  font-size: 44rpx;
+}
+
+.seventeen-pt {
+  font-size: 34rpx;
+}
+
+/* text-color */
+.whiteTen{
+  color:rgba(255, 255, 255, 1);
+}
+
+.blackNine{
+  color: rgba(0, 0, 0, 0.9);
+}
+
+/* text-style */
+.text-bolder{
+  font-weight: bolder;
+}
   
