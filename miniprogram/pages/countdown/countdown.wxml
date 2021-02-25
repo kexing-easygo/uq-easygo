@@ -9,13 +9,13 @@
 
 	</view>
 	<view class="searchbar">
-		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="showHistory" bindclear="clear" focus= "{{searchFocus}}" value="{{searchBarValue}}" search="{{search}}"></mp-searchbar>
-		<view class="history hide{{showHistory ? 'show' : '' }}" >
+		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" bindfocus="startsearch" bindclear="clear"  value="{{searchBarValue}}" search="{{search}}"></mp-searchbar>
+		<!-- <view class="history hide{{showHistory ? 'show' : '' }}" >
 			<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
 				<image class="hisIcon" src="{{historyIcon}}" data-historyTag="{{item}}" bindtap="historyTap"></image>
 				<text class="hisContent" data-historyTag="{{item}}" bindtap="historyTap">{{item}}</text>
 			</view>
-		</view>
+		</view> -->
 	</view>
 
 	
@@ -91,4 +91,4 @@
 </view>
 
 
-<view class="shade hide{{showHistory?'show':''}}" bindtap="hideHistory"></view>
+<view class="shade hide{{startsearch?'show':''}}" bindtap="hideHistory"></view>

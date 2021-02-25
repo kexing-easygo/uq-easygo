@@ -21,16 +21,17 @@ Page({
     selectedAssignments: [],
     showResult: "",
     history: [],
-    showHistory: false,
+    startsearch: false,
     searchFocus: false,
     searchBarValue: "",
-    style: "countdown_days"
+    style: "countdown_days",
+    recentAssignmentDate: "∞",
+    recentAssignmentName: "None"
   },
   //显示搜索记录
-  showHistory: function (value) {
+  startsearch: function (value) {
     this.setData({
-      showHistory: true,
-
+      startsearch: true,
     })
   },
   //用户点击搜索记录的时候，跳转到对应界面
@@ -99,23 +100,26 @@ Page({
       selectMatchedItem: true,
       selectedAssignments: temp,
       showAll: false,
-      showResult: "hidden"
+      showResult: "hidden",
+      startsearch: false,
     })
   },
   clear: function (e) {
-    // this.setData(
-    //     {
-    //       showAll: true,
-    //       selectMatchedItem: false,
-    //       selectedAssignments: [],
-    //       matchedItems: [],
-    //       showResult: "",
-    //       showHistory: false,
-    //       searchFocus: false,
-    //     }
-    // );
+    this.setData(
+        {
+          showAll: true,
+          selectMatchedItem: false,
+          selectedAssignments: [],
+          matchedItems: [],
+          showResult: "",
+          startsearch: false,
+          searchFocus: false,
+        }
+    );
 
-    this.onLoad();
+    console.log(this.data.startsearch);
+
+    
   },
 
   hideHistory: function (e) {
@@ -167,16 +171,19 @@ Page({
                 .get({
                   success: function (res) {
                     temp = res.data[0].userAssignments
+                    
                     // 如果用户有登记过assignment
                     if (temp.length > 0) {
-                      var userAssignments = res.data[0].userAssignments
+                      var userAssignments = res.data[0].userAssignments;
                       app.globalData.userAssignments = userAssignments;
-                      var diffs = []
-                      var now = new Date().getTime()
+                      var diffs = [];
+                      var now = new Date().getTime();
+                      
                       if (res.data[0].notification.location == "AU") {
                         // 转化为澳洲时间计算
-                        now += 2 * 60 * 60 * 1000
+                        now += 2 * 60 * 60 * 1000;
                       }
+                      
                       for (var i = 0; i < userAssignments.length; i++) {
                         var date = userAssignments[i]["date"]
                         var time = userAssignments[i]["time"]
@@ -186,11 +193,15 @@ Page({
                         diffs.push(diff)
                         // 计算style中的进度条百分比
                         var percentage = Number(diff / 20 * 100).toFixed(1)
+                        
                         if (percentage >= 100) {
                           percentage = 0
-                        } else {
+                        } else if (percentage < 100 && percentage > 0){
                           percentage = 100 - percentage
+                        } else {
+                          percentage = 100
                         }
+                        console.log(percentage);
                         userAssignments[i]["countdown"] = diff
                         userAssignments[i]["id"] = i
                         userAssignments[i]["percentage"] = percentage
@@ -202,6 +213,7 @@ Page({
                         var diff = userAssignments[i]["diff"]
                         if (diff == minValue) {
                           var name = userAssignments[i]["name"]
+                          
                           // 决定了header的assignment即为i代表的assignment值
                           that.setData({
                             // headerAssignment: userAssignments[i],
@@ -219,11 +231,13 @@ Page({
                           })
                         }
                       }
-                    }
+                    } 
+                    
                   }
                 })
             }
           })
+          
         } else {
           wx.showModal({
             title: '温馨提示',

@@ -2,15 +2,15 @@
 <view class="container">
 
 	<view class="heading">
-		<text style="margin-left: 50rpx;">标题名称<text class="red-star">*</text></text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 32px;width: 25%;">标题名称<text class="red-star">*</text></text>
 		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 	</view>
 
 	<view class="due_date">
-		<text style="margin-left: 50rpx; width: 21%;">Due Date<text class="red-star">*</text></text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 32px; width: 25%;">Due Date<text class="red-star">*</text></text>
 		<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" style="width:40%;">
 			<view class="picker">
-				<text style="margin-left: 50rpx; margin-right: 50rpx;">{{dueDate}}</text>
+				<text style="margin-left: 45rpx; margin-right: 50rpx;">{{dueDate}}</text>
 			</view>
 		</picker>
 		<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:20%;">
@@ -21,7 +21,7 @@
 	</view>
 	
 	<view class="colours">
-		<text style="margin-right: 54rpx;margin-left: 50rpx;">设置颜色</text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 32px; width: 25%;">设置颜色</text>
 		<view>
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FE5B5B;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindRed"></button>
 		</view>
@@ -67,8 +67,7 @@
 		</view>
 	</view>  -->
 	<view class="confirm">
-		<button bindtap="addCountDown"><text style="color: #FFFFFF">{{buttonText}}</text></button>
-		
+		<button  bindtap="addCountDown"><text style="color: #FFFFFF">{{buttonText}}</text></button>
 	</view>
 	<view class="delete" wx:if="{{showDelete}}" >
 		<button  type="warn" bindtap="deleteCountdown"><text style="color: #c10716">删除作业</text></button>

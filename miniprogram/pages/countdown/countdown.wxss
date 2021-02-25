@@ -168,7 +168,7 @@
 .searchbar {
   width: 80%;
   height: 84rpx;
- 
+  z-index: 999;
   background-color: #FFFFFF;
   margin: -5% 10% 0 10%;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;

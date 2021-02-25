@@ -39,7 +39,7 @@
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
 .input {
-  margin-left: auto;
+  margin-left: 8%;
   width: 70%;
 }
 .notice_duration {
@@ -68,12 +68,13 @@
   margin-left: 85rpx;
 }
 .confirm {
-  background-color: #07C160;
   margin-top: 100rpx;
-  margin-left: 40%;
-  margin-right: 30%;
-  /* margin: 25rpx 0rpx; */
-  width: 50%;
+  width: 100%;
+  padding:0;
+}
+
+.confirm button{
+  background-color: #07C160;
   border: 1rpx soild #000000;
   border-radius: 25rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
