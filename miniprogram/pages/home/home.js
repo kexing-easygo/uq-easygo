@@ -1,4 +1,5 @@
 // pages/home/home.js
+const app = getApp()
 Page({
 
   /**
@@ -16,9 +17,17 @@ Page({
 
   /**
    * Lifecycle function--Called when page load
+   * 在进入主页时，缓存用户的openid
    */
   onLoad: function (options) {
-
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log("openid获取成功: ", res.result.openid)
+        app.globalData._openid = res.result.openid
+      }
+    })
   },
 
   /**

@@ -17,7 +17,7 @@ App({
     this.globalData = {
       userInfo: {},
       hasUserInfo: false,
-      openid: null,
+      _openid: null,
       userID: null,
       easygoNickname: null,
       userVerificationCode: '',

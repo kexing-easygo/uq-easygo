@@ -22,7 +22,7 @@ Page({
   onLoad: function (options) {
     db.collection("MainUser").
     where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
     }).get().then(res => {
       if (res.data.length > 0) {
         var notification = res.data[0].notification
@@ -131,7 +131,7 @@ Page({
     }
     db.collection("MainUser")
     .where({
-      _openid: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8'
+      _openid: app.globalData._openid
     })
     .update({
       data: {

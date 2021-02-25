@@ -105,21 +105,19 @@ Page({
     })
   },
   clear: function (e) {
-    this.setData(
-        {
-          showAll: true,
-          selectMatchedItem: false,
-          selectedAssignments: [],
-          matchedItems: [],
-          showResult: "",
-          startsearch: false,
-          searchFocus: false,
-        }
-    );
+    this.setData({
+      showAll: true,
+      selectMatchedItem: false,
+      selectedAssignments: [],
+      matchedItems: [],
+      showResult: "",
+      startsearch: false,
+      searchFocus: false,
+    });
 
     console.log(this.data.startsearch);
 
-    
+
   },
 
   hideHistory: function (e) {
@@ -159,85 +157,79 @@ Page({
         if (res.authSetting['scope.userInfo']) {
           // 获取用户所有的assignments
           var temp = []
-          wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-              app.globalData._openid = res.result.openid
-              db.collection('MainUser')
-                .where({
-                  _openid: res.result.openid
-                })
-                .get({
-                  success: function (res) {
-                    temp = res.data[0].userAssignments
-                    
-                    // 如果用户有登记过assignment
-                    if (temp.length > 0) {
-                      var userAssignments = res.data[0].userAssignments;
-                      app.globalData.userAssignments = userAssignments;
-                      var diffs = [];
-                      var now = new Date().getTime();
-                      
-                      if (res.data[0].notification.location == "AU") {
-                        // 转化为澳洲时间计算
-                        now += 2 * 60 * 60 * 1000;
-                      }
-                      
-                      for (var i = 0; i < userAssignments.length; i++) {
-                        var date = userAssignments[i]["date"]
-                        var time = userAssignments[i]["time"]
-                        var string = date + "T" + time + ":00"
-                        var d = new Date(string).getTime()
-                        var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                        diffs.push(diff)
-                        // 计算style中的进度条百分比
-                        var percentage = Number(diff / 20 * 100).toFixed(1)
-                        
-                        if (percentage >= 100) {
-                          percentage = 0
-                        } else if (percentage < 100 && percentage > 0){
-                          percentage = 100 - percentage
-                        } else {
-                          percentage = 100
-                        }
-                        console.log(percentage);
-                        userAssignments[i]["countdown"] = diff
-                        userAssignments[i]["id"] = i
-                        userAssignments[i]["percentage"] = percentage
-                        userAssignments[i]["diff"] = diff
-                      }
-                      var minValue = Math.min.apply(null, diffs)
-                      // 匹配最近的作业名称
-                      for (var i = 0; i < userAssignments.length; i++) {
-                        var diff = userAssignments[i]["diff"]
-                        if (diff == minValue) {
-                          var name = userAssignments[i]["name"]
-                          
-                          // 决定了header的assignment即为i代表的assignment值
-                          that.setData({
-                            // headerAssignment: userAssignments[i],
-                            recentAssignmentName: name,
-                            recentAssignmentDate: minValue,
-                            userAssignments: userAssignments,
-                            history: res.data[0].history.search,
-                            showAll: true,
-                            selectMatchedItem: false,
-                            selectedAssignments: [],
-                            matchedItems: [],
-                            showResult: "",
-                            showHistory: false,
-                            searchFocus: false,
-                          })
-                        }
-                      }
-                    } 
-                    
+
+          db.collection('MainUser')
+            .where({
+              _openid: app.globalData._openid
+            })
+            .get({
+              success: function (res) {
+                temp = res.data[0].userAssignments
+
+                // 如果用户有登记过assignment
+                if (temp.length > 0) {
+                  var userAssignments = res.data[0].userAssignments;
+                  app.globalData.userAssignments = userAssignments;
+                  var diffs = [];
+                  var now = new Date().getTime();
+
+                  if (res.data[0].notification.location == "AU") {
+                    // 转化为澳洲时间计算
+                    now += 2 * 60 * 60 * 1000;
                   }
-                })
-            }
-          })
-          
+
+                  for (var i = 0; i < userAssignments.length; i++) {
+                    var date = userAssignments[i]["date"]
+                    var time = userAssignments[i]["time"]
+                    var string = date + "T" + time + ":00"
+                    var d = new Date(string).getTime()
+                    var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                    diffs.push(diff)
+                    // 计算style中的进度条百分比
+                    var percentage = Number(diff / 20 * 100).toFixed(1)
+
+                    if (percentage >= 100) {
+                      percentage = 0
+                    } else if (percentage < 100 && percentage > 0) {
+                      percentage = 100 - percentage
+                    } else {
+                      percentage = 100
+                    }
+                    console.log(percentage);
+                    userAssignments[i]["countdown"] = diff
+                    userAssignments[i]["id"] = i
+                    userAssignments[i]["percentage"] = percentage
+                    userAssignments[i]["diff"] = diff
+                  }
+                  var minValue = Math.min.apply(null, diffs)
+                  // 匹配最近的作业名称
+                  for (var i = 0; i < userAssignments.length; i++) {
+                    var diff = userAssignments[i]["diff"]
+                    if (diff == minValue) {
+                      var name = userAssignments[i]["name"]
+
+                      // 决定了header的assignment即为i代表的assignment值
+                      that.setData({
+                        // headerAssignment: userAssignments[i],
+                        recentAssignmentName: name,
+                        recentAssignmentDate: minValue,
+                        userAssignments: userAssignments,
+                        history: res.data[0].history.search,
+                        showAll: true,
+                        selectMatchedItem: false,
+                        selectedAssignments: [],
+                        matchedItems: [],
+                        showResult: "",
+                        showHistory: false,
+                        searchFocus: false,
+                      })
+                    }
+                  }
+                }
+
+              }
+            })
+
         } else {
           wx.showModal({
             title: '温馨提示',

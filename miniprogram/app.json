@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/countdown/countdown",
     "pages/home/home",
+    "pages/countdown/countdown",
     "pages/profile/profile",
     
     "pages/otherSettings/otherSettings",
