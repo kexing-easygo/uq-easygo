@@ -1,16 +1,15 @@
 {
   "pages": [
-    "pages/home/home",
     "pages/countdown/countdown",
+    "pages/getCode/getCode",
+    "pages/home/home",
+    "pages/getEmail/getEmail",
     "pages/profile/profile",
-    
     "pages/otherSettings/otherSettings",
     "pages/basicUserInfo/basicUserInfo",
     "pages/addCountDown/addCountDown",
-    "pages/getCode/getCode",
     "pages/calc/calc",
     "pages/mobile/mobile",
-    "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",

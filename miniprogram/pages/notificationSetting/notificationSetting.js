@@ -20,28 +20,51 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    db.collection("MainUser").
-    where({
-      _openid: app.globalData._openid
-    }).get().then(res => {
-      if (res.data.length > 0) {
-        var notification = res.data[0].notification
-        this.setData(
-          {
-            emailNotification: notification.emailNotification,
-            wechatNotification: notification.wechatNotification,
-            oneDay: notification.oneDay,
-            threeDay: notification.threeDay,
-            oneWeek: notification.oneWeek
-          }
-        )
-        if (notification.location == "CH") {
-          this.setData({china: true})
-        } else if (notification.location == "AU") {
-          this.setData({australia: true})
+    
+    if (app.globalData.notification) {
+      var notification = app.globalData.notification
+      this.setData(
+        {
+          emailNotification: notification.emailNotification,
+          wechatNotification: notification.wechatNotification,
+          oneDay: notification.oneDay,
+          threeDay: notification.threeDay,
+          oneWeek: notification.oneWeek
         }
+      )
+      if (notification.location == "CH") {
+        this.setData({china: true})
+      } else if (notification.location == "AU") {
+        this.setData({australia: true})
       }
-    })
+
+    } else {
+      db.collection("MainUser")
+      .where({
+        _openid: app.globalData._openid
+      })
+      .get().then(
+        res => {
+          if (res.data.length > 0) {
+            var notification = res.data[0].notification
+            this.setData(
+              {
+                emailNotification: notification.emailNotification,
+                wechatNotification: notification.wechatNotification,
+                oneDay: notification.oneDay,
+                threeDay: notification.threeDay,
+                oneWeek: notification.oneWeek
+              }
+            )
+            if (notification.location == "CH") {
+              this.setData({china: true})
+            } else if (notification.location == "AU") {
+              this.setData({australia: true})
+            }
+          }
+        })
+    }
+    
   },
   bindSwitch1: function (e) {
     this.setData({
@@ -121,6 +144,7 @@ Page({
   },
   confirm: function(e) {
     // 更新数据库
+    
     let location = ''
     if (this.data.australia == true) {
       location = "AU"
@@ -149,15 +173,37 @@ Page({
         }
       }
     })
-    wx.navigateTo({
-      url: '/pages/countdown/countdown',
-      success: function (res) {
-        var page = getCurrentPages().pop()
-        if (page == undefined || page == null) return;
-        // 刷新页面
-        page.onLoad() 
-      }
-    })
+    app.globalData.notification = {
+      location: location,
+      wechatNotification: this.data.wechatNotification,
+      emailNotification: this.data.emailNotification,
+      oneDay: this.data.oneDay,
+      threeDay: this.data.threeDay,
+      oneWeek: this.data.oneWeek
+    }
+    // var pages = getCurrentPages()
+    // var lastPage = pages[pages.length - 2]
+    // if (lastPage.route == '/pages/countdown/countdown') {
+    //   wx.navigateTo({
+    //     url: '/pages/countdown/countdown',
+    //     success: function (res) {
+    //       var page = getCurrentPages().pop()
+    //       if (page == undefined || page == null) return;
+    //       // 刷新页面
+    //       page.onLoad() 
+    //     }
+    //   })
+    // } else {
+    //   wx.navigateTo({
+    //     url: '/pages/otherSetting/otherSetting',
+    //     success: function (res) {
+    //       var page = getCurrentPages().pop()
+    //       if (page == undefined || page == null) return;
+    //       // 刷新页面
+    //       page.onLoad() 
+    //     }
+    //   })
+    // }
   },
   
   requestSubscribe: function() {
@@ -168,7 +214,7 @@ Page({
       }
     })
   },
-
+  
   template: function() {
     wx.cloud.callFunction({
       name: 'sendTemplate',

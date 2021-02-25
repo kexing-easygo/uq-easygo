@@ -24,7 +24,6 @@ Page({
       name: 'login',
       data: {},
       success: res => {
-        console.log("openid获取成功: ", res.result.openid)
         app.globalData._openid = res.result.openid
       }
     })

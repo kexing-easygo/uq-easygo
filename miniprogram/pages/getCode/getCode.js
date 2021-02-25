@@ -46,12 +46,11 @@ Page({
                 }
             )
         }
-        console.log("输入正确。")
         // 调用数据库，录入用户邮箱
         db.collection('MainUser')
         .where(
             {
-                _openid: app.globalData.openid
+                _openid: app.globalData._openid
             }
         )
         .update({

@@ -18,13 +18,8 @@ App({
       userInfo: {},
       hasUserInfo: false,
       _openid: null,
-      userID: null,
-      easygoNickname: null,
       userVerificationCode: '',
       userEmail: '',
-      userAssignments: [],
-      wechatNotification: false,
-      emailNotification: false
     }
   },
   })

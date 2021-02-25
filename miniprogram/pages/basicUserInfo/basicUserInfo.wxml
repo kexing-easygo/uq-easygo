@@ -5,8 +5,8 @@
 			<view>用户名</view>
 			<view class="txt">
 				<text wx:if="{{!hasUserInfo}}">未登录</text>
-				<text wx:elif="{{easygoNickname == null}}">{{userInfo.nickName}}</text>
-				<text wx:elif="{{easygoNickname != null}}">{{easygoNickname}}</text>
+				<text wx:if="{{hasUserInfo}}">{{nickName}}</text>
+				<!-- <text wx:elif="{{easygoNickname != null}}">{{easygoNickname}}</text> -->
 			</view>
 		</view>
 	</view>

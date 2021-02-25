@@ -48,4 +48,3 @@
 		</button>
 	</view>
 </view>
-<!-- <button type="confirm" plain="true" bindtap="testCrontab"><text>调试云函数</text></button> -->

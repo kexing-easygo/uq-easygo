@@ -12,7 +12,6 @@ Page({
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
-    anonymousPlaceholder: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未登录用户.jpeg",
     basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本信息.png",
     basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本设置.png",
     bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/邮箱绑定.png",
@@ -31,7 +30,6 @@ Page({
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
-        // console.log(res.authSetting)
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
             success: async (res) => {
@@ -44,16 +42,15 @@ Page({
           })
         }
       }
-    })    
+    })
   },
 
   /**
    * 用户首次获取授权时调用login函数
    * 获取openid。如果openid已经存在，则不再录入
    */
-  login: function() {
+  login: function () {
     let that = this
-
     //从云数据库中检索该openid是否存在
     db.collection('MainUser')
       .where({
@@ -77,30 +74,29 @@ Page({
                     location: ""
                   },
                   history: {
-                    calculator : {},
+                    calculator: {},
                     search: {}
                   }
                 }
               })
-          //如果存在
-          } else { 
+            //如果存在
+          } else {
             // 将读取到的所有用户的信息均更新至全局变量中
-            app.globalData.hasUserInfo = true
-            app.globalData.userEmail = res.data[0].userEmail
-            app.globalData.userAssignments = res.data[0].userAssignments
             app.globalData.userInfo = res.data[0].userInfo
+            // app.globalData.userAssignments = res.data[0].userAssignments
+            app.globalData.userEmail = res.data[0].userEmail
+            app.globalData.notification = res.data[0].notification
+            // app.globalData.history = res.data[0].history
             // 更新用户的开放信息
             db.collection('MainUser')
-              .where(
-                {
-                  _openid: app.globalData._openid
-                }
-              )
+              .where({
+                _openid: app.globalData._openid
+              })
               .update({
                 data: {
                   userInfo: that.data.userInfo
-                }, 
-                success: function(s) {
+                },
+                success: function (s) {
                   console.log(s)
                   if (s.stats.updated > 0) {
                     console.log("更新成功")
@@ -110,8 +106,8 @@ Page({
                 }
               })
           }
+          app.globalData.hasUserInfo = true
         })
-
   },
   /**
    * 仅获取开放信息，如头像，名字，性别，城市等
