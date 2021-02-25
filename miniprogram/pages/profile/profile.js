@@ -75,7 +75,19 @@ Page({
                     data: {
                       userAssignments: [],
                       userInfo: that.data.userInfo,
-                      userEmail: ""
+                      userEmail: "",
+                      notification: {
+                        emailNotification: "",
+                        wechatNotification: "",
+                        oneDay: "",
+                        threeDay: "",
+                        oneWeek: "",
+                        location: ""
+                      },
+                      history: {
+                        calculator : {},
+                        search: {}
+                      }
                     }
                   })
               //如果存在
