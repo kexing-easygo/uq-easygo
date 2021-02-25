@@ -8,7 +8,7 @@
 	 class="setting-input"
 	/>
 </view>
-<view style="margin-top: 52rpx;">
+<view>
 	<button
 	 disabled="{{disabledButton}}"
 	 bindtap="checkVerificationCode"

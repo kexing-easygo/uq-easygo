@@ -9,6 +9,8 @@
     align-items: center;
     justify-content: center;
     background-color: #ffffff;
+    font-size: 34rpx;
+    color: (0, 0, 0, 0.9);
 }
 .page-section navigator {
     width: 646rpx;
