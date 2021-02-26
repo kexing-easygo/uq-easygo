@@ -45,12 +45,12 @@
 		</view>
 	</view>
 
-	<!-- <view class="colours">
+	<view class="colours">
 		<text style="margin-right: 54rpx;margin-left: 50rpx;">当前颜色</text>
 		<view>
 			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: {{color}};border-radius: 100rpx; margin-left: 22rpx;"></button>
 		</view>
-	</view> -->
+	</view>
 
 	<!-- <view class="notice_duration">
 		<view>

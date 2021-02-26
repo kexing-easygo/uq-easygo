@@ -12,10 +12,24 @@ Page({
     addCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
     notificationSetting: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    addBlack:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/黑色按钮.png",
+    addBlack: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/黑色按钮.png",
     historyIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     showTrue: false,
     showAll: true,
+    // 新用户进入倒计时的默认作业条目
+    defaultUserAssignments: [{
+        'color': '#8877FF',
+        'name': "CSSE1001 Assignment1 (示例)",
+        "date": "2021-03-08",
+        "time": "16:16"
+      },
+      {
+        'color': '#8877FF',
+        'name': "点我查看更多",
+        "date": "2021-04-08",
+        "time": "16:16"
+      }
+    ],
     userAssignments: [],
     matchedItems: [],
     selectMatchedItem: false,
@@ -35,7 +49,7 @@ Page({
     if (this.data.searchBarValue.length > 0) {
       this.setData({
         startsearch: true,
-      })  
+      })
     }
     this.setData({
       searchFocus: false
@@ -126,7 +140,7 @@ Page({
         }
       });
     }
-    
+
     this.setData({
       startsearch: false,
       showAll: true,
@@ -162,20 +176,36 @@ Page({
       showView: (!that.data.showView)
     })
   },
+  calculatePercentage: function (diff) {
+    var percentage = Number(diff / 20 * 100).toFixed(1)
+    if (percentage >= 100) {
+      percentage = 0
+    } else if (percentage < 100 && percentage > 0) {
+      percentage = 100 - percentage
+    } else {
+      percentage = 100
+    }
+    return percentage
+  },
+  updateAssignmentValues: function() {
+
+  },
   /**
    * Lifecycle function--Called when page load
    */
+
   onLoad: function (options) {
     // 如果用户没登录，会提示弹窗
     this.setData({
       search: this.search.bind(this)
     })
-
+    const now = new Date().getTime()
     let that = this
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
+          console.log("?")
           // 获取用户所有的assignments
           wx.cloud.callFunction({
             name: 'login',
@@ -195,7 +225,7 @@ Page({
                       var userAssignments = res.data[0].userAssignments;
                       app.globalData.userAssignments = userAssignments;
                       var diffs = [];
-                      var now = new Date().getTime();
+                      // var now = new Date().getTime();
                       if (res.data[0].notification.location == "AU") {
                         // 转化为澳洲时间计算
                         now += 2 * 60 * 60 * 1000;
@@ -208,15 +238,7 @@ Page({
                         var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                         diffs.push(diff)
                         // 计算style中的进度条百分比
-                        var percentage = Number(diff / 20 * 100).toFixed(1)
-                        if (percentage >= 100) {
-                          percentage = 0
-                        } else if (percentage < 100 && percentage > 0) {
-                          percentage = 100 - percentage
-                        } else {
-                          percentage = 100
-                        }
-                        console.log(percentage);
+                        var percentage = this.calculatePercentage(diff)
                         userAssignments[i]["countdown"] = diff
                         userAssignments[i]["id"] = i
                         userAssignments[i]["percentage"] = percentage
@@ -228,7 +250,6 @@ Page({
                         var diff = userAssignments[i]["diff"]
                         if (diff == minValue) {
                           var name = userAssignments[i]["name"]
-
                           // 决定了header的assignment即为i代表的assignment值
                           that.setData({
                             // headerAssignment: userAssignments[i],
@@ -252,26 +273,47 @@ Page({
                 })
             }
           })
-
-
         } else {
           wx.showModal({
             title: '温馨提示',
-            content: '您还没有登录哦',
-            success(res) {
-              if (res.confirm) {
-                console.log('用户点击确定')
-                wx.switchTab({
-                  url: '/pages/profile/profile',
-                })
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-                wx.switchTab({
-                  url: '/pages/home/home',
-                })
-              }
-            }
+            content: '登录才能使用倒计时的完整功能哦！',
+            success(res) {}
           })
+          if (app.globalData.userAssignments) {
+            console.log(app.globalData.userAssignments)
+            this.setData({
+              defaultUserAssignments: app.globalData.userAssignments
+            })
+          } else {
+            for (var i = 0; i < 2; i++) {
+              // 默认数据全是写死的
+              var date = this.data.defaultUserAssignments[i]["date"]
+              var time = this.data.defaultUserAssignments[i]["time"]
+              var string = date + "T" + time + ":00"
+              var d = new Date(string).getTime()
+              var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+              var percentage = this.calculatePercentage(diff)
+              this.data.defaultUserAssignments[i]["countdown"] = diff
+              this.data.defaultUserAssignments[i]["id"] = i
+              this.data.defaultUserAssignments[i]["percentage"] = percentage
+            }
+            app.globalData.userAssignments = this.data.defaultUserAssignments
+            that.setData({
+              userAssignments: this.data.defaultUserAssignments,
+              recentAssignmentName: this.data.defaultUserAssignments[0].name,
+              recentAssignmentDate: diff,
+              history: {
+                search: {}
+              },
+              showAll: true,
+              selectMatchedItem: false,
+              selectedAssignments: [],
+              matchedItems: [],
+              showResult: "",
+              showHistory: false,
+              searchFocus: false,
+            })
+          }
         }
       }
     })
