@@ -4,7 +4,7 @@
 	<view class="heading">
 		<text class = "cdtitle" >标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<input class="input" auto-focus bindinput="bindTitleInput" placeholder="CSSE1001 Assigment 1" />
+			<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 		</view>
 	</view>
 

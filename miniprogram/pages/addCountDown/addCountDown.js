@@ -77,9 +77,7 @@ Page({
         color: this.data.color,
         time: this.data.dueTime
       }
-      console.log("1")
       if (app.globalData.hasUserInfo) {
-        console.log("2")
         db.collection("MainUser")
           .where({
             _openid: app.globalData._openid

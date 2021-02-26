@@ -20,7 +20,7 @@ Page({
     // 新用户进入倒计时的默认作业条目
     defaultUserAssignments: [{
         'color': '#576B95',
-        'name': "CSSE1001 Assignment1 (示例)",
+        'name': "CSSE1001 A1 (示例)",
         "date": "2021-03-08",
         "time": "16:16"
       },
