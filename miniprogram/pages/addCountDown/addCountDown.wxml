@@ -2,12 +2,12 @@
 <view class="container">
 
 	<view class="heading">
-		<text class = "seventeen-pt blackNine" style="margin-left: 32px;width: 25%;">标题名称<text class="red-star">*</text></text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">标题名称<text class="red-star">*</text></text>
 		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 	</view>
 
 	<view class="due_date">
-		<text class = "seventeen-pt blackNine" style="margin-left: 32px; width: 25%;">Due Date<text class="red-star">*</text></text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">Due Date<text class="red-star">*</text></text>
 		<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" style="width:40%;">
 			<view class="picker">
 				<text style="margin-left: 45rpx; margin-right: 50rpx;">{{dueDate}}</text>
@@ -21,24 +21,21 @@
 	</view>
 	
 	<view class="colours">
-		<text class = "seventeen-pt blackNine" style="margin-left: 32px; width: 25%;">设置颜色</text>
+		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">设置颜色</text>
 		<view>
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FE5B5B;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindRed"></button>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FA5151;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindRed"></button>
 		</view>
 		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FF8FDE;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPink"></button>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FFC300;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPink"></button>
 		</view>
 		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #77D5FF;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindLightBlue"></button>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #07C160;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindLightBlue"></button>
 		</view>
 		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #8877FF;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPurple"></button>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #1485EE;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPurple"></button>
 		</view>
 		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #E3FF6E;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindYellow"></button>
-		</view>
-		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #9EFF97;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindGreen"></button>
+			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #576B95;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindYellow"></button>
 		</view>
 	</view>
 
