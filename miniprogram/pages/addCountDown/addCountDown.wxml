@@ -70,8 +70,9 @@
 		</view>
 	</view>  -->
 	<view class="confirm ">
-		<button  bindtap="addCountDown"><text class="confirmOrDele">{{buttonText}}</text></button>
+		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
+
 	<view class="delete confirmOrDele" wx:if="{{showDelete}}" >
 		<button   bindtap="deleteCountdown"><text class="confirmOrDele">删除作业</text></button>
 	</view>

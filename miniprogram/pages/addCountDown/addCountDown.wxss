@@ -77,11 +77,17 @@
   padding:0;
 }
 
-.confirm button{
+/* .confirm button{
   background-color: #07C160;
   border: 1rpx soild #000000;
   border-radius: 15rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+} */
+
+.setting-confirm-button {
+  font-weight: normal;
+  font-size: 34rpx;
+  color: (0, 0, 0, 0.9);
 }
 
 .delete button{
@@ -90,6 +96,8 @@
   border-radius: 15rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
+
+
 
 
 /* .delete {
