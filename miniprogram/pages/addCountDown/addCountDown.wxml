@@ -2,7 +2,7 @@
 <view class="container">
 
 	<view class="heading">
-		<text class = "cdtitle" >标题名称<text class="red-star">*</text></text>
+		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
 			<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
 		</view>
@@ -77,8 +77,8 @@
 		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
 
-	<view class="delete confirmOrDele" wx:if="{{showDelete}}" >
-		<button   bindtap="deleteCountdown"><text class="confirmOrDele">删除作业</text></button>
+	<view class="confirmOrDele" wx:if="{{showDelete}}" >
+		<button   bindtap="deleteCountdown" class="setting-delete-button" ><text class="confirmOrDele">删除作业</text></button>
 	</view>
 	
 </view>

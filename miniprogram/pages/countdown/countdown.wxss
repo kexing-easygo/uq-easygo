@@ -35,7 +35,7 @@
   height: fit-content;
   text-align: right;
   font-size: 160rpx;
-  padding-right: 5%;
+  padding-right: 15rpx;
 }
 .days {
   font-size: 28rpx;
@@ -117,6 +117,9 @@
 }
 
 .progress-bar .subject {
+  height: 100%;
+  width: 90%;
+  overflow: hidden;
   position: absolute;
   font-size: 34rpx;
   left: 5%;

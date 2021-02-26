@@ -90,11 +90,19 @@
   color: (0, 0, 0, 0.9);
 }
 
-.delete button{
+/* .delete button{
   background-color: #c10716;
   border: 1rpx soild #000000;
   border-radius: 15rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+} */
+
+.setting-delete-button {
+  margin-top: 40rpx;
+  background-color: #FA5151;
+  font-weight: normal;
+  font-size: 34rpx;
+  color: (0, 0, 0, 0.9);
 }
 
 
