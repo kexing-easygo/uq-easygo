@@ -30,8 +30,8 @@
 				<!-- <view class="test"> -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
-							<text class="subject">{{item.name}}</text>
 						</view>
+						<text class="subject">{{item.name}}</text>
 					</view>
 					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}}">
 						{{item.countdown}} Days
