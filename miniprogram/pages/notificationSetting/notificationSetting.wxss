@@ -1,6 +1,5 @@
 /* pages/notificationSetting/notificationSetting.wxss */
 .container {
-  color: #707070;
   height: 100%;
   width: 100%;
   display: flex;
@@ -100,3 +99,13 @@ checkbox{
   border-color: transparent; 
 }
 
+
+.titleFont {
+  font-size: 34rpx;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.conmmentFont {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 0.5);
+}
