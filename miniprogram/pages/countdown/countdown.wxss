@@ -213,7 +213,7 @@
   flex-direction: row;
   z-index: 2;
   position: fixed;
-  bottom: 40rpx;
+  bottom: 100rpx;
   right: 30rpx;
 }
 
@@ -239,7 +239,7 @@
   align-items: flex-end;
   flex-direction: column; 
   position: fixed;
-  bottom: 150rpx;
+  bottom: 200rpx;
   right: 30rpx; 
   font-size: 30rpx;
   color: rgba(0, 0, 0, 0.9);
