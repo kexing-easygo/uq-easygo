@@ -2,40 +2,46 @@
 <view class="container">
 
 	<view class="heading">
-		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">标题名称<text class="red-star">*</text></text>
-		<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
+		<text class = "cdtitle" >标题名称<text class="red-star">*</text></text>
+		<view class="cdDetail">
+			<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
+		</view>
 	</view>
 
 	<view class="due_date">
-		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">Due Date<text class="red-star">*</text></text>
-		<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" style="width:40%;">
-			<view class="picker">
-				<text style="margin-left: 45rpx; margin-right: 50rpx;">{{dueDate}}</text>
-			</view>
-		</picker>
-		<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:20%;">
-			<view class="picker">
-				<text style="margin-left: 10rpx; margin-right: 20rpx;">{{dueTime}}</text>
-			</view>
-		</picker>
+		<text class = "cdtitle">Due Date<text class="red-star">*</text></text>
+		<view class="cdDetail">
+			<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" >
+				<view class="picker">
+					<text >{{dueDate}}</text>
+				</view>
+			</picker>
+			<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:20%;">
+				<view class="picker">
+					<text >{{dueTime}}</text>
+				</view>
+			</picker>
+		</view>
 	</view>
 	
 	<view class="colours">
-		<text class = "seventeen-pt blackNine" style="margin-left: 5px; width: 25%;">设置颜色</text>
-		<view>
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FA5151;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindRed"></button>
-		</view>
-		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #FFC300;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPink"></button>
-		</view>
-		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #07C160;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindLightBlue"></button>
-		</view>
-		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #1485EE;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindPurple"></button>
-		</view>
-		<view>	
-			<button class="mini-btn" type="primary" size="mini" style="width: 40rpx; height: 40rpx; background-color: #576B95;border-radius: 100rpx; margin-left: 22rpx;" bindtap="bindYellow"></button>
+		<text class = "cdtitle">设置颜色</text>
+		<view class="cdDetail ">
+			<view>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FA5151;" bindtap="bindRed"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;" bindtap="bindPink"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #07C160;" bindtap="bindLightBlue"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #1485EE;" bindtap="bindPurple"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #576B95;" bindtap="bindYellow"></button>
+			</view>
 		</view>
 	</view>
 
@@ -63,12 +69,11 @@
 			<checkbox checked="{{hours72}}" bindchange="bind72"></checkbox>
 		</view>
 	</view>  -->
-	<view class="confirm">
-		<button  bindtap="addCountDown"><text style="color: #FFFFFF">{{buttonText}}</text></button>
+	<view class="confirm ">
+		<button  bindtap="addCountDown"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
-	<view class="delete" wx:if="{{showDelete}}" >
-		<button  type="warn" bindtap="deleteCountdown"><text style="color: #c10716">删除作业</text></button>
-
+	<view class="delete confirmOrDele" wx:if="{{showDelete}}" >
+		<button   bindtap="deleteCountdown"><text class="confirmOrDele">删除作业</text></button>
 	</view>
 	
 </view>

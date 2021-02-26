@@ -119,16 +119,12 @@
 
 .progress-bar .subject {
   position: absolute;
-  /* text-align: left;
-  overflow:show;
-  white-space:nowrap;
-  text-overflow:ellipsis; */
   font-size: 34rpx;
   left: 5%;
   top:0;
   line-height: 72rpx;
   color: rgba(0, 0, 0, 0.9);
-  z-index: 99999;
+  
 }
 
 /* .test  */
@@ -172,7 +168,7 @@
   height: 84rpx;
   z-index: 999;
   background-color: #FFFFFF;
-  margin: -5% auto 0 auto;
+  margin: -5% auto 40rpx auto;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
 
@@ -217,7 +213,7 @@
   flex-direction: row;
   z-index: 2;
   position: fixed;
-  bottom: 150rpx;
+  bottom: 40rpx;
   right: 30rpx;
 }
 
@@ -243,8 +239,10 @@
   align-items: flex-end;
   flex-direction: column; 
   position: fixed;
-  bottom: 245rpx;
+  bottom: 150rpx;
   right: 30rpx; 
+  font-size: 30rpx;
+  color: rgba(0, 0, 0, 0.9);
 }  
 
 .contents view {
