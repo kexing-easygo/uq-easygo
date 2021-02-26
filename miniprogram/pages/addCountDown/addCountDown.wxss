@@ -23,7 +23,7 @@
 }
 
 .cdtitle {
-  margin-left: 10%;
+  margin-left: 7%;
   height: fit-content;
   width: 180rpx;
 }
@@ -42,7 +42,7 @@
   margin-right: 15rpx;
 }
 
-picker {
+.picker {
   margin-right: 30rpx;
 }
 
