@@ -67,7 +67,7 @@
 			<image style="width: 88rpx; height: 88rpx" src="{{add}}" />
 		</view>
 		<view class="hide{{showView? 'show' : ''}}" bindtap="change">
-			<image style="width: 88rpx; height: 88rpx" src="{{add}}" />
+			<image style="width: 88rpx; height: 88rpx" src="{{addBlack}}" />
 		</view>
 	</view>
 </view>

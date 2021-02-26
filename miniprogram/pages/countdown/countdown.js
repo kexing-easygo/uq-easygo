@@ -12,6 +12,7 @@ Page({
     addCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
     notificationSetting: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
+    addBlack:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/黑色按钮.png",
     historyIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     showTrue: false,
     showAll: true,
