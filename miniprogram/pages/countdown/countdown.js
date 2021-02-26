@@ -105,17 +105,34 @@ Page({
     this.setData({
       selectMatchedItem: true,
       selectedAssignments: temp,
+      recentAssignmentName: this.data.userAssignments[key].name,
+      recentAssignmentDate: this.data.userAssignments[key].countdown,
       showAll: false,
       showResult: "hidden",
       startsearch: false,
     })
   },
   clear: function (e) {
+    var tempName = "None";
+    var tempCD = "∞";
+    if (this.data.userAssignments.length > 0) {
+      tempName = this.data.userAssignments[0].name;
+      tempCD = this.data.userAssignments[0].countdown;
+      this.data.userAssignments.forEach(element => {
+        if (element.countdown < tempCD) {
+          tempName = element.name;
+          tempCD = element.countdown;
+        }
+      });
+    }
+    
     this.setData({
       startsearch: false,
       showAll: true,
       selectMatchedItem: false,
       selectedAssignments: [],
+      recentAssignmentDate: tempCD,
+      recentAssignmentName: tempName,
       matchedItems: [],
       showResult: "",
       searchFocus: true

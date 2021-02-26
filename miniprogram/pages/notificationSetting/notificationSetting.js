@@ -181,6 +181,12 @@ Page({
       threeDay: this.data.threeDay,
       oneWeek: this.data.oneWeek
     }
+    wx.showToast({
+      title: '成功',
+      icon: 'succes',
+      duration: 1000,
+      mask:true
+    })
     // var pages = getCurrentPages()
     // var lastPage = pages[pages.length - 2]
     // if (lastPage.route == '/pages/countdown/countdown') {

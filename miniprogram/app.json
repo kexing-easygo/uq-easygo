@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/addCountDown/addCountDown",
     "pages/countdown/countdown",
-    "pages/getCode/getCode",
     "pages/home/home",
+    "pages/getCode/getCode",
+    "pages/email/email",
     "pages/getEmail/getEmail",
     "pages/profile/profile",
     "pages/otherSettings/otherSettings",
     "pages/basicUserInfo/basicUserInfo",
+    "pages/addCountDown/addCountDown",
     "pages/calc/calc",
     "pages/mobile/mobile",
     "pages/nonfunction/nonfunction",

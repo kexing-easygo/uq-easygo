@@ -15,27 +15,26 @@
   background-color: #FFA9A3;
   color:#707070;
   display: flex;
-  justify-items: center;
   align-items: center;
   flex-wrap: nowrap;
 }
 .header_subject {
   width: 35%;
   padding:0 7.5%;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.9);
   font-weight: bold;
   height: fit-content;
   text-align: left;
   word-wrap: break-word;
-  font-size: 1.4em;
+  font-size: 44rpx;
   line-height: 1.2em;
 }
 .remain_day {
   width: 20%;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.9);
   height: fit-content;
   text-align: left;
-  font-size: 3em;
+  font-size: 160rpx;
   padding-right: 5%;
 }
 .days {
