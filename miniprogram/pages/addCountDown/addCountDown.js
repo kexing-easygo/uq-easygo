@@ -23,13 +23,15 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "2020-02-02",
+    dueDate: "2021-02-02",
     dueTime: '11:11',
     color: "#576B95",
     years,
     showDelete: false,
     index: 0,
-    buttonText: "确认添加"
+    buttonText: "确认添加",
+    buttonDisabled: true,
+    inputDisabled: false
   },
 
   /**
@@ -45,7 +47,6 @@ Page({
       // 解码json数据
       var raw = JSON.parse(e)
       var data = raw.data
-      console.log(data)
       if (Object.keys(data).length > 0) {
         // console.log("从上一页面传递进来的data为" + data)
         that.setData({
@@ -55,12 +56,18 @@ Page({
           color: data.color,
           showDelete: true,
           index: raw.index,
-          buttonText: "确认"
+          buttonText: "确认",
+          buttonDisabled: false,
+          inputDisabled: true
         })
         // 设置该页面标题为作业名称
         wx.setNavigationBarTitle({
           title: data.name,
         })
+      } else {
+        // that.setData({
+        //   buttonDisabled: true
+        // })
       }
     })
   },
@@ -95,8 +102,7 @@ Page({
       }
     } else {
       // 当数据都在的时候才可以添加
-      if (this.data.dueDate != '2020-02-02' && this.data.title != ''
-      && this.data.time != '11:11') {
+      
         const _ = db.command
         if (app.globalData.hasUserInfo) {
           db.collection("MainUser")
@@ -120,14 +126,6 @@ Page({
               }
             })
         }
-      } else {
-        wx.showModal({
-          title: '温馨提示',
-          content: '你还有未添加的项目哦',
-          success(res) {}
-        })
-        return 
-      }
     }
     app.globalData.userAssignments = temp
     wx.navigateTo({
@@ -156,6 +154,12 @@ Page({
     this.setData({
       dueTime: e.detail.value
     })
+    if (this.data.dueDate != '2021-02-02' && this.data.title != ''
+      && this.data.time != '11:11') {
+        this.setData({
+          buttonDisabled: false
+        })
+      }
   },
   bindRed: function () {
     this.setData({
@@ -185,26 +189,35 @@ Page({
   deleteCountdown: function () {
     let temp = app.globalData.userAssignments
     let that = this
+    if (!app.globalData.hasUserInfo) {
+      wx.showToast({
+        title: '你需要登陆才能使用倒计时的删除功能哦！',
+        icon: "none"
+      })
+      return
+    }
     wx.showModal({
-      title: "删除作业",
+      title: "删除倒计时",
       content: "是否确定要删除？",
       success(res) {
         if (res.confirm) {
-          temp.splice(that.data.index, 1)
-          db.collection("MainUser")
-            .where({
-              _openid: app.globalData._openid
-            })
-            .update({
-              data: {
-                userAssignments: temp
-              },
-              success: function (res) {
-                if (res.stats.updated > 0) {
-                  console.log("作业条目删除成功")
+          if (app.globalData.hasUserInfo) {
+            temp.splice(that.data.index, 1)
+            db.collection("MainUser")
+              .where({
+                _openid: app.globalData._openid
+              })
+              .update({
+                data: {
+                  userAssignments: temp
+                },
+                success: function (res) {
+                  if (res.stats.updated > 0) {
+                    console.log("作业条目删除成功")
+                  }
                 }
-              }
-            })
+              })
+          }
           wx.navigateTo({
             url: '/pages/countdown/countdown',
             success: function (res) {
@@ -212,7 +225,6 @@ Page({
               if (page == undefined || page == null) return;
               // 刷新页面
               page.onLoad()
-
             }
           })
         }

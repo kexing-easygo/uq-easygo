@@ -3,6 +3,19 @@ const db = wx.cloud.database()
 const app = getApp()
 var now = new Date().getTime()
 const _ = db.command
+
+function  GetDateStr(AddDayCount) { 
+  var  dd =  new  Date();
+  dd.setDate(dd.getDate()+AddDayCount); //获取AddDayCount天后的日期
+  var  y = dd.getFullYear(); 
+  var  m = (dd.getMonth()+1)<10? "0" +(dd.getMonth()+1):(dd.getMonth()+1); //获取当前月份的日期，不足10补0
+  var  d = dd.getDate()<10? "0" +dd.getDate():dd.getDate(); //获取当前几号，不足10补0
+  return  y+ "-" +m+ "-" +d; 
+}
+
+var d1 = GetDateStr(4)
+var d2 = GetDateStr(30)
+
 Page({
 
   /**
@@ -17,18 +30,20 @@ Page({
     historyIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     showTrue: false,
     showAll: true,
+    d1,
+    d2,
     // 新用户进入倒计时的默认作业条目
     defaultUserAssignments: [{
         'color': '#576B95',
         'name': "CSSE1001 A1 (示例)",
-        "date": "2021-03-08",
-        "time": "16:16"
+        "date": d1,
+        "time": "00:00"
       },
       {
         'color': '#576B95',
         'name': "点我查看更多",
-        "date": "2021-04-08",
-        "time": "16:16"
+        "date": d2,
+        "time": "00:00"
       }
     ],
     userAssignments: [],

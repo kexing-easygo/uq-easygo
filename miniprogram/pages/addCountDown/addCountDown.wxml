@@ -4,7 +4,7 @@
 	<view class="heading">
 		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<input class="input" auto-focus bindinput="bindTitleInput" placeholder="{{title}}" />
+			<input focus="false" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
 		</view>
 	</view>
 
@@ -74,11 +74,11 @@
 		</view>
 	</view>  -->
 	<view class="confirm ">
-		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
+		<button  bindtap="addCountDown" class="setting-confirm-button" disabled="{{buttonDisabled}}"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
 
 	<view class="confirmOrDele" wx:if="{{showDelete}}" >
-		<button   bindtap="deleteCountdown" class="setting-delete-button" ><text class="confirmOrDele">删除作业</text></button>
+		<button   bindtap="deleteCountdown" class="setting-delete-button" ><text class="confirmOrDele">删除倒计时</text></button>
 	</view>
 	
 </view>
