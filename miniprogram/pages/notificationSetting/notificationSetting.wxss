@@ -109,3 +109,10 @@ checkbox{
   font-size: 28rpx;
   color: rgba(0, 0, 0, 0.5);
 }
+
+.setting-confirm-button {
+  margin-top: 100rpx;
+  font-weight: normal;
+  font-size: 34rpx;
+  color: (0, 0, 0, 0.9);
+}

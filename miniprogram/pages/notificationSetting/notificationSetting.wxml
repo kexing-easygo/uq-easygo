@@ -43,8 +43,8 @@
 		</view>
   </view>
   <view>
-    <button  type="confirm" plain="true" bindtap="confirm" style="background-color:#17c783;margin-top:20%;border:none;">
-			<text style="color:white">确定</text>
+    <button  type="confirm" plain="true" bindtap="confirm" style="background-color:#17c783;margin-top:20%;border:none;" class="setting-confirm-button">
+			<text style="color:white">确定修改</text>
 		</button>
 	</view>
 </view>
