@@ -94,11 +94,10 @@
 .progress-bar{
   background-color: white;
   width: 492rpx;
-  border: 1rpx solid #707070;
   height: 72rpx;
+  box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
   color: #707070;
   border-radius: 5px;
-  box-shadow: 5px 2.5px 2px beige;
   margin-right: 20rpx;
   position: relative;
 }

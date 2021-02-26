@@ -1,6 +1,7 @@
 // pages/countdown/countdown.js
 const db = wx.cloud.database()
 const app = getApp()
+var now = new Date().getTime()
 const _ = db.command
 Page({
 
@@ -18,13 +19,13 @@ Page({
     showAll: true,
     // 新用户进入倒计时的默认作业条目
     defaultUserAssignments: [{
-        'color': '#8877FF',
+        'color': '#576B95',
         'name': "CSSE1001 Assignment1 (示例)",
         "date": "2021-03-08",
         "time": "16:16"
       },
       {
-        'color': '#8877FF',
+        'color': '#576B95',
         'name': "点我查看更多",
         "date": "2021-04-08",
         "time": "16:16"
@@ -177,7 +178,7 @@ Page({
     })
   },
   calculatePercentage: function (diff) {
-    var percentage = Number(diff / 20 * 100).toFixed(1)
+    var percentage = Number(diff / 30 * 100).toFixed(1)
     if (percentage >= 100) {
       percentage = 0
     } else if (percentage < 100 && percentage > 0) {
@@ -187,8 +188,36 @@ Page({
     }
     return percentage
   },
-  updateAssignmentValues: function() {
-
+  updateDefaultAssignmentValues: function(assignments) {
+    let that = this
+    for (var i = 0; i < 2; i++) {
+      // 默认数据全是写死的
+      var date = assignments[i]["date"]
+      var time = assignments[i]["time"]
+      var string = date + "T" + time + ":00"
+      var d = new Date(string).getTime()
+      var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+      var percentage = this.calculatePercentage(diff)
+      assignments[i]["countdown"] = diff
+      assignments[i]["id"] = i
+      assignments[i]["percentage"] = percentage
+    }
+    app.globalData.userAssignments = assignments
+    that.setData({
+      userAssignments: assignments,
+      recentAssignmentName: assignments[0].name,
+      recentAssignmentDate: assignments[0].countdown,
+      history: {
+        search: {}
+      },
+      showAll: true,
+      selectMatchedItem: false,
+      selectedAssignments: [],
+      matchedItems: [],
+      showResult: "",
+      showHistory: false,
+      searchFocus: false,
+    })
   },
   /**
    * Lifecycle function--Called when page load
@@ -199,13 +228,12 @@ Page({
     this.setData({
       search: this.search.bind(this)
     })
-    const now = new Date().getTime()
+    
     let that = this
     wx.getSetting({
       withSubscriptions: true,
       success: (res) => {
         if (res.authSetting['scope.userInfo']) {
-          console.log("?")
           // 获取用户所有的assignments
           wx.cloud.callFunction({
             name: 'login',
@@ -215,17 +243,16 @@ Page({
               var temp = []
               db.collection('MainUser')
                 .where({
-                  _openid: app.globalData._openid
+                  _openid: res.result.openid
                 })
                 .get({
                   success: function (res) {
                     temp = res.data[0].userAssignments
                     // 如果用户有登记过assignment
                     if (temp.length > 0) {
-                      var userAssignments = res.data[0].userAssignments;
-                      app.globalData.userAssignments = userAssignments;
+                      var userAssignments = temp;
+                      
                       var diffs = [];
-                      // var now = new Date().getTime();
                       if (res.data[0].notification.location == "AU") {
                         // 转化为澳洲时间计算
                         now += 2 * 60 * 60 * 1000;
@@ -237,8 +264,9 @@ Page({
                         var d = new Date(string).getTime()
                         var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                         diffs.push(diff)
+                        console.log(diff)
                         // 计算style中的进度条百分比
-                        var percentage = this.calculatePercentage(diff)
+                        var percentage = that.calculatePercentage(diff)
                         userAssignments[i]["countdown"] = diff
                         userAssignments[i]["id"] = i
                         userAssignments[i]["percentage"] = percentage
@@ -268,7 +296,7 @@ Page({
                         }
                       }
                     }
-
+                    app.globalData.userAssignments = userAssignments;
                   }
                 })
             }
@@ -279,40 +307,10 @@ Page({
             content: '登录才能使用倒计时的完整功能哦！',
             success(res) {}
           })
-          if (app.globalData.userAssignments) {
-            console.log(app.globalData.userAssignments)
-            this.setData({
-              defaultUserAssignments: app.globalData.userAssignments
-            })
+          if (app.globalData.userAssignments != undefined) {
+            this.updateDefaultAssignmentValues(app.globalData.userAssignments)
           } else {
-            for (var i = 0; i < 2; i++) {
-              // 默认数据全是写死的
-              var date = this.data.defaultUserAssignments[i]["date"]
-              var time = this.data.defaultUserAssignments[i]["time"]
-              var string = date + "T" + time + ":00"
-              var d = new Date(string).getTime()
-              var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-              var percentage = this.calculatePercentage(diff)
-              this.data.defaultUserAssignments[i]["countdown"] = diff
-              this.data.defaultUserAssignments[i]["id"] = i
-              this.data.defaultUserAssignments[i]["percentage"] = percentage
-            }
-            app.globalData.userAssignments = this.data.defaultUserAssignments
-            that.setData({
-              userAssignments: this.data.defaultUserAssignments,
-              recentAssignmentName: this.data.defaultUserAssignments[0].name,
-              recentAssignmentDate: diff,
-              history: {
-                search: {}
-              },
-              showAll: true,
-              selectMatchedItem: false,
-              selectedAssignments: [],
-              matchedItems: [],
-              showResult: "",
-              showHistory: false,
-              searchFocus: false,
-            })
+            this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
           }
         }
       }

@@ -20,6 +20,16 @@ Page({
    * 在进入主页时，缓存用户的openid
    */
   onLoad: function (options) {
+    wx.getSetting({
+      withSubscriptions: true,
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 证明用户授权了
+          app.globalData.hasUserInfo = true,
+          app.globalData.userInfo = res.authSetting['scope.userInfo']
+        }
+      }
+    })
     wx.cloud.callFunction({
       name: 'login',
       data: {},

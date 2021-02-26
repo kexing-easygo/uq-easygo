@@ -25,7 +25,7 @@ Page({
     title: "",
     dueDate: "2020-02-02",
     dueTime: '11:11',
-    color: "",
+    color: "#576B95",
     years,
     showDelete: false,
     index: 0,
@@ -44,9 +44,8 @@ Page({
     eventChannel.on('acceptDataFromOpenerPage', function (e) {
       // 解码json数据
       var raw = JSON.parse(e)
-      console.log(raw)
       var data = raw.data
-
+      console.log(data)
       if (Object.keys(data).length > 0) {
         // console.log("从上一页面传递进来的data为" + data)
         that.setData({
@@ -62,8 +61,6 @@ Page({
         wx.setNavigationBarTitle({
           title: data.name,
         })
-      } else {
-        console.log("?")
       }
     })
   },
@@ -80,7 +77,9 @@ Page({
         color: this.data.color,
         time: this.data.dueTime
       }
+      console.log("1")
       if (app.globalData.hasUserInfo) {
+        console.log("2")
         db.collection("MainUser")
           .where({
             _openid: app.globalData._openid
@@ -97,28 +96,39 @@ Page({
           })
       }
     } else {
-      const _ = db.command
-      if (app.globalData.hasUserInfo) {
-        db.collection("MainUser")
-          .where({
-            _openid: app.globalData._openid
-          })
-          .update({
-            data: {
-              userAssignments: _.push({
-                date: this.data.dueDate,
-                name: this.data.title,
-                // color是颜色板选择的颜色
-                color: this.data.color,
-                time: this.data.dueTime
-              })
-            },
-            success: function (res) {
-              if (res.stats.updated > 0) {
-                console.log("作业条目更新成功")
+      // 当数据都在的时候才可以添加
+      if (this.data.dueDate != '2020-02-02' && this.data.title != ''
+      && this.data.time != '11:11') {
+        const _ = db.command
+        if (app.globalData.hasUserInfo) {
+          db.collection("MainUser")
+            .where({
+              _openid: app.globalData._openid
+            })
+            .update({
+              data: {
+                userAssignments: _.push({
+                  date: this.data.dueDate,
+                  name: this.data.title,
+                  // color是颜色板选择的颜色
+                  color: this.data.color,
+                  time: this.data.dueTime
+                })
+              },
+              success: function (res) {
+                if (res.stats.updated > 0) {
+                  console.log("作业条目更新成功")
+                }
               }
-            }
-          })
+            })
+        }
+      } else {
+        wx.showModal({
+          title: '温馨提示',
+          content: '你还有未添加的项目哦',
+          success(res) {}
+        })
+        return 
       }
     }
     app.globalData.userAssignments = temp
@@ -151,32 +161,27 @@ Page({
   },
   bindRed: function () {
     this.setData({
-      color: "#FE5B5B"
+      color: "#FA5151"
     })
   },
   bindPink: function () {
     this.setData({
-      color: "#FF8FDE"
+      color: "#FFC300"
     })
   },
   bindLightBlue: function () {
     this.setData({
-      color: "#77D5FF"
+      color: "#07C160"
     })
   },
   bindPurple: function () {
     this.setData({
-      color: "#8877FF"
+      color: "#1485EE"
     })
   },
   bindYellow: function () {
     this.setData({
-      color: "#E3FF6E"
-    })
-  },
-  bindGreen: function () {
-    this.setData({
-      color: "#9EFF97"
+      color: "#576B95"
     })
   },
   deleteCountdown: function () {

@@ -71,7 +71,7 @@ Page({
                     oneDay: "",
                     threeDay: "",
                     oneWeek: "",
-                    location: ""
+                    location: "AU"
                   },
                   history: {
                     calculator: {},
