@@ -23,14 +23,13 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "2021-02-02",
-    dueTime: '11:11',
+    dueDate: "2021-01-01",
+    dueTime: '00:00',
     color: "#576B95",
     years,
     showDelete: false,
     index: 0,
     buttonText: "确认添加",
-    buttonDisabled: true,
     inputDisabled: false
   },
 
@@ -72,6 +71,14 @@ Page({
     })
   },
   addCountDown: function () {
+    // 用户只有输入完题目、设置好时间日期后，才可以进行下一步
+    if (this.data.title == '' || this.data.dueDate == '2021-01-01' || this.data.dueTime == '00:00') {
+      wx.showToast({
+        title: '请输入完整的作业信息',
+        icon: 'none'
+      })
+      return
+    }
     // 表明是在修改作业条目
     let temp = app.globalData.userAssignments
     let that = this
@@ -102,7 +109,6 @@ Page({
       }
     } else {
       // 当数据都在的时候才可以添加
-      
         const _ = db.command
         if (app.globalData.hasUserInfo) {
           db.collection("MainUser")
@@ -144,7 +150,6 @@ Page({
     this.data.title = e.detail.value
   },
   bindDateChange: function (e) {
-    // console.log('picker发送选择改变，携带值为', e.detail.value)
     // 设置due date
     this.setData({
       dueDate: e.detail.value
@@ -154,12 +159,12 @@ Page({
     this.setData({
       dueTime: e.detail.value
     })
-    if (this.data.dueDate != '2021-02-02' && this.data.title != ''
-      && this.data.time != '11:11') {
-        this.setData({
-          buttonDisabled: false
-        })
-      }
+    // if (this.data.dueDate != '2021-02-02' && this.data.title != ''
+    //   && this.data.time != '11:11') {
+    //     this.setData({
+    //       buttonDisabled: false
+    //     })
+    //   }
   },
   bindRed: function () {
     this.setData({

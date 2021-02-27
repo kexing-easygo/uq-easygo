@@ -74,7 +74,7 @@
 		</view>
 	</view>  -->
 	<view class="confirm ">
-		<button  bindtap="addCountDown" class="setting-confirm-button" disabled="{{buttonDisabled}}"><text class="confirmOrDele">{{buttonText}}</text></button>
+		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
 
 	<view class="confirmOrDele" wx:if="{{showDelete}}" >
