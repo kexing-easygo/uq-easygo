@@ -4,13 +4,13 @@ const app = getApp()
 var now = new Date().getTime()
 const _ = db.command
 
-function  GetDateStr(AddDayCount) { 
-  var  dd =  new  Date();
-  dd.setDate(dd.getDate()+AddDayCount); //获取AddDayCount天后的日期
-  var  y = dd.getFullYear(); 
-  var  m = (dd.getMonth()+1)<10? "0" +(dd.getMonth()+1):(dd.getMonth()+1); //获取当前月份的日期，不足10补0
-  var  d = dd.getDate()<10? "0" +dd.getDate():dd.getDate(); //获取当前几号，不足10补0
-  return  y+ "-" +m+ "-" +d; 
+function GetDateStr(AddDayCount) {
+  var dd = new Date();
+  dd.setDate(dd.getDate() + AddDayCount); //获取AddDayCount天后的日期
+  var y = dd.getFullYear();
+  var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1); //获取当前月份的日期，不足10补0
+  var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate(); //获取当前几号，不足10补0
+  return y + "-" + m + "-" + d;
 }
 
 var d1 = GetDateStr(4)
@@ -203,7 +203,7 @@ Page({
     }
     return percentage
   },
-  updateDefaultAssignmentValues: function(assignments) {
+  updateDefaultAssignmentValues: function (assignments) {
     let that = this
     for (var i = 0; i < 2; i++) {
       // 默认数据全是写死的
@@ -243,93 +243,92 @@ Page({
     this.setData({
       search: this.search.bind(this)
     })
-    
     let that = this
-    wx.getSetting({
-      withSubscriptions: true,
-      success: (res) => {
-        if (res.authSetting['scope.userInfo']) {
-          // 获取用户所有的assignments
-          wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-              app.globalData._openid = res.result.openid
-              var temp = []
-              db.collection('MainUser')
-                .where({
-                  _openid: res.result.openid
-                })
-                .get({
-                  success: function (res) {
-                    temp = res.data[0].userAssignments
-                    // 如果用户有登记过assignment
-                    if (temp.length > 0) {
-                      var userAssignments = temp;
-                      
-                      var diffs = [];
-                      if (res.data[0].notification.location == "AU") {
-                        // 转化为澳洲时间计算
-                        now += 2 * 60 * 60 * 1000;
-                      }
-                      for (var i = 0; i < userAssignments.length; i++) {
-                        var date = userAssignments[i]["date"]
-                        var time = userAssignments[i]["time"]
-                        var string = date + "T" + time + ":00"
-                        var d = new Date(string).getTime()
-                        var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                        diffs.push(diff)
-                        console.log(diff)
-                        // 计算style中的进度条百分比
-                        var percentage = that.calculatePercentage(diff)
-                        userAssignments[i]["countdown"] = diff
-                        userAssignments[i]["id"] = i
-                        userAssignments[i]["percentage"] = percentage
-                        userAssignments[i]["diff"] = diff
-                      }
-                      var minValue = Math.min.apply(null, diffs)
-                      // 匹配最近的作业名称
-                      for (var i = 0; i < userAssignments.length; i++) {
-                        var diff = userAssignments[i]["diff"]
-                        if (diff == minValue) {
-                          var name = userAssignments[i]["name"]
-                          // 决定了header的assignment即为i代表的assignment值
-                          that.setData({
-                            // headerAssignment: userAssignments[i],
-                            recentAssignmentName: name,
-                            recentAssignmentDate: minValue,
-                            userAssignments: userAssignments,
-                            history: res.data[0].history.search,
-                            showAll: true,
-                            selectMatchedItem: false,
-                            selectedAssignments: [],
-                            matchedItems: [],
-                            showResult: "",
-                            showHistory: false,
-                            searchFocus: false,
-                          })
-                        }
-                      }
-                    }
-                    app.globalData.userAssignments = userAssignments;
-                  }
-                })
+    // wx.getSetting({
+    //   withSubscriptions: true,
+    //   success: (res) => {
+    // if (res.authSetting['scope.userInfo']) {
+    if (app.globalData.hasUserInfo) {
+      // 获取用户所有的assignments
+      // wx.cloud.callFunction({
+      //   name: 'login',
+      //   data: {},
+      //   success: res => {
+      // app.globalData._openid = res.result.openid
+      var temp = []
+      db.collection('MainUser')
+        .where({
+          _openid: app.globalData._openid
+        })
+        .get({
+          success: function (res) {
+            temp = res.data[0].userAssignments
+            // 如果用户有登记过assignment
+            if (temp.length > 0) {
+              var userAssignments = temp;
+              var diffs = [];
+              if (res.data[0].notification.location == "AU") {
+                // 转化为澳洲时间计算
+                now += 2 * 60 * 60 * 1000;
+              }
+              for (var i = 0; i < userAssignments.length; i++) {
+                var date = userAssignments[i]["date"]
+                var time = userAssignments[i]["time"]
+                var string = date + "T" + time + ":00"
+                var d = new Date(string).getTime()
+                var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                diffs.push(diff)
+                console.log(diff)
+                // 计算style中的进度条百分比
+                var percentage = that.calculatePercentage(diff)
+                userAssignments[i]["countdown"] = diff
+                userAssignments[i]["id"] = i
+                userAssignments[i]["percentage"] = percentage
+                userAssignments[i]["diff"] = diff
+              }
+              var minValue = Math.min.apply(null, diffs)
+              // 匹配最近的作业名称
+              for (var i = 0; i < userAssignments.length; i++) {
+                var diff = userAssignments[i]["diff"]
+                if (diff == minValue) {
+                  var name = userAssignments[i]["name"]
+                  // 决定了header的assignment即为i代表的assignment值
+                  that.setData({
+                    // headerAssignment: userAssignments[i],
+                    recentAssignmentName: name,
+                    recentAssignmentDate: minValue,
+                    userAssignments: userAssignments,
+                    history: res.data[0].history.search,
+                    showAll: true,
+                    selectMatchedItem: false,
+                    selectedAssignments: [],
+                    matchedItems: [],
+                    showResult: "",
+                    showHistory: false,
+                    searchFocus: false,
+                  })
+                }
+              }
             }
-          })
-        } else {
-          wx.showModal({
-            title: '温馨提示',
-            content: '登录才能使用倒计时的完整功能哦！',
-            success(res) {}
-          })
-          if (app.globalData.userAssignments != undefined) {
-            this.updateDefaultAssignmentValues(app.globalData.userAssignments)
-          } else {
-            this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
+            app.globalData.userAssignments = userAssignments;
           }
-        }
+        })
+      //   }
+      // })
+    } else {
+      if (app.globalData.userAssignments != undefined) {
+        this.updateDefaultAssignmentValues(app.globalData.userAssignments)
+      } else {
+        this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
       }
-    })
+      wx.showModal({
+        title: '温馨提示',
+        content: '登录才能使用倒计时的完整功能哦！',
+        success(res) {}
+      })
+    }
+    // }
+    // })
   },
 
   /**

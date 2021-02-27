@@ -27,16 +27,17 @@ Page({
           // 证明用户授权了
           app.globalData.hasUserInfo = true,
           app.globalData.userInfo = res.authSetting['scope.userInfo']
+          wx.cloud.callFunction({
+            name: 'login',
+            data: {},
+            success: res => {
+              app.globalData._openid = res.result.openid
+            }
+          })
         }
       }
     })
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        app.globalData._openid = res.result.openid
-      }
-    })
+    
   },
 
   /**
