@@ -72,13 +72,6 @@ Page({
   },
   addCountDown: function () {
     // 用户只有输入完题目、设置好时间日期后，才可以进行下一步
-    if (this.data.title == '' || this.data.dueDate == '2021-01-01' || this.data.dueTime == '00:00') {
-      wx.showToast({
-        title: '请输入完整的作业信息',
-        icon: 'none'
-      })
-      return
-    }
     // 表明是在修改作业条目
     let temp = app.globalData.userAssignments
     let that = this
@@ -108,6 +101,15 @@ Page({
           })
       }
     } else {
+      if (this.data.title == '' || 
+      this.data.dueDate == '2021-01-01' || 
+      this.data.dueTime == '00:00') {
+        wx.showToast({
+          title: '请输入完整的作业信息',
+          icon: 'none'
+        })
+        return
+      }
       // 当数据都在的时候才可以添加
         const _ = db.command
         if (app.globalData.hasUserInfo) {
@@ -134,15 +136,8 @@ Page({
         }
     }
     app.globalData.userAssignments = temp
-    wx.redirectTo({
+    wx.reLaunch({
       url: '/pages/countdown/countdown',
-      success: function (res) {
-        var page = getCurrentPages().pop()
-        if (page == undefined || page == null) return;
-        // 刷新页面
-        page.onLoad()
-
-      }
     })
   },
   bindTitleInput: function (e) {
