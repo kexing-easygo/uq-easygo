@@ -55,8 +55,11 @@ Page({
           userEmail: app.globalData.userEmail
         }
       })
-    wx.redirectTo({
-      url: '/pages/email/email',
-    })
+      wx.switchTab({
+        url: '/pages/profile/profile',
+      })
+    // wx.redirectTo({
+    //   url: '/pages/email/email',
+    // })
   }
 })

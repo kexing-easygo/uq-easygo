@@ -4,7 +4,7 @@
 	<view class="heading">
 		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<input focus="false" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
+			<input focus="false" type="text" maxlength="20" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
 		</view>
 	</view>
 

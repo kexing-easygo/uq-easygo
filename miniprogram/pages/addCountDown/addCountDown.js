@@ -134,7 +134,7 @@ Page({
         }
     }
     app.globalData.userAssignments = temp
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/pages/countdown/countdown',
       success: function (res) {
         var page = getCurrentPages().pop()
@@ -159,12 +159,7 @@ Page({
     this.setData({
       dueTime: e.detail.value
     })
-    // if (this.data.dueDate != '2021-02-02' && this.data.title != ''
-    //   && this.data.time != '11:11') {
-    //     this.setData({
-    //       buttonDisabled: false
-    //     })
-    //   }
+
   },
   bindRed: function () {
     this.setData({
@@ -223,7 +218,7 @@ Page({
                 }
               })
           }
-          wx.navigateTo({
+          wx.redirectTo({
             url: '/pages/countdown/countdown',
             success: function (res) {
               var page = getCurrentPages().pop()

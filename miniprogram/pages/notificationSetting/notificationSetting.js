@@ -20,7 +20,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
     if (app.globalData.notification) {
       var notification = app.globalData.notification
       this.setData(
@@ -101,14 +100,14 @@ Page({
     } else {
       temp = 0
     }
+    if (this.data.wechatNotification == true && e.detail.value == true) {
+      this.requestSubscribe()
+    }
     this.setData(
       {
         oneDay: temp
       }
     )
-    if (this.data.wechatNotification == true) {
-      this.requestSubscribe()
-    }
   },
   bindThreeDay: function (e) {
     var temp = 0
@@ -117,14 +116,14 @@ Page({
     } else {
       temp = 0
     }
+    if (this.data.wechatNotification == true && e.detail.value == true) {
+      this.requestSubscribe()
+    }
     this.setData(
       {
         threeDay: temp
       }
     )
-    if (this.data.wechatNotification == true) {
-      this.requestSubscribe()
-    }
   },
   bindOneWeek: function (e) {
     var temp = 0
@@ -133,14 +132,15 @@ Page({
     } else {
       temp = 0
     }
+    
+    if (this.data.wechatNotification == true && e.detail.value == true) {
+      this.requestSubscribe()
+    }
     this.setData(
       {
         oneWeek: temp
       }
     )
-    if (this.data.wechatNotification == true) {
-      this.requestSubscribe()
-    }
   },
   confirm: function(e) {
     // 更新数据库
@@ -187,29 +187,7 @@ Page({
       duration: 1000,
       mask:true
     })
-    // var pages = getCurrentPages()
-    // var lastPage = pages[pages.length - 2]
-    // if (lastPage.route == '/pages/countdown/countdown') {
-    //   wx.navigateTo({
-    //     url: '/pages/countdown/countdown',
-    //     success: function (res) {
-    //       var page = getCurrentPages().pop()
-    //       if (page == undefined || page == null) return;
-    //       // 刷新页面
-    //       page.onLoad() 
-    //     }
-    //   })
-    // } else {
-    //   wx.navigateTo({
-    //     url: '/pages/otherSetting/otherSetting',
-    //     success: function (res) {
-    //       var page = getCurrentPages().pop()
-    //       if (page == undefined || page == null) return;
-    //       // 刷新页面
-    //       page.onLoad() 
-    //     }
-    //   })
-    // }
+    
   },
   
   requestSubscribe: function() {
