@@ -16,6 +16,8 @@ function GetDateStr(AddDayCount) {
 var d1 = GetDateStr(4)
 var d2 = GetDateStr(30)
 
+ 
+
 Page({
 
   /**
@@ -286,29 +288,21 @@ Page({
                 userAssignments[i]["percentage"] = percentage
                 userAssignments[i]["diff"] = diff
               }
-              var minValue = Math.min.apply(null, diffs)
-              // 匹配最近的作业名称
-              for (var i = 0; i < userAssignments.length; i++) {
-                var diff = userAssignments[i]["diff"]
-                if (diff == minValue) {
-                  var name = userAssignments[i]["name"]
-                  // 决定了header的assignment即为i代表的assignment值
-                  that.setData({
-                    // headerAssignment: userAssignments[i],
-                    recentAssignmentName: name,
-                    recentAssignmentDate: minValue,
-                    userAssignments: userAssignments,
-                    history: res.data[0].history.search,
-                    showAll: true,
-                    selectMatchedItem: false,
-                    selectedAssignments: [],
-                    matchedItems: [],
-                    showResult: "",
-                    showHistory: false,
-                    searchFocus: false,
-                  })
-                }
-              }
+              userAssignments = userAssignments.sort(function(a, b){return a['diff'] - b['diff']});
+              that.setData({
+                // headerAssignment: userAssignments[i],
+                recentAssignmentName: userAssignments[0]['name'],
+                recentAssignmentDate: userAssignments[0]['diff'],
+                userAssignments: userAssignments,
+                history: res.data[0].history.search,
+                showAll: true,
+                selectMatchedItem: false,
+                selectedAssignments: [],
+                matchedItems: [],
+                showResult: "",
+                showHistory: false,
+                searchFocus: false,
+              })
             }
             app.globalData.userAssignments = userAssignments;
           }
