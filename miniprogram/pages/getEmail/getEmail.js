@@ -60,7 +60,7 @@ Page({
     
   },
   isEmail: function (email) {
-    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+([a-zA-Z0-9_-])/
+    var reg = /^(.)+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+([a-zA-Z0-9_-])/
     return reg.test(email)
   },
   /**

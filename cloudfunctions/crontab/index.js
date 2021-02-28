@@ -144,7 +144,7 @@ async function getAllData() {
                         }
                     }
                 }
-                用户接收订阅
+                //用户接收订阅
                 if (wechatNotification == true) {
                     if (dayDiff <= 1 && oneDay == 1) {
                         if (userAssignments[j]["oneDay"] != 1) {

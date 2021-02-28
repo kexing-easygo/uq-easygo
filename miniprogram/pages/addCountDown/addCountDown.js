@@ -100,6 +100,10 @@ Page({
             }
           })
       }
+      app.globalData.userAssignments = temp
+      wx.redirectTo({
+        url: '/pages/countdown/countdown',
+      })
     } else {
       if (this.data.title == '' || 
       this.data.dueDate == '2021-01-01' || 
@@ -113,6 +117,7 @@ Page({
       // 当数据都在的时候才可以添加
         const _ = db.command
         if (app.globalData.hasUserInfo) {
+          
           db.collection("MainUser")
             .where({
               _openid: app.globalData._openid
@@ -134,17 +139,18 @@ Page({
               }
             })
         }
+        wx.redirectTo({
+          url: '/pages/countdown/countdown',
+          success: function (res) {
+            var page = getCurrentPages().pop()
+            if (page == undefined || page == null) return;
+            // 刷新页面
+            page.onLoad()
+          }
+        })
     }
-    app.globalData.userAssignments = temp
-    wx.reLaunch({
-      url: '/pages/countdown/countdown',
-      success: function (res) {
-        var page = getCurrentPages().pop()
-        if (page == undefined || page == null) return;
-        // 刷新页面
-        page.onLoad()
-      }
-    })
+    
+      
   },
   bindTitleInput: function (e) {
     // 获取assignment名称
