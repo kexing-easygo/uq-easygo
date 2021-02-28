@@ -60,7 +60,7 @@ Page({
     
   },
   isEmail: function (email) {
-    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
+    var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+([a-zA-Z0-9_-])/
     return reg.test(email)
   },
   /**
@@ -79,4 +79,10 @@ Page({
       })
     }
   },
+  onReady: function() {
+    wx.showModal({
+      title: "提示",
+      content: "我们推荐绑定学校或qq邮箱；某些邮箱可能会将我们的邮件识别为垃圾邮件，若未收到，请查看垃圾邮箱哦～"
+    })
+  }
 })

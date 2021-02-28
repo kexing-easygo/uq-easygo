@@ -37,6 +37,15 @@ Page({
         }
       }
     })
+    // wx.cloud.callFunction({
+    //   // 云函数名称
+    //   name: 'crontab',
+    //   // 传给云函数的参数
+    //   success: function(res) {
+    //     console.log(res) // 3
+    //   },
+    //   fail: console.error
+    // })
     
   },
 

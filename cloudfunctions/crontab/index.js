@@ -51,15 +51,11 @@ async function send(email, name, type) {
 
 // date1 是now， date2是dueDate
 function dateDiff(date1, date2, location) {
-    var timeStamp = date1.getTime()
     if (location == "AU") {
-        // 转化为澳洲时间计算
-        timeStamp += 2 * 60 * 60 * 1000
-    } 
-    var date1 = new Date(timeStamp)
-    var new1 = new Date(date1.getFullYear().toString() + "/" + (date1.getMonth() + 1).toString() + "/" + date1.getDate().toString()).getTime()
-    var new2 = new Date(date2.getFullYear().toString() + "/" + (date2.getMonth() + 1).toString() + "/" + date2.getDate().toString()).getTime()
-    var diff = parseInt((new2 - new1) / (1000 * 60 * 60 * 24))
+        var hours = date1.getHours()
+        date1.setHours(hours + 2) // 澳洲差两个小时
+    }
+    var diff = parseInt((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))
     return diff
 }
 
@@ -85,7 +81,7 @@ async function getAllData() {
         errMsg: acc.errMsg,
     }))
     var data = response.data
-    const now = new Date()
+    var now = new Date()
     // 第一次循环，获取所有用户信息
     for (let i = 0; i < data.length; i++) {
         const userAssignments = data[i].userAssignments
@@ -93,7 +89,7 @@ async function getAllData() {
         const openid = data[i]._openid
         if (data[i].notification) {
             const notification = data[i].notification
-            if (notification.location)  {
+            if (notification.location) {
                 var location = notification.location
             }
             if (notification.oneDay) {
@@ -130,31 +126,56 @@ async function getAllData() {
             if (dayDiff >= 0) {
                 if (emailNotification == true && email != '') {
                     if (dayDiff <= 1 && oneDay == 1) {
-                        send(email, name, "oneDay")
+                        if (userAssignments[j]["oneDay"] != 1) {
+                            send(email, name, "oneDay")
+                            userAssignments[j]["oneDay"] = 1
+                        }
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
-                        send(email, name, "threeDay")
+                        if (userAssignments[j]["threeDay"] != 1) {
+                            send(email, name, "threeDay")
+                            userAssignments[j]["threeDay"] = 1
+                        }
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
-                        send(email, name, "oneWeek")
+                        if (userAssignments[j]["oneWeek"] != 1) {
+                            send(email, name, "oneWeek")
+                            userAssignments[j]["oneWeek"] = 1
+                        }
                     }
                 }
-                // 用户接收订阅
+                用户接收订阅
                 if (wechatNotification == true) {
                     if (dayDiff <= 1 && oneDay == 1) {
-                        template(name, now, dueDate, openid)
-                        
+                        if (userAssignments[j]["oneDay"] != 1) {
+                            template(name, now, dueDate, openid)
+                        }
+
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
-                        template(name, now, dueDate, openid)
+                        if (userAssignments[j]["threeDay"] != 1) {
+                            template(name, now, dueDate, openid)
+                        }
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
-                        template(name, now, dueDate, openid)
+                        if (userAssignments[j]["oneWeek"] != 1) {
+                            template(name, now, dueDate, openid)
+                        }
                     }
-                    
                 }
             }
         }
+        // console.log(userAssignments)
+        // 把用户作业更新上去
+        const res = db
+            .collection("MainUser")
+            .where({
+                _openid: openid
+            })
+            .update({
+                userAssignments: userAssignments
+            })
+        console.log(res)
     }
 }
 // 云函数入口函数

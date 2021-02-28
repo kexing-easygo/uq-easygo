@@ -246,17 +246,8 @@ Page({
       search: this.search.bind(this)
     })
     let that = this
-    // wx.getSetting({
-    //   withSubscriptions: true,
-    //   success: (res) => {
-    // if (res.authSetting['scope.userInfo']) {
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
-      // wx.cloud.callFunction({
-      //   name: 'login',
-      //   data: {},
-      //   success: res => {
-      // app.globalData._openid = res.result.openid
       var temp = []
       db.collection('MainUser')
         .where({
@@ -280,7 +271,6 @@ Page({
                 var d = new Date(string).getTime()
                 var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                 diffs.push(diff)
-                console.log(diff)
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
                 userAssignments[i]["countdown"] = diff

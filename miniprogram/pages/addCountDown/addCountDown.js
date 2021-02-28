@@ -138,6 +138,12 @@ Page({
     app.globalData.userAssignments = temp
     wx.reLaunch({
       url: '/pages/countdown/countdown',
+      success: function (res) {
+        var page = getCurrentPages().pop()
+        if (page == undefined || page == null) return;
+        // 刷新页面
+        page.onLoad()
+      }
     })
   },
   bindTitleInput: function (e) {
