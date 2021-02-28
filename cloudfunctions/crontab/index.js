@@ -55,7 +55,7 @@ function dateDiff(date1, date2, location) {
         var hours = date1.getHours()
         date1.setHours(hours + 2) // 澳洲差两个小时
     }
-    var diff = parseInt((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))
+    var diff = parseFloat((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))
     return diff
 }
 
@@ -81,7 +81,7 @@ async function getAllData() {
         errMsg: acc.errMsg,
     }))
     var data = response.data
-    var now = new Date()
+    
     // 第一次循环，获取所有用户信息
     for (let i = 0; i < data.length; i++) {
         const userAssignments = data[i].userAssignments
@@ -114,6 +114,7 @@ async function getAllData() {
             }
         }
         // 第二次循环，获取每个用户的所有作业
+
         for (let j = 0; j < userAssignments.length; j++) {
             const ass = userAssignments[j]
             const date = ass.date
@@ -121,7 +122,9 @@ async function getAllData() {
             var dueDate = processDateTime(date, time)
             const name = ass.name
             // 忽视due的时间，只计算日期
+            var now = new Date()
             var dayDiff = dateDiff(now, dueDate, location)
+            // console.log("用户%s的作业：%s还有%d天 due", data[i].userInfo.nickName, name, dayDiff)
             // 检查是否相差正数天
             if (dayDiff >= 0) {
                 if (emailNotification == true && email != '') {
@@ -175,7 +178,7 @@ async function getAllData() {
             .update({
                 userAssignments: userAssignments
             })
-        console.log(res)
+        // console.log(res)
     }
 }
 // 云函数入口函数

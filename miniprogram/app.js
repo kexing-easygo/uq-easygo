@@ -17,7 +17,7 @@ App({
     this.globalData = {
       userInfo: {},
       hasUserInfo: false,
-      _openid: null,
+      _openid: '',
       userVerificationCode: '',
       userEmail: '',
     }

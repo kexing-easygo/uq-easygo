@@ -101,8 +101,14 @@ Page({
           })
       }
       app.globalData.userAssignments = temp
-      wx.redirectTo({
+      wx.reLaunch({
         url: '/pages/countdown/countdown',
+        success: function (res) {
+          var page = getCurrentPages().pop()
+          if (page == undefined || page == null) return;
+          // 刷新页面
+          page.onLoad()
+        }
       })
     } else {
       if (this.data.title == '' || 
@@ -117,7 +123,6 @@ Page({
       // 当数据都在的时候才可以添加
         const _ = db.command
         if (app.globalData.hasUserInfo) {
-          
           db.collection("MainUser")
             .where({
               _openid: app.globalData._openid
@@ -134,12 +139,12 @@ Page({
               },
               success: function (res) {
                 if (res.stats.updated > 0) {
-                  console.log("作业条目更新成功")
+                  console.log("作业条目添加成功")
                 }
               }
             })
         }
-        wx.redirectTo({
+        wx.reLaunch({        
           url: '/pages/countdown/countdown',
           success: function (res) {
             var page = getCurrentPages().pop()
@@ -225,7 +230,7 @@ Page({
                 }
               })
           }
-          wx.redirectTo({
+          wx.reLaunch({
             url: '/pages/countdown/countdown',
             success: function (res) {
               var page = getCurrentPages().pop()

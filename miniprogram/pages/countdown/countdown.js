@@ -46,6 +46,12 @@ Page({
         'name': "点我查看更多",
         "date": d2,
         "time": "00:00"
+      },
+      {
+        'color': '#576B95',
+        'name': "取消按钮正在开发",
+        "date": d2,
+        "time": "00:00"
       }
     ],
     userAssignments: [],
@@ -269,6 +275,7 @@ Page({
                 var time = userAssignments[i]["time"]
                 var string = date + "T" + time + ":00"
                 var d = new Date(string).getTime()
+                now = new Date().getTime()
                 var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                 diffs.push(diff)
                 // 计算style中的进度条百分比
@@ -297,8 +304,6 @@ Page({
             app.globalData.userAssignments = userAssignments;
           }
         })
-      //   }
-      // })
     } else {
       if (app.globalData.userAssignments != undefined) {
         this.updateDefaultAssignmentValues(app.globalData.userAssignments)
@@ -306,15 +311,23 @@ Page({
         this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
       }
       wx.showModal({
-        title: '温馨提示',
+        title: 'UU妹提醒',
         content: '登录才能使用倒计时的完整功能哦！',
         success(res) {}
       })
     }
-    // }
-    // })
   },
-
+  onShow: function() {
+    if (app.globalData._openid == '') {
+      wx.cloud.callFunction({
+        name: 'login',
+        data: {},
+        success: res => {
+          app.globalData._openid = res.result.openid
+        }
+      })
+    }
+  },
   /**
    * 用户点击单项作业时，可以跳转到showCountDown页面
    * 显示该项作业

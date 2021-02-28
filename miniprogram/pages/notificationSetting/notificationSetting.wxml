@@ -48,9 +48,9 @@
 		</button>
 	</view>
 
-	<view>
+	<!-- <view>
     <button  type="confirm" plain="true" bindtap="testCrontab" style="background-color:#17c783;margin-top:20%;border:none;" class="setting-confirm-button">
 			<text style="color:white">调试</text>
 		</button>
-	</view>
+	</view> -->
 </view>

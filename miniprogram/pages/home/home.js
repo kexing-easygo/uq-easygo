@@ -37,16 +37,7 @@ Page({
         }
       }
     })
-    // wx.cloud.callFunction({
-    //   // 云函数名称
-    //   name: 'crontab',
-    //   // 传给云函数的参数
-    //   success: function(res) {
-    //     console.log(res) // 3
-    //   },
-    //   fail: console.error
-    // })
-    
+
   },
 
   /**
@@ -60,7 +51,10 @@ Page({
    * Lifecycle function--Called when page show
    */
   onShow: function () {
-
+    wx.showModal({
+      title: "体验须知",
+      content: "小程序目前在体验测试阶段，后续发布的正式版才会储存数据哦～"
+    })
   },
 
   /**
