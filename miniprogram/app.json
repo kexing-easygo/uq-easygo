@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
     "pages/getCode/getCode",
     "pages/email/email",
@@ -15,8 +16,7 @@
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",
     "pages/setEmailNotification/setEmailNotification",
-    "pages/setMobileNotification/setMobileNotification",
-    "pages/notificationSetting/notificationSetting"
+    "pages/setMobileNotification/setMobileNotification"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

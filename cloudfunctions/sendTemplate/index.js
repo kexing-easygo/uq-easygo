@@ -5,21 +5,20 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  console.log(event)
+  // console.log(event)
   try {
     const result = await cloud.openapi.subscribeMessage.send({
-        touser: 'oe4Eh5T-KoCMkEFWFa4X5fthaUG8',
-        // page: 'index',
+        touser: event.openid,
         lang: 'zh_CN',
         data: {
           thing10: {
             value: event.作业标题
           },
           date2: {
-            value: "2021-02-20"
+            value: event.时间
           },
           date8: {
-            value: "2021-02-25"
+            value: event.截止时间
           },
           thing3: {
             value: event.提醒内容

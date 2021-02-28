@@ -64,6 +64,23 @@ Page({
         })
     }
     
+    if (this.data.wechatNotification == true) {
+      wx.getSetting({
+        withSubscriptions: true,
+        success (res) {
+          if (!res.subscriptionsSetting.itemSettings) {
+            wx.showModal({
+              title: '提示',
+              content: "系统检测到您未在订阅消息勾选总是保持以上选择，为保证您的体验，请一定要勾选哦！"
+            })
+          } else {
+            console.log(res.subscriptionsSetting.itemSettings)
+            
+          }
+        }
+      })
+    }
+    
   },
   bindSwitch1: function (e) {
     this.setData({
@@ -198,19 +215,26 @@ Page({
       }
     })
   },
-  
-  template: function() {
-    wx.cloud.callFunction({
-      name: 'sendTemplate',
-      success: res => {
-          console.log(res)
-      },
-      fail: err => {
-          console.error("模版云函数调用失败。")
-          console.error(err)
-      }
-    })
-  },
+
+  // template: function() {
+  //   wx.cloud.callFunction({
+  //     name: 'sendTemplate',
+  //     data :{
+  //       作业标题: "1",
+  //       时间:"2021-02-20",
+  //       截止时间:"2021-02-25",
+  //       提醒内容:"无",
+  //       备注:"无"
+  //     },
+  //     success: res => {
+  //         console.log(res)
+  //     },
+  //     fail: err => {
+  //         console.error("模版云函数调用失败。")
+  //         console.error(err)
+  //     }
+  //   })
+  // },
   testCrontab: function() {
     wx.cloud.callFunction({
       // 云函数名称
