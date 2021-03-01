@@ -6,7 +6,7 @@ const date = new Date()
 const years = []
 const months = []
 const days = []
-for (let i = 2020; i <= date.getFullYear(); i++) {
+for (let i = 2021; i <= date.getFullYear(); i++) {
   years.push(i)
 }
 for (let i = 1; i <= 12; i++) {
@@ -24,7 +24,7 @@ Page({
   data: {
     title: "",
     dueDate: "2021-01-01",
-    dueTime: '00:00',
+    dueTime: '23:59',
     color: "#576B95",
     years,
     showDelete: false,

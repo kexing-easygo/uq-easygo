@@ -129,40 +129,43 @@ async function getAllData() {
             if (dayDiff >= 0) {
                 if (emailNotification == true && email != '') {
                     if (dayDiff <= 1 && oneDay == 1) {
-                        if (userAssignments[j]["oneDay"] != 1) {
+                        if (userAssignments[j]["oneDayEmail"] != 1) {
                             send(email, name, "oneDay")
-                            userAssignments[j]["oneDay"] = 1
+                            userAssignments[j]["oneDayEmail"] = 1
                         }
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
-                        if (userAssignments[j]["threeDay"] != 1) {
+                        if (userAssignments[j]["threeDayEmail"] != 1) {
                             send(email, name, "threeDay")
-                            userAssignments[j]["threeDay"] = 1
+                            userAssignments[j]["threeDayEmail"] = 1
                         }
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
-                        if (userAssignments[j]["oneWeek"] != 1) {
+                        if (userAssignments[j]["oneWeekEmail"] != 1) {
                             send(email, name, "oneWeek")
-                            userAssignments[j]["oneWeek"] = 1
+                            userAssignments[j]["oneWeekEmail"] = 1
                         }
                     }
                 }
                 //用户接收订阅
                 if (wechatNotification == true) {
                     if (dayDiff <= 1 && oneDay == 1) {
-                        if (userAssignments[j]["oneDay"] != 1) {
+                        if (userAssignments[j]["oneDayWe"] != 1) {
                             template(name, now, dueDate, openid)
+                            userAssignments[j]["oneDayWe"] = 1
                         }
 
                     }
                     if (dayDiff <= 3 && threeDay == 1) {
                         if (userAssignments[j]["threeDay"] != 1) {
                             template(name, now, dueDate, openid)
+                            userAssignments[j]["threeDayWe"] = 1
                         }
                     }
                     if (dayDiff <= 7 && oneWeek == 1) {
                         if (userAssignments[j]["oneWeek"] != 1) {
                             template(name, now, dueDate, openid)
+                            userAssignments[j]["oneWeekWe"] = 1
                         }
                     }
                 }
