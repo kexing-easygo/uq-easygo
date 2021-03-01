@@ -8,10 +8,11 @@ Page({
   data: {
     swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图上线了.png",
     swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图倒计时功能.png",
-    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图敬请期待.png",
+    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
     calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
     countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
-    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图敬请期待.png",
+    PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
+    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待海报.png",
     inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png"
   },
 

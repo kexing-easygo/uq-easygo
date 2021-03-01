@@ -6,6 +6,9 @@
 	<swiper-item>
 		<image src="{{swiperPlaceholderTwo}}" />
 	</swiper-item>
+	<swiper-item>
+		<image src="{{swiperPlaceholderThree}}" />
+	</swiper-item>
 </swiper>
 
 <view class="nav-icons">
@@ -38,7 +41,7 @@
 </view>
 
 <view class="in-coming">
-	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
+	<image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/>
 </view>
 <view class="in-coming">
 	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
