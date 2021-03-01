@@ -91,5 +91,16 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  navigateToWaiting: function() {
+    wx.navigateTo({
+      url: '/pages/waiting/waiting',
+    })
+  },
+  /**
+   * 分享朋友圈。灰度测试
+   */
+  onShareTimeline: function() {
+    
   }
 })
