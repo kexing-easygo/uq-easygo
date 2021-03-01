@@ -20,6 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({australia: true})
     if (app.globalData.notification) {
       var notification = app.globalData.notification
       this.setData(
@@ -32,9 +33,9 @@ Page({
         }
       )
       if (notification.location == "CH") {
-        this.setData({china: true})
+        this.setData({china: true, australia: false})
       } else if (notification.location == "AU") {
-        this.setData({australia: true})
+        this.setData({australia: true, china: false})
       }
 
     } else {
@@ -56,9 +57,9 @@ Page({
               }
             )
             if (notification.location == "CH") {
-              this.setData({china: true})
+              this.setData({china: true, australia: false})
             } else if (notification.location == "AU") {
-              this.setData({australia: true})
+              this.setData({australia: true, china: false})
             }
           }
         })
@@ -185,9 +186,6 @@ Page({
           oneWeek: this.data.oneWeek
         }
       }, success: function(res) {
-        if (res.stats.updated > 0) {
-          console.log("提醒更新成功")
-        }
       }
     })
     app.globalData.notification = {
