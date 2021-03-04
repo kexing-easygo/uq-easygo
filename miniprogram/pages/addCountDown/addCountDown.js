@@ -70,6 +70,9 @@ Page({
         // })
       }
     })
+    wx.hideKeyboard({
+      success: (res) => {},
+    })
   },
   addCountDown: function () {
     // 用户只有输入完题目、设置好时间日期后，才可以进行下一步

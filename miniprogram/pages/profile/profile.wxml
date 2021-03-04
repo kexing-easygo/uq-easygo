@@ -72,7 +72,7 @@
 		</navigator>
 	</view>
 
-	<view class="page-block">
+	<!-- <view class="page-block">
 		<navigator url="/pages/aboutUs/aboutUs">
 			<view class="img">
 				<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
@@ -94,6 +94,6 @@
 				<view>></view>
 			</view>
 		</navigator>
-	</view>
+	</view> -->
 
 </view>
