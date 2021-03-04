@@ -30,7 +30,8 @@ Page({
     showDelete: false,
     index: 0,
     buttonText: "确认添加",
-    inputDisabled: false
+    inputDisabled: false, 
+    inputFocus: false,
   },
 
   /**
