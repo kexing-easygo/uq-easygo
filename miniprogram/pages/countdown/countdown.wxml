@@ -33,7 +33,7 @@
 						</view>
 						<text class="subject">{{item.name}}</text>
 					</view>
-					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}}">
+					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}} green_day{{item.countdown < 0 ? '':'nog'}}">
 						{{item.countdown}} Days
 					</view>
 				<!-- </view> -->

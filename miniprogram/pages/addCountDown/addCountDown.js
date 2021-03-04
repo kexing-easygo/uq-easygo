@@ -23,7 +23,7 @@ Page({
    */
   data: {
     title: "",
-    dueDate: "2021-01-01",
+    dueDate: "2020-12-31",
     dueTime: '23:59',
     color: "#576B95",
     years,

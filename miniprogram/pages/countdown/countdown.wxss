@@ -147,6 +147,10 @@
   background-color: red;
 }
 
+.green_day {
+  background-color: green;
+}
+
 /* .countdown_days_red {
   width: 20%;
   padding: 1%;
