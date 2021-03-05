@@ -135,16 +135,15 @@
   width: 142rpx;
   height: 72rpx;
   font-size: 34rpx;
-  border: 1rpx solid #707070;
   border-radius: 5px;
-  background-color: #4A4A4A;
+  background-color: #000000;
   color: rgba(255, 255, 255, 1);
   text-align: center;
   line-height: 72rpx;
 }
 
 .red_day {
-  background-color: red;
+  background-color:#FA5151;
 }
 
 /* .countdown_days_red {

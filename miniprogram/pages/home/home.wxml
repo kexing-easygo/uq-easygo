@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<swiper autoplay circular indicator-dots interval="2000">
+<swiper autoplay circular indicator-dots interval="2000" class="swiper">
 	<swiper-item>
 		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
@@ -25,6 +25,7 @@
 		<image src="{{inComingIcon}}" />
 	</navigator>
 </view>
+
 <view class="nav-text">
 	<navigator url="/pages/calc/calc">
 		计算器
