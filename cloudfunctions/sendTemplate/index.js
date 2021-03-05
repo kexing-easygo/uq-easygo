@@ -11,23 +11,20 @@ exports.main = async (event, context) => {
         touser: event.openid,
         lang: 'zh_CN',
         data: {
-          thing10: {
-            value: event.作业标题
-          },
-          date2: {
-            value: event.时间
-          },
-          date8: {
-            value: event.截止时间
-          },
-          thing3: {
+          thing1: {
             value: event.提醒内容
           },
-          thing9: {
-            value: event.备注
+          thing2: {
+            value: event.作业名称
+          },
+          time3: {
+            value: event.截至日期
+          },
+          thing4: {
+            value: event.发布人员
           }
         },
-        templateId: 'YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI',
+        templateId: '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U',
         miniprogramState: 'developer'
       })
     return result

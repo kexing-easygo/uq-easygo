@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/profile/profile",
     "pages/notificationSetting/notificationSetting",
+    "pages/profile/profile",
     "pages/countdown/countdown",
     "pages/getCode/getCode",
     "pages/email/email",

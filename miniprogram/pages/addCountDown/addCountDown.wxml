@@ -4,14 +4,14 @@
 	<view class="heading">
 		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<input focus="false" type="text" maxlength="20" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
+			<input focus= "{{inputFocus}}" type="text" maxlength="20" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
 		</view>
 	</view>
 
 	<view class="due_date">
 		<text class = "cdtitle">Due Date<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<picker mode="date" value="{{dueDate}}" start="2021-01-01" end="2021-12-31" bindchange="bindDateChange" >
+			<picker mode="date" value="{{dueDate}}" start="2020-12-31" end="2021-12-31" bindchange="bindDateChange" >
 				<view class="picker">
 					<text >{{dueDate}}</text>
 				</view>
