@@ -22,9 +22,9 @@ App({
       userVerificationCode: '',
       userEmail: '',
     }
-    wx.showModal({
-      title: "体验须知",
-      content: "小程序目前在体验测试阶段，后续发布的正式版才会储存数据哦～"
-    })
+    // wx.showModal({
+    //   title: "体验须知",
+    //   content: "小程序目前在体验测试阶段，后续发布的正式版才会储存数据哦～"
+    // })
   },
 })

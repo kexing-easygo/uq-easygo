@@ -102,5 +102,14 @@ Page({
    */
   onShareTimeline: function() {
     
+  },
+  clickImage: function(e) {
+    wx.previewImage({
+      urls: ["cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png"], //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   }
 })

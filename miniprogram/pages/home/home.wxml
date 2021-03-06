@@ -7,7 +7,9 @@
 		<image src="{{swiperPlaceholderTwo}}" />
 	</swiper-item>
 	<swiper-item>
-		<image src="{{swiperPlaceholderThree}}" />
+		<!-- <image src="{{swiperPlaceholderThree}}" /> -->
+		
+		<image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png" bindtap="clickImage" />
 	</swiper-item>
 </swiper>
 
@@ -42,7 +44,9 @@
 </view>
 
 <view class="in-coming">
-	<image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/>
+	
+	<!-- <image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/> -->
+	<image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png" bindtap="clickImage"/>
 </view>
 <view class="in-coming">
 	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
