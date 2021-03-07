@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<swiper autoplay circular indicator-dots interval="2000" class="swiper">
+<swiper autoplay circular indicator-dots interval="2000" class="swiper" bindtap="clickImages">
 	<swiper-item>
 		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
@@ -7,9 +7,8 @@
 		<image src="{{swiperPlaceholderTwo}}" />
 	</swiper-item>
 	<swiper-item>
-		<!-- <image src="{{swiperPlaceholderThree}}" /> -->
-		
-		<image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png" bindtap="clickImage" />
+		<image src="{{swiperPlaceholderThree}}" />
+	
 	</swiper-item>
 </swiper>
 
@@ -43,11 +42,9 @@
 	</navigator>
 </view>
 
-<view class="in-coming">
-	
-	<!-- <image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/> -->
-	<image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png" bindtap="clickImage"/>
+<view class="in-coming">	
+	<image src="{{PostHolderOne}}" bindtap="clickImage"/>
 </view>
 <view class="in-coming">
-	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
+	<image src="{{inComingHolder}}" bindtap="clickWaiting"/>
 </view>

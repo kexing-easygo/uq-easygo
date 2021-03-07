@@ -116,8 +116,8 @@ Page({
       })
     } else {
       if (this.data.title == '' || 
-      this.data.dueDate == '2021-01-01' || 
-      this.data.dueTime == '00:00') {
+      this.data.dueDate == '2020-12-31' || 
+      this.data.dueTime == '23:59') {
         wx.showToast({
           title: '请输入完整的作业信息',
           icon: 'none'
