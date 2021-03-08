@@ -18,7 +18,7 @@ Page({
     // 丢失总分
     totalDropped: 0,
     // 是否为doublePass
-    doublePass: true,
+    doublePass: false,
     calculatedGPA: 0,
     // 历史数据
     historyData: {},
@@ -54,10 +54,11 @@ Page({
     var score = 0
     for (var i = 0; i < assessments.length; i++) {
       var item = assessments[i]
+      console.log(item)
       var score1 = item.score1
       var score2 = item.score2
       var weight = item.weight
-      // score += 
+      
       if (score1 >= 0 && score2 > 0) {
         score += (score1 / score2) * weight
       }
@@ -65,6 +66,7 @@ Page({
     score = parseFloat(score.toFixed(2))
     var drop = 100 - score
     var gpa = this.calculateGPA(score)
+    console.log(score)
     this.setData({
       totalDropped: drop,
       totalScore: score,
@@ -169,11 +171,17 @@ Page({
     // 数据库搜索
     db.collection("Courses").where({
       name: db.RegExp({
+        options: 'i',
         regexp: '^' + value
       })
     }).get({
       success: function(res) {
         var assessments = res.data[0].assessment
+        if (assessments[assessments.length - 1].doublepass == true) {
+          _this.setData({
+            doublePass: true
+          })
+        }
         if (_this.data.userLoggedIn == true && _this.data.historyData.length > 0) {
           // 只有当用户登录并且有历史记录的时候
           // 才询问是否加载历史记录
@@ -195,22 +203,19 @@ Page({
                 }
                 _this.setData({
                   historyData: historyData,
+                  assessments: assessments
                 })
+                _this.calculateScore(_this.data.assessments)
               }
-              
+              _this.setData({
+                // assessments: assessments
+              })
+              // _this.calculateScore(_this.data.assessments)
             }
           })
-          
         }
-        _this.setData({
-          assessments: assessments
-        })
-        _this.calculateScore(_this.data.assessments)
       }
     })
-    
-    
-    
   },
 
   /**
@@ -224,7 +229,7 @@ Page({
    * Lifecycle function--Called when page show
    */
   onShow: function () {
-
+    
   },
 
   /**
@@ -241,7 +246,7 @@ Page({
   onUnload: function () {
     // 用户退出时保存所有历史信息
     let _this = this
-    let name = "CSSE1001"
+    let name = this.data.course
     var assessments = _this.data.assessments
     var d = []
     for (var i = 0; i < assessments.length; i++) {
