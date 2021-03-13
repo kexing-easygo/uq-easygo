@@ -44,6 +44,7 @@
   border-radius: 10rpx;
   margin-top: 20rpx;
   margin-left: 50rpx;
+  display: flex;
 }
 
 .course {
@@ -57,12 +58,12 @@
 
 .mini-button {
   height: 60rpx;
-  margin-top: 30rpx;
+  margin-left: 20rpx;
   border-radius: 10rpx;
 }
 
 .progress_box{
-  position: absolute;
+  position: fixed;
   width:100px;
   height: 100px;  
   display: flex;  
@@ -70,7 +71,7 @@
   justify-content: center;
   background-color: transparent;
   align-self: flex-end;
-  margin-top: 40rpx;
+  margin-top: 45rpx;
   margin-right: 40rpx;
 }
 
@@ -152,7 +153,7 @@
   width: 654rpx;
   height: auto;
   border-radius: 8rpx;
-  background-color: #FFFFFF;
+  background-color: #FFA9A3;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
   margin-top: 35rpx;
   padding: 10rpx;

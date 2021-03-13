@@ -10,8 +10,12 @@
 		</view>
 
 		<view class="course_box"> 
-			<input class="course" bindinput="bindCourseInput" maxlength="8"/>
-			<button style="font-size: 30rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+			<view class="a">
+				<view style="width: 256rpx;"><input class="course" bindinput="bindCourseInput" maxlength="8"/></view>
+			</view>
+			<view class="b">
+				<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+			</view>
 		</view>
 
 		<!-- 动态圆形进度条 -->

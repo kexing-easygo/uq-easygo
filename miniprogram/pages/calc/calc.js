@@ -72,9 +72,10 @@ Page({
       totalScore: score,
       calculatedGPA: gpa
     })
-
+    var startAngle = 1.5 * Math.PI;
+    var endAngle = ((score / 100)*2) * Math.PI;
     this.drawCirclebg(); 
-    this.drawCirclefront(score);
+    this.drawCirclefront(startAngle, endAngle);
   },
   calculateGPA: function(score) {
     if (score >= 50 && score < 64) {
@@ -104,8 +105,8 @@ Page({
    */
   drawCirclebg: function() {
     var circle = wx.createCanvasContext('canvasProgressbg')
-    circle.setLineWidth(5);
-    circle.setStrokeStyle("#000000");
+    circle.setLineWidth(10);
+    circle.setStrokeStyle("#ffffff");
     circle.setLineCap("butt");
     circle.beginPath();
     circle.arc(50, 50, 45, 0, 2 * Math.PI, false);
@@ -116,13 +117,17 @@ Page({
   /**
    * 圆形动态进度条：绘制上层蓝色圆环
    */
-  drawCirclefront: function(score) {
+  drawCirclefront: function(start, end) {
     var circle = wx.createCanvasContext('canvasProgress');
-    circle.setLineWidth(8);
-    circle.setStrokeStyle("#ffffff");
-    circle.setLineCap("round");
+    circle.setLineWidth(10);
+    circle.setStrokeStyle("#587FFC");
+    circle.setLineCap("butt");
     circle.beginPath();
-    circle.arc(50, 50, 45, 0 * Math.PI, ((score / 100)*2) * Math.PI, false);
+    if (end == 0) {
+      circle.arc(50, 50, 45, start, 1.5 * Math.PI, false);
+    } else {
+      circle.arc(50, 50, 45, start, end, false);
+    }
     circle.stroke();
     circle.draw();
   },
