@@ -1,0 +1,122 @@
+<!--miniprogram/pages/timetable/timetable.wxml-->
+<view class = "allWeeks">
+  <view class="week">
+    <text>第一周</text>
+  </view>
+  <view class="week">
+    <text>第二周</text>
+  </view>
+  <view class="week">
+    <text>第三周</text>
+  </view>
+  <view class="week">
+    <text>第四周</text>
+  </view>
+  <view class="week">
+    <text>第五周</text>
+  </view>
+  <view class="week">
+    <text>第六周</text>
+  </view>
+</view>
+
+<view class="timeTable">
+  <view class="time">
+    <view class="month">
+      <text>二月</text>
+    </view>
+    <view class="timePoint">
+      <text>8</text>
+    </view>
+    <view class="timePoint">
+      <text>9</text>
+    </view>
+    <view class="timePoint">
+      <text>10</text>
+    </view>
+    <view class="timePoint">
+      <text>11</text>
+    </view>
+    <view class="timePoint">
+      <text>12</text>
+    </view>
+    <view class="timePoint">
+      <text>13</text>
+    </view>
+    <view class="timePoint">
+      <text>14</text>
+    </view>
+    <view class="timePoint">
+      <text>15</text>
+    </view>
+    <view class="timePoint">
+      <text>16</text>
+    </view>
+    <view class="timePoint">
+      <text>17</text>
+    </view>
+    <view class="timePoint">
+      <text>18</text>
+    </view>
+    <view class="timePoint">
+      <text>19</text>
+    </view>
+    <view class="timePoint">
+      <text>20</text>
+    </view>
+
+
+  </view>
+
+  <view class="weekClass">
+    <view class="weekDate">
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+      <view class="weekDateitem">
+        <view class="weekDateitemContent">
+          <text>周一\n02-01</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="classes">
+      <view class="class">
+        <text>csse2310</text>
+      </view>
+
+    </view>
+
+
+  
+  
+  </view>
+
+</view>

@@ -1,0 +1,97 @@
+/* miniprogram/pages/timetable/timetable.wxss */
+
+.allWeeks {
+  margin-top: 40rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 30rpx;
+  color: rgba(red, green, blue, 0.9);
+}
+
+.week {
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  height: 48rpx;
+  width: 104rpx;
+  margin-right: 20rpx;
+  text-align: center;
+}
+
+
+
+.timeTable {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top:20rpx;
+}
+
+.time {
+  width: 52rpx;
+  font-size: 24rpx;
+}
+
+.time .month {
+  text-align: center;
+  height: 76rpx;
+  background-color: rgba(100, 103, 204, 0.7);
+  writing-mode:vertical-lr;
+  width: 100%;
+}
+
+.time .timePoint{
+  background-color: #ffffff;
+  text-align: center;
+  height: 88rpx;
+}
+
+.weekClass {
+  width: 696rpx;
+  position: relative;
+  font-size: 24rpx;
+  
+}
+
+.weekDate {
+  display: flex;
+  flex-flow: row nowrap;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.weekDateitem {
+  height: 76rpx;
+  width: 100rpx;
+  line-height:24rpx;
+  
+  position: relative;
+}
+
+.weekDateitemContent {
+  
+  margin-top: 14rpx;
+  border-right: 5rpx rgba(0, 0, 0, 0.5) solid;
+}
+
+.classes {
+  position: relative;
+}
+
+.class {
+  width: 90rpx;
+  background-color: #576b95;
+  border-radius: 10rpx;
+  height: 176rpx;
+  word-wrap: break-word;
+  position: absolute;
+  left: 200rpx; /* 100rpx * 周几 */
+  top: 720rpx; /* 90rpx * 第几节 */
+}
+
+
+
+
+
+
+
+
+
