@@ -40,17 +40,18 @@
 .course_box {
   width: 378rpx;
   height: 60rpx;
-  background-color: #ffffff;
-  border-radius: 10rpx;
   margin-top: 20rpx;
   margin-left: 50rpx;
-  display: flex;
+  display: flex; 
+  flex-flow: row, nowrap;
 }
 
 .course {
+  background-color: #ffffff; 
+  height: 60rpx;
+  border-radius: 10rpx;
   font-size: 100%;
-  text-align: justify;
-  margin-left: 20rpx;
+  text-align: center;
 }
 ::placeholder {
   color: #B2B2B2;

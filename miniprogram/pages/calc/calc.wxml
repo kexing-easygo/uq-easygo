@@ -10,13 +10,22 @@
 		</view>
 
 		<view class="course_box"> 
-			<view class="a">
-				<view style="width: 256rpx;"><input class="course" bindinput="bindCourseInput" maxlength="8"/></view>
+			<view style="width:254rpx;">
+				<input type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
 			</view>
-			<view class="b">
+			<view style="width:104rpx;">
 				<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
 			</view>
 		</view>
+
+	<!-- <view style="display: flex; flex-flow: row, nowrap;">
+		<view style="width:50%;">
+			<input style="background-color: white; height: 60rpx;border-radius: 10rpx;"bindinput="bindCourseInput" maxlength="8"/>
+		</view>
+		<view style="width:50%;">
+			<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+		</view>
+	</view> -->
 
 		<!-- 动态圆形进度条 -->
 		<view class='progress_box'>
