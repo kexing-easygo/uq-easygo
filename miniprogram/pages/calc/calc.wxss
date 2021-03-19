@@ -7,19 +7,19 @@
   height: 100%;
   width: 100%;
   display: flex;
-  margin-top: 10rpx;
+  margin-top: 8rpx;
   justify-content: center;
   flex-flow: column nowrap;
   align-items: center;
 }
 
 .header {
-  height: 312rpx;
+  height: 300rpx;
   width: 100%;
   background-color: #ffa9a3;
   display: flex;
-  flex-wrap: nowrap;
-  flex-direction: column;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .semester_box {
@@ -64,16 +64,13 @@
 }
 
 .progress_box{
-  position: fixed;
+  /* position: fixed; */
   width:100px;
   height: 100px;  
-  display: flex;  
+  display: flex; 
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  align-self: flex-end;
-  margin-top: 45rpx;
-  margin-right: 40rpx;
 }
 
 .progress_bg{
@@ -103,7 +100,6 @@
 }
 
 .prompot {
-  margin-top: 50rpx;
   text-align: center;
   color: #E64340;
   font-size: 28rpx;
