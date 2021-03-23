@@ -51,7 +51,7 @@
 			<!-- table heading -->
 			<view class="table-tr">
 				<view class="table-th">Assessment</view>
-				<view class="table-th">Weight</view>
+				<view class="table-th">Weight(%)</view>
 				<view class="table-th">Score</view>
 			</view>
 			<!-- assessment blocks -->
@@ -61,7 +61,7 @@
 				<view class="table-td">{{item.name}}</view>
 				<!-- assessment weight -->
 				<!-- <view class="table-td">6.25%</view> -->
-				<view class="table-td">{{item.weight}}%</view>
+				<view class="table-td">{{item.weight}}</view>
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
