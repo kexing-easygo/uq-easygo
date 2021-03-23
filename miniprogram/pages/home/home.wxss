@@ -1,0 +1,53 @@
+/* pages/home/home.wxss */
+.swiper {
+    width: 654rpx;
+    height: 274rpx;
+    margin: 0 auto;
+    margin-top: 36rpx;
+    border-radius: 35rpx;
+    overflow: hidden;
+}
+.swiper image {
+    width: 100%;
+    height: 100%;
+    border-radius: 35rpx;
+}
+.nav-icons, .nav-text {
+    height: 88rpx;
+    width: 530rpx;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+.nav-icons {
+    margin-top: 40rpx;
+}
+.nav-text {
+    margin-top: 14rpx;
+    height: 48rpx;
+}
+.nav-icons navigator, .nav-text navigator {
+    height: 100%;
+    width: 88rpx;
+    float: left;
+    font-size: 28rpx;
+    text-align: center;
+}
+.nav-icons image {
+    height: 100%;
+    width: 88rpx;
+}
+.in-coming {
+    width: 654rpx;
+    margin: 0 auto;
+    margin-top: 40rpx;
+    height: 274rpx;
+    line-height: 330rpx;
+    text-align: center;
+    box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+    -webkit-box-shadow: 0 4px 4px 1px #cccccc;
+}
+.in-coming image {
+    height: 100%;
+    width: 100%;
+}

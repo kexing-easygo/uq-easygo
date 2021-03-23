@@ -1,0 +1,22 @@
+<view class="wrapper">
+	
+	<view class="page-section">
+		<view class="container">
+			<view>用户名</view>
+			<view class="txt">
+				<text wx:if="{{!hasUserInfo}}">未登录</text>
+				<text wx:if="{{hasUserInfo}}">{{nickName}}</text>
+				<!-- <text wx:elif="{{easygoNickname != null}}">{{easygoNickname}}</text> -->
+			</view>
+		</view>
+	</view>
+
+	<!-- <view class="page-section">
+		<view class="container">
+			<view>学生账号</view>
+			<view>
+				<text style="color: #A4A4A4;">暂未上线</text>
+			</view>
+		</view>
+	</view> -->
+</view>

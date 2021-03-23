@@ -1,0 +1,97 @@
+<!--pages/countdown/countdown.wxml-->
+<view class="container">
+	<view class="header" style="background-color: {{recentAssignmentColor}}">
+
+		<view class="header_subject">{{recentAssignmentName}}
+		</view>
+		<view class="remain_day">{{recentAssignmentDate}}</view>
+		<view class="days red_day{{recentAssignmentDate > 3 ? 'nored':''}} green_day{{recentAssignmentDate < 0 ? '':'nog'}}">Days</view>
+
+	</view>
+	<view class="searchbar">
+		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" 
+		bindfocus="startsearch" bindclear="clear"  
+		value="{{searchBarValue}}" search="{{search}}"
+		placeholder="搜索你的作业"></mp-searchbar>
+		<!-- <view class="history hide{{showHistory ? 'show' : '' }}" >
+			<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
+				<image class="hisIcon" src="{{historyIcon}}" data-historyTag="{{item}}" bindtap="historyTap"></image>
+				<text class="hisContent" data-historyTag="{{item}}" bindtap="historyTap">{{item}}</text>
+			</view>
+		</view> -->
+	</view>
+
+	
+
+
+	<view class="assignment-list"  wx:if="{{showAll}}">
+		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:for-item="item">
+			<view class="countdown_event" data-index="{{index}}">
+				<!-- <view class="test"> -->
+				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
+						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
+						</view>
+						<text class="subject">{{item.name}}</text>
+					</view>
+					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}} green_day{{item.countdown < 0 ? '':'nog'}}">
+						{{item.countdown}} Days
+					</view>
+				<!-- </view> -->
+			</view>
+		</view>
+	</view>
+	<view class="assignment-list" wx:if="{{selectMatchedItem}}">
+		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
+			wx:key="name">
+			<view class="countdown_event" data-index="{{index}}">
+				<!-- <view class="test"> -->
+				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
+					<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
+						<text class="subject">{{item.name}}</text>
+					</view>
+				</view>
+					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}}">
+						{{item.countdown}} Days
+					</view>
+				<!-- </view> -->
+			</view>
+		</view>
+	</view>
+</view>
+
+
+<view class="menu-switch">
+	<view class="add-event">
+		<!--切换按钮-->
+		<view class="hide{{showView? '' : 'show'}}" bindtap="change">
+			<image style="width: 88rpx; height: 88rpx" src="{{add}}" />
+		</view>
+		<view class="hide{{showView? 'show' : ''}}" bindtap="change">
+			<image style="width: 88rpx; height: 88rpx" src="{{addBlack}}" />
+		</view>
+	</view>
+</view>
+
+<view class="hide{{showView?'show':''}}" bindtap="hideHistory"> 
+	<!--遮罩层  -->
+	<view class="shade">
+		<!--蒙板内部-->
+		<view class="contents">
+			<view>
+				<text>添加倒计时</text>
+				<navigator url="/pages/addCountDown/addCountDown">
+					<image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
+				</navigator>
+			</view>
+			<view>
+				<text>提醒设置</text>
+				<navigator url="/pages/notificationSetting/notificationSetting">
+					<image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+				</navigator>
+			</view>
+		</view>
+	</view>
+</view>
+
+
+<view class="shade hide{{startsearch?'show':''}}" bindtap="hideHistory"></view>

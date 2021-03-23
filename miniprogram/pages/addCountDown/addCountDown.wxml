@@ -1,0 +1,87 @@
+<!--pages/addCountDown/addCountDown.wxml-->
+<view class="container">
+
+	<view class="heading">
+		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
+		<view class="cdDetail">
+			<input focus= "{{inputFocus}}" type="text" maxlength="20" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
+		</view>
+	</view>
+
+	<view class="due_date">
+		<text class = "cdtitle">Due Date<text class="red-star">*</text></text>
+		<view class="cdDetail">
+			<picker mode="date" value="{{dueDate}}" start="2020-12-31" end="2021-12-31" bindchange="bindDateChange" >
+				<view class="picker">
+					<text >{{dueDate}}</text>
+				</view>
+			</picker>
+			<picker mode="time" value="{{dueTime}}" start="00:00" end="23:59" bindchange="bindTimeChange" style="width:20%;">
+				<view class="picker">
+					<text >{{dueTime}}</text>
+				</view>
+			</picker>
+		</view>
+	</view>
+	
+	<view class="colours">
+		<text class = "cdtitle">设置颜色</text>
+		<view class="cdDetail ">
+			<view>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FF8A65;" bindtap="bindRed"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFF176;" bindtap="bindPink"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #81C784;" bindtap="bindLightBlue"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #64B5F6;" bindtap="bindPurple"></button>
+			</view>
+			<view>	
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #7986CB;" bindtap="bindYellow"></button>
+			</view>
+		</view>
+	</view>
+
+	<view class="colours">
+		<text class = "cdtitle">当前颜色</text>
+		<view class="cdDetail ">
+			<view>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: {{color}}"></button>
+			</view>
+
+		</view>
+		
+	</view>
+
+	<!-- <view class="notice_duration">
+		<view>
+			<text style="color:gainsboro;font-size:0.8em;">提醒时间为澳洲时间，用户可以在设置中更改时区</text>
+		</view>
+		<view>
+			<text>一天前提醒</text>
+			<checkbox checked="{{hours24}}" bindchange="bind24"></checkbox>
+		</view>
+		<view>
+			<text>三天前提醒</text>
+			<checkbox checked="{{hours48}}" bindchange="bind48"></checkbox>
+		</view>
+		<view>
+			<text>一周前提醒</text>
+			<checkbox checked="{{hours72}}" bindchange="bind72"></checkbox>
+		</view>
+	</view>  -->
+	<view class="confirm ">
+		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
+	</view>
+
+	<view class="confirmOrDele" wx:if="{{showDelete}}" >
+		<button   bindtap="deleteCountdown" class="setting-delete-button" ><text class="confirmOrDele">删除倒计时</text></button>
+	</view>
+	
+</view>
+
+
+

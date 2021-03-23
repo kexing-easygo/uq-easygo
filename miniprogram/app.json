@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/notificationSetting/notificationSetting",
+    "pages/profile/profile",
+    "pages/countdown/countdown",
+    "pages/getCode/getCode",
+    "pages/email/email",
+    "pages/getEmail/getEmail",
+    "pages/otherSettings/otherSettings",
+    "pages/basicUserInfo/basicUserInfo",
+    "pages/addCountDown/addCountDown",
+    "pages/calc/calc",
+    "pages/mobile/mobile",
+    "pages/nonfunction/nonfunction",
+    "pages/modifyUserName/modifyUserName",
+    "pages/setWechatNotification/setWechatNotification",
+    "pages/setEmailNotification/setEmailNotification",
+    "pages/setMobileNotification/setMobileNotification",
+    "pages/aboutUs/aboutUs",
+    "pages/contactUs/contactUs"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "UQ校园通",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/icons/首页前.png",
+        "selectedIconPath": "images/icons/首页后.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/icons/个人中心前.png",
+        "selectedIconPath": "images/icons/个人中心后.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "useExtendedLib": {
+    "kbone": true,
+    "weui": true
+  }
+}

@@ -1,0 +1,27 @@
+// pages/email/email.js
+const app = getApp()
+
+Page({
+
+    /**
+     * 页面的初始数据
+     */
+    data: {
+        userEmail: ''
+    },
+
+    /**
+     * 生命周期函数--监听页面加载
+     */
+    onLoad: function (options) {
+        if (app.globalData.userEmail == '') {
+            this.setData({
+                userEmail: "未绑定"
+            })
+        } else {
+            this.setData({
+                userEmail: app.globalData.userEmail
+            });
+        }
+    }
+})

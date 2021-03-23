@@ -1,0 +1,36 @@
+/* pages/otherSettings/otherSettings.wxss */
+.wrapper {
+    background-color: #E5EAF4;
+}
+.page-section {
+    margin-top: 40rpx;
+    height: 100rpx;
+    box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
+    -webkit-box-shadow: 0 3px 5px 1px #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 34rpx;
+}
+.page-section .container {
+    width: 646rpx;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.page-section .container navigator {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.line {
+    height: 2rpx;
+    background-color: #EDEDED;
+}

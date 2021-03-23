@@ -1,0 +1,277 @@
+/* pages/countdown/countdown.wxss */
+.container {
+  font-size: 16pt;
+  color: #707070;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top: 4rpx;
+  flex-wrap: wrap;
+}
+.header {
+  height: 312rpx;
+  width: 100%;
+  background-color: #FFA9A3;
+  color:#707070;
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.header_subject {
+  width: 35%;
+  padding-left: 10%;
+  color: rgba(0, 0, 0, 0.9);
+  font-weight: bold;
+  height: fit-content;
+  text-align: left;
+  word-wrap: break-word;
+  font-size: 44rpx;
+  line-height: 1.2em;
+}
+.remain_day {
+  width: 25%;
+  color: rgba(0, 0, 0, 0.9);
+  height: fit-content;
+  text-align: right;
+  font-size: 160rpx;
+  padding-right: 15rpx;
+}
+.days {
+  font-size: 28rpx;
+  text-align: center;
+  color:#FFFFFF;
+  background-color: yellow;
+  width: 15%;
+  background-color: #4A4A4A;
+  border-radius: 5px;
+  padding: 5rpx 0;
+  align-self: flex-start;
+  margin-top: 94rpx;
+}
+
+.searchbar-result.hidden {
+  display: none;
+}
+
+.assignment-list .countdown movable-area {
+  height: 500rpx;
+  width: 700rpx;
+}
+
+.assignment-list .countdown movable-view {
+  height: 120rpx;
+  width: 700rpx;
+  z-index: 999;
+}
+
+.assignment-list .countdown .delete-btn {
+  position: relative;
+  z-index: 1;
+  background: #E66671;
+  text-align: center;
+}
+
+.test {
+  flex-direction: row;
+}
+.assignment-list {
+  width: 100%;
+}
+
+.countdown {
+  width: 90%;
+  height: fit-content;
+  margin: 40rpx 5% 0 5%;
+}
+.countdown_event {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  /* margin-bottom: 40rpx; */
+}
+.progress-bar{
+  background-color: white;
+  width: 492rpx;
+  height: 72rpx;
+  box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
+  color: #707070;
+  border-radius: 5px;
+  margin-right: 20rpx;
+  position: relative;
+}
+
+
+.progress-bar .progress {
+  width: calc(100% * var(--percent) / 100);
+  --barvalue : calc(100% * var(--percent) / 100);
+  animation: countdownBar 2s ;
+  height: 100%;
+  border-radius: 3px;
+}
+
+@keyframes countdownBar{
+  from {width: 0;}
+  to {width: var(--barvalue)}
+}
+
+.progress-bar .subject {
+  height: 100%;
+  width: 90%;
+  overflow: hidden;
+  position: absolute;
+  font-size: 34rpx;
+  left: 5%;
+  top:0;
+  line-height: 72rpx;
+  color: rgba(0, 0, 0, 0.9);
+  
+}
+
+/* .test  */
+
+.countdown_days {
+  width: 142rpx;
+  height: 72rpx;
+  font-size: 34rpx;
+  border-radius: 5px;
+  background-color: #000000;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 72rpx;
+}
+
+.red_day {
+  background-color:#FA5151;
+}
+
+.green_day {
+  background-color: green;
+}
+
+/* .countdown_days_red {
+  width: 20%;
+  padding: 1%;
+  border: 1rpx solid #707070;
+  border-radius: 5px;
+  background-color: #E66671;
+  color: #FFFFFF;
+  text-align: center;
+} */
+
+.navi-buttons {
+  position: absolute;
+  bottom: 20rpx;
+  right: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.searchbar {
+  width: 612rpx;
+  height: 84rpx;
+  z-index: 999;
+  background-color: #FFFFFF;
+  margin: -5% auto 40rpx auto;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+}
+
+.history {
+  position:absolute;
+  background-color: whitesmoke;
+  width: 80%;
+  margin: 2% auto 0 auto;
+  z-index: 999;
+
+}
+
+.historyItem {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  width: 100%;
+  margin:  auto;
+  border-radius: 2%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  z-index: 99;
+}
+
+.hisIcon {
+  width: 60rpx;
+  height: 60rpx;
+  padding: 2% 3%;
+  z-index: 2;
+}
+
+.hisContent {
+
+  font-size: 1em;
+  z-index: 2;
+}
+
+
+/* +号菜单样式 */
+.menu-switch {
+  display: flex;
+  flex-direction: row;
+  z-index: 2;
+  position: fixed;
+  bottom: 100rpx;
+  right: 30rpx;
+}
+
+.add_event{   
+  display: inline-block;   
+  height: 80rpx;   
+  width: 80rpx;   
+}  
+/*遮罩层 */  
+.shade{   
+  width:100%;   
+  height:100%;   
+  top:0;   
+  background:rgba(247, 247, 247, 0.7);   
+  overflow: hidden;   
+  z-index: 1;   
+  position: absolute;  
+  }   
+  
+/*显示与隐藏的内容即点击核算后所展示的详细内容 */  
+.contents { 
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column; 
+  position: fixed;
+  bottom: 200rpx;
+  right: 30rpx; 
+  font-size: 30rpx;
+  color: rgba(0, 0, 0, 0.9);
+}  
+
+.contents view {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16rpx;
+  justify-content: center;
+  align-items: baseline;
+}
+
+.contents view image {
+  margin-left: 15rpx;
+  vertical-align: middle;
+}
+    
+/*显示整个conts */  
+.show{   
+  display: block;  
+}  
+/*隐藏整个conts */  
+.hide{   
+  display: none;  
+}  
+
+.page__bd {
+  width: 100%;
+}
