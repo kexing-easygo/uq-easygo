@@ -6,6 +6,8 @@ const date = new Date()
 const years = []
 const months = []
 const days = []
+var me;
+var animation;
 for (let i = 2021; i <= date.getFullYear(); i++) {
   years.push(i)
 }
@@ -32,6 +34,12 @@ Page({
     buttonText: "确认添加",
     inputDisabled: false, 
     inputFocus: false,
+  },
+
+
+  color_choose: function() {
+    this.at_play();
+
   },
 
   /**
@@ -177,7 +185,8 @@ Page({
   bindRed: function () {
     this.setData({
       color: "#FA5151"
-    })
+    });
+    
   },
   bindPink: function () {
     this.setData({
@@ -244,4 +253,5 @@ Page({
       }
     })
   }
+
 })

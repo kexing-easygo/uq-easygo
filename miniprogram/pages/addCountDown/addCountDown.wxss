@@ -40,6 +40,17 @@
   height: 40rpx;
   border-radius: 80%;
   margin-right: 15rpx;
+  transition:width 2s;
+}
+
+.colorButton:active {
+  width:80rpx;
+}
+
+
+@keyframes colorPick {
+  from {width: 40rpx;}
+  to {width: 80rpx;}
 }
 
 .picker {

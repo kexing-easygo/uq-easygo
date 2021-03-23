@@ -28,7 +28,8 @@
 		<text class = "cdtitle">设置颜色</text>
 		<view class="cdDetail ">
 			<view>
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FA5151;" bindtap="bindRed"></button>
+				<!-- #FA5151 -->
+				<button class="mini-btn colorButton " type="primary" size="mini" style="background-color: #FA5151 ;" bindtap="bindRed" animation="{{dhdata}}"></button>
 			</view>
 			<view>	
 				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;" bindtap="bindPink"></button>

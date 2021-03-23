@@ -5,7 +5,7 @@
 		<view class="header_subject">{{recentAssignmentName}}
 		</view>
 		<view class="remain_day">{{recentAssignmentDate}}</view>
-		<view class="days">Days</view>
+		<view class="days red_day{{recentAssignmentDate > 3 ? 'nored':''}} green_day{{recentAssignmentDate < 0 ? '':'nog'}}">Days</view>
 
 	</view>
 	<view class="searchbar">
