@@ -48,7 +48,7 @@
 			<!-- table heading -->
 			<view class="table-tr">
 				<view class="table-th">Assessment</view>
-				<view class="table-th">Weight</view>
+				<view class="table-th">Weight(%)</view>
 				<view class="table-th">Score</view>
 			</view>
 			<!-- assessment blocks -->
@@ -58,13 +58,15 @@
 				<view class="table-td">{{item.name}}</view>
 				<!-- assessment weight -->
 				<!-- <view class="table-td">6.25%</view> -->
-				<view class="table-td">{{item.weight}}%</view>
+				<view class="table-td">{{item.weight}}</view>
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
-						<input type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}" value="{{item.score1}}"/>
+						<!-- <input maxlength="5" bindinput="bindKeyInput" data-model="score1" id="{{index}}" value="{{item.score1}}"/> -->
+						<input maxlength="5" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
 						<view>/</view>
-						<input type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}" value="{{item.score2}}"/>
+						<!-- <input maxlength="5" bindinput="bindKeyInput" data-model="score2" id="{{index}}" value="{{item.score2}}"/> -->
+						<input maxlength="5" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
 					</view>
 				</view>
 			</view>
