@@ -106,7 +106,7 @@
 .progress-bar .progress {
   width: calc(100% * var(--percent) / 100);
   --barvalue : calc(100% * var(--percent) / 100);
-  /* animation: countdownBar 2s ; */
+  animation: countdownBar 2s ;
   height: 100%;
   border-radius: 3px;
 }
