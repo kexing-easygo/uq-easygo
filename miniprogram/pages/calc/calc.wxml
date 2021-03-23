@@ -1,4 +1,0 @@
-<!--pages/calc/calc.wxml-->
-<view class="in-coming">
-	<image src="{{InComingImage}}"/>
-</view>

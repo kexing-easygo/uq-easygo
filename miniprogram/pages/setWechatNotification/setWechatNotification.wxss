@@ -1,9 +1,0 @@
-/* pages/setWechatNotification/setWechatNotification.wxss */
-
-.left {
-    float:left;
-}
-
-.right {
-    float: right;
-}

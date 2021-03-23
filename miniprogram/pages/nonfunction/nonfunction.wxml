@@ -1,5 +1,0 @@
-<!--pages/nonfunction1/nonfunction1.wxml-->
-<view class="in-coming">
-	<image src="{{InComingImage}}"/>
-</view>
-

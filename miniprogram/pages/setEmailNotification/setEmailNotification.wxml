@@ -1,9 +1,0 @@
-<!--pages/setEmailNotification/setEmailNotification.wxml-->
-<view>
-	<view class="left">
-		<text>邮件提醒</text>
-	</view>
-	<view class="right">
-		<switch checked="{{emailSwitch}}" bindchange="bindEmailSwitch"></switch>
-	</view>
-</view>
