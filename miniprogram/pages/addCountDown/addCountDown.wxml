@@ -28,20 +28,19 @@
 		<text class = "cdtitle">设置颜色</text>
 		<view class="cdDetail ">
 			<view>
-				<!-- #FA5151 -->
-				<button class="mini-btn colorButton " type="primary" size="mini" style="background-color: #FA5151 ;" bindtap="bindRed" animation="{{dhdata}}"></button>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FF8A65;" bindtap="bindRed"></button>
 			</view>
 			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;" bindtap="bindPink"></button>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFF176;" bindtap="bindPink"></button>
 			</view>
 			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #07C160;" bindtap="bindLightBlue"></button>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #81C784;" bindtap="bindLightBlue"></button>
 			</view>
 			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #1485EE;" bindtap="bindPurple"></button>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #64B5F6;" bindtap="bindPurple"></button>
 			</view>
 			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #576B95;" bindtap="bindYellow"></button>
+				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #7986CB;" bindtap="bindYellow"></button>
 			</view>
 		</view>
 	</view>

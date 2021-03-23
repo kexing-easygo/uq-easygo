@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<swiper autoplay circular indicator-dots interval="2000">
+<swiper autoplay circular indicator-dots interval="2000" class="swiper" bindtap="clickImages">
 	<swiper-item>
 		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
@@ -8,6 +8,7 @@
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderThree}}" />
+	
 	</swiper-item>
 </swiper>
 
@@ -25,6 +26,7 @@
 		<image src="{{inComingIcon}}" />
 	</navigator>
 </view>
+
 <view class="nav-text">
 	<navigator url="/pages/calc/calc">
 		计算器
@@ -40,9 +42,9 @@
 	</navigator>
 </view>
 
-<view class="in-coming">
-	<image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/>
+<view class="in-coming">	
+	<image src="{{PostHolderOne}}" bindtap="clickImage"/>
 </view>
 <view class="in-coming">
-	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
+	<image src="{{inComingHolder}}" bindtap="clickWaiting"/>
 </view>

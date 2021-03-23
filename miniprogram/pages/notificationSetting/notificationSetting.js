@@ -112,6 +112,14 @@ Page({
     }
   },
   bindOneDay: function (e) {
+    if (this.data.wechatNotification != true 
+      && this.data.emailNotification != true) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      })
+      return
+    }
     var temp = 0
     if (e.detail.value == true) {
       temp = 1
@@ -128,6 +136,14 @@ Page({
     )
   },
   bindThreeDay: function (e) {
+    if (this.data.wechatNotification != true 
+      && this.data.emailNotification != true) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      })
+      return
+    }
     var temp = 0
     if (e.detail.value == true) {
       temp = 1
@@ -144,6 +160,14 @@ Page({
     )
   },
   bindOneWeek: function (e) {
+    if (this.data.wechatNotification != true 
+      && this.data.emailNotification != true) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      })
+      return
+    }
     var temp = 0
     if (e.detail.value == true) {
       temp = 1
@@ -207,33 +231,24 @@ Page({
   
   requestSubscribe: function() {
     wx.requestSubscribeMessage({
-      tmplIds: ['YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI'],
+      // tmplIds: ['YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI'],
+      tmplIds: ['3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'],
       success (res) {
         console.log(res)
       }
     })
   },
-
-  // template: function() {
-  //   wx.cloud.callFunction({
-  //     name: 'sendTemplate',
-  //     data :{
-  //       作业标题: "1",
-  //       时间:"2021-02-20",
-  //       截止时间:"2021-02-25",
-  //       提醒内容:"无",
-  //       备注:"无"
-  //     },
-  //     success: res => {
-  //         console.log(res)
-  //     },
-  //     fail: err => {
-  //         console.error("模版云函数调用失败。")
-  //         console.error(err)
-  //     }
-  //   })
-  // },
   testCrontab: function() {
-    
+    wx.cloud.callFunction({
+      name: 'crontab',
+      data :{
+      },
+      success: res => {
+          console.log(res)
+      },
+      fail: err => {
+          console.error(err)
+      }
+    })
   }
 })
