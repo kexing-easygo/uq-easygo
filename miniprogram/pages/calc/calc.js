@@ -13,6 +13,12 @@ Page({
     semester: "select semester",
     assessments: [],
     course: "",
+    semester_array: ['Semester 1, 2021','Semester 2, 2021'],
+    objectArray: [
+      {id: 0, name: 'Semester 1, 2021'},
+      {id: 1, name: 'Semester 2, 2021'},
+    ],
+    index: 0,
     // 获得总分
     totalScore: 0,
     // 丢失总分
@@ -25,6 +31,13 @@ Page({
     userLoggedIn: false
 
   },
+  //semester picker function
+  bindPickerChange: function(e) {
+    this.setData({
+      index: e.detail.value
+    })
+  },
+
   bindCourseInput: function(e) {
     this.setData({course: e.detail.value})
   },
@@ -78,7 +91,13 @@ Page({
     this.drawCirclefront(startAngle, endAngle);
   },
   calculateGPA: function(score) {
-    if (score >= 50 && score < 64) {
+    if (score >= 0 && score < 19) {
+      return 1
+    } else if (score >= 20 && score < 44) {
+      return 2
+    } else if (score >= 45 && score < 49) {
+      return 3
+    } else if (score >= 50 && score < 64) {
       return 4
     } else if (score >= 64 && score < 75) {
       return 5

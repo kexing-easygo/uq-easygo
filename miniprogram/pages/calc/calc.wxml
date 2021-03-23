@@ -5,14 +5,17 @@
 
 		<view class="input_area" style="width: 60%;">
 			<view class="semester_box">
-				<view class="semester">
-					Semester 1, 2021
-				</view>
+				<picker bindchange="bindPickerChange" value="{{index}}" range="{{semester_array}}">
+					<view class="semester">
+						{{semester_array[index]}}
+						<view class="down_arrow"> ▽ </view>
+					</view>
+				</picker>
 			</view>
 
 			<view class="course_box"> 
 				<view style="width:254rpx;">
-					<input type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
+					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
 				</view>
 				<view style="width:104rpx;">
 					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
@@ -62,9 +65,9 @@
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
-						<input type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}" value="{{item.score1}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}" value="{{item.score1}}"/>
 						<view>/</view>
-						<input type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}" value="{{item.score2}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}" value="{{item.score2}}"/>
 					</view>
 				</view>
 			</view>

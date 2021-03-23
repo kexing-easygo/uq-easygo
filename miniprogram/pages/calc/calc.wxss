@@ -29,12 +29,33 @@
   border-radius: 10rpx;
   margin-top: 70rpx;
   margin-left: 50rpx;
+  line-height: 60rpx;
 }
 
 .semester {
   font-size: 100%;
-  text-align: justify;
+  text-align: center;
   margin-left: 20rpx;
+  margin-right: 20rpx;
+  display:flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.down_arrow {
+  position: relative;
+  animation: down 1.5s;
+}
+@keyframes down {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: -15rpx;
+  }
+  100% {
+    bottom: 0;
+  }
 }
 
 .course_box {
@@ -51,7 +72,7 @@
   height: 60rpx;
   border-radius: 10rpx;
   font-size: 100%;
-  text-align: center;
+  /* margin-left: 20rpx; */
 }
 ::placeholder {
   color: #B2B2B2;
