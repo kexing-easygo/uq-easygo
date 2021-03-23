@@ -1,6 +1,6 @@
 <!--pages/countdown/countdown.wxml-->
 <view class="container">
-	<view class="header">
+	<view class="header" style="background-color: {{recentAssignmentColor}}">
 
 		<view class="header_subject">{{recentAssignmentName}}
 		</view>

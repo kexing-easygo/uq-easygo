@@ -284,6 +284,7 @@ Page({
                 // headerAssignment: userAssignments[i],
                 recentAssignmentName: userAssignments[0]['name'],
                 recentAssignmentDate: userAssignments[0]['diff'],
+                recentAssignmentColor: userAssignments[0]['color'],
                 userAssignments: userAssignments,
                 history: res.data[0].history.search,
                 showAll: true,
