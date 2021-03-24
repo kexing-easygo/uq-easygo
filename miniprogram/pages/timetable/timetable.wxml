@@ -1,2 +1,4 @@
 <!--pages/timetable/timetable.wxml-->
-<text>pages/timetable/timetable.wxml</text>
+<view class="in-coming">
+	<image src="{{InComingImage}}"/>
+</view>

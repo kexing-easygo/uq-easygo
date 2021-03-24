@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    InComingImage:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表敬请期待.png"
   },
 
   /**
