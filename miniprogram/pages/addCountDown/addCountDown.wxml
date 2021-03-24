@@ -45,34 +45,6 @@
 		</view>
 	</view>
 
-	<view class="colours">
-		<text class = "cdtitle">当前颜色</text>
-		<view class="cdDetail ">
-			<view>
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: {{color}}"></button>
-			</view>
-
-		</view>
-		
-	</view>
-
-	<!-- <view class="notice_duration">
-		<view>
-			<text style="color:gainsboro;font-size:0.8em;">提醒时间为澳洲时间，用户可以在设置中更改时区</text>
-		</view>
-		<view>
-			<text>一天前提醒</text>
-			<checkbox checked="{{hours24}}" bindchange="bind24"></checkbox>
-		</view>
-		<view>
-			<text>三天前提醒</text>
-			<checkbox checked="{{hours48}}" bindchange="bind48"></checkbox>
-		</view>
-		<view>
-			<text>一周前提醒</text>
-			<checkbox checked="{{hours72}}" bindchange="bind72"></checkbox>
-		</view>
-	</view>  -->
 	<view class="confirm ">
 		<button  bindtap="addCountDown" class="setting-confirm-button"><text class="confirmOrDele">{{buttonText}}</text></button>
 	</view>
