@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/testSearchBar/testSearchBar",
     "pages/home/home",
     "pages/notificationSetting/notificationSetting",
     "pages/profile/profile",

@@ -1,0 +1,21 @@
+<view class="search-bar">
+  <view class="search-bar-form">
+    <view class="search-bar-box"> 
+      <icon class="search-icon_left" type="search" size="20"></icon>
+      <input type="text" class="search-bar-input" placeholder="{{placeholder}}" 
+      value="{{inputValue}}" focus="{{focus}}" 
+      bindblur="inputBlur" 
+      bindfocus="inputFocus" 
+      bindinput="inputChange" />
+      <view class="clear-icon" wx:if="{{inputValue.length > 0}}" bindtap="clearInput">
+        <icon type="clear" size="20"></icon>
+      </view> 
+    </view>
+  </view>
+</view>
+<!--  wx:if="{{searchState && result.length > 0}}" -->
+<mp-cells class="searchbar-result my-result">
+    <view bindtap="selectResult" data-index="{{index}}" wx:for="{{result}}" hover>
+        <view>{{item.text}}</view>
+    </view>
+</mp-cells>
