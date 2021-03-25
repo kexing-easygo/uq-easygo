@@ -65,9 +65,9 @@
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
-						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="digit" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
 						<view>/</view>
-						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="digit" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
 					</view>
 				</view>
 			</view>

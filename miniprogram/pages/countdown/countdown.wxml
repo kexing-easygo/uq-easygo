@@ -44,7 +44,6 @@
 		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
 			wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
-				<!-- <view class="test"> -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 					<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						<text class="subject">{{item.name}}</text>

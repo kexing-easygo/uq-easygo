@@ -6,16 +6,19 @@ Page({
    * Page initial data
    */
   data: {
+    // 轮播图
     swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图上线了.png",
     swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器功能上线图‘.png",
     swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
+    // 功能图标
     calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
     countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
     timetableIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课表图标.png",
     inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
+    // 下方非滚动海报
     PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/精简校历三月.png",
     PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
-    inComingHolder:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待海报.png"
+    PostHolderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待海报.png"
   },
 
   /**
@@ -95,7 +98,7 @@ Page({
     return {
       title: 'UQ校园通',
       path: '/pages/home/home',
-      // imageUrl: 'cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/三月精简校历.png'
+      imageUrl: 'cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/精简校历三月.png'
     }
   },
   navigateToWaiting: function() {
@@ -103,24 +106,20 @@ Page({
       url: '/pages/waiting/waiting',
     })
   },
-  // /**
-  //  * 分享朋友圈。灰度测试
-  //  */
-  // onShareTimeline: function() {
-    
-  // },
+
   clickImage: function(e) {
+    var model = e.currentTarget.dataset.model
+    var imageUrl = ''
+    if (model == "one") {
+      imageUrl = this.data.PostHolderOne
+    } else if (model == "two") {
+      imageUrl = this.data.PostHolderTwo
+    } else {
+      imageUrl = this.data.PostHolderThree
+    }
+    
     wx.previewImage({
-      urls: [this.data.swiperPlaceholderThree], //需要预览的图片http链接列表，注意是数组
-      current: '', // 当前显示图片的http链接，默认是第一个
-      success: function (res) { },
-      fail: function (res) { },
-      complete: function (res) { },
-    })
-  },
-  clickWaiting: function(e) {
-    wx.previewImage({
-      urls: [this.data.inComingHolder], //需要预览的图片http链接列表，注意是数组
+      urls: [imageUrl], //需要预览的图片http链接列表，注意是数组
       current: '', // 当前显示图片的http链接，默认是第一个
       success: function (res) { },
       fail: function (res) { },
