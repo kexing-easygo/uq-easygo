@@ -1,0 +1,16 @@
+<!--miniprogram/pages/contactUs/contactUs.wxml-->
+<view class="container">
+  <view class="header">
+    <image src="{{logo}}" />
+    <view style="font-size: 44rpx;">UQ校园通</view>
+    <view style="font-size: 34rpx; margin-top: 2rpx;">Version 1.0.0</view>
+  </view>
+
+  <view class="feedback">
+    <view style="height: 50rpx; border-bottom:1rpx solid rgba(237, 237, 237, 0.9);text-align: left;">
+      扫码向开发者反馈
+    </view>
+    <view style="width: 100%; height: 100rpx; border-bottom:1rpx solid rgba(237, 237, 237, 0.9);">功能异常</view>
+    <view style="height: 100rpx;">产品建议</view>
+  </view>
+</view>

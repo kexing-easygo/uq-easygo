@@ -1,6 +1,8 @@
 <!--pages/calc/calc.wxml-->
+<form>
 <view class="container">
 	
+	<!-- <form class="form" style="width: 100%"> -->
 	<view class="header">
 
 		<view class="input_area" style="width: 60%;">
@@ -18,7 +20,7 @@
 					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
 				</view>
 				<view style="width:104rpx;">
-					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse" form-type="reset">搜索</button>
 				</view>
 			</view>
 		</view>
@@ -91,3 +93,4 @@
 	</view>
 
 </view>
+</form>
