@@ -15,7 +15,7 @@ Page({
     china: false,
     australia: false,
     templateID: '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U',
-    timeZone: ""
+    timeZone: "中国"
   },
 
   /**
