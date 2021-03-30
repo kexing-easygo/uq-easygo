@@ -17,7 +17,7 @@
 
 			<view class="course_box"> 
 				<view style="width:254rpx;">
-					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
+					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8" placeholder="eg: csse1001"/>
 				</view>
 				<view style="width:104rpx;">
 					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse" form-type="reset">搜索</button>
