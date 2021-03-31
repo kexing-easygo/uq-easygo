@@ -13,7 +13,9 @@ Page({
     threeDay: false,
     oneWeek: false,
     china: false,
-    australia: false
+    australia: false,
+    templateID: '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U',
+    timeZone: "中国"
   },
 
   /**
@@ -100,8 +102,12 @@ Page({
       this.setData({
         australia: false
       })
-    } 
-    
+    }
+    if (this.data.china == true) {
+      this.setData({timeZone: "中国"})
+    } else {
+      this.setData({timeZone: "澳洲"})
+    }
   },
   bindAustralia: function(e) {
     this.setData({australia: e.detail.value})
@@ -110,8 +116,14 @@ Page({
         china: false
       })
     }
+    if (this.data.china == true) {
+      this.setData({timeZone: "中国"})
+    } else {
+      this.setData({timeZone: "澳洲"})
+    }
   },
   bindOneDay: function (e) {
+    let that = this
     if (this.data.wechatNotification != true 
       && this.data.emailNotification != true) {
       wx.showModal({
@@ -120,73 +132,122 @@ Page({
       })
       return
     }
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
-    }
+    // that.setData({oneDay: e.detail.value})
     if (this.data.wechatNotification == true && e.detail.value == true) {
-      this.requestSubscribe()
-    }
-    this.setData(
-      {
-        oneDay: temp
-      }
-    )
-  },
-  bindThreeDay: function (e) {
-    if (this.data.wechatNotification != true 
-      && this.data.emailNotification != true) {
-      wx.showModal({
-        title: "提示",
-        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      var templateID = this.data.templateID
+      wx.requestSubscribeMessage({
+        tmplIds: [templateID],
+        success (res) {
+          if (res['3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'] == 'accept') {
+            that.setData(
+              {
+                oneDay: true
+              }
+            )
+          } else {
+            that.setData(
+              {
+                oneDay: false
+              }
+            )
+          }
+        }
       })
-      return
     }
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
-    }
-    if (this.data.wechatNotification == true && e.detail.value == true) {
-      this.requestSubscribe()
-    }
-    this.setData(
-      {
-        threeDay: temp
-      }
-    )
-  },
-  bindOneWeek: function (e) {
-    if (this.data.wechatNotification != true 
-      && this.data.emailNotification != true) {
-      wx.showModal({
-        title: "提示",
-        content: "你好像忘记设置微信或邮箱提醒了哦！"
-      })
-      return
-    }
-    var temp = 0
-    if (e.detail.value == true) {
-      temp = 1
-    } else {
-      temp = 0
+    if (e.detail.value == false) {
+      that.setData(
+        {
+          oneDay: false
+        }
+      )
     }
     
-    if (this.data.wechatNotification == true && e.detail.value == true) {
-      this.requestSubscribe()
+  },
+  bindThreeDay: function (e) {
+    let that = this
+    if (this.data.wechatNotification != true 
+      && this.data.emailNotification != true) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      })
+      return
     }
-    this.setData(
-      {
-        oneWeek: temp
-      }
-    )
+
+    if (this.data.wechatNotification == true && e.detail.value == true) {
+      var templateID = this.data.templateID
+      wx.requestSubscribeMessage({
+        tmplIds: [templateID],
+        success (res) {
+          if (res['3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'] == 'accept') {
+            that.setData(
+              {
+                threeDay: true
+              }
+            )
+          } else {
+            that.setData(
+              {
+                threeDay: false
+              }
+            )
+          }
+        }
+      })
+    }
+    if (e.detail.value == false) {
+      that.setData(
+        {
+          threeDay: false
+        }
+      )
+    }
+  },
+  bindOneWeek: function (e) {
+    let that = this
+    if (this.data.wechatNotification != true 
+      && this.data.emailNotification != true) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置微信或邮箱提醒了哦！"
+      })
+      return
+    }
+    if (this.data.wechatNotification == true && e.detail.value == true) {
+      var templateID = this.data.templateID
+      wx.requestSubscribeMessage({
+        tmplIds: [templateID],
+        success (res) {
+          if (res['3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'] == 'accept') {
+            that.setData(
+              {
+                oneWeek: true
+              }
+            )
+          } else {
+            that.setData(
+              {
+                oneWeek: false
+              }
+            )
+          }
+        }
+      })
+    }
+    if (e.detail.value == false) {
+      that.setData(
+        {
+          oneWeek: false
+        }
+      )
+    }
   },
   confirm: function(e) {
     // 更新数据库
-    
+    console.log(app.globalData._openid)
+    console.log(this.data.oneDay)
+    console.log(this.data.threeDay)
+    console.log(this.data.oneWeek)
     let location = ''
     if (this.data.australia == true) {
       location = "AU"
@@ -210,6 +271,7 @@ Page({
           oneWeek: this.data.oneWeek
         }
       }, success: function(res) {
+        console.log(res)
       }
     })
     app.globalData.notification = {
@@ -230,9 +292,10 @@ Page({
   },
   
   requestSubscribe: function() {
+    var templateID = '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'
     wx.requestSubscribeMessage({
       // tmplIds: ['YWEyy0vIoy9kdb12oU9Nr5YvizOF0Z1b3x7lwdZ8AFI'],
-      tmplIds: ['3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'],
+      tmplIds: [templateID],
       success (res) {
         console.log(res)
       }

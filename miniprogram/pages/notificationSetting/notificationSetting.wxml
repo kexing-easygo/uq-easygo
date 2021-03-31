@@ -27,7 +27,7 @@
   </view>
   <view class="notice_duration">
 		<view>
-			<text class="conmmentFont">提醒时间为澳洲时间</text>
+			<text class="conmmentFont">提醒时间为{{timeZone}}时间</text>
 		</view>
 		<view>
 			<text class="titleFont">一天前提醒</text>

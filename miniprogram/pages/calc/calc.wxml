@@ -1,6 +1,8 @@
 <!--pages/calc/calc.wxml-->
+<form>
 <view class="container">
 	
+	<!-- <form class="form" style="width: 100%"> -->
 	<view class="header">
 
 		<view class="input_area" style="width: 60%;">
@@ -15,10 +17,10 @@
 
 			<view class="course_box"> 
 				<view style="width:254rpx;">
-					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8"/>
+					<input style="padding-left:20rpx;" type="text" class="course" bindinput="bindCourseInput" maxlength="8" placeholder="eg: csse1001"/>
 				</view>
 				<view style="width:104rpx;">
-					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse">搜索</button>
+					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse" form-type="reset">搜索</button>
 				</view>
 			</view>
 		</view>
@@ -65,9 +67,9 @@
 				<!-- assessment score -->
 				<view class="table-td">
 					<view class="score"> 
-						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="digit" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score1" id="{{index}}"/>
 						<view>/</view>
-						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="digit" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
+						<input style="width:70rpx;height:20px; border: 1px solid lightgray" type="number" bindinput="bindKeyInput" data-model="score2" id="{{index}}"/>
 					</view>
 				</view>
 			</view>
@@ -91,3 +93,4 @@
 	</view>
 
 </view>
+</form>
