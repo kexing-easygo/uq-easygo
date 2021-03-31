@@ -16,7 +16,7 @@ Page({
     timetableIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课表图标.png",
     inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
     // 下方非滚动海报
-    PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/精简校历三月.png",
+    PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/精简校历四月.png",
     PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
     PostHolderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待海报.png"
   },
