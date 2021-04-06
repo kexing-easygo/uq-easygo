@@ -1,8 +1,8 @@
 {
   "pages": [
+    "pages/testSearchBar/testSearchBar",
     "pages/home/home",
     "pages/profile/profile",
-    "pages/testSearchBar/testSearchBar",
     "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
     "pages/getCode/getCode",

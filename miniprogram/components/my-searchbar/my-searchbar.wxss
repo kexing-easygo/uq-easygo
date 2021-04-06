@@ -1,4 +1,9 @@
 /* components/my-searchbar.wxss */
+.container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+}
 
 .search-bar {
   position: relative;
@@ -37,10 +42,11 @@
   padding-left: 32px;
   padding-right: 32px;
   width: 100%;
+  /* width: 300rpx; */
   background: #FFFFFF;
   z-index: 1;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 10rpx;
 }
 
 .search-bar-input {
@@ -49,7 +55,7 @@
   line-height: 40px;
    /* 搜索框文字的大小 */
   font-size: 15px;
-  margin-left: 8px;
+  margin-left: 40rpx;
   caret-color: #07C160;
   /* background: #FFFFFF; */
   
@@ -61,7 +67,7 @@
   right: 0;
   bottom: 0;
   /* margin-right: 20px; */
-  padding: 0 8px;
+  padding: 0 20rpx;
   font-size: 0;
   /* width: 10%; */
 }
@@ -77,14 +83,17 @@
 
 .search-icon_left {
   position: absolute;
-  left: 12px;
+  left: 30rpx;
   top: 50%;
   margin-top: -10px
 }
 
 .my-result view{
-  margin: 10px 10px 10px 10px;
+  margin: 15rpx 20rpx;
+  box-sizing: border-box;
+  border-radius: 10rpx;
 }
+
 
 
 
