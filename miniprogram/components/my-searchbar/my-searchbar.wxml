@@ -1,8 +1,8 @@
 <view class="container">
-  <view class="search-bar">
-    <view class="search-bar-form">
+  <!-- <view class="search-bar"> -->
+    <!-- <view class="search-bar-form"> -->
       <view class="search-bar-box"> 
-        <icon class="search-icon_left" type="search" size="20"></icon>
+        <view><icon class="search-icon_left" type="search" size="20"></icon></view>
         <input type="text" class="search-bar-input" placeholder="{{placeholder}}" 
         value="{{inputValue}}" focus="{{focus}}" 
         bindblur="inputBlur" 
@@ -12,8 +12,8 @@
           <icon type="clear" size="20"></icon>
         </view> 
       </view>
-    </view>
-  </view>
+    <!-- </view> -->
+  <!-- </view> -->
   <!--  wx:if="{{searchState && result.length > 0}}" -->
 
   <mp-cells class="searchbar-result my-result" wx:if="{{inputValue.length > 0}}">

@@ -172,7 +172,7 @@
   width: 612rpx;
   height: 84rpx;
   z-index: 999;
-  background-color: #FFFFFF;
+  /* background-color: #ffffff; */
   margin: -5% auto 40rpx auto;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
 }
