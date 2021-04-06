@@ -137,8 +137,10 @@
 }
 
 .table {
+  width: 100%;
   display: table;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .table-tr {
@@ -160,6 +162,8 @@
   text-align: center;
   vertical-align: middle;
   padding: 10rpx;
+  word-wrap:break-word;
+  /* word-break:break-all; */
 }
 
 .score {

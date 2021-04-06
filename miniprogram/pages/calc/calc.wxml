@@ -22,9 +22,11 @@
 				<view style="width:104rpx;">
 					<button style="font-size: 25rpx; width: 100rpx; text-align: center;line-height: 60rpx;"class="mini-button" type="primary" size="mini" bindtap="searchCourse" form-type="reset">搜索</button>
 				</view>
+				
 			</view>
 		</view>
-
+		<searchbar 
+				placeholder="搜索课程"></searchbar>
 		<view class="circle_area" style="width:40%;display:flex;align-items:center;justify-content:center;margin-top:10rpx;">
 			<!-- 动态圆形进度条 -->
 			<view class='progress_box'>

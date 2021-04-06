@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/testSearchBar/testSearchBar",
     "pages/home/home",
+    "pages/testSearchBar/testSearchBar",
     "pages/profile/profile",
     "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
