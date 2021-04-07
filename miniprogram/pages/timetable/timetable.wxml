@@ -1,5 +1,5 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
-<view class = "allWeeks">
+<view class="allWeeks">
   <view class="week">
     <text>第一周</text>
   </view>
@@ -108,15 +108,99 @@
     </view>
 
     <view class="classes">
-      <view class="class">
+      <view class="class" data-course="csse2310" bindtap="timeDetail">
         <text>csse2310</text>
       </view>
 
     </view>
 
 
-  
-  
+
+
   </view>
 
+</view>
+
+
+<view class="addTimeItem" bindtap="">
+  <image style="width: 88rpx; height: 88rpx" src="{{add}}" />
+</view>
+
+<view class="classDetail hide{{detailShow?'no':''}}">
+  <view class="detailHeader">
+    <text style="font-size:44rpx; padding-left:48rpx">课程详情</text>
+    <text style="padding-right:48rpx; color:red">删除</text>
+  </view>
+
+  <view class="detailInfor">
+    <view class="inforname">
+      <view class="infortitle">
+        <text>名称</text>
+      </view>
+
+      <view class="inforContent">
+        <text> CSSE2310 LEC</text>
+      </view>
+    </view>
+
+    <view class="inforcolor">
+      <view class="infortitle">
+        <text>颜色</text>
+      </view>
+
+      <view class="inforContent">
+        <view>
+          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FA5151;"
+            bindtap="bindRed"></button>
+        </view>
+        <view>
+          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;"
+            bindtap="bindPink"></button>
+        </view>
+        <view>
+          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #07C160;"
+            bindtap="bindLightBlue"></button>
+        </view>
+        <view>
+          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #1485EE;"
+            bindtap="bindPurple"></button>
+        </view>
+        <view>
+          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #576B95;"
+            bindtap="bindYellow"></button>
+        </view>
+      </view>
+
+    </view>
+  </view>
+
+  <view class="inforlocation">
+    <view class="infortitle">
+      <text>地点</text>
+    </view>
+
+    <view class="inforContent">
+      <text>78-101</text>
+    </view>
+  </view>
+
+  <view class="infortime">
+    <view class="infortitle">
+      <text>时间</text>
+    </view>
+
+    <view class="inforContent">
+      <text> MON 8:00 - 9:00</text>
+    </view>
+  </view>
+
+  <view class="inforcomment">
+    <view class="infortitle">
+      <text>备注</text>
+    </view>
+
+    <view class="inforContent">
+      <text style="color:rgba(0,0,0,0.5)">我是一个没有感情的备注框。。。可以随时修改我</text>
+    </view>
+  </view>
 </view>

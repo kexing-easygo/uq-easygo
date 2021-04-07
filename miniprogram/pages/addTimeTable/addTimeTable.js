@@ -1,20 +1,11 @@
-// miniprogram/pages/timetable/timetable.js
+// miniprogram/pages/addTimeTable/addTimeTable.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    detailShow: false,
 
-  },
-
-  timeDetail: function(event){
-    console.log(event.currentTarget.dataset['course']);
-    this.setData({
-      detailShow: true,
-    });
   },
 
   /**

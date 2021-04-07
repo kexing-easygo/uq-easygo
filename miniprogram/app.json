@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/timetable/timetable",
+    "pages/addTimeTable/addTimeTable",
+    
     "pages/home/home",
     "pages/notificationSetting/notificationSetting",
     "pages/profile/profile",
