@@ -123,7 +123,9 @@
 
 
 <view class="addTimeItem" bindtap="">
+  <navigator url="/pages/addTimeTable/addTimeTable">
   <image style="width: 88rpx; height: 88rpx" src="{{add}}" />
+  </navigator>
 </view>
 
 <view class="classDetail hide{{detailShow?'no':''}}">
