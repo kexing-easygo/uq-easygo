@@ -1,11 +1,11 @@
 <!--pages/countdown/countdown.wxml-->
 <view class="container">
-	<view class="header">
+	<view class="header" style="background-color: {{recentAssignmentColor}}">
 
 		<view class="header_subject">{{recentAssignmentName}}
 		</view>
 		<view class="remain_day">{{recentAssignmentDate}}</view>
-		<view class="days">Days</view>
+		<view class="days red_day{{recentAssignmentDate > 3 ? 'nored':''}} green_day{{recentAssignmentDate < 0 ? '':'nog'}}">Days</view>
 
 	</view>
 	<view class="searchbar">
@@ -44,7 +44,6 @@
 		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
 			wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
-				<!-- <view class="test"> -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 					<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						<text class="subject">{{item.name}}</text>

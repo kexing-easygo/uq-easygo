@@ -36,20 +36,14 @@ Page({
     d2,
     // 新用户进入倒计时的默认作业条目
     defaultUserAssignments: [{
-        'color': '#576B95',
+        'color': '#7986CB',
         'name': "CSSE1001 A1 (示例)",
         "date": d1,
         "time": "00:00"
       },
       {
-        'color': '#576B95',
+        'color': '#7986CB',
         'name': "点我查看更多",
-        "date": d2,
-        "time": "00:00"
-      },
-      {
-        'color': '#576B95',
-        'name': "取消按钮正在开发",
         "date": d2,
         "time": "00:00"
       }
@@ -290,6 +284,7 @@ Page({
                 // headerAssignment: userAssignments[i],
                 recentAssignmentName: userAssignments[0]['name'],
                 recentAssignmentDate: userAssignments[0]['diff'],
+                recentAssignmentColor: userAssignments[0]['color'],
                 userAssignments: userAssignments,
                 history: res.data[0].history.search,
                 showAll: true,

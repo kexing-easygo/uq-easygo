@@ -1,5 +1,5 @@
 <!--pages/home/home.wxml-->
-<swiper autoplay circular indicator-dots interval="2000">
+<swiper autoplay circular indicator-dots interval="2000" class="swiper" bindtap="clickImages">
 	<swiper-item>
 		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
@@ -8,6 +8,7 @@
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderThree}}" />
+	
 	</swiper-item>
 </swiper>
 
@@ -18,13 +19,14 @@
 	<navigator url="/pages/countdown/countdown">
 		<image src="{{countdownIcon}}" />
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
-		<image src="{{inComingIcon}}" />
+	<navigator url="/pages/timetable/timetable">
+		<image src="{{timetableIcon}}" />
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
 		<image src="{{inComingIcon}}" />
 	</navigator>
 </view>
+
 <view class="nav-text">
 	<navigator url="/pages/calc/calc">
 		计算器
@@ -32,17 +34,20 @@
 	<navigator url="/pages/countdown/countdown">
 		倒计时
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
-		未开发
+	<navigator url="/pages/timetable/timetable">
+		课程表
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
 		未开发
 	</navigator>
 </view>
 
-<view class="in-coming">
-	<image src="{{PostHolderOne}}" bindtap="navigateToWaiting"/>
+<view class="in-coming">	
+	<image src="{{PostHolderOne}}" bindtap="clickImage" data-model="one"/>
+</view>
+<view class="in-coming">	
+	<image src="{{PostHolderTwo}}" bindtap="clickImage" data-model="two"/>
 </view>
 <view class="in-coming">
-	<image src="{{inComingHolder}}" bindtap="navigateToWaiting"/>
+	<image src="{{PostHolderThree}}" bindtap="clickImage" data-model="three"/>
 </view>

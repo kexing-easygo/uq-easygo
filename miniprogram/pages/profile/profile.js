@@ -12,10 +12,11 @@ Page({
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
-    basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本信息.png",
-    basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/基本设置.png",
-    bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/邮箱绑定.png",
-    bindingPhoneIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/profile/手机绑定.png",
+    basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本信息.png",
+    basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本设置.png",
+    bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/邮箱绑定.png",
+    bindingPhoneIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/手机绑定.png",
+    contactUs: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们.png"
   },
 
   /**

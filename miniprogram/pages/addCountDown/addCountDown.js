@@ -25,7 +25,7 @@ Page({
     title: "",
     dueDate: "2020-12-31",
     dueTime: '23:59',
-    color: "#576B95",
+    color: "#7986CB",
     years,
     showDelete: false,
     index: 0,
@@ -116,8 +116,8 @@ Page({
       })
     } else {
       if (this.data.title == '' || 
-      this.data.dueDate == '2021-01-01' || 
-      this.data.dueTime == '00:00') {
+      this.data.dueDate == '2020-12-31' || 
+      this.data.dueTime == '23:59') {
         wx.showToast({
           title: '请输入完整的作业信息',
           icon: 'none'
@@ -179,27 +179,27 @@ Page({
   },
   bindRed: function () {
     this.setData({
-      color: "#FA5151"
+      color: "#FF8A65"
     })
   },
   bindPink: function () {
     this.setData({
-      color: "#FFC300"
+      color: "#FFF176"
     })
   },
   bindLightBlue: function () {
     this.setData({
-      color: "#07C160"
+      color: "#81C784"
     })
   },
   bindPurple: function () {
     this.setData({
-      color: "#1485EE"
+      color: "#64B5F6"
     })
   },
   bindYellow: function () {
     this.setData({
-      color: "#576B95"
+      color: "#7986CB"
     })
   },
   deleteCountdown: function () {

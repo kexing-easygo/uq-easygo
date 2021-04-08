@@ -128,15 +128,6 @@ async function getAllData() {
             var now = new Date()
             var dayDiff = dateDiff(now, dueDate, location)
             // 检查是否相差正数天
-            // debug
-            // if (openid == "oe4Eh5fXV7Oo2l6dIpQCNII3XFIw") {
-            // if (ass["oneDayEmail"] == 1) ass["oneDayEmail"] = 0
-            // if (ass["threeDayEmail"] == 1) ass["threeDayEmail"] = 0
-            // if (ass["oneWeekEmail"] == 1) ass["oneWeekEmail"] = 0
-            // if (ass["oneDayWe"] == 1) ass["oneDayWe"] = 0
-            // if (ass["threeDayWe"] == 1) ass["threeDayWe"] = 0
-            // if (ass["oneWeekWe"] == 1) ass["oneWeekWe"] = 0
-
             if (dayDiff >= 0) {
                 if (emailNotification == true && email != '') {
                     if (dayDiff <= 1 && oneDay == 1) {

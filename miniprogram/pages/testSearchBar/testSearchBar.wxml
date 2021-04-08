@@ -1,0 +1,4 @@
+<!--miniprogram/pages/testSearchBar.wxml-->
+<text>miniprogram/pages/testSearchBar.wxml</text>
+
+<searchbar bindselectresult="selectResult" search="{{search}}"></searchbar>

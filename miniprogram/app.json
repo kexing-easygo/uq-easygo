@@ -4,8 +4,9 @@
     "pages/addTimeTable/addTimeTable",
     
     "pages/home/home",
-    "pages/notificationSetting/notificationSetting",
     "pages/profile/profile",
+    "pages/testSearchBar/testSearchBar",
+    "pages/notificationSetting/notificationSetting",
     "pages/countdown/countdown",
     "pages/getCode/getCode",
     "pages/email/email",
@@ -21,7 +22,8 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/aboutUs/aboutUs",
-    "pages/contactUs/contactUs"
+    "pages/contactUs/contactUs",
+    "pages/timetable/timetable"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

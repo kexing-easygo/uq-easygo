@@ -72,28 +72,16 @@
 		</navigator>
 	</view>
 
-	<!-- <view class="page-block">
-		<navigator url="/pages/aboutUs/aboutUs">
-			<view class="img">
-				<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
-			</view>
-			<view class="txt seventeen-pt blacknine">
-				<view>关于我们</view>
-				<view>></view>
-			</view>
-		</navigator>
-	</view>
-
 	<view class="page-block">
 		<navigator url="/pages/contactUs/contactUs">
 			<view class="img">
-				<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
+				<image class="icon" src="{{contactUs}}" mode="aspectFill"></image>
 			</view>
 			<view class="txt seventeen-pt blacknine">
 				<view>联系我们</view>
 				<view>></view>
 			</view>
 		</navigator>
-	</view> -->
+	</view> 
 
 </view>
