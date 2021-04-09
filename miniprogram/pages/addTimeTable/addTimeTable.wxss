@@ -27,14 +27,21 @@
 .cdtitle {
   margin-left: 7%;
   height: fit-content;
-  width: 180rpx;
+  
 }
 
 .cdDetail {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   margin-left: 30rpx;
+  
+  /* background-color: blue; */
+}
+
+.searchbutton {
+  width: 12rpx;
 }
 
 .colorButton {
@@ -42,6 +49,10 @@
   height: 40rpx;
   border-radius: 80%;
   margin-right: 22rpx;
+  transition:width 2s;
+}
+.colorButton:active {
+  width:80rpx;
 }
 
 .timeSelectContainer {
@@ -80,9 +91,9 @@ checkbox .wx-checkbox-input{
 }
 
 .confirm {
-  position: absolute;
-  bottom: 150rpx;
+
   width: 368rpx;
-  left: 50%;
-  margin-left: -184rpx;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50rpx;
 }

@@ -22,6 +22,8 @@ Page({
     courseTitle:"csse1001",
     courseTimeDeatial: {},
     findTime: false,
+    selectedClass: [],
+    color: "#6600cc",
   },
 
   /**
@@ -136,5 +138,70 @@ Page({
     });
 
     
+  },
+  chooseClass: function(e) {
+    var values = e.detail.value;
+    var temp = [];
+    for (var i = 0; i < values.length; i++) {
+      temp.push(values[i]);
+    }
+    this.data.selectedClass = temp;
+    
+  },
+  confirmSelect: function() {
+    var temp = [];
+    var j = 0
+    let that = this;
+    for (var i in this.data.selectedClass) {
+      cl(this.data.courseTimeDeatial['S1FD'][i]);
+      var t = {};
+      t["courseName"] = this.data.courseTitle;
+      t['classTime'] = this.data.courseTimeDeatial['S1FD'][i];
+      t['color'] = this.data.color;
+      temp.push(t);
+
+    }
+
+    
+
+
+    db.collection("MainUser").where({
+      _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
+    }).update({
+      data: {
+        courseTime: _.push(
+          temp
+        )
+      }
+    });
+
+
+
+
+  },
+  bindRed: function() {
+    this.setData({
+      color: "#FA5151"
+    });
+  },
+  bindPink: function() {
+    this.setData({
+      color: "#FFC300"
+    });
+  },
+  bindLightBlue: function() {
+    this.setData({
+      color: "#07C160"
+    });
+  },
+  bindPurple: function() {
+    this.setData({
+      color: "#1485EE"
+    });
+  },
+  bindYellow: function() {
+    this.setData({
+      color: "#576B95"
+    });
   }
 })

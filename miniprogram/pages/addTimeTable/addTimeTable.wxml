@@ -39,17 +39,19 @@
 
 
 <view class="timeSelectContainer">
-  <view class="timeContainer" wx:for="{{courseTimeDeatial['S1FD']}}" wx:for-item="item">
+  <checkbox-group bindchange="chooseClass">
+  <view class="timeContainer" wx:for="{{courseTimeDeatial['S1FD']}}" wx:for-item="item" wx:for-index="index">
     <view class="timeItem">
       <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end"]}}</text>
-      <checkbox class="checkoption" value="hhhh" />
+      <checkbox class="checkoption"  value="{{index}}"  />
     </view>
   </view>
+  </checkbox-group>
 
 
 
 </view>
 
 <view class="confirm ">
-  <button bindtap="" class="setting-confirm-button"><text class="">确定</text></button>
+  <button bindtap="confirmSelect" type="primary"><text class="">确定</text></button>
 </view>
