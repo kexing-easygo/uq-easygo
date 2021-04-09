@@ -1,4 +1,6 @@
 // miniprogram/pages/timetable/timetable.js
+
+var deatilTime;
 Page({
 
   /**
@@ -7,14 +9,40 @@ Page({
   data: {
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     detailShow: false,
+    detailAnimation : "bottom: 0;animation: detailDownUp 1s;",
 
   },
+
+
 
   timeDetail: function(event){
     console.log(event.currentTarget.dataset['course']);
     this.setData({
       detailShow: true,
     });
+  },
+
+  timeDetailDown: function(event) {
+    this.setData({
+      //detailAnimation : "bottom: -545rpx;animation: detailUpDown 1s;",
+      detailShow: false,
+    });
+    // console.log(this.data['detailShow']);
+    // deatilTime = setTimeout(function() {
+    //   this.data.setData({
+    //     detailShow: false,
+    //   });
+    // } , 1000);
+  },
+
+  quitShade: function(event) {
+
+    this.setData({
+      // detailAnimation : "bottom: -545rpx;animation: detailUpDown 1s;",
+      detailShow: false,
+
+    });
+    clearTimeout(deatilTime);
   },
 
   /**

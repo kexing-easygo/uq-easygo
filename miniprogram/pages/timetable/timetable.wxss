@@ -102,20 +102,26 @@
 
 
 .classDetail {
-  animation: detailDownUp 1s;
+  /* bottom: 0;
+  animation: detailDownUp 1s; */
   width: 100%;
   height: 545rpx;
   background-color: white;
   position: absolute;
-  
- 
-  
+   
 }
 
 @keyframes detailDownUp {
   from {bottom: -545rpx;}
   to {bottom:0;}
 }
+
+@keyframes detailUpDown {
+  from {bottom:0;}
+  to {bottom: -545rpx;}
+}
+
+
 
 .detailHeader {
   display: flex;
@@ -170,6 +176,13 @@
 
 .hide {
   display: none;
+}
+
+.shade {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 

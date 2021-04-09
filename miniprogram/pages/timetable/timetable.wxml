@@ -128,7 +128,13 @@
   </navigator>
 </view>
 
-<view class="classDetail hide{{detailShow?'no':''}}">
+
+<view class="shade  hide{{detailShow?'no':''}}" bindtap="timeDetailDown">
+
+
+
+</view>
+<view class="classDetail hide{{detailShow?'no':''}}" style="{{detailAnimation}}">
   <view class="detailHeader">
     <text style="font-size:44rpx; padding-left:48rpx">课程详情</text>
     <text style="padding-right:48rpx; color:red">删除</text>
@@ -206,3 +212,5 @@
     </view>
   </view>
 </view>
+
+

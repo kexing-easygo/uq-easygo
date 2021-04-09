@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/timetable/timetable",
     "pages/addTimeTable/addTimeTable",
-    
+    "pages/timetable/timetable",
     "pages/home/home",
+    
     "pages/profile/profile",
     "pages/testSearchBar/testSearchBar",
     "pages/notificationSetting/notificationSetting",
@@ -22,8 +22,7 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/aboutUs/aboutUs",
-    "pages/contactUs/contactUs",
-    "pages/timetable/timetable"
+    "pages/contactUs/contactUs"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
