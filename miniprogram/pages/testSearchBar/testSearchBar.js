@@ -12,7 +12,7 @@ Page({
       this.setData({
           search: this.search.bind(this)
       })
-      console.log(this.data.search)
+    //   console.log(this.data.search)
   },
   search: function (value) {
       return new Promise((resolve, reject) => {
@@ -24,4 +24,17 @@ Page({
   selectResult: function (e) {
       console.log('select result', e.detail)
   },
+  testCrontab: function() {
+    wx.cloud.callFunction({
+      name: 'database',
+      data :{
+      },
+      success: res => {
+          console.log(res)
+      },
+      fail: err => {
+          console.error(err)
+      }
+    })
+  }
 })
