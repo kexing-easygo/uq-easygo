@@ -19,18 +19,14 @@ Page({
   data: {
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     detailShow: false,
-    detailAnimation : "bottom: 0;animation: detailDownUp 1s;",
+    detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],
     selectClass: {},
-    
+
 
   },
-
-
-
-  timeDetail: function(event){
+  timeDetail: function (event) {
     console.log(event.currentTarget.dataset['courseindex']);
-
     var courseIndex = event.currentTarget.dataset['courseindex'];
     var temp = this.data.userCourseTime[courseIndex];
     temp['courseindex'] = courseIndex;
@@ -41,7 +37,7 @@ Page({
     cl(this.data.selectClass);
   },
 
-  timeDetailDown: function(event) {
+  timeDetailDown: function (event) {
     this.setData({
       //detailAnimation : "bottom: -545rpx;animation: detailUpDown 1s;",
       detailShow: false,
@@ -54,16 +50,14 @@ Page({
     // } , 1000);
   },
 
-  quitShade: function(event) {
+  quitShade: function (event) {
 
     this.setData({
-      // detailAnimation : "bottom: -545rpx;animation: detailUpDown 1s;",
       detailShow: false,
-
     });
     clearTimeout(deatilTime);
   },
-  deleteClass: function(e) {
+  deleteClass: function (e) {
     cl(e.currentTarget.dataset['classindex']);
     var temp = this.data.userCourseTime;
     temp.splice(e.currentTarget.dataset['classindex'], 1);
@@ -85,15 +79,8 @@ Page({
           userCourseTime: temp,
           detailShow: false,
         });
-        
-
-      
-      
       }
     })
-
-
-
   },
 
   /**
@@ -116,14 +103,13 @@ Page({
           temp[i]["color"] = "background-color:" + temp[i]['color'] + ";";
           temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 88 + "rpx;";
         }
-
         that.setData({
           userCourseTime: temp
         });
       }
     });
   },
-  
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成

@@ -22,7 +22,7 @@
 .timeTable {
   display: flex;
   flex-flow: row nowrap;
-  margin-top:20rpx;
+  margin-top: 20rpx;
 }
 
 .time {
@@ -34,11 +34,11 @@
   text-align: center;
   height: 76rpx;
   background-color: rgba(100, 103, 204, 0.7);
-  writing-mode:vertical-lr;
+  writing-mode: vertical-lr;
   width: 100%;
 }
 
-.time .timePoint{
+.time .timePoint {
   background-color: #ffffff;
   text-align: center;
   height: 88rpx;
@@ -48,7 +48,7 @@
   width: 696rpx;
   position: relative;
   font-size: 24rpx;
-  
+
 }
 
 .weekDate {
@@ -61,13 +61,13 @@
 .weekDateitem {
   height: 76rpx;
   width: 100rpx;
-  line-height:24rpx;
-  
+  line-height: 24rpx;
+
   position: relative;
 }
 
 .weekDateitemContent {
-  
+
   margin-top: 14rpx;
   border-right: 5rpx rgba(0, 0, 0, 0.5) solid;
 }
@@ -111,17 +111,27 @@
   height: 545rpx;
   background-color: white;
   position: absolute;
-   
+
 }
 
 @keyframes detailDownUp {
-  from {bottom: -545rpx;}
-  to {bottom:0;}
+  from {
+    bottom: -545rpx;
+  }
+
+  to {
+    bottom: 0;
+  }
 }
 
 @keyframes detailUpDown {
-  from {bottom:0;}
-  to {bottom: -545rpx;}
+  from {
+    bottom: 0;
+  }
+
+  to {
+    bottom: -545rpx;
+  }
 }
 
 
@@ -130,7 +140,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-style:solid;
+  border-bottom-style: solid;
   border-bottom-width: 2rpx;
 }
 
@@ -141,7 +151,10 @@
   font-size: 34rpx;
 }
 
-.inforname, .inforcolor, .inforlocation, .infortime{
+.inforname,
+.inforcolor,
+.inforlocation,
+.infortime {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -154,7 +167,7 @@
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: flex-start;
-  height:fit-content;
+  height: fit-content;
 }
 
 .infortitle {
@@ -167,7 +180,7 @@
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  width:500rpx;
+  width: 500rpx;
 }
 
 .colorButton {
@@ -187,8 +200,3 @@
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
 }
-
-
-
-
-
