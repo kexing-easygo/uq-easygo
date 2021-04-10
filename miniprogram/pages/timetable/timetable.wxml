@@ -77,40 +77,44 @@
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周二\n02-01</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周三\n02-01</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周四\n02-01</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周五\n02-01</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周六\n02-01</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周日\n02-01</text>
         </view>
       </view>
     </view>
+    <text>{{getTimes}}</text>
 
-    <view class="classes">
-      <view class="class" data-course="csse2310" bindtap="timeDetail">
-        <text>csse2310</text>
+    <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index">
+      <view class="class" data-courseindex="{{index}}" bindtap="timeDetail" style="{{item.left}} {{item.top}} {{item.color}} {{item.height}}">
+        <text>{{item.courseName}}</text>
+        <text>{{item.classTime.type}}</text>
+        <text>{{item.classTime.location}}</text>
       </view>
+     
 
     </view>
 
@@ -137,7 +141,7 @@
 <view class="classDetail hide{{detailShow?'no':''}}" style="{{detailAnimation}}">
   <view class="detailHeader">
     <text style="font-size:44rpx; padding-left:48rpx">课程详情</text>
-    <text style="padding-right:48rpx; color:red">删除</text>
+    <text data-classindex="{{selectClass.courseindex}}" bindtap="deleteClass" style="padding-right:48rpx; color:red">删除</text>
   </view>
 
   <view class="detailInfor">
@@ -147,7 +151,7 @@
       </view>
 
       <view class="inforContent">
-        <text> CSSE2310 LEC</text>
+        <text> {{selectClass.courseName}} {{selectClass.classTime.type}}</text>
       </view>
     </view>
 
@@ -158,25 +162,10 @@
 
       <view class="inforContent">
         <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FA5151;"
+          <button class="mini-btn colorButton" type="primary" size="mini" style="{{selectClass.color}}"
             bindtap="bindRed"></button>
         </view>
-        <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;"
-            bindtap="bindPink"></button>
-        </view>
-        <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #07C160;"
-            bindtap="bindLightBlue"></button>
-        </view>
-        <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #1485EE;"
-            bindtap="bindPurple"></button>
-        </view>
-        <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #576B95;"
-            bindtap="bindYellow"></button>
-        </view>
+        
       </view>
 
     </view>
@@ -188,7 +177,7 @@
     </view>
 
     <view class="inforContent">
-      <text>78-101</text>
+      <text>{{selectClass.classTime.location}}</text>
     </view>
   </view>
 
@@ -198,7 +187,7 @@
     </view>
 
     <view class="inforContent">
-      <text> MON 8:00 - 9:00</text>
+      <text> {{selectClass.classTime.weekday}} {{selectClass.classTime["start-end"]}}</text>
     </view>
   </view>
 

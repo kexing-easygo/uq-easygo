@@ -7,7 +7,7 @@ function get_class_start_end(start, duration) {
   var hour = duration / 60;
   var starts = start.split(":");
   var end = parseInt(starts[0]) + hour + ":" + starts[1];
-  return start + " - " + end; 
+  return start + " - " + end;
 }
 
 function cl(content) {
@@ -19,7 +19,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    courseTitle:"csse1001",
+    courseTitle: "csse1001",
     courseTimeDeatial: {},
     findTime: false,
     selectedClass: [],
@@ -81,32 +81,26 @@ Page({
   onShareAppMessage: function () {
 
   },
-  timeCourse: function(e) {
+  timeCourse: function (e) {
     this.setData({
-      courseTitle:e.detail.value.toUpperCase(),
+      courseTitle: e.detail.value.toUpperCase(),
     });
     console.log(this.data.course);
   },
-  searchCourseTime: function() {
-   
+  searchCourseTime: function () {
+
     var dic = {};
     let that = this;
     db.collection('Timetable').where({
       course: that.data.courseTitle,
     }).get({
-      success: function(res) {
-        
+      success: function (res) {
         for (var key in res.data[0]) {
-          
           if (key.length >= 20) {
             var keyList = key.split("_");
-            
             var mode = keyList[1] + keyList[3];
             var i = 0;
-            
             dic[mode] = [];
-            
-            
             for (var keyItem in res.data[0][key]) {
               var keyItemList = keyItem.split("|");
               var temp = {};
@@ -115,20 +109,18 @@ Page({
               if (res.data[0][key][keyItem]["location"].length > 3) {
                 location = res.data[0][key][keyItem]["location"].split(" ")[0];
               }
-              
+
               temp["location"] = location;
               temp["weekday"] = res.data[0][key][keyItem]["day_of_week"];
               var startTime = res.data[0][key][keyItem]["start_time"];
               var time = res.data[0][key][keyItem]["duration"];
-              
               temp["start-end"] = get_class_start_end(startTime, time);
               temp["start"] = startTime;
               temp["hours"] = time / 60;
-              dic[mode].push(temp);    
+              dic[mode].push(temp);
             }
           }
         }
-
         that.setData({
           courseTimeDeatial: dic,
           findTime: true,
@@ -137,36 +129,34 @@ Page({
       }
     });
 
-    
+
   },
-  chooseClass: function(e) {
+  chooseClass: function (e) {
     var values = e.detail.value;
     var temp = [];
-    for (var i = 0; i < values.length; i++) {
-      temp.push(values[i]);
+    for (var i = 0; i < this.data.courseTimeDeatial['S1FD'].length; i++) {
+      for (var j = 0; j < values.length; j++) {
+        if (this.data.courseTimeDeatial['S1FD'][i] == this.data.courseTimeDeatial['S1FD'][values[j]]) {
+          temp.push(this.data.courseTimeDeatial['S1FD'][i]);
+          break;
+        }
+      }
     }
     this.data.selectedClass = temp;
-    
+    cl(this.data.selectedClass);
   },
-  confirmSelect: function() {
+  confirmSelect: function () {
     var temp = [];
-    var j = 0
-    let that = this;
-    for (var i in this.data.selectedClass) {
-      cl(this.data.courseTimeDeatial['S1FD'][i]);
+    for (var i = 0; i < this.data.selectedClass.length; i++) {
       var t = {};
       t["courseName"] = this.data.courseTitle;
-      t['classTime'] = this.data.courseTimeDeatial['S1FD'][i];
+      t['classTime'] = this.data.selectedClass[i];
       t['color'] = this.data.color;
       temp.push(t);
-
     }
-
-    
-
-
     db.collection("MainUser").where({
       _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
+      // _openid: app.globalData._openid
     }).update({
       data: {
         courseTime: _.push(
@@ -175,31 +165,37 @@ Page({
       }
     });
 
-
-
-
+    wx.reLaunch({
+      url: '/pages/timetable/timetable',
+      success: function (res) {
+        var page = getCurrentPages().pop()
+        if (page == undefined || page == null) return;
+        // 刷新页面
+        page.onLoad()
+      }
+    })
   },
-  bindRed: function() {
+  bindRed: function () {
     this.setData({
       color: "#FA5151"
     });
   },
-  bindPink: function() {
+  bindPink: function () {
     this.setData({
       color: "#FFC300"
     });
   },
-  bindLightBlue: function() {
+  bindLightBlue: function () {
     this.setData({
       color: "#07C160"
     });
   },
-  bindPurple: function() {
+  bindPurple: function () {
     this.setData({
       color: "#1485EE"
     });
   },
-  bindYellow: function() {
+  bindYellow: function () {
     this.setData({
       color: "#576B95"
     });

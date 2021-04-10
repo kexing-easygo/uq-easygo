@@ -78,13 +78,16 @@
 
 .class {
   width: 90rpx;
-  background-color: #576b95;
+  /* background-color: #576b95; */
   border-radius: 10rpx;
-  height: 176rpx;
+  /* height: 176rpx; */
   word-wrap: break-word;
   position: absolute;
-  left: 200rpx; /* 100rpx * 周几 */
-  top: 720rpx; /* 90rpx * 第几节 */
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  /* left: 200rpx; 100rpx * 周几
+  top: 720rpx; 90rpx * 第几节 */
 }
 
 
