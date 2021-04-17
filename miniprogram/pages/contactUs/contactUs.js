@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    logoimg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
   },
 
   /**

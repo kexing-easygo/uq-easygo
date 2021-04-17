@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/countdown/countdown",
+    "pages/contactUs/contactUs",
     "pages/testSearchBar/testSearchBar",
     "pages/home/home",
-    "pages/countdown/countdown",
     "pages/calc/calc",
     "pages/profile/profile",
     "pages/notificationSetting/notificationSetting",
@@ -19,7 +20,6 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/aboutUs/aboutUs",
-    "pages/contactUs/contactUs",
     "pages/timetable/timetable"
   ],
   "window": {
