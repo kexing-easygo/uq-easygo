@@ -60,7 +60,7 @@
 
 .weekDateitem {
   height: 76rpx;
-  width: 100rpx;
+  width: 140rpx;
   line-height: 24rpx;
 
   position: relative;
@@ -77,7 +77,7 @@
 }
 
 .class {
-  width: 90rpx;
+  width: 130rpx;
   /* background-color: #576b95; */
   border-radius: 10rpx;
   /* height: 176rpx; */
@@ -86,7 +86,7 @@
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;
-  /* left: 200rpx; 100rpx * 周几
+  /* left: 200rpx; 140rpx * 周几
   top: 720rpx; 90rpx * 第几节 */
 }
 

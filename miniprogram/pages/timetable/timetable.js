@@ -95,7 +95,7 @@ Page({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
         for (var i = 0; i < temp.length; i++) {
-          var left = 100 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+          var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
           var start = temp[i]["classTime"]["start"].split(":")[0];
           var top = 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"

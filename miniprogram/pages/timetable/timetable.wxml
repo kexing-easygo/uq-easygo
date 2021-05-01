@@ -95,7 +95,7 @@
           <text>周五\n02-01</text>
         </view>
       </view>
-      <view class="weekDateitem">
+      <!-- <view class="weekDateitem">
         <view class="weekDateitemContent">
           <text>周六\n02-01</text>
         </view>
@@ -104,7 +104,7 @@
         <view class="weekDateitemContent">
           <text>周日\n02-01</text>
         </view>
-      </view>
+      </view> -->
     </view>
     <text>{{getTimes}}</text>
 
