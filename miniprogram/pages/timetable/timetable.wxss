@@ -77,7 +77,7 @@
 }
 
 .class {
-  width: 130rpx;
+  /* width: 130rpx; */
   /* background-color: #576b95; */
   border-radius: 10rpx;
   /* height: 176rpx; */

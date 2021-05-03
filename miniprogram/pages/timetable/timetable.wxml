@@ -1,29 +1,29 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks">
   <view class="week">
-    <text>第一周</text>
+    <text>wk8</text>
   </view>
   <view class="week">
-    <text>第二周</text>
+    <text>wk9</text>
+  </view>
+  <view class="week current">
+    <text>wk10</text>
   </view>
   <view class="week">
-    <text>第三周</text>
+    <text>wk11</text>
   </view>
   <view class="week">
-    <text>第四周</text>
+    <text>wk12</text>
   </view>
   <view class="week">
-    <text>第五周</text>
-  </view>
-  <view class="week">
-    <text>第六周</text>
+    <text>wk13</text>
   </view>
 </view>
 
 <view class="timeTable">
   <view class="time">
     <view class="month">
-      <text>二月</text>
+      <text>{{currentMonth}}月</text>
     </view>
     <view class="timePoint">
       <text>8</text>
@@ -64,35 +64,33 @@
     <view class="timePoint">
       <text>20</text>
     </view>
-
-
   </view>
 
   <view class="weekClass">
     <view class="weekDate">
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n02-01</text>
+          <text>周一\n05-03</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周二\n02-01</text>
+          <text>周二\n05-04</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周三\n02-01</text>
+          <text>周三\n05-05</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周四\n02-01</text>
+          <text>周四\n05-06</text>
         </view>
       </view>
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周五\n02-01</text>
+          <text>周五\n05-07</text>
         </view>
       </view>
       <!-- <view class="weekDateitem">
@@ -110,18 +108,12 @@
 
     <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index">
       <view class="class" data-courseindex="{{index}}" bindtap="timeDetail"
-        style="{{item.left}} {{item.top}} {{item.color}} {{item.height}}">
+        style="{{item.left}} {{item.top}} {{item.color}} {{item.height}} {{item.width}}">
         <text>{{item.courseName}}</text>
         <text>{{item.classTime.type}}</text>
         <text>{{item.classTime.location}}</text>
       </view>
-
-
     </view>
-
-
-
-
   </view>
 
 </view>

@@ -6,10 +6,31 @@ const app = getApp();
 const _ = db.command;
 
 const weeks = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-
+const series = {
+  "08:00": 0,
+  "09:00": 1,
+  "10:00": 2,
+  "11:00": 3,
+  "12:00": 4,
+  "13:00": 5,
+  "14:00": 6,
+  "15:00": 7,
+  "16:00": 8,
+  "17:00": 9,
+  "18:00": 10,
+  "19:00": 11
+}
 function cl(content) {
   console.log(content);
 }
+
+var today = new Date();
+// 当前月份为today.getMonth() + 1
+var currentMonth = today.getMonth() + 1;
+// 当前周几为today.getDay() + 1
+var currentDay = today.getDay() + 1;
+// 当前第几周没想好，写死了10
+var currentWeek = 10
 
 Page({
 
@@ -22,7 +43,9 @@ Page({
     detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],
     selectClass: {},
-
+    currentMonth: currentMonth,
+    currentDay: currentDay,
+    currentWeek: currentWeek
 
   },
   timeDetail: function (event) {
@@ -63,13 +86,13 @@ Page({
     temp.splice(e.currentTarget.dataset['classindex'], 1);
     let that = this;
     db.collection("MainUser").where({
-      _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var list = res.data[0]['courseTime'];
         list.splice(e.currentTarget.dataset['classindex'], 1);
         db.collection("MainUser").where({
-          _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
+          _openid: app.globalData._openid
         }).update({
           data: {
             courseTime: list
@@ -88,14 +111,39 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
-
     db.collection("MainUser").where({
-      _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
         for (var i = 0; i < temp.length; i++) {
-          var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+          for (var j = 0; j < temp.length; j++) {
+            if (i != j) {
+              if (temp[i]["classTime"]["weekday"] == temp[j]["classTime"]["weekday"]) {
+                var s1 = that.generateTimeSeries(temp[i]);
+                var s2 = that.generateTimeSeries(temp[j]);
+                for (var k = 0; k < 12; k++) {
+                  // 判断两节课是否有冲突的部分
+                  if (s1[k] == s2[k] && "clash" in temp[i] == false && "clash" in temp[j] == false) {
+                    if (s1[k] == 1) {
+                      temp[i]["clash"] = 0
+                      temp[j]["clash"] = 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        for (var i = 0; i < temp.length; i++) {
+          var clash = temp[i]["clash"]
+          if (temp[i].hasOwnProperty("clash")) {
+            temp[i]['width'] = "width:" + "65rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
+          } else {
+            temp[i]['width'] = "width:" + "130rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+          }
           var start = temp[i]["classTime"]["start"].split(":")[0];
           var top = 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
@@ -109,6 +157,25 @@ Page({
       }
     });
   },
+  /**
+   * 根据每节课的时间
+   * 生成时间列表
+   * 如果课是在8-9点，则该位置为1，其余位置为0
+   * 如果课在8-10，则从8-9开始标记为1（两个1），其余位置为0
+   */
+  generateTimeSeries: function(course) {
+    var course_duration = course["classTime"]["hours"];
+    var time_series = []
+    for (var i = 0; i < 12; i++) {
+      time_series.push(0);
+    }
+    var start_index = series[course["classTime"]["start"]]
+    for (var i = start_index; i < start_index + course_duration; i++) {
+      time_series[i] = 1
+    }
+    return time_series;
+  },
+
 
 
   /**
