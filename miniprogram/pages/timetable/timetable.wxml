@@ -6,7 +6,7 @@
   <view class="week">
     <text>wk9</text>
   </view>
-  <view class="week current">
+  <view class="week" style="background-color: rgba(100, 103, 204, 0.7);">
     <text>wk10</text>
   </view>
   <view class="week">
@@ -68,11 +68,16 @@
 
   <view class="weekClass1"  wx:for="{{weekdays}}"  wx:for-item="item" wx:for-index="index">
     <view class="weekDate">
-      <view class="weekDateitem">
+      <view class="weekDateitem" wx:if="{{index + 1 == currentDay}}">
+        <view class="weekDateitemContent" style="background-color: rgba(100, 103, 204, 0.7);">
+          <text>{{item}}</text>
+        </view>
+      </view>  
+      <view class="weekDateitem" wx:else>
         <view class="weekDateitemContent">
           <text>{{item}}</text>
         </view>
-      </view>        
+      </view>       
     </view>
   </view>
   <view class="weekClass">

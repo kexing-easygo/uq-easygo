@@ -53,6 +53,7 @@ Page({
     currentMonth: currentMonth,
     weekdays: [],
     currentWeek: currentWeek,
+    currentDay: currentDay
 
   },
   timeDetail: function (event) {
