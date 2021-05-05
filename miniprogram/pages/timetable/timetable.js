@@ -1,5 +1,5 @@
 // miniprogram/pages/timetable/timetable.js
-
+import util from '../../utils/util.js';
 var deatilTime;
 const db = wx.cloud.database();
 const app = getApp();
@@ -26,12 +26,19 @@ function cl(content) {
 
 var today = new Date();
 // 当前月份为today.getMonth() + 1
+var currentYear = today.getFullYear()
 var currentMonth = today.getMonth() + 1;
 // 当前周几为today.getDay() + 1
-var currentDay = today.getDay() + 1;
+var currentDay = today.getDay();
 // 当前第几周没想好，写死了10
 var currentWeek = 10
-
+const weekday_mapper = {
+  1: "周一",
+  2: "周二",
+  3: "周三",
+  4: "周四",
+  5: "周五"
+}
 Page({
 
   /**
@@ -44,8 +51,8 @@ Page({
     userCourseTime: [],
     selectClass: {},
     currentMonth: currentMonth,
-    currentDay: currentDay,
-    currentWeek: currentWeek
+    weekdays: [],
+    currentWeek: currentWeek,
 
   },
   timeDetail: function (event) {
@@ -112,7 +119,7 @@ Page({
   onLoad: function (options) {
     let that = this;
     db.collection("MainUser").where({
-      _openid: app.globalData._openid
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
     }).get({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
@@ -156,6 +163,32 @@ Page({
         });
       }
     });
+    var weekdays = []
+    // <view class="weekDateitem">
+    //     <view class="weekDateitemContent">
+    //       <text>周日\n02-01</text>
+    //     </view>
+    //   </view>
+
+    // 逆向生成日期    
+    // var startDate = new Date(today.setDate(today.getDate() - difference));
+    for (var i = 1; i < currentDay; i++) {
+      var today = new Date()
+      var difference = currentDay - i;
+      var newDate = new Date(today.setDate(today.getDate() - difference));
+      var month = newDate.getMonth() + 1;
+      weekdays.push(weekday_mapper[i] + "\n" + month + "-" + newDate.getDate());
+    }
+    for (var i = currentDay; i < 6; i++) {
+      var today = new Date()
+      var difference = currentDay - i;
+      var newDate = new Date(today.setDate(today.getDate() - difference));
+      var month = newDate.getMonth() + 1;
+      weekdays.push(weekday_mapper[i] + "\n" + month + "-" + newDate.getDate());
+    }
+    this.setData({
+      weekdays: weekdays
+    })
   },
   /**
    * 根据每节课的时间

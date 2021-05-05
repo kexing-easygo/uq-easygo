@@ -46,12 +46,21 @@
 
 .weekClass {
   width: 696rpx;
-  position: relative;
+  position: absolute;
   font-size: 24rpx;
-
+  margin-left: 48rpx;
+  margin-top: 60rpx;
 }
 
+.weekClass1 {
+  width: 696rpx;
+  position: relative;
+  font-size: 24rpx;
+}
+
+
 .weekDate {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   text-align: center;
@@ -62,7 +71,6 @@
   height: 76rpx;
   width: 140rpx;
   line-height: 24rpx;
-
   position: relative;
 }
 

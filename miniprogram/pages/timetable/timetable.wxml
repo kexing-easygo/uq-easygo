@@ -66,46 +66,16 @@
     </view>
   </view>
 
-  <view class="weekClass">
+  <view class="weekClass1"  wx:for="{{weekdays}}"  wx:for-item="item" wx:for-index="index">
     <view class="weekDate">
       <view class="weekDateitem">
         <view class="weekDateitemContent">
-          <text>周一\n05-03</text>
+          <text>{{item}}</text>
         </view>
-      </view>
-      <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周二\n05-04</text>
-        </view>
-      </view>
-      <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周三\n05-05</text>
-        </view>
-      </view>
-      <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周四\n05-06</text>
-        </view>
-      </view>
-      <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周五\n05-07</text>
-        </view>
-      </view>
-      <!-- <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周六\n02-01</text>
-        </view>
-      </view>
-      <view class="weekDateitem">
-        <view class="weekDateitemContent">
-          <text>周日\n02-01</text>
-        </view>
-      </view> -->
+      </view>        
     </view>
-    <text>{{getTimes}}</text>
-
+  </view>
+  <view class="weekClass">
     <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index">
       <view class="class" data-courseindex="{{index}}" bindtap="timeDetail"
         style="{{item.left}} {{item.top}} {{item.color}} {{item.height}} {{item.width}}">
@@ -115,7 +85,6 @@
       </view>
     </view>
   </view>
-
 </view>
 
 
