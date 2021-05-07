@@ -94,13 +94,13 @@ Page({
     temp.splice(e.currentTarget.dataset['classindex'], 1);
     let that = this;
     db.collection("MainUser").where({
-      _openid: app.globalData._openid
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
     }).get({
       success: function (res) {
         var list = res.data[0]['courseTime'];
         list.splice(e.currentTarget.dataset['classindex'], 1);
         db.collection("MainUser").where({
-          _openid: app.globalData._openid
+          _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
         }).update({
           data: {
             courseTime: list

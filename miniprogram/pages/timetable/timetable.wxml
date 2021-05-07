@@ -1,6 +1,6 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
-<view class="allWeeks">
-  <view class="week">
+<!-- <view class="allWeeks"> -->
+  <!-- <view class="week">
     <text>wk8</text>
   </view>
   <view class="week">
@@ -17,8 +17,8 @@
   </view>
   <view class="week">
     <text>wk13</text>
-  </view>
-</view>
+  </view> -->
+<!-- </view> -->
 
 <view class="timeTable">
   <view class="time">

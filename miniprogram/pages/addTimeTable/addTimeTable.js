@@ -155,8 +155,8 @@ Page({
       temp.push(t);
     }
     db.collection("MainUser").where({
-      // _openid: "oe4Eh5bq0O-m12IGUL6Ps-DkBuj8"
-      _openid: app.globalData._openid
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      // _openid: app.globalData._openid
     }).update({
       data: {
         courseTime: _.push(
