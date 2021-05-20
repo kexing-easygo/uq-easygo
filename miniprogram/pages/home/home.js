@@ -1,5 +1,6 @@
 // pages/home/home.js
 const app = getApp()
+const db = wx.cloud.database()
 Page({
 
   /**
@@ -25,24 +26,31 @@ Page({
    * Lifecycle function--Called when page load
    * 在进入主页时，缓存用户的openid
    */
+
   onLoad: function (options) {
-    wx.getSetting({
-      withSubscriptions: true,
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 证明用户授权了
-          app.globalData.hasUserInfo = true,
-          app.globalData.userInfo = res.authSetting['scope.userInfo']
-          wx.cloud.callFunction({
-            name: 'login',
-            data: {},
-            success: res => {
-              app.globalData._openid = res.result.openid
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        app.globalData._openid = res.result.openid
+        // 拿到openid后，检索数据库
+        // 如果数据库内没有对应openid，就视为未登录
+        db.collection('MainUser')
+        .where({
+          _openid: app.globalData._openid
+        })
+        .get({
+          success: function (res) {
+            if (res.data.length == 0) {
+              app.globalData.hasUserInfo = false;
+            } else {
+              app.globalData.hasUserInfo = true;
             }
-          })
-        }
+          }
+        })
       }
     })
+    
 
   },
 

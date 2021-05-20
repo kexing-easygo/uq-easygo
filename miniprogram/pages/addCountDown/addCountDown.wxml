@@ -4,7 +4,9 @@
 	<view class="heading">
 		<text class = "cdtitle ">标题名称<text class="red-star">*</text></text>
 		<view class="cdDetail">
-			<input focus= "{{inputFocus}}" type="text" maxlength="20" bindinput="bindTitleInput" placeholder="{{title}}" placeholder-style="color: black"/>
+			<input focus= "{{inputFocus}}" type="text" maxlength="20" 
+			bindinput="bindTitleInput" bindfocus="bindFocus" bindblur="bindBlur"
+			placeholder="{{title}}" placeholder-style="color: {{cursorColor}}"/>
 		</view>
 	</view>
 

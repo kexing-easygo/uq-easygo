@@ -35,7 +35,8 @@ Page({
     d1,
     d2,
     // 新用户进入倒计时的默认作业条目
-    defaultUserAssignments: [{
+    defaultUserAssignments: [
+      {
         'color': '#7986CB',
         'name': "CSSE1001 A1 (示例)",
         "date": d1,
@@ -48,7 +49,9 @@ Page({
         "time": "00:00"
       }
     ],
-    userAssignments: [],
+    userAssignments: [
+      
+    ],
     matchedItems: [],
     selectMatchedItem: false,
     selectedAssignments: [],
@@ -219,7 +222,6 @@ Page({
       assignments[i]["id"] = i
       assignments[i]["percentage"] = percentage
     }
-    app.globalData.userAssignments = assignments
     that.setData({
       userAssignments: assignments,
       recentAssignmentName: assignments[0].name,
@@ -246,6 +248,7 @@ Page({
       search: this.search.bind(this)
     })
     let that = this
+    
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
       var temp = []
@@ -300,19 +303,16 @@ Page({
           }
         })
     } else {
-      if (app.globalData.userAssignments != undefined) {
-        this.updateDefaultAssignmentValues(app.globalData.userAssignments)
-      } else {
-        this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
-      }
       wx.showModal({
         title: 'UU妹提醒',
         content: '登录才能使用倒计时的完整功能哦！',
         success(res) {}
       })
+      this.updateDefaultAssignmentValues(this.data.defaultUserAssignments);
     }
   },
   onShow: function() {
+    
     if (app.globalData._openid == '') {
       wx.cloud.callFunction({
         name: 'login',

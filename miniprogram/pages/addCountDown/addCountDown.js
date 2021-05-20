@@ -32,6 +32,7 @@ Page({
     buttonText: "确认添加",
     inputDisabled: false, 
     inputFocus: false,
+    cursorColor: "black"
   },
 
   /**
@@ -115,11 +116,23 @@ Page({
         }
       })
     } else {
-      if (this.data.title == '' || 
-      this.data.dueDate == '2020-12-31' || 
-      this.data.dueTime == '23:59') {
+      if (this.data.title == '') {
         wx.showToast({
-          title: '请输入完整的作业信息',
+          title: '请输入作业标题哦～',
+          icon: 'none'
+        })
+        return
+      }
+      if (this.data.dueDate == '2020-12-31') {
+        wx.showToast({
+          title: '请修改due的日期哦～',
+          icon: 'none'
+        })
+        return
+      }
+      if (this.data.dueTime == '23:59') {
+        wx.showToast({
+          title: '请修改due的时间哦～',
           icon: 'none'
         })
         return
@@ -164,6 +177,17 @@ Page({
   bindTitleInput: function (e) {
     // 获取assignment名称
     this.data.title = e.detail.value
+  },
+  bindFocus: function(e) {
+    this.setData({
+      cursorColor: "grey"
+    })
+  },
+
+  bindBlur: function(e) {
+    this.setData({
+      cursorColor: "black"
+    })
   },
   bindDateChange: function (e) {
     // 设置due date

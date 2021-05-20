@@ -3,7 +3,7 @@
   <view class="logo">
       <image src="{{logoimg}}" style="width: 140rpx; height:140rpx; margin-bottom: 40rpx;" />
       <view style="font-size:50rpx;">UQ校园通</view>
-      <view style="font-size:34rpx;">Version 1.0.1</view>
+      <view style="font-size:34rpx;">Version 1.0.2</view>
   </view>
 
   <view class="content" style="background-color:rgba(255, 255, 255, 1);">
