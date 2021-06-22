@@ -85,18 +85,22 @@ Page({
           .add({
             data: {
               nickName: r.userInfo.nickName,
-              userAssignments: [{
-                'color': '#7986CB',
-                'name': "CSSE1001 A1 (示例)",
-                "date": d1,
-                "time": "00:00"
-              },
-              {
-                'color': '#7986CB',
-                'name': "点我查看更多",
-                "date": d2,
-                "time": "00:00"
-              }],
+              userAssignments: [
+                {
+                  'color': '#7986CB',
+                  'name': "CSSE1001 A1 (示例)",
+                  "date": d1,
+                  "time": "00:00",
+                  "default": true
+                },
+                {
+                  'color': '#7986CB',
+                  'name': "点我查看更多",
+                  "date": d2,
+                  "time": "00:00",
+                  "default": true
+                }
+              ],
               userInfo: r.userInfo,
               userEmail: "",
               notification: {

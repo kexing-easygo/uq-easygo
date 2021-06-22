@@ -8,18 +8,18 @@ Page({
    */
   data: {
     // 轮播图
-    swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/熊猫外卖异业合作.png",
-    swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图上线了.png",
-    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
+    swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图一.png",
+    swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图二.png",
+    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图三.png",
     // 功能图标
     calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
     countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
     timetableIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课表图标.png",
     inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
     // 下方非滚动海报
-    PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/熊猫外卖异业合作.png",
-    PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/精简校历五月.png",
-    PostHolderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
+    PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报一.png",
+    PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
+    PostHolderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报三.png",
   },
 
   /**

@@ -40,13 +40,15 @@ Page({
         'color': '#7986CB',
         'name': "CSSE1001 A1 (示例)",
         "date": d1,
-        "time": "00:00"
+        "time": "00:00",
+        "default": true
       },
       {
         'color': '#7986CB',
         'name': "点我查看更多",
         "date": d2,
-        "time": "00:00"
+        "time": "00:00",
+        "default": true
       }
     ],
     userAssignments: [
@@ -75,33 +77,6 @@ Page({
     this.setData({
       searchFocus: false
     })
-  },
-  //用户点击搜索记录的时候，跳转到对应界面
-  historyTap: function (value) {
-    //
-    this.setData({
-      showHistory: false,
-    })
-    var history = value['target']['dataset']['historytag'];
-    var temp = [];
-    if (history != null) {
-      this.data.userAssignments.forEach(element => {
-        if (element['name'] == history) {
-          temp.push(element);
-        }
-      });
-      this.setData({
-        selectMatchedItem: true,
-        selectedAssignments: temp,
-        showAll: false,
-        showResult: "hidden",
-        recentAssignmentName: temp[0].name,
-        recentAssignmentDate: temp[0].countdown,
-        searchBarValue: temp[0].name,
-        searchFocus: false,
-      })
-    }
-
   },
 
   search: function (value) {
@@ -210,6 +185,7 @@ Page({
   },
   updateDefaultAssignmentValues: function (assignments) {
     let that = this
+    // const arr = [d1, d2]
     for (var i = 0; i < 2; i++) {
       // 默认数据全是写死的
       var date = assignments[i]["date"]
@@ -272,8 +248,8 @@ Page({
                 var time = userAssignments[i]["time"]
                 var string = date + "T" + time + ":00"
                 var d = new Date(string).getTime()
-                now = new Date().getTime()
                 var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                console.log(userAssignments[i])
                 diffs.push(diff)
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
