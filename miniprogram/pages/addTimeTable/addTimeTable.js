@@ -24,6 +24,12 @@ Page({
     findTime: false,
     selectedClass: [],
     color: "#6600cc",
+
+    clicked_1: false,
+    clicked_2: false,
+    clicked_3: false,
+    clicked_4: false,
+    clicked_5: false,
   },
 
   /**
@@ -177,27 +183,52 @@ Page({
   },
   bindRed: function () {
     this.setData({
-      color: "#FA5151"
+      color: "#FA5151",
+      clicked_1: true,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
     });
   },
   bindPink: function () {
     this.setData({
-      color: "#FFC300"
+      color: "#FFC300",
+      clicked_1: false,
+      clicked_2: true,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
     });
   },
   bindLightBlue: function () {
     this.setData({
-      color: "#07C160"
+      color: "#07C160",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: true,
+      clicked_4: false,
+      clicked_5: false,
     });
   },
   bindPurple: function () {
     this.setData({
-      color: "#1485EE"
+      color: "#1485EE",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: true,
+      clicked_5: false,
     });
   },
   bindYellow: function () {
     this.setData({
-      color: "#576B95"
+      color: "#576B95",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: true,
     });
   }
 })

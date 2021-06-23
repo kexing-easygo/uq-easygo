@@ -146,10 +146,10 @@ Page({
         for (var i = 0; i < temp.length; i++) {
           var clash = temp[i]["clash"]
           if (temp[i].hasOwnProperty("clash")) {
-            temp[i]['width'] = "width:" + "65rpx;"
+            temp[i]['width'] = "width:" + "67.5rpx;"
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
           } else {
-            temp[i]['width'] = "width:" + "130rpx;"
+            temp[i]['width'] = "width:" + "135rpx;"
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
           }
           var start = temp[i]["classTime"]["start"].split(":")[0];
@@ -209,8 +209,6 @@ Page({
     }
     return time_series;
   },
-
-
 
   /**
    * 生命周期函数--监听页面初次渲染完成

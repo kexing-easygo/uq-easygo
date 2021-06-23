@@ -26,14 +26,16 @@
 }
 
 .time {
-  width: 52rpx;
+  width: 50rpx;
   font-size: 24rpx;
+  border: 1rpx black solid;
 }
 
 .time .month {
   text-align: center;
   height: 76rpx;
-  background-color: rgba(100, 103, 204, 0.7);
+  /* background-color: rgba(100, 103, 204, 0.7); */
+  background-color: rgba(152, 95, 254, 0.7);
   writing-mode: vertical-lr;
   width: 100%;
 }
@@ -75,9 +77,8 @@
 }
 
 .weekDateitemContent {
-
   margin-top: 14rpx;
-  border-right: 5rpx rgba(0, 0, 0, 0.5) solid;
+  /* border: 5rpx rgba(0, 0, 0, 0.5) solid; */
 }
 
 .classes {

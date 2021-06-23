@@ -51,9 +51,20 @@
   margin-right: 22rpx;
   transition:width 2s;
 }
-.colorButton:active {
-  width:80rpx;
+
+.clicked {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 80%;
+  margin-right: 22rpx;
+  transition:width 2s;
+  outline: 1px dashed #CE843B;
 }
+
+/* .colorButton:active{
+  width:80rpx;
+  outline: 5px dashed #CE843B;
+} */
 
 .timeSelectContainer {
   width: 90%;
@@ -97,3 +108,40 @@ checkbox .wx-checkbox-input{
   margin-right: auto;
   margin-bottom: 50rpx;
 }
+
+/* test */
+
+.confirm{
+  width: 325rpx;
+  height: 80rpx;
+  background: #07c160;
+  border-radius: 6rpx;
+  font-size: 30rpx;
+  color: #fff;
+  line-height: 80rpx;
+  text-align: center;
+  
+ }
+ .bubble{
+  position: relative;
+  overflow: hidden;
+ }
+ .bubble:after{
+  content: "";
+  background: #999;
+  position: absolute;
+  /* width: 750rpx;
+  height: 750rpx; */
+  left: calc(50% - 375rpx);
+  top: calc(50% - 375rpx);
+  opacity: 0;
+  margin: auto;
+  border-radius: 50%;
+  transform: scale(1);
+  transition: all 0.4s ease-in-out;
+ }
+ .bubble:active:after {
+  transform: scale(0);
+  opacity: 1;
+  transition: 0s;
+ }

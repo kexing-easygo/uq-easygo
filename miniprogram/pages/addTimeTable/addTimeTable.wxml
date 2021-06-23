@@ -13,23 +13,23 @@
     <text class="cdtitle">设置颜色</text>
     <view class="cdDetail">
       <view>
-        <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FA5151;"
+        <button class="{{clicked_1? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FA5151;"
           bindtap="bindRed"></button>
       </view>
       <view>
-        <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFC300;"
+        <button class="{{clicked_2? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FFC300;"
           bindtap="bindPink"></button>
       </view>
       <view>
-        <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #07C160;"
+        <button class="{{clicked_3? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #07C160;"
           bindtap="bindLightBlue"></button>
       </view>
       <view>
-        <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #1485EE;"
+        <button class="{{clicked_4? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #1485EE;"
           bindtap="bindPurple"></button>
       </view>
       <view>
-        <button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #576B95;"
+        <button class="{{clicked_5? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #576B95;"
           bindtap="bindYellow"></button>
       </view>
     </view>
@@ -55,3 +55,6 @@
 <view class="confirm ">
   <button bindtap="confirmSelect" type="primary"><text class="">确定</text></button>
 </view>
+
+
+<view class="confirm bubble">确定</view>
