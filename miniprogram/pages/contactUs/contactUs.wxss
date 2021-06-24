@@ -1,35 +1,72 @@
-/* miniprogram/pages/contactUs/contactUs.wxss */
+/* miniprogram/pages/contactUs.wxss */
 .container {
-  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(229, 234, 244, 1);
+}
+
+.logo {
   width:100%;
   display: flex;
-  justify-content: center;
   flex-flow: column nowrap;
-  align-items: center;
-}
-
-.header {
-  width: 100%; 
-  text-align: center;
-  font-weight: 300;
-  margin-top:150rpx;
-  margin-bottom: 40rpx;
-}
-
-.header image {
-  width: 140rpx;
-  height: 140rpx;
-  margin-bottom: 40rpx;
-}
-
-.feedback {
-  width: 100%;
-  height: 100%;
-  background-color: #ffffff;
-  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  margin-top: 160rpx;
+  font-weight: 400;
 }
 
+.content {
+  width: 100%;
+  margin-top: 40rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  font-weight: 350;
+}
+
+.arcode {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20rpx;
+}
+
+.down {
+  position: relative;
+  animation: down 1s;
+}
+
+@keyframes down {
+  0% {
+    bottom: 0;
+  }
+  50% {
+    bottom: -20rpx;
+  }
+  100% {
+    bottom: 0;
+  }
+}
+
+.footer {
+  position: fixed;
+  bottom: 35rpx;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  font-size: 24rpx;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.developers {
+  margin-top: 10rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}

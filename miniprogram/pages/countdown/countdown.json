@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "slide-delete": "../../components/slide-delete/index"
+    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
+    "searchbar": "/components/my-searchbar/my-searchbar"
   },
   "navigationBarTitleText": "倒计时"
 }

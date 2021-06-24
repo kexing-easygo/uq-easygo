@@ -202,7 +202,7 @@ Page({
         if (res.data.length == 0) {
           wx.showModal({
             title: '温馨提示',
-            content: "您要找的课程不存在，请重新搜索您的课程",
+            content: "这门课太难了，超出了U妹目前的搜索范围。请确定课号重新输入或者微信联系U妹～",
             success(res) {
               return
             }

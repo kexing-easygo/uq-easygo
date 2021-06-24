@@ -4,11 +4,11 @@
 	 class="user-input"
 	 id="input1"
 	 bindinput="bindKeyboardInput"
-	 placeholder="请输入4位验证码"
+	 placeholder="请输入6位验证码"
 	 class="setting-input"
 	/>
 </view>
-<view style="margin-top: 52rpx;">
+<view>
 	<button
 	 disabled="{{disabledButton}}"
 	 bindtap="checkVerificationCode"

@@ -1,5 +1,5 @@
 <!--pages/email/email.wxml-->
-<view class="page-section" style="margin-top: 0;">
+<view class="page-section">
 	<navigator url="/pages/getEmail/getEmail">
 		<view>邮箱</view>
 		<view>

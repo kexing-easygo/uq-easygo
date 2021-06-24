@@ -1,16 +1,65 @@
-<!--miniprogram/pages/contactUs/contactUs.wxml-->
+<!-- <image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们页面.png" mode="widthFix" style="width:100%;"></image> -->
 <view class="container">
-  <view class="header">
-    <image src="{{logo}}" />
-    <view style="font-size: 44rpx;">UQ校园通</view>
-    <view style="font-size: 34rpx; margin-top: 2rpx;">Version 1.0.0</view>
+  <view class="logo">
+      <image src="{{logoimg}}" style="width: 140rpx; height:140rpx; margin-bottom: 40rpx;" />
+      <view style="font-size:50rpx;">UQ校园通</view>
+      <view style="font-size:34rpx;">Version 1.0.2</view>
   </view>
 
-  <view class="feedback">
-    <view style="height: 50rpx; border-bottom:1rpx solid rgba(237, 237, 237, 0.9);text-align: left;">
-      扫码向开发者反馈
+  <view class="content" style="background-color:rgba(255, 255, 255, 1);">
+    <view class="feeback">
+      <view style="padding:4rpx 45rpx; font-size: 30rpx; color:rgba(0, 0, 0, 0.9);">
+        扫码向开发者反馈
+      </view>
+      <view style="height:2rpx; width:100%; background-color:rgba(237, 237, 237, 0.9);"></view>
+      <view style="padding:25rpx 45rpx; font-size: 34rpx; color:rgba(0, 0, 0, 0.9);" >
+        功能异常
+        <p style="font-size: 30rpx; color:rgba(0, 0, 0, 0.5); margin-left: 20rpx;">
+          请向开发者反馈小程序功能异常问题
+        </p>
+      </view>
+      <view style="height:2rpx; width:100%; background-color:rgba(237, 237, 237, 0.9);"></view>
+      <view style="padding:25rpx 45rpx; font-size: 34rpx; color:rgba(0, 0, 0, 0.9);">
+        产品建议
+        <p style="font-size: 30rpx; color:rgba(0, 0, 0, 0.5); margin-left: 20rpx;">
+          请向开发者反馈你对产品的相关建议
+        </p>
+      </view>
     </view>
-    <view style="width: 100%; height: 100rpx; border-bottom:1rpx solid rgba(237, 237, 237, 0.9);">功能异常</view>
-    <view style="height: 100rpx;">产品建议</view>
   </view>
+
+  <view class="arcode">
+    <view class="down"> 👇 </view>
+    <image src="{{kefuimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;"/>
+    <view class="down"> 👇 </view>
+    <image src="{{accountimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;"/>
+  </view>
+
+  <view class="footer">
+    <view>开发者组织</view>
+    <view>404 有限bug公司</view>
+    <view class="developers">
+      <view>
+        <image src="{{developer1}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        王老安
+      </view>
+      <view>
+        <image src="{{developer2}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        亚瑟王
+      </view>
+      <view>
+        <image src="{{operator2}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        乐爷
+      </view>
+      <view>
+        <image src="{{developer3}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        顾某
+      </view>
+      <view>
+        <image src="{{operator1}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        佳熹
+      </view>
+    </view>
+  </view>
+
 </view>

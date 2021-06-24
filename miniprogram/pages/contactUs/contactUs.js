@@ -1,11 +1,18 @@
-// miniprogram/pages/contactUs/contactUs.js
+// miniprogram/pages/contactUs.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    logo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们.png",
+    logoimg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/UQ_EASY GO.png",
+    kefuimg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/微信客服号.JPG",
+    accountimg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/微信公众号.jpg",
+    developer1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/lewis.JPG",
+    developer2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/arthur.JPG",
+    developer3: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/nine1ie.JPG",
+    operator1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/jessica.JPG",
+    operator2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/xiaole.JPG"
   },
 
   /**

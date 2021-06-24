@@ -11,33 +11,30 @@
     </view>
   </view>
 </view> -->
+<view class="wrapper">
+	<view class="page-section">
+		<view class="container">
+			<navigator url="/pages/notificationSetting/notificationSetting">
+					<view>倒计时提醒</view>
+					<view>
+						<!-- <text style="color: #A4A4A4;">允许全部</text> -->
+						>
+					</view>
+			</navigator>
+		</view>
+	</view>
 
-<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
-	<view class="container">
-		<view>倒计时提醒</view>
-		<view>
-			<text style="color: #A4A4A4;">允许全部</text>
-			>
+	<view class="line"></view>
+
+	<view class="page-section" style="margin-top: 0;">
+		<view class="container">
+			<view>上课提醒</view>
+			<view>
+				<text style="color: rgba(0, 0, 0, 0.5);">暂未上线</text>
+			</view>
 		</view>
 	</view>
-</view>
-<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
-	<view class="container">
-		<view>出分提醒</view>
-		<view>
-			<text style="color: #A4A4A4;">部分允许</text>
-			>
-		</view>
-	</view>
-</view>
-<view class="page-section" style="box-shadow: none; webkit-box-shadow: none; border-bottom: 2rpx solid #cccccc;">
-	<view class="container">
-		<view>上课提醒</view>
-		<view>
-			<text style="color: #A4A4A4;">部分允许</text>
-			>
-		</view>
-	</view>
+
 </view>
 <!-- <view class="page-section">
 	<view class="container">
