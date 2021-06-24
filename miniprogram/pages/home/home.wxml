@@ -19,8 +19,8 @@
 	<navigator url="/pages/countdown/countdown">
 		<image src="{{countdownIcon}}" />
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
-		<image src="{{inComingIcon}}" />
+	<navigator url="/pages/timetable/timetable">
+		<image src="{{timetableIcon}}" />
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
 		<image src="{{inComingIcon}}" />
@@ -34,8 +34,8 @@
 	<navigator url="/pages/countdown/countdown">
 		倒计时
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
-		未开发
+	<navigator url="/pages/timetable/timetable">
+		课程表
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
 		未开发
@@ -43,8 +43,11 @@
 </view>
 
 <view class="in-coming">	
-	<image src="{{PostHolderOne}}" bindtap="clickImage"/>
+	<image src="{{PostHolderOne}}" bindtap="clickImage" data-model="one"/>
+</view>
+<view class="in-coming">	
+	<image src="{{PostHolderTwo}}" bindtap="clickImage" data-model="two"/>
 </view>
 <view class="in-coming">
-	<image src="{{inComingHolder}}" bindtap="clickWaiting"/>
+	<image src="{{PostHolderThree}}" bindtap="clickImage" data-model="three"/>
 </view>

@@ -16,7 +16,7 @@ function GetDateStr(AddDayCount) {
 var d1 = GetDateStr(4)
 var d2 = GetDateStr(30)
 
- 
+
 
 Page({
 
@@ -39,16 +39,20 @@ Page({
         'color': '#7986CB',
         'name': "CSSE1001 A1 (示例)",
         "date": d1,
-        "time": "00:00"
+        "time": "00:00",
+        "default": true
       },
       {
         'color': '#7986CB',
         'name': "点我查看更多",
         "date": d2,
-        "time": "00:00"
+        "time": "00:00",
+        "default": true
       }
     ],
-    userAssignments: [],
+    userAssignments: [
+
+    ],
     matchedItems: [],
     selectMatchedItem: false,
     selectedAssignments: [],
@@ -72,33 +76,6 @@ Page({
     this.setData({
       searchFocus: false
     })
-  },
-  //用户点击搜索记录的时候，跳转到对应界面
-  historyTap: function (value) {
-    //
-    this.setData({
-      showHistory: false,
-    })
-    var history = value['target']['dataset']['historytag'];
-    var temp = [];
-    if (history != null) {
-      this.data.userAssignments.forEach(element => {
-        if (element['name'] == history) {
-          temp.push(element);
-        }
-      });
-      this.setData({
-        selectMatchedItem: true,
-        selectedAssignments: temp,
-        showAll: false,
-        showResult: "hidden",
-        recentAssignmentName: temp[0].name,
-        recentAssignmentDate: temp[0].countdown,
-        searchBarValue: temp[0].name,
-        searchFocus: false,
-      })
-    }
-
   },
 
   search: function (value) {
@@ -205,8 +182,14 @@ Page({
     }
     return percentage
   },
-  updateDefaultAssignmentValues: function (assignments) {
+  /**
+   * 更新用户作业中的默认作业条目数值。
+   * @param {*} assignments 
+   */
+  updateAssignments: function (assignments) {
     let that = this
+    // const arr = [d1, d2]
+
     for (var i = 0; i < 2; i++) {
       // 默认数据全是写死的
       var date = assignments[i]["date"]
@@ -219,7 +202,6 @@ Page({
       assignments[i]["id"] = i
       assignments[i]["percentage"] = percentage
     }
-    app.globalData.userAssignments = assignments
     that.setData({
       userAssignments: assignments,
       recentAssignmentName: assignments[0].name,
@@ -246,6 +228,7 @@ Page({
       search: this.search.bind(this)
     })
     let that = this
+
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
       var temp = []
@@ -265,11 +248,19 @@ Page({
                 now += 2 * 60 * 60 * 1000;
               }
               for (var i = 0; i < userAssignments.length; i++) {
+                // 如果用户作业中存在默认作业
+                // 更新其数值为固定数值
+                if (userAssignments[i]["default"] == true) {
+                  if (userAssignments[i]["name"] == "CSSE1001 A1 (示例)") {
+                    userAssignments[i]["date"] = d1;
+                  } else {
+                    userAssignments[i]["date"] = d2;
+                  }
+                }
                 var date = userAssignments[i]["date"]
                 var time = userAssignments[i]["time"]
                 var string = date + "T" + time + ":00"
                 var d = new Date(string).getTime()
-                now = new Date().getTime()
                 var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
                 diffs.push(diff)
                 // 计算style中的进度条百分比
@@ -279,7 +270,9 @@ Page({
                 userAssignments[i]["percentage"] = percentage
                 userAssignments[i]["diff"] = diff
               }
-              userAssignments = userAssignments.sort(function(a, b){return a['diff'] - b['diff']});
+              userAssignments = userAssignments.sort(function (a, b) {
+                return a['diff'] - b['diff']
+              });
               that.setData({
                 // headerAssignment: userAssignments[i],
                 recentAssignmentName: userAssignments[0]['name'],
@@ -300,19 +293,17 @@ Page({
           }
         })
     } else {
-      if (app.globalData.userAssignments != undefined) {
-        this.updateDefaultAssignmentValues(app.globalData.userAssignments)
-      } else {
-        this.updateDefaultAssignmentValues(that.data.defaultUserAssignments)
-      }
       wx.showModal({
         title: 'UU妹提醒',
         content: '登录才能使用倒计时的完整功能哦！',
         success(res) {}
       })
+      this.updateAssignments(this.data.defaultUserAssignments);
     }
+    
   },
-  onShow: function() {
+  onShow: function () {
+
     if (app.globalData._openid == '') {
       wx.cloud.callFunction({
         name: 'login',

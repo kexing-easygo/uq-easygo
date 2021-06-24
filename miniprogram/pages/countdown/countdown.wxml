@@ -9,16 +9,15 @@
 
 	</view>
 	<view class="searchbar">
-		<mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" 
+		<!-- <mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" 
 		bindfocus="startsearch" bindclear="clear"  
 		value="{{searchBarValue}}" search="{{search}}"
-		placeholder="搜索你的作业"></mp-searchbar>
-		<!-- <view class="history hide{{showHistory ? 'show' : '' }}" >
-			<view class="historyItem" wx:for="{{history}}" data-historyTag="{{item}}" bindtap="historyTap">
-				<image class="hisIcon" src="{{historyIcon}}" data-historyTag="{{item}}" bindtap="historyTap"></image>
-				<text class="hisContent" data-historyTag="{{item}}" bindtap="historyTap">{{item}}</text>
-			</view>
-		</view> -->
+		placeholder="搜索你的作业"></mp-searchbar> -->
+
+		<searchbar  ext-class="{{showResult}}" bindselectresult="selectResult" 
+		bindfocus="startsearch" bindclear="clear"  
+		value="{{searchBarValue}}" search="{{search}}"
+		placeholder="搜索你的作业"></searchbar>
 	</view>
 
 	
@@ -44,7 +43,6 @@
 		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
 			wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
-				<!-- <view class="test"> -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 					<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						<text class="subject">{{item.name}}</text>
