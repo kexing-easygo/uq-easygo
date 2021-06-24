@@ -16,7 +16,7 @@ function GetDateStr(AddDayCount) {
 var d1 = GetDateStr(4)
 var d2 = GetDateStr(30)
 
- 
+
 
 Page({
 
@@ -35,8 +35,7 @@ Page({
     d1,
     d2,
     // 新用户进入倒计时的默认作业条目
-    defaultUserAssignments: [
-      {
+    defaultUserAssignments: [{
         'color': '#7986CB',
         'name': "CSSE1001 A1 (示例)",
         "date": d1,
@@ -52,7 +51,7 @@ Page({
       }
     ],
     userAssignments: [
-      
+
     ],
     matchedItems: [],
     selectMatchedItem: false,
@@ -183,9 +182,14 @@ Page({
     }
     return percentage
   },
-  updateDefaultAssignmentValues: function (assignments) {
+  /**
+   * 更新用户作业中的默认作业条目数值。
+   * @param {*} assignments 
+   */
+  updateAssignments: function (assignments) {
     let that = this
     // const arr = [d1, d2]
+
     for (var i = 0; i < 2; i++) {
       // 默认数据全是写死的
       var date = assignments[i]["date"]
@@ -224,7 +228,7 @@ Page({
       search: this.search.bind(this)
     })
     let that = this
-    
+
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
       var temp = []
@@ -244,12 +248,20 @@ Page({
                 now += 2 * 60 * 60 * 1000;
               }
               for (var i = 0; i < userAssignments.length; i++) {
+                // 如果用户作业中存在默认作业
+                // 更新其数值为固定数值
+                if (userAssignments[i]["default"] == true) {
+                  if (userAssignments[i]["name"] == "CSSE1001 A1 (示例)") {
+                    userAssignments[i]["date"] = d1;
+                  } else {
+                    userAssignments[i]["date"] = d2;
+                  }
+                }
                 var date = userAssignments[i]["date"]
                 var time = userAssignments[i]["time"]
                 var string = date + "T" + time + ":00"
                 var d = new Date(string).getTime()
                 var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                console.log(userAssignments[i])
                 diffs.push(diff)
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
@@ -258,7 +270,9 @@ Page({
                 userAssignments[i]["percentage"] = percentage
                 userAssignments[i]["diff"] = diff
               }
-              userAssignments = userAssignments.sort(function(a, b){return a['diff'] - b['diff']});
+              userAssignments = userAssignments.sort(function (a, b) {
+                return a['diff'] - b['diff']
+              });
               that.setData({
                 // headerAssignment: userAssignments[i],
                 recentAssignmentName: userAssignments[0]['name'],
@@ -284,11 +298,12 @@ Page({
         content: '登录才能使用倒计时的完整功能哦！',
         success(res) {}
       })
-      this.updateDefaultAssignmentValues(this.data.defaultUserAssignments);
+      this.updateAssignments(this.data.defaultUserAssignments);
     }
-  },
-  onShow: function() {
     
+  },
+  onShow: function () {
+
     if (app.globalData._openid == '') {
       wx.cloud.callFunction({
         name: 'login',
