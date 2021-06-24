@@ -5,79 +5,80 @@
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </block> -->
 <view class="wrapper">
-<view class="container">
-	<view wx:if="{{!hasUserInfo}}" class="userinfo">
-		<image class="userinfo-avatar" src="{{anonymousPlaceholder}}" />
-		<button
-		 open-type="getUserInfo"
-		 bindgetuserinfo="getUserInfo"
-		 hover-class="none"
-		>
-			<!-- <view class="userinfo-nickname"> -->
-			<view>登录/注册</view>
-			<view>></view>
-			<!-- </view> -->
-
-		</button>
+	<view class="container">
+		<view wx:if="{{!hasUserInfo}}" class="userinfo">
+			<image class="userinfo-avatar" src="{{anonymousPlaceholder}}" />
+			<button bindtap="getUserProfile" hover-class="none">
+				<view>登录/注册</view>
+				<view>></view>
+			</button>
+		</view>
+		<view wx:else class="userinfo">
+			<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+			<text class="userinfo-nickname">{{userInfo.nickName}}</text>
+		</view>
 	</view>
-	<view wx:else class="userinfo">
-		<image
-		 class="userinfo-avatar"
-		 src="{{userInfo.avatarUrl}}"
-		 mode="cover"
-		></image>
-		<text class="userinfo-nickname">{{userInfo.nickName}}</text>
+
+	<view class="page-block">
+		<navigator url="/pages/basicUserInfo/basicUserInfo">
+			<view class="img">
+				<image class="icon" src="{{basicInfoIcon}}" mode="aspectFill"></image>
+			</view>
+			<view class="txt seventeen-pt blacknine">
+				<view>基本资料</view>
+				<view>></view>
+			</view>
+		</navigator>
 	</view>
-</view>
 
-<view class="page-block"> 
-	<navigator url="/pages/basicUserInfo/basicUserInfo">
-		<view class="img">
-			<image class="icon" src="{{basicInfoIcon}}" mode="aspectFill"></image>
-		</view>
-		<view class="txt seventeen-pt blacknine">
-			<view>基本资料</view>
-			<view>></view>
-		</view>
-	</navigator>
-</view>
+	<view class="page-block" style="box-shadow: none;">
+		<navigator url="/pages/mobile/mobile">
+			<view class="img">
+				<image class="icon" src="{{bindingPhoneIcon}}" mode="aspectFill"></image>
+			</view>
+			<view class="txt seventeen-pt blacknine">
+				<view>手机号绑定</view>
+				<view>></view>
+			</view>
+		</navigator>
+	</view>
 
-<view class="page-block" style="box-shadow: none;"> 
-	<navigator url="/pages/mobile/mobile">
-		<view class="img">
-			<image class="icon" src="{{bindingPhoneIcon}}" mode="aspectFill"></image>
-		</view>
-		<view class="txt seventeen-pt blacknine">
-			<view>手机号绑定</view>
-			<view>></view>
-		</view>
-	</navigator>
-</view>
+	<view class="line"></view>
 
-<view class="line"></view>
+	<view class="page-block" style="margin-top: 0;">
+		<navigator url="/pages/email/email">
+			<view class="img">
+				<image class="icon" src="{{bindingEmailIcon}}" mode="aspectFill"></image>
+			</view>
+			<view class="txt seventeen-pt blacknine">
+				<view>邮箱绑定</view>
+				<view>></view>
+			</view>
+		</navigator>
+	</view>
 
-<view class="page-block" style="margin-top: 0;"> 
-	<navigator url="/pages/email/email">
-		<view class="img">
-			<image class="icon" src="{{bindingEmailIcon}}" mode="aspectFill"></image>
-		</view>
-		<view class="txt seventeen-pt blacknine">
-			<view>邮箱绑定</view>
-			<view>></view>
-		</view>
-	</navigator>
-</view>
+	<view class="page-block">
+		<navigator url="/pages/otherSettings/otherSettings">
+			<view class="img">
+				<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
+			</view>
+			<view class="txt seventeen-pt blacknine">
+				<view>其他设置</view>
+				<view>></view>
+			</view>
+		</navigator>
+	</view>
 
-<view class="page-block"> 
-	<navigator url="/pages/otherSettings/otherSettings">
-		<view class="img">
-			<image class="icon" src="{{basicSettingIcon}}" mode="aspectFill"></image>
-		</view>
-		<view class="txt seventeen-pt blacknine">
-			<view>其他设置</view>
-			<view>></view>
-		</view>
-	</navigator>
-</view>
+	<view class="page-block">
+		<navigator url="/pages/contactUs/contactUs">
+			<view class="img">
+				<image class="icon" src="{{contactUs}}" mode="aspectFill"></image>
+			</view>
+			<view class="txt seventeen-pt blacknine">
+				<view>联系我们</view>
+				<view>></view>
+			</view>
+		</navigator>
+	</view> 
 
 </view>

@@ -1,5 +1,5 @@
 <!--pages/mobile/mobile.wxml-->
 <view class="in-coming">
-	<image src="{{InComingImage}}"/>
+	<image src="{{InComingImage}}" mode="widthFix"/>
 </view>
 

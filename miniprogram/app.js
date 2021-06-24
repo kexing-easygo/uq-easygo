@@ -9,23 +9,22 @@ App({
         //   env 参数决定接下来小程序发起的云开发调用（wx.cloud.xxx）会默认请求到哪个云环境的资源
         //   此处请填入环境 ID, 环境 ID 可打开云控制台查看
         //   如不填则使用默认环境（第一个创建的环境）
-        // env: 'my-env-id',
+        env: 'uqeasygo1',
         traceUser: true,
-        env: "uqeasygo1",
       })
     }
+    
     // 小程序全局变量
     this.globalData = {
       userInfo: {},
       hasUserInfo: false,
-      openid: null,
-      userID: null,
-      easygoNickname: null,
+      _openid: '',
       userVerificationCode: '',
       userEmail: '',
-      userAssignments: [],
-      wechatNotification: false,
-      emailNotification: false
     }
+    // wx.showModal({
+    //   title: "体验须知",
+    //   content: "小程序目前在体验测试阶段，后续发布的正式版才会储存数据哦～"
+    // })
   },
-  })
+})

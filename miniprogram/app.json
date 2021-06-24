@@ -1,21 +1,25 @@
 {
   "pages": [
-    "pages/profile/profile",
     "pages/home/home",
+    "pages/profile/profile",
+    "pages/calc/calc",
+    "pages/countdown/countdown",
+    "pages/contactUs/contactUs",
+    "pages/notificationSetting/notificationSetting",
+    "pages/getCode/getCode",
+    "pages/email/email",
+    "pages/getEmail/getEmail",
     "pages/otherSettings/otherSettings",
     "pages/basicUserInfo/basicUserInfo",
-    "pages/countdown/countdown",
     "pages/addCountDown/addCountDown",
-    "pages/searchbar/searchbar",
-    "pages/getCode/getCode",
-    "pages/calc/calc",
     "pages/mobile/mobile",
-    "pages/getEmail/getEmail",
     "pages/nonfunction/nonfunction",
     "pages/modifyUserName/modifyUserName",
     "pages/setWechatNotification/setWechatNotification",
     "pages/setEmailNotification/setEmailNotification",
-    "pages/setMobileNotification/setMobileNotification"
+    "pages/setMobileNotification/setMobileNotification",
+    "pages/aboutUs/aboutUs",
+    "pages/timetable/timetable"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

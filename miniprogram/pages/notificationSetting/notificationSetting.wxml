@@ -2,13 +2,55 @@
 <view class="container">
   <view class="notices">
     <view class="wechatnotice">
-      <text>微信提醒</text>
+      <text class="titleFont">微信提醒</text>
       <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
     </view>
-    
     <view class="mailnotice">
-      <text>邮件提醒</text>
+      <text class="titleFont">邮件提醒</text>
       <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
     </view>
   </view>
+  <view class="time-zone">
+		<view>
+			<text class="conmmentFont">地区选择，会影响提醒时间</text>
+		</view>
+		<view>
+			<text class="titleFont">中国时间</text>
+			<switch type="switch" checked="{{china}}" bindchange="bindChina"></switch>
+			<!-- <checkbox checked="{{china}}" bindchange="bindChina"></checkbox> -->
+		</view>
+		<view>
+			<text class="titleFont">澳洲时间</text>
+			<switch type="switch" checked="{{australia}}" bindchange="bindAustralia"></switch>
+			<!-- <checkbox checked="{{australia}}" bindchange="bindAustralia"></checkbox> -->
+		</view>
+  </view>
+  <view class="notice_duration">
+		<view>
+			<text class="conmmentFont">提醒时间为{{timeZone}}时间</text>
+		</view>
+		<view>
+			<text class="titleFont">一天前提醒</text>
+			<switch type="switch" checked="{{oneDay}}" bindchange="bindOneDay"></switch>
+		</view>
+		<view>
+			<text class="titleFont">三天前提醒</text>
+			<switch type="switch" checked="{{threeDay}}" bindchange="bindThreeDay"></switch>
+		</view>
+		<view>
+			<text class="titleFont">一周前提醒</text>
+			<switch type="switch" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch>
+		</view>
+  </view>
+  <view>
+    <button  type="confirm" plain="true" bindtap="confirm" style="background-color:#17c783;margin-top:20%;border:none;" class="setting-confirm-button">
+			<text style="color:white">确定修改</text>
+		</button>
+	</view>
+
+	<!-- <view>
+    <button  type="confirm" plain="true" bindtap="testCrontab" style="background-color:#17c783;margin-top:20%;border:none;" class="setting-confirm-button">
+			<text style="color:white">调试</text>
+		</button>
+	</view> -->
 </view>
