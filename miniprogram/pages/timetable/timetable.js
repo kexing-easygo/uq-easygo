@@ -20,8 +20,24 @@ const series = {
   "18:00": 10,
   "19:00": 11
 }
+
 function cl(content) {
   console.log(content);
+}
+
+function current_week() {
+  const targetDate = new Date();
+  const startDate = new Date(targetDate);
+
+  startDate.setMonth(0);
+  startDate.setDate(1);
+  startDate.setHours(0, 0, 0, 0);
+
+  const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
+
+  const diff = targetDate.valueOf() - startDate.valueOf();
+
+  return Math.ceil(diff / millisecondsOfWeek)
 }
 
 var today = new Date();
@@ -113,11 +129,27 @@ Page({
       }
     })
   },
+  currentWeek: function () {
+    const targetDate = new Date();
+    const startDate = new Date(targetDate);
+
+    startDate.setMonth(0);
+    startDate.setDate(1);
+    startDate.setHours(0, 0, 0, 0);
+
+    const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
+
+    const diff = targetDate.valueOf() - startDate.valueOf();
+
+    cl(Math.ceil(diff / millisecondsOfWeek))
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    
     let that = this;
     db.collection("MainUser").where({
       _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
@@ -125,25 +157,29 @@ Page({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
         for (var i = 0; i < temp.length; i++) {
-          for (var j = 0; j < temp.length; j++) {
-            if (i != j) {
-              if (temp[i]["classTime"]["weekday"] == temp[j]["classTime"]["weekday"]) {
-                var s1 = that.generateTimeSeries(temp[i]);
-                var s2 = that.generateTimeSeries(temp[j]);
-                for (var k = 0; k < 12; k++) {
-                  // 判断两节课是否有冲突的部分
-                  if (s1[k] == s2[k] && "clash" in temp[i] == false && "clash" in temp[j] == false) {
-                    if (s1[k] == 1) {
-                      temp[i]["clash"] = 0
-                      temp[j]["clash"] = 1
+          temp[i]['index'] = i;
+            for (var j = 0; j < temp.length; j++) {
+              if (i != j) {
+                if (temp[i]["classTime"]["weekday"] == temp[j]["classTime"]["weekday"]) {
+                  var s1 = that.generateTimeSeries(temp[i]);
+                  var s2 = that.generateTimeSeries(temp[j]);
+                  for (var k = 0; k < 12; k++) {
+                    // 判断两节课是否有冲突的部分
+                    if (s1[k] == s2[k] && "clash" in temp[i] == false && "clash" in temp[j] == false) {
+                      if (s1[k] == 1) {
+                        temp[i]["clash"] = 0
+                        temp[j]["clash"] = 1
+                      }
                     }
                   }
                 }
               }
             }
-          }
+          
         }
+
         for (var i = 0; i < temp.length; i++) {
+
           var clash = temp[i]["clash"]
           if (temp[i].hasOwnProperty("clash")) {
             temp[i]['width'] = "width:" + "67.5rpx;"
@@ -156,9 +192,18 @@ Page({
           var top = 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
           temp[i]['top'] = "top:" + top + "rpx;"
-          temp[i]["color"] = "background-color:" + temp[i]['color'] + ";";
+          temp[i]["color"] = temp[i]['color'];
           temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 88 + "rpx;";
+          temp[i]["notes"] = temp[i]['classTime']["notes"];
+          // != 变成 == 即可
+          if (temp[i]["classTime"]["week_pattern"][current_week() - 1] != 1) {
+            temp[i]["display"] = "yes";
+          } else {
+            temp[i]["display"] = "no";
+          }
+          
         }
+        cl(temp);
         that.setData({
           userCourseTime: temp
         });
@@ -191,13 +236,33 @@ Page({
       weekdays: weekdays
     })
   },
+  add_note: function (e) {
+    var temp = this.data.selectClass;
+    temp.notes = e.detail.value;
+    this.setData({
+      selectClass: temp,
+    });
+  },
+
+  update_note: function(e) {
+    var temp = this.data.userCourseTime;
+    temp[this.data.selectClass.index]["classTime"]['notes'] = this.data.selectClass.notes;
+    let that = this;
+    db.collection("MainUser").where({
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
+    }).update({
+      data: {
+        courseTime: temp,
+      }
+    });
+  },
   /**
    * 根据每节课的时间
    * 生成时间列表
    * 如果课是在8-9点，则该位置为1，其余位置为0
    * 如果课在8-10，则从8-9开始标记为1（两个1），其余位置为0
    */
-  generateTimeSeries: function(course) {
+  generateTimeSeries: function (course) {
     var course_duration = course["classTime"]["hours"];
     var time_series = []
     for (var i = 0; i < 12; i++) {

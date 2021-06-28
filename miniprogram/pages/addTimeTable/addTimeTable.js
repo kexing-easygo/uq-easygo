@@ -123,6 +123,8 @@ Page({
               temp["start-end"] = get_class_start_end(startTime, time);
               temp["start"] = startTime;
               temp["hours"] = time / 60;
+              temp["week_pattern"] = res.data[0][key][keyItem]["week_pattern"];
+              temp["notes"] = "Nothing";
               dic[mode].push(temp);
             }
           }
@@ -157,7 +159,7 @@ Page({
       var t = {};
       t["courseName"] = this.data.courseTitle;
       t['classTime'] = this.data.selectedClass[i];
-      t['color'] = this.data.color;
+      t['color'] = "background-color:" + this.data.color + ";";
       temp.push(t);
     }
     db.collection("MainUser").where({
