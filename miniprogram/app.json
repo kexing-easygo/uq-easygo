@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/autoCountDown/autoCountDown",
+    "pages/countdown/countdown",
     "pages/home/home",
     "pages/profile/profile",
     "pages/calc/calc",
-    "pages/countdown/countdown",
     "pages/contactUs/contactUs",
     "pages/notificationSetting/notificationSetting",
     "pages/getCode/getCode",

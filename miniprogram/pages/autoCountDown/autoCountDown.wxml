@@ -1,0 +1,66 @@
+<!--miniprogram/pages/autoCountDown.wxml-->
+<view class="container">
+	<view class="searchArea">
+		<view class="searchBar">
+			<searchbar  ext-class="{{showResult}}" bindselectresult="selectResult" 
+			bindfocus="startsearch" bindclear="clear"  
+			value="{{searchBarValue}}" search="{{search}}"
+			placeholder="CSSE1001">
+			</searchbar>
+		</view>
+		<view class="searchButton">
+				<button class="mini-btn" type="primary" size="mini" bindtap="showResult">搜索</button>
+		</view>
+	</view>
+
+	<!-- searchResult展示部分 -->
+	<view class="{{showResult? 'result':'hide'}}">
+		<view class="resultHeader">
+			<view style="margin-left: 30rpx;">搜索结果</view>
+			<view style="margin-right: 30rpx;"><icon class="icon-small" type="warn" size="20"></icon>
+				标注需自主添加时间
+			</view>
+		</view>
+
+		<!-- 每有一个搜索结果增加一个resultElement block -->
+		<view class="resultElement">
+			<view class="assignmentName">Online Online Online Online Online Online</view>
+			<checkbox/>
+		</view>
+
+		<view class="resultElement">
+			<icon class="{{warning? 'icon-small':'hide'}}" type="warn" size="20"></icon>
+			<view class="assignmentName">Online Online Online Online Online Online</view>
+			<checkbox/>
+		</view>
+
+		<view class="resultElement">
+			<view class="assignmentName">Online Online Online Online Online Online</view>
+			<checkbox/>
+		</view>
+
+		<view class="resultElement">
+			<view class="assignmentName">Online Online Online Online Online Online</view>
+			<checkbox/>
+		</view>
+	</view>
+
+	<button class="{{showResult? '':'hide'}}" type="primary" style="margin-top: 50rpx;">下一步</button>
+
+
+	<!-- 信息提示区 -->
+	<view class="{{!showResult? 'notiBoard':'hide'}}">
+		<view class="info">
+			最终交付时间要以BlackBoard为准，大家随时查看并更新倒计时的时间哦～
+		</view>
+	</view>
+
+	<!-- 如果没设置上课模式 （setClassMode == false） 那么显示弹窗 -->
+	<mp-dialog show="{{!setClassMode}}" buttons="{{buttons}}" mask="true">
+			<view>U妹发现同学并没有选择本学期的上课方式哦！</view>
+			<view>请在个人中心->基本资料中设置才可以使用本功能。</view>
+	</mp-dialog>
+
+
+
+</view>
