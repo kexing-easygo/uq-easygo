@@ -9,6 +9,22 @@ Page({
   data: {
     nickName: '',
     hasUserInfo: false,
+    array: ['External', 'Internal'],
+    classMode: "点击设置",
+    index: 0,
+  },
+
+  bindPickerChange: function (e) {
+    this.setData({
+      index: e.detail.value,
+      classMode: this.data.array[e.detail.value],
+    })
+  },
+
+  setMode: function (e) {
+    this.setData({
+      setClassMode: true
+    })
   },
 
   /**
