@@ -1,0 +1,148 @@
+/* miniprogram/pages/review/review.wxss */
+.container {
+  font-size: 16pt;
+  color: #707070;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rpx;
+  flex-wrap: wrap;
+}
+
+.courseName {
+  width:95%;
+  height: 74rpx;
+  background-color: #FFA9A3;
+  border: 5rpx solid #FFA9A3;
+  border-radius: 50rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: 300;
+  z-index: 999;
+}
+
+.courseInfo {
+  margin-top: 20rpx;
+  width: 95%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.courseBoard {
+  background-color: #FFFFFF;
+  width: 95%;
+  margin-top: -25rpx;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+}
+
+.courseElement {
+  color: black;
+  font-weight: 300;
+  font-size: 30rpx;
+  width: 90%;
+  border-bottom: 1rpx solid #EDEDED;
+  margin: 20rpx 0;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+}
+
+.likeBar {
+  width: 100%;
+  background-color: #FFA9A3;
+  display: flex;
+  flex-direction: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50rpx;
+  border-top: 2rpx solid #FFFFFF;
+  border-bottom: 2rpx solid #95B9FF;
+}
+
+.likeBar .likeButton {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
+    height: 66rpx;
+    font-size: 28rpx;
+    font-weight: lighter;
+    line-height: 35rpx;
+}
+
+.likeBar .likeButton image {
+  margin-right: 10rpx;
+}
+
+.reviewBlock {
+  width: 95%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50rpx;
+}
+
+.reviewerInfo {
+  width:95%;
+  height: 74rpx;
+  background-color: #95B9FF;
+  border: 5rpx solid #95B9FF;
+  border-radius: 50rpx;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  color: black;
+  font-weight: 300;
+  z-index: 999;
+}
+
+.reviewContent {
+  background-color: #FFFFFF;
+  width: 95%;
+  margin-top: -25rpx;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+}
+
+.reviewTxt {
+  color: black;
+  font-weight: 300;
+  font-size: 30rpx;
+  width: 90%;
+  margin: 20rpx 0;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.heart {
+  width: 30%;
+  height: 70rpx;
+  align-self: flex-end;
+}
+.heart button{
+  background-color: #FFA9A3;
+  margin-top:-20rpx;
+  border-radius: 50rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding:0;
+}

@@ -1,0 +1,96 @@
+<!--miniprogram/pages/review/review.wxml-->
+<view class="container">
+  <view class="courseInfo">
+    <view class="courseName">{{courseName}}</view>
+
+    <view class="courseBoard">
+      <view class="courseElement" style="margin-top: 50rpx;">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Lecturer</view>
+        <view>{{courseLecturer}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Faculty</view>
+        <view>{{courseFaculty}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Prequisites</view>
+        <view>{{coursePre}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Semester(s)</view>
+        <view>{{courseSemester[0]}}</view>
+      </view>
+
+      <view style="font-size: 24rpx; margin-bottom: 20rpx; font-weight: 300;">
+      想知道更多记得去看官方ECP哦
+      </view>
+    </view>
+
+  </view>
+
+  <view class="likeBar">
+    <button class="likeButton"> 
+      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>好过</view>
+    </button>
+    <button class="likeButton"> 
+      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      好难
+    </button>
+    <button class="likeButton"> 
+      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      好7
+    </button>
+    <button class="likeButton"> 
+      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>运气</view>
+    </button>
+  </view>
+
+  <view class="reviewBlock">
+    <view class="reviewerInfo">
+      <view style="margin-left: 50rpx;">{{reviewerInfo}}</view>
+      <view style="margin-left: 150rpx;">优秀回答🤪</view>
+    </view>
+
+    <view class="reviewContent">
+      <view class="reviewTxt" style="margin-top: 50rpx;">
+          DECO课都洗内DECO课都洗内DECO课都洗内.DECO课都洗内DECO课都洗内DECO课都洗内.
+          DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内
+      </view>
+    </view>
+
+    <view class="heart">
+      <button style="width: 100rpx; height: 64rpx;">
+        <image src="{{like}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">21</view>
+      </button>
+    </view>
+
+  </view>
+
+  <view class="reviewBlock">
+    <view class="reviewerInfo">
+      <view style="margin-left: 50rpx;">{{reviewerInfo}}</view>
+    </view>
+
+    <view class="reviewContent">
+      <view class="reviewTxt" style="margin-top: 50rpx;">
+          DECO课都洗内DECO课都洗内DECO课都洗内.DECO课都洗内DECO课都洗内DECO课都洗内.
+          DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内
+      </view>
+    </view>
+
+    <view class="heart">
+      <button style="width: 100rpx; height: 64rpx;">
+        <image src="{{like}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">21</view>
+      </button>
+    </view>
+
+  </view>
+
+  
+
+  
+</view>
