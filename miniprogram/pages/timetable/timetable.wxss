@@ -28,7 +28,7 @@
 .time {
   width: 50rpx;
   font-size: 24rpx;
-  border: 1rpx black solid;
+  /*border: 1rpx black solid;*/
 }
 
 .time .month {

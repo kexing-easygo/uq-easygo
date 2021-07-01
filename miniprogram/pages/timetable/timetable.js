@@ -189,11 +189,11 @@ Page({
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
           }
           var start = temp[i]["classTime"]["start"].split(":")[0];
-          var top = 90 * (start - 8);
+          var top = 25 + 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
           temp[i]['top'] = "top:" + top + "rpx;"
           temp[i]["color"] = temp[i]['color'];
-          temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 88 + "rpx;";
+          temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // != 变成 == 即可
           if (temp[i]["classTime"]["week_pattern"][current_week() - 1] != 1) {
