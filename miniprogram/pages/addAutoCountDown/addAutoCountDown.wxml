@@ -1,0 +1,46 @@
+<!--miniprogram/pages/addAutoCountDown.wxml-->
+<view class="container">
+  <view class="colours">
+    <text class = "cdtitle">设置颜色</text>
+    <view class="cdDetail ">
+        <button class="{{clicked_1? 'colorButton clicked_1':'colorButton'}}" type="primary" size="mini" style="background-color: #FF8A65;" bindtap="bindRed"></button>
+
+        <button class="{{clicked_2? 'colorButton clicked_2':'colorButton'}}" type="primary" size="mini" style="background-color: #FFF176;" bindtap="bindPink"></button>
+
+        <button class="{{clicked_3? 'colorButton clicked_3':'colorButton'}}" type="primary" size="mini" style="background-color: #81C784;" bindtap="bindLightBlue"></button>
+
+        <button class="{{clicked_4? 'colorButton clicked_4':'colorButton'}}" type="primary" size="mini" style="background-color: #64B5F6;" bindtap="bindPurple"></button>
+
+        <button class="{{clicked_5? 'colorButton clicked_5':'colorButton'}}" type="primary" size="mini" style="background-color: #7986CB;" bindtap="bindYellow"></button>
+    </view>
+  </view>
+
+  <view class="notifySetting">
+
+      <view class="notifyHeader">
+        <view class="info">提醒为澳洲时间，用户可在提醒设置中更改时区</view>
+      </view>
+
+      <!-- 一周option -->
+      <view class="notifyOption">
+        <view class="notifyTxt">一周前提醒</view>
+        <checkbox/>
+      </view>
+
+      <!-- 一天option -->
+      <view class="notifyOption">
+        <view class="notifyTxt">一天前提醒</view>
+        <checkbox/>
+      </view>
+
+      <!-- 三天option -->
+      <view class="notifyOption">
+        <view class="notifyTxt">三天前提醒</view>
+        <checkbox/>
+      </view>
+
+  </view>
+
+  <button class="" type="primary" style="margin-top: 50rpx;">确认添加</button>
+
+</view>

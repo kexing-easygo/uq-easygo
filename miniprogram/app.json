@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/autoCountDown/autoCountDown",
+    "pages/addAutoCountDown/addAutoCountDown",
     "pages/countdown/countdown",
     "pages/home/home",
     "pages/profile/profile",
@@ -20,7 +21,8 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/aboutUs/aboutUs",
-    "pages/timetable/timetable"
+    "pages/timetable/timetable",
+    "pages/addAutoCountDown"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

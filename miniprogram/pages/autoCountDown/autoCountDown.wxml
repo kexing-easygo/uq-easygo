@@ -45,7 +45,9 @@
 		</view>
 	</view>
 
-	<button class="{{showResult? '':'hide'}}" type="primary" style="margin-top: 50rpx;">下一步</button>
+	<navigator url="/pages/addAutoCountDown/addAutoCountDown">
+		<button class="{{showResult? '':'hide'}}" type="primary">下一步</button>
+	</navigator>
 
 
 	<!-- 信息提示区 -->

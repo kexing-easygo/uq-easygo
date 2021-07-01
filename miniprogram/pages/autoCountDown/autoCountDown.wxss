@@ -66,9 +66,11 @@
   width: 100%;
   background-color: #FFFFFF;
   margin-top: 40rpx;
+  margin-bottom: 50rpx;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
+
 }
 
 .resultHeader {
