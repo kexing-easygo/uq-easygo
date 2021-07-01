@@ -1,13 +1,9 @@
 <!--miniprogram/pages/autoCountDown.wxml-->
 <view class="container">
+
 	<view class="searchArea">
-		<view class="searchBar">
-			<searchbar  ext-class="{{showResult}}" bindselectresult="selectResult" 
-			bindfocus="startsearch" bindclear="clear"  
-			value="{{searchBarValue}}" search="{{search}}"
-			placeholder="CSSE1001">
-			</searchbar>
-		</view>
+		<input style="padding-left:40rpx;" type="text" class="searchBar" maxlength="8" placeholder="CSSE1001"/>
+		
 		<view class="searchButton">
 				<button class="mini-btn" type="primary" size="mini" bindtap="showResult">搜索</button>
 		</view>

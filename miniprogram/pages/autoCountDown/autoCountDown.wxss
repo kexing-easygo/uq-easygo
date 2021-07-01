@@ -13,10 +13,12 @@
   display: flex;
   width: 100%;
   flex-flow: row nowrap;
+  justify-content: center;
   align-items: center;
 }
 
 .searchBar {
+  background-color: #FFFFFF;
   width: 592rpx;
   height: 84rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;

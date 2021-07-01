@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/autoCountDown/autoCountDown",
+    "pages/home/home",
     "pages/addAutoCountDown/addAutoCountDown",
     "pages/countdown/countdown",
-    "pages/home/home",
     "pages/profile/profile",
     "pages/calc/calc",
     "pages/contactUs/contactUs",
