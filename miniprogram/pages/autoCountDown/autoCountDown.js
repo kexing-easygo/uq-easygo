@@ -8,6 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    color: 0,
+    clicked_1: false,
+    clicked_2: false,
+    clicked_3: false,
+    clicked_4: false,
+    clicked_5: false,
+
     setClassMode: true,
     buttons: [{text: '好的'}, {text: '这就去设置'}],
     showResult: false,
@@ -22,6 +29,58 @@ Page({
       searchBarValue: e.detail.value
     })
   },
+
+  bindRed: function() {
+    this.setData({
+      color: "#FA5151",
+      clicked_1: true,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindPink: function() {
+    this.setData({
+      color: "#FFC300",
+      clicked_1: false,
+      clicked_2: true,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindLightBlue: function() {
+    this.setData({
+      color: "#07C160",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: true,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindPurple: function() {
+    this.setData({
+      color: "#1485EE",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: true,
+      clicked_5: false,
+    });
+  },
+  bindYellow: function() {
+    this.setData({
+      color: "#576B95",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: true,
+    });
+  },
+  
   /**
    * 生命周期函数--监听页面加载
    */
