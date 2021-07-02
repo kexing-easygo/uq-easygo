@@ -18,11 +18,13 @@
 		</view>
 
 		<!-- 每有一个搜索结果增加一个resultElement block -->
-		<view class="resultElement" wx:for="{{assessments}}" wx:key="index" wx:for-item="item">
-			<icon wx:if="{{item.date == 'TBD'}}" class="{{warning? 'icon-small':'hide'}}" type="warn" size="20"></icon>
-			<view class="assignmentName">{{item.name}}</view>
-			<checkbox/>
-		</view>
+		<checkbox-group bindchange="selectAssessments">
+			<view class="resultElement" wx:for="{{assessments}}" wx:key="index" wx:for-item="item" wx:for-index="index">
+				<icon wx:if="{{item.date == 'TBD'}}" class="{{warning? 'icon-small':'hide'}}" type="warn" size="20"></icon>
+				<view class="assignmentName">{{item.name}}</view>
+				<checkbox value="{{index}}"/>
+			</view>
+		</checkbox-group>
 <!-- 
 		<view class="resultElement">
 			<icon class="{{warning? 'icon-small':'hide'}}" type="warn" size="20"></icon>
@@ -42,7 +44,7 @@
 	</view>
 
 	<navigator url="/pages/addAutoCountDown/addAutoCountDown">
-		<button class="{{showResult? '':'hide'}}" type="primary">下一步</button>
+		<button class="{{showResult? '':'hide'}}" type="primary" bindtap="nextStep">下一步</button>
 	</navigator>
 
 

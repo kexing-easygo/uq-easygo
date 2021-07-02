@@ -1,5 +1,15 @@
 <!--miniprogram/pages/addAutoCountDown.wxml-->
 <view class="container">
+  <view class="notices">
+    <view class="wechatnotice">
+      <text class="titleFont">微信提醒</text>
+      <switch type="switch" checked="{{wechatNotification}}" bindchange="bindSwitch1"></switch>
+    </view>
+    <view class="mailnotice">
+      <text class="titleFont">邮件提醒</text>
+      <switch type="switch"checked="{{emailNotification}}" bindchange="bindSwitch2"></switch>
+    </view>
+  </view>
   <view class="colours">
     <text class = "cdtitle">设置颜色</text>
     <view class="cdDetail ">
@@ -23,24 +33,27 @@
 
       <!-- 一周option -->
       <view class="notifyOption">
-        <view class="notifyTxt">一周前提醒</view>
-        <checkbox/>
+        <view class="notifyTxt">一天前提醒</view>
+        <!-- <checkbox checked="{{oneDay}}"/> -->
+        <switch type="switch" checked="{{oneDay}}" bindchange="bindOneDay"></switch>
       </view>
 
       <!-- 一天option -->
       <view class="notifyOption">
-        <view class="notifyTxt">一天前提醒</view>
-        <checkbox/>
+        <view class="notifyTxt">三天前提醒</view>
+        <!-- <checkbox checked="{{threeDay}}"/> -->
+        <switch type="switch" checked="{{threeDay}}" bindchange="bindThreeDay"></switch>
       </view>
 
       <!-- 三天option -->
       <view class="notifyOption">
-        <view class="notifyTxt">三天前提醒</view>
-        <checkbox/>
+        <view class="notifyTxt">一周前提醒</view>
+        <!-- <checkbox checked="{{oneWeek}}"/> -->
+        <switch type="switch" checked="{{oneWeek}}" bindchange="bindOneWeek"></switch>
       </view>
 
   </view>
 
-  <button class="" type="primary" style="margin-top: 50rpx;">确认添加</button>
+  <button class="" type="primary" style="margin-top: 50rpx;" bindtap="confirm">确认添加</button>
 
 </view>
