@@ -59,12 +59,7 @@
     </view>
   </view>
 
-
-	<navigator url="/pages/addAutoCountDown/addAutoCountDown">
-		<button class="{{showResult? '':'hide'}}" type="primary" bindtap="nextStep" 
-		style="  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;">确定添加</button>
-	</navigator>
-	
+	<button class="{{showResult? 'colours':'hide'}}" type="primary" style="margin-top: 50rpx; box-shadow: 0 10rpx 10rpx 2rpx #cccccc;" bindtap="confirm">确认添加</button>
 
 
 	<!-- 信息提示区 -->

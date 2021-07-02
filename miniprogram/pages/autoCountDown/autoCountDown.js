@@ -185,16 +185,51 @@ Page({
    * 下一步按钮的回调函数，将选中的作业列表
    * 传递到下一个页面
    */
-  nextStep: function () {
-    let that = this;
-    // 将用户选中的作业缓存至全局
-    // TODO 我也不知道为啥一样的代码在这就不好使 MD
-    app.globalData.selectedAssessments = that.data.selectedAssessments;
-    wx.navigateTo({
-      url: '../addAutoCountDown/addAutoCountDown',
+  confirm: function () {
+    var color = this.data.color;
+    var ass = this.data.selectedAssessments;
+    // 用户选了作业但是没选择颜色
+    if (color == 0 && ass.length != 0) {
+      wx.showModal({
+        title: "提示",
+        content: "你好像忘记设置颜色了哦！"
+      })
+      return
+    }
+    
+    for (var i = 0; i < ass.length; i++) {
+      // 更新color字段
+      ass[i].color = color;
+      // TODO: 解析到TBD，自动变为30天后
+      if (ass[i].date == "TBD") {
+        ass[i].date = GetDateStr(30);
+        ass[i].time = "00:00"
+      }
+      console.log(ass[i])
+      db.collection("MainUser")
+      .where({
+        // _openid: app.globalData._openid
+        _openid:"oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+
+      })
+      .update({
+        data: {
+          userAssignments: _.push(ass[i])
+        },
+        success: function (res) {
+          if (res.stats.updated > 0) {
+            console.log("作业条目添加成功")
+          }
+        }
+      })
+    }
+    wx.reLaunch({
+      url: '../countdown/countdown',
       success: function (res) {
-        // 通过eventChannel向被打开页面传送正在被点击的assignment信息
-        res.eventChannel.emit('acceptDataFromOpenerPage', {data: that.data.selectAssessments});
+        var page = getCurrentPages().pop()
+        if (page == undefined || page == null) return;
+        // 刷新页面
+        page.onLoad()
       }
     })
   }
