@@ -79,8 +79,8 @@ Page({
    * 
    */
   fetchCourseInfo: function() {
-    // var course = this.data.searchBarValue;
-    var course = "CSSE1001"
+    var course = this.data.searchBarValue;
+    // var course = "CSSE1001"
     let that = this;
     if (course.length == 8) {
       db.collection('CourseReview')
