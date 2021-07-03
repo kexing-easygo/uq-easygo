@@ -6,6 +6,7 @@ const app = getApp();
 const _ = db.command;
 
 const weeks = ["Mon", "Tue", "Wed", "Thu", "Fri"];
+
 const series = {
   "08:00": 0,
   "09:00": 1,
@@ -47,7 +48,8 @@ var currentMonth = today.getMonth() + 1;
 // 当前周几为today.getDay() + 1
 var currentDay = today.getDay();
 // 当前第几周没想好，写死了10
-var currentWeek = 10
+var currentWeek = current_week();
+var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
   1: "周一",
   2: "周二",
@@ -68,8 +70,11 @@ Page({
     selectClass: {},
     currentMonth: currentMonth,
     weekdays: [],
-    currentWeek: currentWeek,
-    currentDay: currentDay
+    currentWeek: current_week(),
+    currentDay: currentDay,
+    weekTitleStyle: ["", "","","","","","","","","","","","",""],
+    selectWeekStyle: selectWeekTitleStyle,
+    selectWeek: currentWeek
 
   },
   timeDetail: function (event) {
@@ -149,7 +154,7 @@ Page({
    */
   onLoad: function (options) {
 
-    
+    var selectWeek = this.data.selectWeek;
     let that = this;
     db.collection("MainUser").where({
       _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
@@ -196,7 +201,7 @@ Page({
           temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // != 变成 == 即可
-          if (temp[i]["classTime"]["week_pattern"][current_week() - 1] != 1) {
+          if (temp[i]["classTime"]["week_pattern"][selectWeek - 1] != 1) {
             temp[i]["display"] = "yes";
           } else {
             temp[i]["display"] = "no";
@@ -273,6 +278,13 @@ Page({
       time_series[i] = 1
     }
     return time_series;
+  },
+  change_week: function(e) {
+    
+    this.setData({
+      selectWeek: e.currentTarget.dataset['week']
+    });
+   
   },
 
   /**

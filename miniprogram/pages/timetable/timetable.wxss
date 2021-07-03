@@ -6,6 +6,8 @@
   flex-flow: row nowrap;
   font-size: 30rpx;
   color: rgba(red, green, blue, 0.9);
+  max-width: 100%;
+  overflow: scroll;
 }
 
 .week {
@@ -15,6 +17,10 @@
   width: 104rpx;
   margin-right: 20rpx;
   text-align: center;
+}
+
+.selectWeek {
+  background-color: rgba(100, 103, 204, 0.7);
 }
 
 
