@@ -96,11 +96,13 @@ Page({
   searchCourseTime: function () {
 
     var dic = {};
+    
     let that = this;
     db.collection('Timetable').where({
       course: that.data.courseTitle,
     }).get({
       success: function (res) {
+       
         for (var key in res.data[0]) {
           if (key.length >= 20) {
             var keyList = key.split("_");

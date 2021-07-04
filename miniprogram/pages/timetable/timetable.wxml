@@ -1,44 +1,45 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
-  <view class="week selectWeek{{selectWeek==1?'':'none'}}"  data-week="1" bindtap="change_week">
+  
+  <view class="week selectWeek{{selectWeek==31?'':'none'}}"  data-week="1" bindtap="change_week">
     <text>w1 </text>
   </view>
-  <view class="week selectWeek{{selectWeek==2?'':'none'}}" data-week="2" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==32?'':'none'}}" data-week="2" bindtap="change_week" >
     <text>w2</text>
   </view>
-  <view class="week selectWeek{{selectWeek==3?'':'none'}}" data-week="3" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==33?'':'none'}}" data-week="3" bindtap="change_week" >
     <text>w3</text>
   </view>
-  <view class="week selectWeek{{selectWeek==4?'':'none'}}" data-week="4" bindtap="change_week">
+  <view class="week selectWeek{{selectWeek==34?'':'none'}}" data-week="4" bindtap="change_week">
     <text>w4</text>
   </view>
-  <view class="week selectWeek{{selectWeek==5?'':'none'}}" data-week="5" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==35?'':'none'}}" data-week="5" bindtap="change_week" >
     <text>w5</text>
   </view>
-  <view class="week selectWeek{{selectWeek==6?'':'none'}}" data-week="6" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==36?'':'none'}}" data-week="6" bindtap="change_week" >
     <text>w6</text>
   </view>
-  <view class="week selectWeek{{selectWeek==7?'':'none'}}" data-week="7" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==37?'':'none'}}" data-week="7" bindtap="change_week" >
     <text>w7</text>
   </view>
-  <view class="week selectWeek{{selectWeek==8?'':'none'}}" data-week="8" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==38?'':'none'}}" data-week="8" bindtap="change_week" >
     <text>w8</text> 
   </view>
-  <view class="week selectWeek{{selectWeek==9?'':'none'}}" data-week="9" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==40?'':'none'}}" data-week="9" bindtap="change_week" >
     <text>w9</text>
   </view>
-  <view class="week selectWeek{{selectWeek==10?'':'none'}}" data-week="10" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==41?'':'none'}}" data-week="10" bindtap="change_week" >
     <text>w10</text>
   </view>
-  <view class="week selectWeek{{selectWeek==11?'':'none'}}" data-week="11" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==42?'':'none'}}" data-week="11" bindtap="change_week" >
     <text>w11</text>
   </view>
-  <view class="week selectWeek{{selectWeek==12?'':'none'}}" data-week="12" bindtap="change_week" >
+  <view class="week selectWeek{{selectWeek==43?'':'none'}}" data-week="12" bindtap="change_week" >
     <text>w12</text>
   </view>
-  <view class="week selectWeek{{selectWeek==13?'':'none'}}" data-week="13" bindtap="change_week" >
+  <!-- <view class="week selectWeek{{selectWeek==44?'':'none'}}" data-week="13" bindtap="change_week" >
     <text>w13</text>
-  </view>
+  </view> -->
 </view>
 
 <view class="timeTable">

@@ -30,6 +30,8 @@ function current_week() {
   const targetDate = new Date();
   const startDate = new Date(targetDate);
 
+  targetDate.setDate(26);
+  targetDate.setMonth(7);
   startDate.setMonth(0);
   startDate.setDate(1);
   startDate.setHours(0, 0, 0, 0);
@@ -38,7 +40,7 @@ function current_week() {
 
   const diff = targetDate.valueOf() - startDate.valueOf();
 
-  return Math.ceil(diff / millisecondsOfWeek)
+  return Math.ceil(diff / millisecondsOfWeek) - 3
 }
 
 var today = new Date();
@@ -51,11 +53,11 @@ var currentDay = today.getDay();
 var currentWeek = current_week();
 var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
-  1: "周一",
-  2: "周二",
-  3: "周三",
-  4: "周四",
-  5: "周五"
+  0: "周一",
+  1: "周二",
+  2: "周三",
+  3: "周四",
+  4: "周五"
 }
 Page({
 
@@ -74,7 +76,7 @@ Page({
     currentDay: currentDay,
     weekTitleStyle: ["", "","","","","","","","","","","","",""],
     selectWeekStyle: selectWeekTitleStyle,
-    selectWeek: currentWeek
+    selectWeek: currentWeek 
 
   },
   timeDetail: function (event) {
@@ -134,27 +136,28 @@ Page({
       }
     })
   },
-  currentWeek: function () {
-    const targetDate = new Date();
-    const startDate = new Date(targetDate);
+  // currentWeek: function () {
+  //   const targetDate = new Date();
+  //   const startDate = new Date(targetDate);
 
-    startDate.setMonth(0);
-    startDate.setDate(1);
-    startDate.setHours(0, 0, 0, 0);
+  //   startDate.setMonth(0);
+  //   startDate.setDate(1);
+  //   startDate.setHours(0, 0, 0, 0);
 
-    const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
+  //   const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
 
-    const diff = targetDate.valueOf() - startDate.valueOf();
+  //   const diff = targetDate.valueOf() - startDate.valueOf();
 
-    cl(Math.ceil(diff / millisecondsOfWeek))
-  },
+  //   cl(Math.ceil(diff / millisecondsOfWeek))
+  // },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
     var selectWeek = this.data.selectWeek;
+   
     let that = this;
     db.collection("MainUser").where({
       _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
@@ -201,7 +204,7 @@ Page({
           temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // != 变成 == 即可
-          if (temp[i]["classTime"]["week_pattern"][selectWeek - 1] != 1) {
+          if (temp[i]["classTime"]["week_pattern"][selectWeek] == 1) {
             temp[i]["display"] = "yes";
           } else {
             temp[i]["display"] = "no";
@@ -280,10 +283,15 @@ Page({
     return time_series;
   },
   change_week: function(e) {
-    
+    var tmpSelect = parseInt(e.currentTarget.dataset['week']) + current_week() -1;
+    if (tmpSelect >= 39) {
+      tmpSelect += 1;
+    }
     this.setData({
-      selectWeek: e.currentTarget.dataset['week']
+      selectWeek: tmpSelect
     });
+    cl(this.data.selectWeek);
+    this.onLoad();
    
   },
 
