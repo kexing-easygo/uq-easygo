@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
   <view class="week selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
@@ -197,4 +198,9 @@
       <button class="mini-btn" type="primary" size="mini" bindtap="update_note" style="margin-left:35rpx">添加</button>
     </view>
   </view>
+=======
+<!--pages/timetable/timetable.wxml-->
+<view class="in-coming">
+	<image src="{{InComingImage}}"/>
+>>>>>>> master
 </view>
