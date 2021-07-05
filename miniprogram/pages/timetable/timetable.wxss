@@ -1,13 +1,217 @@
-/* pages/timetable/timetable.wxss */
-.in-coming {
-  width: 654rpx;
-  margin: 0 auto;
+/* miniprogram/pages/timetable/timetable.wxss */
+
+.allWeeks {
   margin-top: 40rpx;
-  height: 1200rpx;
-  line-height: 330rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 30rpx;
+  color: rgba(red, green, blue, 0.9);
+  max-width: 100%;
+  overflow: scroll;
+}
+
+.week {
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  height: 48rpx;
+  width: 104rpx;
+  margin-right: 20rpx;
   text-align: center;
 }
-.in-coming image {
-  height: 100%;
+
+.selectWeek {
+  background-color: rgba(100, 103, 204, 0.7);
+}
+
+
+
+.timeTable {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-top: 20rpx;
+}
+
+.time {
+  width: 50rpx;
+  font-size: 24rpx;
+  /*border: 1rpx black solid;*/
+}
+
+.time .month {
+  text-align: center;
+  height: 76rpx;
+  /* background-color: rgba(100, 103, 204, 0.7); */
+  background-color: rgba(152, 95, 254, 0.7);
+  writing-mode: vertical-lr;
   width: 100%;
+}
+
+.time .timePoint {
+  background-color: #ffffff;
+  text-align: center;
+  height: 88rpx;
+}
+
+.weekClass {
+  width: 696rpx;
+  position: absolute;
+  font-size: 24rpx;
+  margin-left: 48rpx;
+  margin-top: 60rpx;
+}
+
+.weekClass1 {
+  width: 696rpx;
+  position: relative;
+  font-size: 24rpx;
+}
+
+
+.weekDate {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+.weekDateitem {
+  height: 76rpx;
+  width: 140rpx;
+  line-height: 24rpx;
+  position: relative;
+}
+
+.weekDateitemContent {
+  margin-top: 14rpx;
+  /* border: 5rpx rgba(0, 0, 0, 0.5) solid; */
+}
+
+.classes {
+  position: relative;
+}
+
+.class {
+  /* width: 130rpx; */
+  /* background-color: #576b95; */
+  border-radius: 10rpx;
+  /* height: 176rpx; */
+  word-wrap: break-word;
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  overflow: hidden;
+  /* left: 200rpx; 140rpx * 周几
+  top: 720rpx; 90rpx * 第几节 */
+}
+
+
+
+/* add course*/
+
+
+.addTimeItem {
+  position: absolute;
+  right: 48rpx;
+  bottom: 158rpx;
+}
+
+
+
+
+.classDetail {
+  /* bottom: 0;
+  animation: detailDownUp 1s; */
+  width: 100%;
+  height: 545rpx;
+  background-color: white;
+  position: absolute;
+
+}
+
+@keyframes detailDownUp {
+  from {
+    bottom: -545rpx;
+  }
+
+  to {
+    bottom: 0;
+  }
+}
+
+@keyframes detailUpDown {
+  from {
+    bottom: 0;
+  }
+
+  to {
+    bottom: -545rpx;
+  }
+}
+
+
+
+.detailHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom-style: solid;
+  border-bottom-width: 2rpx;
+}
+
+.detailInfor {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+  font-size: 34rpx;
+}
+
+.inforname,
+.inforcolor,
+.inforlocation,
+.infortime {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 70rpx;
+}
+
+.inforcomment {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: fit-content;
+}
+
+.infortitle {
+  margin-left: 48rpx;
+  margin-right: 50rpx;
+}
+
+.inforContent {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 500rpx;
+}
+
+.colorButton {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 80%;
+  margin-right: 22rpx;
+}
+
+.hide {
+  display: none;
+}
+
+.shade {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
 }
