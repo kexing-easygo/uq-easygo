@@ -1,6 +1,6 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
-  <view class="week"  data-week="0" bindtap="changeAllWeek">
+  <view class="week selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
     <text>All weeks</text>
   </view>
   <view class="week selectWeek{{selectWeek==31?'':'none'}}"  data-week="1" bindtap="change_week">

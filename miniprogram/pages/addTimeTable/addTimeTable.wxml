@@ -40,16 +40,13 @@
 
 <view class="timeSelectContainer">
   <checkbox-group bindchange="chooseClass">
-  <view class="timeContainer" wx:for="{{courseTimeDeatial['S1FD']}}" wx:for-item="item" wx:for-index="index">
+  <view class="timeContainer" wx:for="{{courseTimeDeatial['S2IN']}}" wx:for-item="item" wx:for-index="index">
     <view class="timeItem">
       <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end"]}}</text>
       <checkbox class="checkoption"  value="{{index}}"  />
     </view>
   </view>
   </checkbox-group>
-
-
-
 </view>
 
 <view class="confirm ">

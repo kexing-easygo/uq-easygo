@@ -10,11 +10,11 @@ function get_class_start_end(start, duration) {
   return start + " - " + end;
 }
 
-function cl(content) {
-  console.log(content);
-}
+// function cl(content) {
+//   console.log(content);
+// }
 Page({
-
+  
   /**
    * 页面的初始数据
    */
@@ -31,61 +31,8 @@ Page({
     clicked_4: false,
     clicked_5: false,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onReady: function(options) {
+    this.searchCourseTime()
   },
   timeCourse: function (e) {
     this.setData({
@@ -94,24 +41,24 @@ Page({
     console.log(this.data.course);
   },
   searchCourseTime: function () {
-
     var dic = {};
-    
     let that = this;
-    db.collection('Timetable').where({
-      course: that.data.courseTitle,
+    db.collection('TimetableNew').where({
+      // course_name: "CSSE2310"
+      course_name: that.data.courseTitle,
     }).get({
       success: function (res) {
-       
+        // console.log(res)
         for (var key in res.data[0]) {
+          // console.log(key)
           if (key.length >= 20) {
             var keyList = key.split("_");
-            var mode = keyList[1] + keyList[3];
-            var i = 0;
+            var mode = keyList[1] + keyList[3]; //S2EX & S2IN
             dic[mode] = [];
             for (var keyItem in res.data[0][key]) {
               var keyItemList = keyItem.split("|");
               var temp = {};
+              // type -> LEC1 / PRA1
               temp["type"] = keyItemList[1];
               var location = "-";
               if (res.data[0][key][keyItem]["location"].length > 3) {
@@ -135,25 +82,23 @@ Page({
           courseTimeDeatial: dic,
           findTime: true,
         });
-        cl(that.data.courseTimeDeatial);
+        console.log(that.data.courseTimeDeatial);
       }
     });
-
 
   },
   chooseClass: function (e) {
     var values = e.detail.value;
     var temp = [];
-    for (var i = 0; i < this.data.courseTimeDeatial['S1FD'].length; i++) {
+    for (var i = 0; i < this.data.courseTimeDeatial['S2IN'].length; i++) {
       for (var j = 0; j < values.length; j++) {
-        if (this.data.courseTimeDeatial['S1FD'][i] == this.data.courseTimeDeatial['S1FD'][values[j]]) {
-          temp.push(this.data.courseTimeDeatial['S1FD'][i]);
+        if (this.data.courseTimeDeatial['S2IN'][i] == this.data.courseTimeDeatial['S2IN'][values[j]]) {
+          temp.push(this.data.courseTimeDeatial['S2IN'][i]);
           break;
         }
       }
     }
     this.data.selectedClass = temp;
-    cl(this.data.selectedClass);
   },
   confirmSelect: function () {
     var temp = [];
@@ -172,18 +117,21 @@ Page({
         courseTime: _.push(
           temp
         )
+      }, 
+      success: function (res) {
+        wx.reLaunch({
+          url: '/pages/timetable/timetable',
+          success: function (res) {
+            var page = getCurrentPages().pop()
+            if (page == undefined || page == null) return;
+            // 刷新页面
+            page.onLoad()
+          }
+        })
       }
     });
 
-    wx.reLaunch({
-      url: '/pages/timetable/timetable',
-      success: function (res) {
-        var page = getCurrentPages().pop()
-        if (page == undefined || page == null) return;
-        // 刷新页面
-        page.onLoad()
-      }
-    })
+    
   },
   bindRed: function () {
     this.setData({

@@ -46,7 +46,7 @@ function generateTeachingWeeks() {
     newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
     teaching_weeks[i] = newDate;
   }
-  cl(teaching_weeks)
+  // cl(teaching_weeks)
   return teaching_weeks;
 }
 
@@ -121,7 +121,7 @@ Page({
     currentDay: currentDay,
     weekTitleStyle: ["", "","","","","","","","","","","","",""],
     selectWeekStyle: selectWeekTitleStyle,
-    selectWeek: currentWeek ,
+    selectWeek: current_week ,
     // 是否显示所有课程
     isAllWeek: false
 
@@ -135,20 +135,13 @@ Page({
       detailShow: true,
       selectClass: temp
     });
-    cl(this.data.selectClass);
+    // cl(this.data.selectClass);
   },
 
   timeDetailDown: function (event) {
     this.setData({
-      //detailAnimation : "bottom: -545rpx;animation: detailUpDown 1s;",
       detailShow: false,
     });
-    // console.log(this.data['detailShow']);
-    // deatilTime = setTimeout(function() {
-    //   this.data.setData({
-    //     detailShow: false,
-    //   });
-    // } , 1000);
   },
 
   quitShade: function (event) {
@@ -159,7 +152,7 @@ Page({
     clearTimeout(deatilTime);
   },
   deleteClass: function (e) {
-    cl(e.currentTarget.dataset['classindex']);
+    // cl(e.currentTarget.dataset['classindex']);
     var temp = this.data.userCourseTime;
     temp.splice(e.currentTarget.dataset['classindex'], 1);
     let that = this;
@@ -183,126 +176,26 @@ Page({
       }
     })
   },
-  // currentWeek: function () {
-  //   const targetDate = new Date();
-  //   const startDate = new Date(targetDate);
 
-  //   startDate.setMonth(0);
-  //   startDate.setDate(1);
-  //   startDate.setHours(0, 0, 0, 0);
-
-  //   const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
-
-  //   const diff = targetDate.valueOf() - startDate.valueOf();
-
-  //   cl(Math.ceil(diff / millisecondsOfWeek))
-  // },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var selectWeek = this.data.selectWeek;
-    console.log(selectWeek);
+    
+    this.setData({
+      selectWeek: 0,
+      isAllWeek: true
+    })
+    this.generateWeekdays();
+    // var selectWeek = this.data.selectWeek;
     // 根据第几周，返回那周的周一日期
-    var startDate = teachingWeeks[selectWeek];
+    // var startDate = teachingWeeks[selectWeek];
+    // 默认查看所有周的课
     this.setData({
-      currentMonth: startDate.getMonth() + 1
+      currentMonth: currentMonth,
     })
-    // 根据current_week逆向生成日期
-    // 先获取当前周的周一，再从周一开始计算四天
-    // 忽略周末    
-    var weekdays = []
-    for (var i = 0; i < 5; i++) {
-      var monday = GetMonday(startDate);
-      var newDate = new Date(monday.setDate(monday.getDate() + i));
-      var month = newDate.getMonth() + 1;
-      weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
-    }
-    this.setData({
-      weekdays: weekdays
-    })
-    let that = this;
-    db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
-    }).get({
-      success: function (res) {
-        var temp = res.data[0]['courseTime'];
-        for (var i = 0; i < temp.length; i++) {
-          temp[i]['index'] = i;
-            for (var j = 0; j < temp.length; j++) {
-              if (i != j) {
-                if (temp[i]["classTime"]["weekday"] == temp[j]["classTime"]["weekday"]) {
-                  var s1 = that.generateTimeSeries(temp[i]);
-                  var s2 = that.generateTimeSeries(temp[j]);
-                  for (var k = 0; k < 12; k++) {
-                    // 判断两节课是否有冲突的部分
-                    if (s1[k] == s2[k] && "clash" in temp[i] == false && "clash" in temp[j] == false) {
-                      if (s1[k] == 1) {
-                        temp[i]["clash"] = 0
-                        temp[j]["clash"] = 1
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          
-        }
-
-        for (var i = 0; i < temp.length; i++) {
-
-          var clash = temp[i]["clash"]
-          if (temp[i].hasOwnProperty("clash")) {
-            temp[i]['width'] = "width:" + "67.5rpx;"
-            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
-          } else {
-            temp[i]['width'] = "width:" + "135rpx;"
-            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
-          }
-          var start = temp[i]["classTime"]["start"].split(":")[0];
-          var top = 25 + 90 * (start - 8);
-          temp[i]['left'] = "left:" + left + "rpx;"
-          temp[i]['top'] = "top:" + top + "rpx;"
-          temp[i]["color"] = temp[i]['color'];
-          temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
-          temp[i]["notes"] = temp[i]['classTime']["notes"];
-          // != 变成 == 即可
-          if (that.data.isAllWeek == false) {
-
-            if (temp[i]["classTime"]["week_pattern"][selectWeek] == 1) {
-              temp[i]["display"] = "yes";
-            } else {
-              temp[i]["display"] = "no";
-            }
-          } else {
-            if (temp[i]["classTime"]["week_pattern"][selectWeek] != 1) {
-              temp[i]["display"] = "yes";
-            } else {
-              temp[i]["display"] = "no";
-            }
-          }
-          
-        }
-        // cl(temp);
-        that.setData({
-          userCourseTime: temp
-        });
-      }
-    });
-    // 根据current_week逆向生成日期
-    // 先获取当前周的周一，再从周一开始计算四天
-    // 忽略周末    
-    // var weekdays = []
-    // for (var i = 0; i < 5; i++) {
-    //   var monday = GetMonday(new Date());
-    //   var newDate = new Date(monday.setDate(monday.getDate() + i));
-    //   var month = newDate.getMonth() + 1;
-    //   weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
-    // }
-    // this.setData({
-    //   weekdays: weekdays
-    // })
+    
   },
   add_note: function (e) {
     var temp = this.data.selectClass;
@@ -315,7 +208,6 @@ Page({
   update_note: function(e) {
     var temp = this.data.userCourseTime;
     temp[this.data.selectClass.index]["classTime"]['notes'] = this.data.selectClass.notes;
-    let that = this;
     db.collection("MainUser").where({
       _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
     }).update({
@@ -342,82 +234,121 @@ Page({
     }
     return time_series;
   },
+
   change_week: function(e) {
     var tmpSelect = parseInt(e.currentTarget.dataset['week']) + current_week() -1;
     if (tmpSelect >= 40) {
       tmpSelect += 1;
     }
+    var currentMonth = teachingWeeks[tmpSelect].getMonth() + 1;
     this.setData({
       selectWeek: tmpSelect,
-      isAllWeek: false
+      isAllWeek: false,
+      currentMonth: currentMonth
     });
-    this.onLoad();
+    this.onReady();
+    this.generateWeekdays(teachingWeeks[tmpSelect]);
    
   },
+
   /**
    * 切换至所有课程都显示的模式
    */
-  changeAllWeek: function() {
+  changeAllWeek: function(e) {
+    this.setData({
+      selectWeek: 0,
+      currentMonth: new Date().getMonth() + 1,
+      isAllWeek: true
+    })
+    this.onReady();
+    this.generateWeekdays();
+  },
+  generateWeekdays: function (startDate=null) {
     var weekdays = []
+    var monday = '';
     for (var i = 0; i < 5; i++) {
-      var monday = GetMonday(new Date());
+      if (startDate == null) {
+        monday = GetMonday(new Date());
+      } else {
+        monday = GetMonday(startDate);
+      }
       var newDate = new Date(monday.setDate(monday.getDate() + i));
       var month = newDate.getMonth() + 1;
       weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
     }
     this.setData({
-      currentMonth: new Date().getMonth() + 1,
       weekdays: weekdays,
-      isAllWeek: true
     })
+
+
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    let that = this;
+    var selectWeek = this.data.selectWeek;
+    db.collection("MainUser").where({
+      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+    }).get({
+      success: function (res) {
+        var temp = res.data[0]['courseTime'];
+        for (var i = 0; i < temp.length; i++) {
+          temp[i]['index'] = i;
+          for (var j = 0; j < temp.length; j++) {
+            if (i != j) {
+              if (temp[i]["classTime"]["weekday"] == temp[j]["classTime"]["weekday"]) {
+                var s1 = that.generateTimeSeries(temp[i]);
+                var s2 = that.generateTimeSeries(temp[j]);
+                for (var k = 0; k < 12; k++) {
+                  // 判断两节课是否有冲突的部分
+                  if (s1[k] == s2[k] && "clash" in temp[i] == false && "clash" in temp[j] == false) {
+                    if (s1[k] == 1) {
+                      temp[i]["clash"] = 0
+                      temp[j]["clash"] = 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        
+        for (var i = 0; i < temp.length; i++) {
+          var clash = temp[i]["clash"]
+          if (temp[i].hasOwnProperty("clash")) {
+            temp[i]['width'] = "width:" + "67.5rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
+          } else {
+            temp[i]['width'] = "width:" + "135rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+          }
+          var start = temp[i]["classTime"]["start"].split(":")[0];
+          var top = 25 + 90 * (start - 8);
+          temp[i]['left'] = "left:" + left + "rpx;"
+          temp[i]['top'] = "top:" + top + "rpx;"
+          temp[i]["color"] = temp[i]['color'];
+          temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
+          temp[i]["notes"] = temp[i]['classTime']["notes"];
+          // 通过isAllWeek控制显示全量还是按周显示
+          if (that.data.isAllWeek == false) {
+            if (temp[i]["classTime"]["week_pattern"][selectWeek - 1] == 1) {
+              temp[i]["display"] = "yes";
+            } else {
+              temp[i]["display"] = "no";
+            }
+          } else {
+            temp[i]["display"] = "yes";
+          }
+          
+        }
+        that.setData({
+          userCourseTime: temp
+        });
+      }
+    });
+    
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
