@@ -1,4 +1,5 @@
 <!--miniprogram/pages/addReview/addReview.wxml-->
+<<<<<<< HEAD
 <view class="container">
   <view class="heading">
     DECO1100 - Design Thinking
@@ -25,3 +26,6 @@
   </button>
 
 </view>
+=======
+<text>miniprogram/pages/addReview/addReview.wxml</text>
+>>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257

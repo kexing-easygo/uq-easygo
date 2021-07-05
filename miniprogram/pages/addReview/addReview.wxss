@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* miniprogram/pages/addReview/addReview.wxss */
 .container {
   font-size: 16pt;
@@ -106,3 +107,6 @@
   bottom: 1rpx;
   right: 1rpx;
 }
+=======
+/* miniprogram/pages/addReview/addReview.wxss */
+>>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257

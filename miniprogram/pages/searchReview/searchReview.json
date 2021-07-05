@@ -1,6 +1,10 @@
 {
+<<<<<<< HEAD
   "usingComponents": {
     "mp-dialog": "weui-miniprogram/dialog/dialog"
   },
   "navigationBarTitleText": "课评"
+=======
+  "usingComponents": {}
+>>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257
 }

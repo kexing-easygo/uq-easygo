@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* miniprogram/pages/searchReview/searchReview.wxss */
 .container {
   font-size: 16pt;
@@ -92,3 +93,6 @@
   font-size: 34rpx;
   font-weight: 300;
 }
+=======
+/* miniprogram/pages/searchReview/searchReview.wxss */
+>>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257
