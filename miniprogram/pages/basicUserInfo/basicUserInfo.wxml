@@ -11,7 +11,7 @@
 		</view>
 	</view>
 
-	<!-- <view class="page-section">
+	<view class="page-section">
 		<view class="container">
 			<view>上课方式</view>
 			<view class="txt">
@@ -22,5 +22,5 @@
  			 </picker>
 			</view>
 		</view>
-	</view> -->
+	</view>
 </view>
