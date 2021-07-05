@@ -219,19 +219,22 @@ Page({
         success: function (res) {
           if (res.stats.updated > 0) {
             console.log("作业条目添加成功")
+            // reLaunch方法一定要在异步方法内部调用，保证先后顺序
+            // 不然会出现更新延迟的问题
+            wx.reLaunch({
+              url: '../countdown/countdown',
+              success: function (res) {
+                var page = getCurrentPages().pop()
+                if (page == undefined || page == null) return;
+                // 刷新页面
+                page.onLoad()
+              }
+            })
           }
         }
       })
     }
-    wx.reLaunch({
-      url: '../countdown/countdown',
-      success: function (res) {
-        var page = getCurrentPages().pop()
-        if (page == undefined || page == null) return;
-        // 刷新页面
-        page.onLoad()
-      }
-    })
+    
   }
 
 })

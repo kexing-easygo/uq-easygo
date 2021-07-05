@@ -101,20 +101,21 @@ Page({
             success: function (res) {
               if (res.stats.updated > 0) {
                 console.log("作业条目更新成功")
+                app.globalData.userAssignments = temp
+                wx.reLaunch({
+                  url: '/pages/countdown/countdown',
+                  success: function (res) {
+                    var page = getCurrentPages().pop()
+                    if (page == undefined || page == null) return;
+                    // 刷新页面
+                    page.onLoad()
+                  }
+                })
               }
             }
           })
       }
-      app.globalData.userAssignments = temp
-      wx.reLaunch({
-        url: '/pages/countdown/countdown',
-        success: function (res) {
-          var page = getCurrentPages().pop()
-          if (page == undefined || page == null) return;
-          // 刷新页面
-          page.onLoad()
-        }
-      })
+      
     } else {
       if (this.data.title == '') {
         wx.showToast({
@@ -157,19 +158,20 @@ Page({
               success: function (res) {
                 if (res.stats.updated > 0) {
                   console.log("作业条目添加成功")
+                  wx.reLaunch({        
+                    url: '/pages/countdown/countdown',
+                    success: function (res) {
+                      var page = getCurrentPages().pop()
+                      if (page == undefined || page == null) return;
+                      // 刷新页面
+                      page.onLoad()
+                    }
+                  })
                 }
               }
             })
         }
-        wx.reLaunch({        
-          url: '/pages/countdown/countdown',
-          success: function (res) {
-            var page = getCurrentPages().pop()
-            if (page == undefined || page == null) return;
-            // 刷新页面
-            page.onLoad()
-          }
-        })
+        
     }
     
       
@@ -254,19 +256,20 @@ Page({
                 success: function (res) {
                   if (res.stats.updated > 0) {
                     console.log("作业条目删除成功")
+                    wx.reLaunch({
+                      url: '/pages/countdown/countdown',
+                      success: function (res) {
+                        var page = getCurrentPages().pop()
+                        if (page == undefined || page == null) return;
+                        // 刷新页面
+                        page.onLoad()
+                      }
+                    })
                   }
                 }
               })
           }
-          wx.reLaunch({
-            url: '/pages/countdown/countdown',
-            success: function (res) {
-              var page = getCurrentPages().pop()
-              if (page == undefined || page == null) return;
-              // 刷新页面
-              page.onLoad()
-            }
-          })
+          
         }
       }
     })
