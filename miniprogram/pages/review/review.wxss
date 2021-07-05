@@ -109,7 +109,7 @@
 }
 
 .reviewContent {
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
   width: 95%;
   margin-top: -25rpx;
   display: flex;
@@ -145,4 +145,27 @@
   justify-content: center;
   align-items: center;
   padding:0;
+}
+
+.bottomBar {
+  width: 100%;
+  height: 66rpx;
+  background-color: #FFA9A3;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+}
+
+.createReview {
+  width: 90%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #000000 0.5;
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  padding-left: 30rpx;
 }

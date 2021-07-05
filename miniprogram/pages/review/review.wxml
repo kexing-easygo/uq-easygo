@@ -74,7 +74,7 @@
       <view style="margin-left: 50rpx;">{{reviewerInfo}}</view>
     </view>
 
-    <view class="reviewContent">
+    <view class="reviewContent" style="{{ownReview?'background-color: #FFF0A7;':'background-color: #FFFFFF;'}}">
       <view class="reviewTxt" style="margin-top: 50rpx;">
           DECO课都洗内DECO课都洗内DECO课都洗内.DECO课都洗内DECO课都洗内DECO课都洗内.
           DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内
@@ -87,10 +87,12 @@
         <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">21</view>
       </button>
     </view>
-
   </view>
 
-  
+  <view class="bottomBar">
+    <navigator class="createReview" url="/pages/addReview/addReview">
+      <view>发表评论</view>
+    </navigator>
+  </view>
 
-  
 </view>

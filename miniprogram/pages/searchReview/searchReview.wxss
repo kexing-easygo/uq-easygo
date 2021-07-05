@@ -1,0 +1,94 @@
+/* miniprogram/pages/searchReview/searchReview.wxss */
+.container {
+  font-size: 16pt;
+  color: #707070;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4rpx;
+  flex-wrap: wrap;
+}
+
+.searchArea {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchBar {
+  background-color: #FFFFFF;
+  width: 592rpx;
+  height: 84rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+  border-radius: 10rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchButton {
+  margin-top: 40rpx;
+  height: 84rpx;
+}
+
+.searchButton .mini-btn{
+  width: 118rpx;
+  height: 84rpx;
+  margin-right: 20rpx;
+  text-align: center;
+  font-weight: lighter;
+  font-size: 32rpx;
+  line-height: 84rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  border-radius: 10rpx;
+}
+
+.searchRank {
+  background-color: #FFFFFF;
+  width: 95%;
+  margin-top: 80rpx;
+  border-radius: 10rpx;
+  padding: 20rpx 0;
+  display:flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchHeading {
+  color:black;
+  font-size: 30rpx;
+  margin-left: 40rpx;
+  margin-bottom: 30rpx;
+  align-self: flex-start;
+}
+
+.items {
+  width: 95%;
+  display:flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.item {
+  width: 40%;
+  height: 72rpx;
+  margin: 30rpx;
+  background-color: #95B9FF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10rpx;
+  color:#FFFFFF;
+  font-size: 34rpx;
+  font-weight: 300;
+}

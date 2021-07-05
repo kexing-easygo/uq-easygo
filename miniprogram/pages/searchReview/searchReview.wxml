@@ -1,0 +1,33 @@
+<!--miniprogram/pages/searchReview/searchReview.wxml-->
+<view class="container">
+	<view class="searchArea">
+    <view class="searchBar">
+      <icon class="icon-small" type="search" size="34"></icon>
+      <input style="padding-left:40rpx;" type="text" maxlength="8" bindinput="bindCourseInput" placeholder="CSSE1001"/>
+    </view>
+		<view class="searchButton">
+				<button class="mini-btn" type="primary" size="mini" bindtap="fetchCourseInfo">搜索</button>
+		</view>
+	</view>
+
+  <view class="searchRank">
+    <view class="searchHeading">火热查询榜</view>
+    <view class="items">
+      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view>
+    </view>
+  </view>
+
+  <mp-dialog show="{{searchError}}" buttons="{{buttons}}" mask="true">
+			<view style="width: 100%;">温馨提示</view>
+			<view>这门课超出了U妹的搜索范围。</view>
+      <view>请重新输入或微信联系U妹。</view>
+	</mp-dialog>
+
+
+
+</view>

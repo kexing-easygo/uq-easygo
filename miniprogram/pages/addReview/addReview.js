@@ -1,21 +1,24 @@
-// miniprogram/pages/review/review.js
+// miniprogram/pages/addReview/addReview.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    courseName: "DECO1100 - Design Thinking",
-    courseLecturer: "Lecturer",
-    courseFaculty: "Faculty",
-    coursePre: ['DECO1100', 'DECO1100'],
-    courseSemester: ['Semester1', 'Semester2'],
-    like:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表敬请期待.png",
-
-    reviewerInfo: "Sprite-2021 s1",
-    ownReview: true,
+    maxlength: 140,
+    reviewTxt: '',
   },
 
+  input: function(e) {
+    var input = e.detail.value;
+    var length = parseInt(input.length);
+
+    if (length > this.data.maxlength) return;
+    this.setData({
+      currentWord: length,
+      reviewTxt: input
+    });
+  },
   /**
    * 生命周期函数--监听页面加载
    */
