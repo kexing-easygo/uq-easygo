@@ -5,11 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-<<<<<<< HEAD
     searchError: false,
     buttons: [{text: '取消'}, {text: '确认'}],
-=======
->>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257
 
   },
 

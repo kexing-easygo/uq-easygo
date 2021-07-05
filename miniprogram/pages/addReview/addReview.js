@@ -5,7 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-<<<<<<< HEAD
     maxlength: 140,
     reviewTxt: '',
   },
@@ -20,11 +19,6 @@ Page({
       reviewTxt: input
     });
   },
-=======
-
-  },
-
->>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257
   /**
    * 生命周期函数--监听页面加载
    */
