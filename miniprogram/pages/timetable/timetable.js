@@ -6,7 +6,7 @@ const app = getApp();
 const _ = db.command;
 
 const weeks = ["Mon", "Tue", "Wed", "Thu", "Fri"];
-
+// 时间序列，判断clash
 const series = {
   "08:00": 0,
   "09:00": 1,
@@ -22,10 +22,43 @@ const series = {
   "19:00": 11
 }
 
+/**
+ * 从7.26开始，将第几周和那周的周一日期对应起来，以便于生成当周的
+ * 五天日期。
+ */
+function generateTeachingWeeks() {
+  var teachingStartMonday = new Date();
+  teachingStartMonday.setDate(26);
+  teachingStartMonday.setMonth(6);
+  var teaching_weeks = {
+    31: teachingStartMonday
+  }
+  for (var i = 32; i < 40; i++) {
+    var newDate = new Date();
+    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
+    teaching_weeks[i] = newDate;
+  }
+  var teachingStartMonday = new Date();
+  teachingStartMonday.setDate(26);
+  teachingStartMonday.setMonth(7);
+  for (var i = 41; i < 46; i++) {
+    var newDate = new Date();
+    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
+    teaching_weeks[i] = newDate;
+  }
+  cl(teaching_weeks)
+  return teaching_weeks;
+}
+
+// 教学周，将week num和第一天绑定
+const teachingWeeks = generateTeachingWeeks();
+
 function cl(content) {
   console.log(content);
 }
-
+/**
+ * 基于7/26为第二学期第一周第一天，计算现在是第几周
+ */
 function current_week() {
   const targetDate = new Date();
   const startDate = new Date(targetDate);
@@ -43,9 +76,21 @@ function current_week() {
   return Math.ceil(diff / millisecondsOfWeek) - 3
 }
 
+/**
+ * 获取某天所在的周一。用于生成周一到周五的日期
+ * @param {获取} date 
+ */
+function GetMonday(date) {
+  var dd = new Date(date)
+  var week = dd.getDay(); //获取时间的星期数
+  var minus = week ? week - 1 : 6;
+  dd.setDate(dd.getDate() - minus); //获取周一日期
+  return dd;
+}
+
+
 var today = new Date();
 // 当前月份为today.getMonth() + 1
-var currentYear = today.getFullYear()
 var currentMonth = today.getMonth() + 1;
 // 当前周几为today.getDay() + 1
 var currentDay = today.getDay();
@@ -53,11 +98,11 @@ var currentDay = today.getDay();
 var currentWeek = current_week();
 var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
-  0: "周一",
-  1: "周二",
-  2: "周三",
-  3: "周四",
-  4: "周五"
+  1: "周一",
+  2: "周二",
+  3: "周三",
+  4: "周四",
+  5: "周五"
 }
 Page({
 
@@ -76,7 +121,9 @@ Page({
     currentDay: currentDay,
     weekTitleStyle: ["", "","","","","","","","","","","","",""],
     selectWeekStyle: selectWeekTitleStyle,
-    selectWeek: currentWeek 
+    selectWeek: currentWeek ,
+    // 是否显示所有课程
+    isAllWeek: false
 
   },
   timeDetail: function (event) {
@@ -155,9 +202,26 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
     var selectWeek = this.data.selectWeek;
-   
+    console.log(selectWeek);
+    // 根据第几周，返回那周的周一日期
+    var startDate = teachingWeeks[selectWeek];
+    this.setData({
+      currentMonth: startDate.getMonth() + 1
+    })
+    // 根据current_week逆向生成日期
+    // 先获取当前周的周一，再从周一开始计算四天
+    // 忽略周末    
+    var weekdays = []
+    for (var i = 0; i < 5; i++) {
+      var monday = GetMonday(startDate);
+      var newDate = new Date(monday.setDate(monday.getDate() + i));
+      var month = newDate.getMonth() + 1;
+      weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
+    }
+    this.setData({
+      weekdays: weekdays
+    })
     let that = this;
     db.collection("MainUser").where({
       _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
@@ -204,45 +268,41 @@ Page({
           temp[i]["height"] = "height:" + temp[i]['classTime']["hours"] * 90 + "rpx;";
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // != 变成 == 即可
-          if (temp[i]["classTime"]["week_pattern"][selectWeek] == 1) {
-            temp[i]["display"] = "yes";
+          if (that.data.isAllWeek == false) {
+
+            if (temp[i]["classTime"]["week_pattern"][selectWeek] == 1) {
+              temp[i]["display"] = "yes";
+            } else {
+              temp[i]["display"] = "no";
+            }
           } else {
-            temp[i]["display"] = "no";
+            if (temp[i]["classTime"]["week_pattern"][selectWeek] != 1) {
+              temp[i]["display"] = "yes";
+            } else {
+              temp[i]["display"] = "no";
+            }
           }
           
         }
-        cl(temp);
+        // cl(temp);
         that.setData({
           userCourseTime: temp
         });
       }
     });
-    var weekdays = []
-    // <view class="weekDateitem">
-    //     <view class="weekDateitemContent">
-    //       <text>周日\n02-01</text>
-    //     </view>
-    //   </view>
-
-    // 逆向生成日期    
-    // var startDate = new Date(today.setDate(today.getDate() - difference));
-    for (var i = 1; i < currentDay; i++) {
-      var today = new Date()
-      var difference = currentDay - i;
-      var newDate = new Date(today.setDate(today.getDate() - difference));
-      var month = newDate.getMonth() + 1;
-      weekdays.push(weekday_mapper[i] + "\n" + month + "-" + newDate.getDate());
-    }
-    for (var i = currentDay; i < 6; i++) {
-      var today = new Date()
-      var difference = currentDay - i;
-      var newDate = new Date(today.setDate(today.getDate() - difference));
-      var month = newDate.getMonth() + 1;
-      weekdays.push(weekday_mapper[i] + "\n" + month + "-" + newDate.getDate());
-    }
-    this.setData({
-      weekdays: weekdays
-    })
+    // 根据current_week逆向生成日期
+    // 先获取当前周的周一，再从周一开始计算四天
+    // 忽略周末    
+    // var weekdays = []
+    // for (var i = 0; i < 5; i++) {
+    //   var monday = GetMonday(new Date());
+    //   var newDate = new Date(monday.setDate(monday.getDate() + i));
+    //   var month = newDate.getMonth() + 1;
+    //   weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
+    // }
+    // this.setData({
+    //   weekdays: weekdays
+    // })
   },
   add_note: function (e) {
     var temp = this.data.selectClass;
@@ -284,15 +344,32 @@ Page({
   },
   change_week: function(e) {
     var tmpSelect = parseInt(e.currentTarget.dataset['week']) + current_week() -1;
-    if (tmpSelect >= 39) {
+    if (tmpSelect >= 40) {
       tmpSelect += 1;
     }
     this.setData({
-      selectWeek: tmpSelect
+      selectWeek: tmpSelect,
+      isAllWeek: false
     });
-    cl(this.data.selectWeek);
     this.onLoad();
    
+  },
+  /**
+   * 切换至所有课程都显示的模式
+   */
+  changeAllWeek: function() {
+    var weekdays = []
+    for (var i = 0; i < 5; i++) {
+      var monday = GetMonday(new Date());
+      var newDate = new Date(monday.setDate(monday.getDate() + i));
+      var month = newDate.getMonth() + 1;
+      weekdays.push(weekday_mapper[i + 1] + "\n" + month + "-" + newDate.getDate());
+    }
+    this.setData({
+      currentMonth: new Date().getMonth() + 1,
+      weekdays: weekdays,
+      isAllWeek: true
+    })
   },
 
   /**
