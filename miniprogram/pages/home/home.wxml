@@ -23,7 +23,7 @@
 		<image src="{{timetableIcon}}" />
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
-		<image src="{{inComingIcon}}" />
+		<image src="{{reviewIcon}}" />
 	</navigator>
 </view>
 

@@ -9,15 +9,57 @@
   flex-direction: column;
   box-sizing: border-box;
 } 
+.searchArea {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
 
-.courseSearch, .colorPick {
+.searchBar {
+  background-color: #FFFFFF;
+  width: 592rpx;
+  height: 84rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+  margin-right: 10rpx;
+  border-radius: 10rpx;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchButton {
+  margin-top: 40rpx;
+  height: 84rpx;
+}
+
+.searchButton .mini-btn{
+  width: 118rpx;
+  height: 84rpx;
+  margin-right: 20rpx;
+  text-align: center;
+  font-weight: lighter;
+  font-size: 32rpx;
+  line-height: 84rpx;
+  box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
+  border-radius: 10rpx;
+}
+
+.colorPick {
   width: 100%;
   height: 100rpx;
   font-size: 34rpx;
   color: rgba(0,0,0,0.9);
   background-color: #FFFFFF;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;
-  margin: 25rpx 0rpx;
+  /* margin: 40rpx 0rpx; */
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-top: 80rpx;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;

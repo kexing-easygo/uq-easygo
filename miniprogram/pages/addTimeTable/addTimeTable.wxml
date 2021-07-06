@@ -1,14 +1,22 @@
 <!--miniprogram/pages/addTimeTable/addTimeTable.wxml-->
 <view class="container">
 
-  <view class="courseSearch">
+  <!-- <view class="courseSearch">
     <icon class="cdtitle" type="search" size="30"></icon>
     <view class="cdDetail">
       <input type="text" bindinput="timeCourse"></input>
       <button class="mini-btn" type="primary" size="mini" bindtap="searchCourseTime" style="margin-left:35rpx">搜索</button>
     </view>
-  </view>
-
+  </view> -->
+  <view class="searchArea">
+    <view class="searchBar">
+      <icon class="icon-small" type="search" style="margin-right:20rpx"  size="34"></icon>
+      <input style="margin-left:50rpx" type="text" maxlength="8" bindinput="timeCourse" placeholder="CSSE1001(大写)"/>
+    </view>
+		<view class="searchButton">
+				<button class="mini-btn" type="primary" size="mini" bindtap="searchCourseTime">搜索</button>
+		</view>
+	</view>
   <view class="colorPick">
     <text class="cdtitle">设置颜色</text>
     <view class="cdDetail">
@@ -40,7 +48,7 @@
 
 <view class="timeSelectContainer">
   <checkbox-group bindchange="chooseClass">
-  <view class="timeContainer" wx:for="{{courseTimeDeatial['S2IN']}}" wx:for-item="item" wx:for-index="index">
+  <view class="timeContainer" wx:for="{{courseTimeDeatial}}" wx:for-item="item" wx:for-index="index">
     <view class="timeItem">
       <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end"]}}</text>
       <checkbox class="checkoption"  value="{{index}}"  />

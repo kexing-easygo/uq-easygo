@@ -139,7 +139,6 @@ Page({
    */
   fetchCourseInfo: function() {
     var course = this.data.searchBarValue;
-    // var course = "CSSE1001"
     let that = this;
     if (course.length == 8) {
       db.collection('CourseReview')
@@ -179,17 +178,17 @@ Page({
         },
       )
     }
-    
   },
   /**
    * 下一步按钮的回调函数，将选中的作业列表
    * 传递到下一个页面
    */
   confirm: function () {
+    var course = this.data.searchBarValue;
     var color = this.data.color;
     var ass = this.data.selectedAssessments;
     // 用户选了作业但是没选择颜色
-    if (color == 0 && ass.length != 0) {
+    if (color == 0) {
       wx.showModal({
         title: "提示",
         content: "你好像忘记设置颜色了哦！"
@@ -200,17 +199,15 @@ Page({
     for (var i = 0; i < ass.length; i++) {
       // 更新color字段
       ass[i].color = color;
+      ass[i].name = course + "-" + ass[i].name;
       // TODO: 解析到TBD，自动变为30天后
       if (ass[i].date == "TBD") {
         ass[i].date = GetDateStr(30);
         ass[i].time = "00:00"
       }
-      console.log(ass[i])
       db.collection("MainUser")
       .where({
         _openid: app.globalData._openid
-        // _openid:"oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
-
       })
       .update({
         data: {
@@ -221,7 +218,7 @@ Page({
             console.log("作业条目添加成功")
             // reLaunch方法一定要在异步方法内部调用，保证先后顺序
             // 不然会出现更新延迟的问题
-            wx.reLaunch({
+            wx.redirectTo({
               url: '../countdown/countdown',
               success: function (res) {
                 var page = getCurrentPages().pop()
