@@ -139,7 +139,6 @@ Page({
       detailShow: true,
       selectClass: temp
     });
-    // cl(this.data.selectClass);
   },
 
   timeDetailDown: function (event) {
@@ -156,18 +155,17 @@ Page({
     clearTimeout(deatilTime);
   },
   deleteClass: function (e) {
-    // cl(e.currentTarget.dataset['classindex']);
     var temp = this.data.userCourseTime;
     temp.splice(e.currentTarget.dataset['classindex'], 1);
     let that = this;
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var list = res.data[0]['courseTime'];
         list.splice(e.currentTarget.dataset['classindex'], 1);
         db.collection("MainUser").where({
-          _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+          _openid: app.globalData._openid
         }).update({
           data: {
             courseTime: list
@@ -177,6 +175,7 @@ Page({
           userCourseTime: temp,
           detailShow: false,
         });
+        that.onReady();
       }
     })
   },
@@ -189,16 +188,10 @@ Page({
     
     this.setData({
       selectWeek: 0,
-      isAllWeek: true
-    })
-    this.generateWeekdays();
-    // var selectWeek = this.data.selectWeek;
-    // 根据第几周，返回那周的周一日期
-    // var startDate = teachingWeeks[selectWeek];
-    // 默认查看所有周的课
-    this.setData({
+      isAllWeek: true,
       currentMonth: currentMonth,
     })
+    this.generateWeekdays();
     
   },
   add_note: function (e) {
@@ -211,12 +204,18 @@ Page({
 
   update_note: function(e) {
     var temp = this.data.userCourseTime;
+    let that = this;
     temp[this.data.selectClass.index]["classTime"]['notes'] = this.data.selectClass.notes;
+    temp[this.data.selectClass.index]["color"] = "background-color:" + this.data.color + ";"
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
+      _openid: app.globalData._openid,
     }).update({
       data: {
         courseTime: temp,
+      }, 
+      success: function (res) {
+        that.onReady();
+        that.quitShade();
       }
     });
   },
@@ -283,8 +282,6 @@ Page({
     this.setData({
       weekdays: weekdays,
     })
-
-
   },
 
   /**
@@ -294,7 +291,7 @@ Page({
     let that = this;
     var selectWeek = this.data.selectWeek;
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
@@ -345,14 +342,12 @@ Page({
           } else {
             temp[i]["display"] = "yes";
           }
-          
         }
         that.setData({
           userCourseTime: temp
         });
       }
     });
-    
   },
 
   bindRed: function() {

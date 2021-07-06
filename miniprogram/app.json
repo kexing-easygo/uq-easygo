@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/timetable/timetable",
     "pages/home/home",
+    "pages/timetable/timetable",
     "pages/autoCountDown/autoCountDown",
     "pages/addTimeTable/addTimeTable",
     "pages/profile/profile",

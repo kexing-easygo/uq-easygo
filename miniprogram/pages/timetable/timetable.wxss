@@ -21,6 +21,8 @@
   height: 50rpx;
   width: 100rpx;
   margin-right: 20rpx;
+  padding-left: 25rpx;
+  padding-right: 30rpx;
   text-align: center;
 }
 

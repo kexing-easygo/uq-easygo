@@ -1,46 +1,46 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
   <view class="week selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
-    <text>All weeks</text>
+    <text decode="true">All&nbsp;weeks</text>
   </view>
   <view class="week selectWeek{{selectWeek==31?'':'none'}}"  data-week="1" bindtap="change_week">
-    <text>w1</text>
+    <text decode="true">week1</text>
   </view>
   <view class="week selectWeek{{selectWeek==32?'':'none'}}" data-week="2" bindtap="change_week" >
-    <text>w2</text>
+    <text decode="true">week2</text>
   </view>
   <view class="week selectWeek{{selectWeek==33?'':'none'}}" data-week="3" bindtap="change_week" >
-    <text>w3</text>
+    <text decode="true">week3</text>
   </view>
   <view class="week selectWeek{{selectWeek==34?'':'none'}}" data-week="4" bindtap="change_week">
-    <text>w4</text>
+    <text>week4</text>
   </view>
   <view class="week selectWeek{{selectWeek==35?'':'none'}}" data-week="5" bindtap="change_week" >
-    <text>w5</text>
+    <text>week5</text>
   </view>
   <view class="week selectWeek{{selectWeek==36?'':'none'}}" data-week="6" bindtap="change_week" >
-    <text>w6</text>
+    <text>week6</text>
   </view>
   <view class="week selectWeek{{selectWeek==37?'':'none'}}" data-week="7" bindtap="change_week" >
-    <text>w7</text>
+    <text>week7</text>
   </view>
   <view class="week selectWeek{{selectWeek==38?'':'none'}}" data-week="8" bindtap="change_week" >
-    <text>w8</text> 
+    <text>week8</text> 
   </view>
   <view class="week selectWeek{{selectWeek==39?'':'none'}}" data-week="9" bindtap="change_week" >
-    <text>w9</text>
+    <text>week9</text>
   </view>
   <view class="week selectWeek{{selectWeek==41?'':'none'}}" data-week="10" bindtap="change_week" >
-    <text>w10</text>
+    <text>week10</text>
   </view>
   <view class="week selectWeek{{selectWeek==42?'':'none'}}" data-week="11" bindtap="change_week" >
-    <text>w11</text>
+    <text>week11</text>
   </view>
   <view class="week selectWeek{{selectWeek==43?'':'none'}}" data-week="12" bindtap="change_week" >
-    <text>w12</text>
+    <text>week12</text>
   </view>
   <view class="week selectWeek{{selectWeek==44?'':'none'}}" data-week="13" bindtap="change_week" >
-    <text>w13</text>
+    <text>week13</text>
   </view>
 </view>
 

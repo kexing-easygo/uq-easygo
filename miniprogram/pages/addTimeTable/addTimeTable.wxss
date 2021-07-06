@@ -114,7 +114,6 @@ checkbox .wx-checkbox-input{
 .confirm{
   width: 325rpx;
   height: 80rpx;
-  background: #07c160;
   border-radius: 6rpx;
   font-size: 30rpx;
   color: #fff;
