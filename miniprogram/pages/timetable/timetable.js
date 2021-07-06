@@ -123,7 +123,11 @@ Page({
     selectWeekStyle: selectWeekTitleStyle,
     selectWeek: current_week ,
     // 是否显示所有课程
-    isAllWeek: false
+    isAllWeek: false,
+
+    //颜色按钮flag
+    color: 0,
+    clicked_1: false,
 
   },
   timeDetail: function (event) {
@@ -318,14 +322,14 @@ Page({
         for (var i = 0; i < temp.length; i++) {
           var clash = temp[i]["clash"]
           if (temp[i].hasOwnProperty("clash")) {
-            temp[i]['width'] = "width:" + "67.5rpx;"
+            temp[i]['width'] = "width:" + "65rpx;"
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
           } else {
-            temp[i]['width'] = "width:" + "135rpx;"
-            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+            temp[i]['width'] = "width:" + "130rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 1;
           }
           var start = temp[i]["classTime"]["start"].split(":")[0];
-          var top = 25 + 90 * (start - 8);
+          var top = 14 +  90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
           temp[i]['top'] = "top:" + top + "rpx;"
           temp[i]["color"] = temp[i]['color'];
@@ -349,6 +353,57 @@ Page({
       }
     });
     
+  },
+
+  bindRed: function() {
+    this.setData({
+      color: "#FA5151",
+      clicked_1: true,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindPink: function() {
+    this.setData({
+      color: "#FFC300",
+      clicked_1: false,
+      clicked_2: true,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindLightBlue: function() {
+    this.setData({
+      color: "#07C160",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: true,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+  bindPurple: function() {
+    this.setData({
+      color: "#1485EE",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: true,
+      clicked_5: false,
+    });
+  },
+  bindYellow: function() {
+    this.setData({
+      color: "#576B95",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: true,
+    });
   },
 
 })
