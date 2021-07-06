@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/review/review",
-    "pages/searchReview/searchReview",
-    "pages/addReview/addReview",
     "pages/home/home",
+    "pages/searchReview/searchReview",
+    "pages/review/review",
+    "pages/addReview/addReview",
     "pages/profile/profile",
     "pages/calc/calc",
     "pages/countdown/countdown",
@@ -22,10 +22,7 @@
     "pages/setEmailNotification/setEmailNotification",
     "pages/setMobileNotification/setMobileNotification",
     "pages/aboutUs/aboutUs",
-    "pages/timetable/timetable",
-    "pages/searchReview",
-    "pages/searchReview/searchReview",
-    "pages/addReview/addReview"
+    "pages/timetable/timetable"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

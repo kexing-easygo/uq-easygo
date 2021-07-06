@@ -1,5 +1,4 @@
 <!--miniprogram/pages/searchReview/searchReview.wxml-->
-<<<<<<< HEAD
 <view class="container">
 	<view class="searchArea">
     <view class="searchBar">
@@ -32,6 +31,3 @@
 
 
 </view>
-=======
-<text>miniprogram/pages/searchReview/searchReview.wxml</text>
->>>>>>> 8189247e65116b75ceb1202a2c1d0ed79ee5f257
