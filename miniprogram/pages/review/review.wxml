@@ -18,7 +18,7 @@
       </view>
       <view class="courseElement">
         <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Semester(s)</view>
-        <view>{{courseSemester[0]}}</view>
+        <view>{{courseSemester}}</view>
       </view>
 
       <view style="font-size: 24rpx; margin-bottom: 20rpx; font-weight: 300;">
