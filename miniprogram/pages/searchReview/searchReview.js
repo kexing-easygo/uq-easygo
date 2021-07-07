@@ -17,7 +17,6 @@ Page({
     })
   },
   fetchCourseInfo: function () {
-    // 检查用户是否选择上课模式
     var title = this.data.searchBarValue;
     db.collection("CourseReview")
     .where({
@@ -60,7 +59,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.setData({
+      searchBarValue: "CSSE1001"
+    })
+    this.fetchCourseInfo();
   },
 
   /**

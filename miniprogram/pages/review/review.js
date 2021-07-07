@@ -1,4 +1,7 @@
 // miniprogram/pages/review/review.js
+const app = getApp()
+const db = wx.cloud.database()
+const _ = db.command
 Page({
 
   /**
@@ -11,14 +14,35 @@ Page({
     coursePre: ['DECO1100', 'DECO1100'],
     courseSemester: ['Semester1', 'Semester2'],
     courseIncompatible: "DECO1100",
-    like:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表敬请期待.png",
+    // 未点赞图标
+    beforeLikeImg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
+    // 点赞图标
+    afterLikeImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/点赞.png",
+    // 未好过
+    beforeEasyPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好过.png",
+    // 未好难
+    beforeHardPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好难.png",
+    // 未好7
+    beforeEasyHdImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好7.png",
+    // 未看运气
+    beforeGoodLuckImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未看运气.png",
+    // 好过
+    afterEasyPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好过.png",
+    // 好难
+    afterHardPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好难.png",
+    // 好7
+    afterEasyHdImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好7.png",
+    // 运气
+    afterGoodLuckImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/看运气.png",
     easy_hd: 0,
     easy_pass: 0,
     good_luck: 0,
     hard_pass: 0,
     reviewerInfo: "Sprite-2021 s1",
     ownReview: true,
-    reviews: []
+    reviews: [],
+    showInfo: false,
+    userOpenid: app.globalData._openid
   },
 
   /**
@@ -26,43 +50,122 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    const eventChannel = that.getOpenerEventChannel()
-    eventChannel.on('acceptDataFromOpenerPage', function (e) {
-      var raw = JSON.parse(e)
-      var data = raw.data;
-      console.log(data);
-      // 赋值
-      var prerequisite = "None"
-      if ("prerequisite" in data.external) {
-        prerequisite = data.external.prerequisite;
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    // 如果页面是从搜索过来
+    if ("route" in prevPage) {
+      if (prevPage.route == "pages/searchReview/searchReview") {
+        const eventChannel = that.getOpenerEventChannel()
+        eventChannel.on('acceptDataFromOpenerPage', function (e) {
+          app.globalData._openid = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8";
+          var raw = JSON.parse(e)
+          var data = raw.data;
+          // 缓存globalData
+          app.globalData.reviewData = data;
+          app.globalData.reviewCourseName = data.course_name;
+        })
       }
-      var incompatible = "None"
-      if ("incompatible" in data.external) {
-        incompatible = data.external.incompatible;
-      }
-      that.setData({
-        courseName: data.course_name,
-        courseLecturer: data.external.lecturer,
-        courseFaculty: data.external.faculty,
-        coursePre: prerequisite,
-        courseIncompatible: incompatible,
-        courseSemester: data.external.taught,
-        easy_hd: data.easy_hd,
-        easy_pass: data.easy_pass,
-        good_luck: data.good_luck,
-        hard_pass: data.hard_pass,
-        reviews: data.reviews
-      })
-    })
+    }
+    
+    
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
+    // var temp = [
+    //   {
+    //     poster_name: "Apocalypse",
+    //     poster_open_id: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
+    //     mode: "external",
+    //     outstanding: true,
+    //     post_date: "2021-06-01",
+    //     post_time: "15:00",
+    //     likes: 23,
+    //     review: "这课安排挺合理的", 
+    //     semester_enrolled: "2017 s1"
+    //   },
+    //   {
+    //     poster_name: "Null🐷",
+    //     poster_open_id: "oe4Eh5Slt8P3MIQIq-UwMuE3pyHg",
+    //     mode: "Internal",
+    //     outstanding: false,
+    //     post_date: "2021-06-03",
+    //     post_time: "12:00",
+    //     likes: 2,
+    //     review: "这课好难啊", 
+    //     semester_enrolled: "2018 s2"
+    //   }
+    // ]
+    // db.collection("CourseReview")
+    // .where({
+    //   course_name: "CSSE1001"
+    // })
+    // .update({
+    //   data: {
+    //     reviews:temp
+    //   },
+    //   success: function (res) {
+    //     console.log(res.stats.updated);
+    //   }
+    // })
+    // console.log(this.data.reviews);
+    let pages = getCurrentPages();
+    let prevPage = pages[pages.length - 2];
+    if ("route" in prevPage) {
+      if (prevPage == "pages/searchReview/searchReview") {
+        db.collection("MainUser")
+        .where({
+          _openid: app.globalData._openid
+        })
+        .get()
+        .then(
+          res => {
+            if (res.data.length == 0) {
+  
+            } else {
+              if ("classMode" in res.data) {
+                app.globalData.classMode = res.data.classMode;
+              } else {
+  
+              }
+            }
+          }
+        )
+      }
+    }
+    
+    // 赋值
+    let that = this
+    var data = app.globalData.reviewData;
+    var prerequisite = "None"
+    if ("prerequisite" in data.external) {
+      prerequisite = data.external.prerequisite;
+    }
+    var incompatible = "None"
+    if ("incompatible" in data.external) {
+      incompatible = data.external.incompatible;
+    }
+    that.setData({
+      courseName: data.course_name,
+      courseLecturer: data.external.lecturer,
+      courseFaculty: data.external.faculty,
+      coursePre: prerequisite,
+      courseIncompatible: incompatible,
+      courseSemester: data.external.taught,
+      easy_hd: data.easy_hd,
+      easy_pass: data.easy_pass,
+      good_luck: data.good_luck,
+      hard_pass: data.hard_pass,
+      reviews: data.reviews,
+      userOpenid: app.globalData._openid
+    })
+  },
+  modifyReview: function (e) {
 
   },
-
   /**
    * 生命周期函数--监听页面显示
    */

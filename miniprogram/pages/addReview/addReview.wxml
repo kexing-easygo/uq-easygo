@@ -6,21 +6,24 @@
 
   <view class="name">
     <view class="nameHead">大佬姓名</view>
-    <input type="text" maxlength="8" placeholder="CSSE1001"/>
+    <input type="text" maxlength="8" placeholder="Lewis" bindinput="getName"/>
   </view>
 
   <view class="semester">
     <view class="semesterHead">学习学期</view>
-    <view style="margin-left: 80rpx; color:black; font-size: 36rpx;"> Semester2, 2021 </view>
+    <view style="margin-left: 80rpx; color:black; font-size: 36rpx;">
+      <input type="text" maxlength="8" placeholder="2021 s1" bindinput="getSemester"/>
+    </view>
+    
   </view>
 
   <view class="content">
-    <textarea type="text" maxlength="{{maxlength}}" bindinput="input" placeholder="留下你的评价，让更多人看到 !" placeholder-class="txt">
+    <textarea type="text" maxlength="{{maxlength}}" bindinput="getReview" placeholder="留下你的评价，让更多人看到 !" placeholder-class="txt">
       <text class="wordCount">{{currentWord|0}}/{{maxlength}}</text>
     </textarea>
   </view>
 
-  <button type="primary" style="margin-top: 50rpx; box-shadow: 0 10rpx 10rpx 2rpx #cccccc;">
+  <button type="primary" style="margin-top: 50rpx; box-shadow: 0 10rpx 10rpx 2rpx #cccccc;" bindtap="postReview">
     确认上传
   </button>
 

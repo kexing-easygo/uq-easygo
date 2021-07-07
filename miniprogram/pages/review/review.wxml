@@ -30,69 +30,57 @@
 
   <view class="likeBar">
     <button class="likeButton"> 
-      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <image src="{{beforeEasyPassImg}}" style="width: 35rpx; height: 35rpx;"></image>
       <view>好过</view>
     </button>
     <button class="likeButton"> 
-      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <image src="{{beforeHardPassImg}}" style="width: 35rpx; height: 35rpx;"></image>
       好难
     </button>
     <button class="likeButton"> 
-      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <image src="{{beforeEasyHdImg}}" style="width: 35rpx; height: 35rpx;"></image>
       好7
     </button>
     <button class="likeButton"> 
-      <image src="{{like}}" style="width: 35rpx; height: 35rpx;"></image>
+      <image src="{{beforeGoodLuckImg}}" style="width: 35rpx; height: 35rpx;"></image>
       <view>运气</view>
     </button>
   </view>
 
-  <view class="reviewBlock">
+  <view class="reviewBlock" wx:for="{{reviews}}" wx:for-index="index" wx:for-item="singleReview" wx:for-key="index">
     <view class="reviewerInfo">
-      <view style="margin-left: 50rpx;">{{reviewerInfo}}</view>
-      <view style="margin-left: 150rpx;">优秀回答🤪</view>
+      <view style="margin-left: 50rpx;">{{singleReview.poster_name}} - {{singleReview.semester_enrolled}}</view>
+      <view wx:if="{{singleReview.outstanding == true}}" style="margin-left: 150rpx;">优秀回答</view>
     </view>
 
-    <view class="reviewContent">
-      <view class="reviewTxt" style="margin-top: 50rpx;">
-          DECO课都洗内DECO课都洗内DECO课都洗内.DECO课都洗内DECO课都洗内DECO课都洗内.
-          DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内
+    <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
+      <view class="reviewTxt" style="margin-top: 50rpx;" bindtap="modifyReview">
+          {{singleReview.review}}
+      </view>
+    </view>
+
+    <view wx:else class="reviewContent"> 
+      <view class="reviewTxt" style="margin-top: 50rpx;" >
+          {{singleReview.review}}
       </view>
     </view>
 
     <view class="heart">
       <button style="width: 100rpx; height: 64rpx;">
-        <image src="{{like}}" style="width: 30rpx; height: 30rpx;"></image>
-        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">21</view>
-      </button>
-    </view>
-
-  </view>
-
-  <view class="reviewBlock">
-    <view class="reviewerInfo">
-      <view style="margin-left: 50rpx;">{{reviewerInfo}}</view>
-    </view>
-
-    <view class="reviewContent" style="{{ownReview?'background-color: #FFF0A7;':'background-color: #FFFFFF;'}}">
-      <view class="reviewTxt" style="margin-top: 50rpx;">
-          DECO课都洗内DECO课都洗内DECO课都洗内.DECO课都洗内DECO课都洗内DECO课都洗内.
-          DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内DECO课都洗内
-      </view>
-    </view>
-
-    <view class="heart">
-      <button style="width: 100rpx; height: 64rpx;">
-        <image src="{{like}}" style="width: 30rpx; height: 30rpx;"></image>
-        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">21</view>
+        <image src="{{beforeLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
       </button>
     </view>
   </view>
+
 
   <view class="bottomBar">
     <navigator class="createReview" url="/pages/addReview/addReview">
       <view>发表评论</view>
     </navigator>
+    <!-- <button class="createReview" bindtap="">
+      <view>发表评论</view>
+    </button> -->
   </view>
 
 </view>
