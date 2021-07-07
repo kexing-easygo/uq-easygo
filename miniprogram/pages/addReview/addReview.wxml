@@ -1,24 +1,24 @@
 <!--miniprogram/pages/addReview/addReview.wxml-->
 <view class="container">
   <view class="heading">
-    DECO1100 - Design Thinking
+    {{heading}}
   </view>
 
   <view class="name">
     <view class="nameHead">大佬姓名</view>
-    <input type="text" maxlength="8" placeholder="Lewis" bindinput="getName"/>
+    <input value="{{nickName}}" type="text" maxlength="8" placeholder="Lewis" bindinput="getName"/>
   </view>
 
   <view class="semester">
     <view class="semesterHead">学习学期</view>
     <view style="margin-left: 80rpx; color:black; font-size: 36rpx;">
-      <input type="text" maxlength="8" placeholder="2021 s1" bindinput="getSemester"/>
+      <input value="{{semester}}" type="text" maxlength="8" placeholder="2021 s1" bindinput="getSemester"/>
     </view>
     
   </view>
 
   <view class="content">
-    <textarea type="text" maxlength="{{maxlength}}" bindinput="getReview" placeholder="留下你的评价，让更多人看到 !" placeholder-class="txt">
+    <textarea value="{{reviewTxt}}" type="text" maxlength="{{maxlength}}" bindinput="getReview" placeholder="留下你的评价，让更多人看到 !" placeholder-class="txt">
       <text class="wordCount">{{currentWord|0}}/{{maxlength}}</text>
     </textarea>
   </view>

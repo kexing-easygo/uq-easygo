@@ -12,7 +12,8 @@ Page({
     reviewTxt: '',
     nickName: "",
     semester: "",
-    course_name: app.globalData.reviewCourseName
+    course_name: app.globalData.reviewCourseName,
+    heading: ""
   },
 
   
@@ -20,7 +21,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that = this
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.on('acceptDataFromOpenerPage', function (e) {
+      // 解码json数据
+      var raw = JSON.parse(e)
+      var data = raw.data
+      if (Object.keys(data).length > 0) {
+        that.setData({
+          nickName: data.poster_name,
+          semester: data.semester_enrolled,
+          reviewTxt: data.review,
+          currentWord: data.review.length
+        })
+      }
+    })
   },
   getName: function (e) {
     this.setData({
@@ -141,7 +156,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      heading: app.globalData.reviewCourseName
+    })
+    wx.setNavigationBarTitle({
+      title: app.globalData.reviewCourseName,
+    })
   },
 
   /**

@@ -164,7 +164,18 @@ Page({
     })
   },
   modifyReview: function (e) {
-
+    var index = e.currentTarget.dataset['reviewindex'];
+    var review = this.data.reviews[index];
+    var query = JSON.stringify({
+      data: review
+    })
+    wx.navigateTo({
+      url: '/pages/addReview/addReview',
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送正在被点击的assignment信息
+        res.eventChannel.emit('acceptDataFromOpenerPage', query)
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面显示

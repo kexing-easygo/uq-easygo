@@ -54,7 +54,7 @@
     </view>
 
     <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
-      <view class="reviewTxt" style="margin-top: 50rpx;" bindtap="modifyReview">
+      <view class="reviewTxt" style="margin-top: 50rpx;" data-reviewindex="{{index}}" bindtap="modifyReview">
           {{singleReview.review}}
       </view>
     </view>
