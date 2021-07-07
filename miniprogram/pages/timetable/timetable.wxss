@@ -26,6 +26,17 @@
   text-align: center;
 }
 
+.weekall {
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  height: 50rpx;
+  width: 100rpx;
+  margin-right: 20rpx;
+  padding-right: 30rpx;
+  text-align: center;
+}
+
+
 .selectWeek {
   background-color: rgba(100, 103, 204, 0.7);
 }
@@ -54,13 +65,11 @@
 
 .time .timePoint {
   background-color: #ffffff;
-  text-align: center;
   height: 90rpx;
   width: 50rpx;
   /* margin-top: 2rpx; */
   display: flex;
   justify-content: center;
-  align-items: center;
   border-bottom: 1rpx rgba(0, 0, 0, 0.1) solid;
 }
 
@@ -113,17 +122,12 @@
 }
 
 .class {
-  /* width: 130rpx; */
-  /* background-color: #576b95; */
   border-radius: 10rpx;
-  /* height: 176rpx; */
   word-wrap: break-word;
   position: absolute;
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;
-  /* left: 200rpx; 140rpx * 周几
-  top: 720rpx; 90rpx * 第几节 */
 }
 
 
@@ -208,19 +212,19 @@
 }
 
 .clicked_1 {
-  outline: 1px solid #FA5151;
+  outline: 1px solid #ff7043;
 }
 .clicked_2 {
-  outline: 1px solid #FFF176;
+  outline: 1px solid #ffca28;
 }
 .clicked_3 {
-  outline: 1px solid #81C784;
+  outline: 1px solid #9ccc65;
 }
 .clicked_4 {
-  outline: 1px solid #64B5F6;
+  outline: 1px solid #29B6F6;
 }
 .clicked_5 {
-  outline: 1px solid #7986CB;
+  outline: 1px solid #576B95;
 }
 
 

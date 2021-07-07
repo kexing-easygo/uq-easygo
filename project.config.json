@@ -38,12 +38,6 @@
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -80,6 +74,11 @@
           "name": "pages/otherSettings/otherSettings",
           "pathName": "pages/otherSettings/otherSettings",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/timetable/timetable",
+          "pathName": "pages/timetable/timetable",
           "scene": null
         }
       ]

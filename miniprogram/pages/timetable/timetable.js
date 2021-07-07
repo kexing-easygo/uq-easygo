@@ -1,5 +1,6 @@
 // miniprogram/pages/timetable/timetable.js
-import util from '../../utils/util.js';
+// import util from '../../utils/util.js'
+
 var deatilTime;
 const db = wx.cloud.database();
 const app = getApp();
@@ -24,7 +25,18 @@ const series = {
 
 // 中文数字和英文数字
 const months = {
-  1: "一"
+  1: "一",
+  2: "二",
+  3: "三",
+  4: "四",
+  5: "五",
+  6: "六",
+  7: "七",
+  8: "八",
+  9: "九",
+  10: "十",
+  11: "十一",
+  12: "十二"
 }
 
 /**
@@ -120,7 +132,7 @@ Page({
     detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],
     selectClass: {},
-    currentMonth: currentMonth,
+    currentMonth: months[currentMonth],
     weekdays: [],
     currentWeek: current_week(),
     currentDay: currentDay,
@@ -195,7 +207,7 @@ Page({
     this.setData({
       selectWeek: 0,
       isAllWeek: true,
-      currentMonth: currentMonth,
+      currentMonth: months[currentMonth],
     })
     this.generateWeekdays();
     
@@ -258,7 +270,7 @@ Page({
     this.setData({
       selectWeek: tmpSelect,
       isAllWeek: false,
-      currentMonth: currentMonth
+      currentMonth: months[currentMonth]
     });
     this.onReady();
     this.generateWeekdays(teachingWeeks[tmpSelect]);
@@ -271,7 +283,7 @@ Page({
   changeAllWeek: function(e) {
     this.setData({
       selectWeek: 0,
-      currentMonth: new Date().getMonth() + 1,
+      currentMonth: months[new Date().getMonth() + 1],
       isAllWeek: true
     })
     this.onReady();
@@ -363,7 +375,7 @@ Page({
 
   bindRed: function() {
     this.setData({
-      color: "#FA5151",
+      color: "#FF7043",
       clicked_1: true,
       clicked_2: false,
       clicked_3: false,
@@ -373,7 +385,7 @@ Page({
   },
   bindPink: function() {
     this.setData({
-      color: "#FFC300",
+      color: "#FFB300",
       clicked_1: false,
       clicked_2: true,
       clicked_3: false,
@@ -383,7 +395,7 @@ Page({
   },
   bindLightBlue: function() {
     this.setData({
-      color: "#07C160",
+      color: "#8BC34A",
       clicked_1: false,
       clicked_2: false,
       clicked_3: true,
@@ -393,7 +405,7 @@ Page({
   },
   bindPurple: function() {
     this.setData({
-      color: "#1485EE",
+      color: "#29B6F6",
       clicked_1: false,
       clicked_2: false,
       clicked_3: false,
