@@ -10,7 +10,7 @@ Page({
     // 轮播图
     swiperPlaceholderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图一.png",
     swiperPlaceholderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图二.png",
-    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图三.png",
+    swiperPlaceholderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表宣传图.png",
     // 功能图标
     calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
     countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
