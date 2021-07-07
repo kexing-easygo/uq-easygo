@@ -19,6 +19,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    courseTitle: "",
     courseTimeDeatial: {},
     findTime: false,
     selectedClass: [],
@@ -75,9 +76,6 @@ Page({
         }
       }
     )    
-  },
-  onReady: function(options) {
-    this.searchCourseTime()
   },
   timeCourse: function (e) {
     this.setData({
