@@ -1,46 +1,46 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
   <view class="week selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
-    <text decode="true">All&nbsp;weeks</text>
+    <text decode="true">All&nbsp;Week</text>
   </view>
   <view class="week selectWeek{{selectWeek==31?'':'none'}}"  data-week="1" bindtap="change_week">
-    <text decode="true">week1</text>
+    <text decode="true">Week1</text>
   </view>
   <view class="week selectWeek{{selectWeek==32?'':'none'}}" data-week="2" bindtap="change_week" >
-    <text decode="true">week2</text>
+    <text decode="true">Week2</text>
   </view>
   <view class="week selectWeek{{selectWeek==33?'':'none'}}" data-week="3" bindtap="change_week" >
-    <text decode="true">week3</text>
+    <text decode="true">Week3</text>
   </view>
   <view class="week selectWeek{{selectWeek==34?'':'none'}}" data-week="4" bindtap="change_week">
-    <text>week4</text>
+    <text>Week4</text>
   </view>
   <view class="week selectWeek{{selectWeek==35?'':'none'}}" data-week="5" bindtap="change_week" >
-    <text>week5</text>
+    <text>Week5</text>
   </view>
   <view class="week selectWeek{{selectWeek==36?'':'none'}}" data-week="6" bindtap="change_week" >
-    <text>week6</text>
+    <text>Week6</text>
   </view>
   <view class="week selectWeek{{selectWeek==37?'':'none'}}" data-week="7" bindtap="change_week" >
-    <text>week7</text>
+    <text>Week7</text>
   </view>
   <view class="week selectWeek{{selectWeek==38?'':'none'}}" data-week="8" bindtap="change_week" >
-    <text>week8</text> 
+    <text>Week8</text> 
   </view>
   <view class="week selectWeek{{selectWeek==39?'':'none'}}" data-week="9" bindtap="change_week" >
-    <text>week9</text>
+    <text>Week9</text>
   </view>
   <view class="week selectWeek{{selectWeek==41?'':'none'}}" data-week="10" bindtap="change_week" >
-    <text>week10</text>
+    <text>Week10</text>
   </view>
   <view class="week selectWeek{{selectWeek==42?'':'none'}}" data-week="11" bindtap="change_week" >
-    <text>week11</text>
+    <text>Week11</text>
   </view>
   <view class="week selectWeek{{selectWeek==43?'':'none'}}" data-week="12" bindtap="change_week" >
-    <text>week12</text>
+    <text>Week12</text>
   </view>
   <view class="week selectWeek{{selectWeek==44?'':'none'}}" data-week="13" bindtap="change_week" >
-    <text>week13</text>
+    <text>Week13</text>
   </view>
 </view>
 
@@ -92,7 +92,7 @@
 
   <view class="weekClass1"  wx:for="{{weekdays}}"  wx:for-item="item" wx:for-index="index">
     <view class="weekDate">
-      <view class="weekDateitem" wx:if="{{index + 1 == currentDay}}">
+      <view class="weekDateitem" wx:if="{{index + 1 == currentDay && selectWeek==0}}">
         <view class="weekDateitemContent" style="background-color: rgba(152, 95, 254, 0.7);">
           <text>{{item}}</text>
         </view>
@@ -105,16 +105,16 @@
     </view>
   </view>
 
-  <view style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1180rpx; width: 130rpx; top: 195rpx; left: calc(50rpx - 140rpx + (140rpx * {{currentDay}}))"></view>
+  <view  wx:if="{{selectWeek==0}}" style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1180rpx; width: 130rpx; top: 195rpx; left: calc(50rpx - 140rpx + (140rpx * {{currentDay}}))"></view>
 
   <view class="weekClass">
 
     <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index" >
       <view class="class" data-courseindex="{{index}}" bindtap="timeDetail"
         style="{{item.left}} {{item.top}} {{item.color}} {{item.height}} {{item.width}}" wx:if="{{item.display == 'yes'}}">
-        <text>{{item.courseName}}</text>
-        <text>{{item.classTime.type}}</text>
-        <text>{{item.classTime.location}}</text>
+        <text style="font-size: 22rpx;">{{item.courseName}}</text>
+        <text style="font-size: 21rpx;">{{item.classTime.type}}</text>
+        <text style="font-size: 22rpx;">{{item.classTime.location}}</text>
       </view>
     </view>
   </view>

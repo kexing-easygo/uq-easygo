@@ -11,7 +11,7 @@
   <view class="searchArea">
     <view class="searchBar">
       <icon class="icon-small" type="search" style="margin-right:20rpx"  size="34"></icon>
-      <input style="margin-left:50rpx" type="text" maxlength="8" bindinput="timeCourse" placeholder="CSSE1001(大写)"/>
+      <input style="margin-left:50rpx" type="text" maxlength="8" bindinput="timeCourse" placeholder="课程名称"/>
     </view>
 		<view class="searchButton">
 				<button class="mini-btn" type="primary" size="mini" bindtap="searchCourseTime">搜索</button>
@@ -57,7 +57,7 @@
   </checkbox-group>
 </view>
 
-<view class="confirm ">
+<view class="confirm" wx:if="{{showButton}}">
   <button bindtap="confirmSelect" type="primary"><text class="">确定</text></button>
 </view>
 

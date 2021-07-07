@@ -22,6 +22,11 @@ const series = {
   "19:00": 11
 }
 
+// 中文数字和英文数字
+const months = {
+  1: "一"
+}
+
 /**
  * 从7.26开始，将第几周和那周的周一日期对应起来，以便于生成当周的
  * 五天日期。
@@ -131,12 +136,13 @@ Page({
 
   },
   timeDetail: function (event) {
-    console.log(event.currentTarget.dataset['courseindex']);
     var courseIndex = event.currentTarget.dataset['courseindex'];
     var temp = this.data.userCourseTime[courseIndex];
     temp['courseindex'] = courseIndex;
+
     this.setData({
       detailShow: true,
+      color: temp["color"].split(":")[1].split(";")[0],
       selectClass: temp
     });
   },
@@ -214,6 +220,11 @@ Page({
         courseTime: temp,
       }, 
       success: function (res) {
+        wx.showToast({
+          title: '更新成功',
+          icon: "none",
+          duration: 1000
+        })
         that.onReady();
         that.quitShade();
       }

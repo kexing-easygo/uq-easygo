@@ -19,7 +19,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    courseTitle: "csse1001",
     courseTimeDeatial: {},
     findTime: false,
     selectedClass: [],
@@ -30,53 +29,52 @@ Page({
     clicked_3: false,
     clicked_4: false,
     clicked_5: false,
+    showButton: false
   },
   onLoad: function(options) {
     let that = this;
-    if (!app.globalData.hasUserInfo) {
-      wx.showModal({
-        title: 'UU妹提醒',
-        content: '登录才能使用课程表哦！',
-        success(res) {
-          wx.redirectTo({
-            url: '/pages/profile/profile',
+    db.collection("MainUser")
+    .where({
+      _openid: app.globalData._openid
+    })
+    .get().then(
+      res => {
+        if (res.data.length == 0) {
+          wx.showModal({
+            title: 'UU妹提醒',
+            content: '登录才能使用课程表哦！请前往个人中心登录～',
+            success(res) {
+              wx.redirectTo({
+                url: '/pages/timetable/timetable',
+              })
+              return;
+            }
           })
-          return;
-        }
-      })
-    } else {
-      db.collection("MainUser")
-      .where({
-        _openid: app.globalData._openid
-      })
-      .get()
-      .then(
-        res => {
-          if (!("classMode" in res.data[0])) {
-            wx.showModal({
-              title: 'UU妹提醒',
-              content: '请在个人中心-基本资料设置授课模式',
-              success(res) {
-                wx.redirectTo({
-                  url: '/pages/basicUserInfo/basicUserInfo',
-                })
-                return;
-              }
-            })
-          } else {
+        } else {
+          if ("classMode" in res.data[0]) {
             that.setData({
               mode: res.data[0].classMode
             })
             wx.showToast({
               title: '当前上课模式为:' + res.data[0].classMode,
-              duration: 1000,
+              duration: 2000,
               icon: "none"
+            })
+          } else {
+            wx.showModal({
+              title: 'UU妹提醒',
+              content: '请前往个人中心-基本资料设置授课模式～',
+              success(res) {
+                wx.reLaunch({
+                  url: '/pages/timetable/timetable',
+                })
+                return;
+              }
             })
           }
         }
-      )
-    }
-    
+      }
+    )    
   },
   onReady: function(options) {
     this.searchCourseTime()
@@ -85,15 +83,23 @@ Page({
     this.setData({
       courseTitle: e.detail.value.toUpperCase(),
     });
-    console.log(this.data.course);
   },
   searchCourseTime: function () {
     var dic = {};
     let that = this;
     db.collection('TimetableNew').where({
-      course_name: that.data.courseTitle,
+      course_name: that.data.courseTitle.toUpperCase(),
     }).get({
       success: function (res) {
+        if (res.data.length == 0) {
+          wx.showModal({
+            title: 'UU妹提醒',
+            content: '这门课太难了，超出了U妹的搜索范围，请确定课程名称后重新搜索或联系U妹～',
+            success(res) {
+              return;
+            }
+          })
+        }
         for (var key in res.data[0]) {
           if (key.length >= 20) {
             var keyList = key.split("_");
@@ -130,8 +136,8 @@ Page({
         that.setData({
           courseTimeDeatial: dic,
           findTime: true,
+          showButton: true
         });
-        console.log(that.data.courseTimeDeatial);
       }
     });
 
@@ -139,10 +145,10 @@ Page({
   chooseClass: function (e) {
     var values = e.detail.value;
     var temp = [];
-    for (var i = 0; i < this.data.courseTimeDeatial['S2IN'].length; i++) {
+    for (var i = 0; i < this.data.courseTimeDeatial.length; i++) {
       for (var j = 0; j < values.length; j++) {
-        if (this.data.courseTimeDeatial['S2IN'][i] == this.data.courseTimeDeatial['S2IN'][values[j]]) {
-          temp.push(this.data.courseTimeDeatial['S2IN'][i]);
+        if (this.data.courseTimeDeatial[i] == this.data.courseTimeDeatial[values[j]]) {
+          temp.push(this.data.courseTimeDeatial[i]);
           break;
         }
       }
@@ -167,7 +173,7 @@ Page({
         )
       }, 
       success: function (res) {
-        wx.redirectTo({
+        wx.reLaunch({
           url: '/pages/timetable/timetable',
           success: function (res) {
             var page = getCurrentPages().pop()
