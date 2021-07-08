@@ -1,0 +1,64 @@
+<!--miniprogram/pages/addTimeTable/addTimeTable.wxml-->
+<view class="container">
+
+  <!-- <view class="courseSearch">
+    <icon class="cdtitle" type="search" size="30"></icon>
+    <view class="cdDetail">
+      <input type="text" bindinput="timeCourse"></input>
+      <button class="mini-btn" type="primary" size="mini" bindtap="searchCourseTime" style="margin-left:35rpx">搜索</button>
+    </view>
+  </view> -->
+  <view class="searchArea">
+    <view class="searchBar">
+      <icon class="icon-small" type="search" style="margin-right:20rpx"  size="34"></icon>
+      <input style="margin-left:50rpx" type="text" maxlength="8" bindinput="timeCourse" placeholder="课程名称"/>
+    </view>
+		<view class="searchButton">
+				<button class="mini-btn" type="primary" size="mini" bindtap="searchCourseTime">搜索</button>
+		</view>
+	</view>
+  <view class="colorPick">
+    <text class="cdtitle">设置颜色</text>
+    <view class="cdDetail">
+      <view>
+        <button class="{{clicked_1? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FA5151;"
+          bindtap="bindRed"></button>
+      </view>
+      <view>
+        <button class="{{clicked_2? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FFC300;"
+          bindtap="bindPink"></button>
+      </view>
+      <view>
+        <button class="{{clicked_3? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #07C160;"
+          bindtap="bindLightBlue"></button>
+      </view>
+      <view>
+        <button class="{{clicked_4? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #1485EE;"
+          bindtap="bindPurple"></button>
+      </view>
+      <view>
+        <button class="{{clicked_5? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #576B95;"
+          bindtap="bindYellow"></button>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+
+<view class="timeSelectContainer">
+  <checkbox-group bindchange="chooseClass">
+  <view class="timeContainer" wx:for="{{courseTimeDeatial}}" wx:for-item="item" wx:for-index="index">
+    <view class="timeItem">
+      <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end"]}}</text>
+      <checkbox class="checkoption"  value="{{index}}"  />
+    </view>
+  </view>
+  </checkbox-group>
+</view>
+
+<view class="confirm" wx:if="{{showButton}}">
+  <button bindtap="confirmSelect" type="primary"><text class="">确定</text></button>
+</view>
+
+

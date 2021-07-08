@@ -23,7 +23,7 @@
 		<image src="{{timetableIcon}}" />
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
-		<image src="{{inComingIcon}}" />
+		<image src="{{reviewIcon}}" />
 	</navigator>
 </view>
 
@@ -38,7 +38,7 @@
 		课程表
 	</navigator>
 	<navigator url="/pages/nonfunction/nonfunction">
-		未开发
+		课评
 	</navigator>
 </view>
 

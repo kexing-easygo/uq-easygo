@@ -22,8 +22,8 @@ Page({
     let that = this;
     db.collection('MainUser')
     .where({
-      // _openid: app.globalData._openid
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
+      // _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
 
     })
     .update({
@@ -57,8 +57,8 @@ Page({
       var classMode = "点击设置"
       db.collection('MainUser')
       .where({
-        // _openid: app.globalData._openid
-        _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+        _openid: app.globalData._openid
+        // _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
 
       })
       .get()

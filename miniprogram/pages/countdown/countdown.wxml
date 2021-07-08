@@ -1,8 +1,9 @@
 <!--pages/countdown/countdown.wxml-->
+<wxs src="../../utils/string.wxs" module="tools" />
 <view class="container">
 	<view class="header" style="background-color: {{recentAssignmentColor}}">
-
-		<view class="header_subject">{{recentAssignmentName}}
+		<!-- 只显示最多15个字符 -->
+		<view class="header_subject">{{tools.my_slice(recentAssignmentName, 0, 15) + "..."}}
 		</view>
 		<view class="remain_day">{{recentAssignmentDate}}</view>
 		<view class="days red_day{{recentAssignmentDate > 3 ? 'nored':''}} green_day{{recentAssignmentDate < 0 ? '':'nog'}}">Days</view>
@@ -31,6 +32,7 @@
 						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						</view>
 						<text class="subject">{{item.name}}</text>
+						<!-- <text class="subject">{{tools.my_slice(item.name, 0, 10) + "..."}}</text> -->
 					</view>
 					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}} green_day{{item.countdown < 0 ? '':'nog'}}">
 						{{item.countdown}} Days
@@ -75,8 +77,14 @@
 	<view class="shade">
 		<!--蒙板内部-->
 		<view class="contents">
+			<!-- <view>
+				<text>自动添加</text>
+				<navigator url="/pages/autoCountDown/autoCountDown">
+					<image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+				</navigator>
+			</view> -->
 			<view>
-				<text>添加倒计时</text>
+				<text>手动添加</text>
 				<navigator url="/pages/addCountDown/addCountDown">
 					<image style="width: 88rpx; height: 88rpx" src="{{addCountDown}}" />
 				</navigator>
