@@ -29,21 +29,40 @@
   </view>
 
   <view class="likeBar">
-    <button class="likeButton"> 
-      <image src="{{beforeEasyPassImg}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>好过</view>
+    <button wx:if="{{easy_pass_clickable}}" class="likeButton" bindtap="easyPass"> 
+      <image src="{{img1}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text1}}</view>
     </button>
-    <button class="likeButton"> 
-      <image src="{{beforeHardPassImg}}" style="width: 35rpx; height: 35rpx;"></image>
-      好难
+    <button wx:else class="likeButton"> 
+      <image src="{{img1}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text1}}</view>
     </button>
-    <button class="likeButton"> 
-      <image src="{{beforeEasyHdImg}}" style="width: 35rpx; height: 35rpx;"></image>
-      好7
+
+    <button wx:if="{{hard_pass_clickable}}" class="likeButton" bindtap="hardPass"> 
+      <image src="{{img2}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text2}}</view>
     </button>
-    <button class="likeButton"> 
-      <image src="{{beforeGoodLuckImg}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>运气</view>
+    <button wx:else class="likeButton"> 
+      <image src="{{img2}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text2}}</view>
+    </button>
+
+    <button wx:if="{{easy_hd_clickable}}" class="likeButton" bindtap="easyHd"> 
+      <image src="{{img3}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text3}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img3}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text3}}</view>
+    </button>
+
+    <button wx:if="{{good_luck_clickable}}" class="likeButton" bindtap="goodLuck"> 
+      <image src="{{img4}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text4}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img4}}" style="width: 35rpx; height: 35rpx;"></image>
+      <view>{{text4}}</view>
     </button>
   </view>
 

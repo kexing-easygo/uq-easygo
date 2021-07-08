@@ -15,6 +15,10 @@ Page({
     courseSemester: ['Semester1', 'Semester2'],
     courseIncompatible: "DECO1100",
     likeUrl: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
+    img1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好过.png",
+    img2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好难.png",
+    img3: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好7.png",
+    img4: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未看运气.png",
     // 未点赞图标
     beforeLikeImg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
     // 点赞图标
@@ -35,10 +39,18 @@ Page({
     afterEasyHdImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好7.png",
     // 运气
     afterGoodLuckImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/看运气.png",
-    easy_hd: 0,
-    easy_pass: 0,
-    good_luck: 0,
-    hard_pass: 0,
+    easy_hd: {},
+    easy_pass: {},
+    good_luck: {},
+    hard_pass: {},
+    easy_hd_clickable: true,
+    easy_pass_clickable: true,
+    good_luck_clickable: true,
+    hard_pass_clickable: true,
+    text1: "好过",
+    text2: "好难",
+    text3: "好7",
+    text4: "运气",
     reviewerInfo: "Sprite-2021 s1",
     ownReview: true,
     reviews: [],
@@ -99,7 +111,6 @@ Page({
         )
       }
     }
-    
     // 赋值
     let that = this
     var data = app.globalData.reviewData;
@@ -135,17 +146,78 @@ Page({
       } else {
         data.reviews[i]["clickable"] = true;
       }
+    }
+    for (var i = 0; i < data.reviews.length; i++) {
       if (data.reviews[i].outstanding == true) {
         temp.push(data.reviews[i]);
-      } else if (userOpenid == data.reviews[i].poster_open_id) {
-        temp.push(data.reviews[i]);
-      } else {
-        temp.push(data.reviews[i]);
+        data.reviews.splice(i, 1);
+        continue
       }
     }
-    console.log(that.data.reviews);
+    for (var i = 0; i < data.reviews.length; i++) {
+      if (data.reviews[i].poster_open_id == userOpenid) {
+        temp.push(data.reviews[i]);
+        data.reviews.splice(i, 1);
+        continue
+      }
+    }
+    for (var i = 0; i < data.reviews.length; i++) {
+      temp.push(data.reviews[i]);
+      data.reviews.splice(i, 1);
+    }
+    app.globalData.reviewData.reviews = temp;
+    // 变量
+    var easy_hd_clickable = that.data.easy_hd_clickable;
+    var easy_pass_clickable = that.data.easy_pass_clickable;
+    var good_luck_clickable = that.data.good_luck_clickable;
+    var hard_pass_clickable = that.data.hard_pass_clickable;
+    var text1 = that.data.text1;
+    var text2 = that.data.text2;
+    var text3 = that.data.text3;
+    var text4 = that.data.text4;
+    var img1 = that.data.img1;
+    var img2 = that.data.img2;
+    var img3 = that.data.img3;
+    var img4 = that.data.img4;
+    // 检查是否有likeBar
+    // 如果有点击过
+    if (that.data.easy_pass.users.indexOf(userOpenid) > -1) {
+      easy_pass_clickable = false;
+      text1 = "好过(" + that.data.easy_pass.num + ")";
+      img1 = that.data.afterEasyPassImg;
+    }
+
+    if (that.data.hard_pass.users.indexOf(userOpenid) > -1) {
+      hard_pass_clickable = false;
+      text2 = "好难(" + that.data.hard_pass.num + ")";
+      img2 = that.data.afterHardPassImg;
+    }
+
+    if (that.data.easy_hd.users.indexOf(userOpenid) > -1) {
+      easy_hd_clickable = false;
+      text3 = "好7(" + that.data.easy_hd.num + ")";
+      img3 = that.data.afterEasyHdImg;
+    }
+
+    if (that.data.good_luck.users.indexOf(userOpenid) > -1) {
+      good_luck_clickable = false;
+      text4 = "运气(" + that.data.good_luck.num + ")";
+      img4 = that.data.afterGoodLuckImg;
+    }
     that.setData({
-      reviews: temp
+      reviews: temp,
+      easy_hd_clickable: easy_hd_clickable,
+      easy_pass_clickable: easy_pass_clickable,
+      good_luck_clickable: good_luck_clickable,
+      hard_pass_clickable: hard_pass_clickable,
+      text1: text1,
+      text2: text2,
+      text3: text3,
+      text4: text4,
+      img1: img1,
+      img2: img2,
+      img3: img3,
+      img4: img4,
     })
   },
   modifyReview: function (e) {
@@ -168,6 +240,31 @@ Page({
     review["likes"] += 1;
     review["liked_by"].push(app.globalData._openid);
     app.globalData.reviewData.reviews = this.data.reviews;
+    this.onReady();
+  },
+  easyPass: function () {
+    var data = this.data.easy_pass;
+    data["num"] += 1;
+    data["users"].push(app.globalData._openid);
+    this.onReady();
+  },
+  hardPass: function () {
+    var data = this.data.hard_pass;
+    data["num"] += 1;
+    data["users"].push(app.globalData._openid);
+    this.onReady();
+  },
+  easyHd: function () {
+    var data = this.data.easy_hd;
+    data["num"] += 1;
+    data["users"].push(app.globalData._openid);
+    this.onReady();
+  },
+  goodLuck: function () {
+    console.log("?")
+    var data = this.data.good_luck;
+    data["num"] += 1;
+    data["users"].push(app.globalData._openid);
     this.onReady();
   },
   /**
@@ -196,7 +293,11 @@ Page({
     })
     .update({
       data: {
-        reviews: that.data.reviews
+        reviews: that.data.reviews,
+        easy_hd: that.data.easy_hd,
+        easy_pass: that.data.easy_pass,
+        hard_pass: that.data.hard_pass,
+        good_luck: that.data.good_luck
       }, 
       success: function (res)  {
         if (res.stats.updated > 0) {
