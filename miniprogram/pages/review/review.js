@@ -14,6 +14,7 @@ Page({
     coursePre: ['DECO1100', 'DECO1100'],
     courseSemester: ['Semester1', 'Semester2'],
     courseIncompatible: "DECO1100",
+    likeUrl: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
     // 未点赞图标
     beforeLikeImg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
     // 点赞图标
@@ -124,6 +125,28 @@ Page({
       reviews: data.reviews,
       userOpenid: app.globalData._openid
     })
+    // 对reviews进行重排
+    // 优秀答案放第一，然后是自己的，最后是别人的
+    var temp = [];
+    var userOpenid = that.data.userOpenid;
+    for (var i = 0; i < data.reviews.length; i++) {
+      if (data.reviews[i].liked_by.indexOf(userOpenid) > -1) {
+        data.reviews[i]["clickable"] = false;
+      } else {
+        data.reviews[i]["clickable"] = true;
+      }
+      if (data.reviews[i].outstanding == true) {
+        temp.push(data.reviews[i]);
+      } else if (userOpenid == data.reviews[i].poster_open_id) {
+        temp.push(data.reviews[i]);
+      } else {
+        temp.push(data.reviews[i]);
+      }
+    }
+    console.log(that.data.reviews);
+    that.setData({
+      reviews: temp
+    })
   },
   modifyReview: function (e) {
     var index = e.currentTarget.dataset['reviewindex'];
@@ -166,6 +189,7 @@ Page({
    */
   onUnload: function () {
     let that = this;
+    console.log(that.data.reviews);
     db.collection("CourseReview")
     .where({
       course_name: app.globalData.reviewCourseName

@@ -65,8 +65,14 @@
       </view>
     </view>
 
-    <view class="heart">
-      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}"  bindtap="likes">
+    <view wx:if="{{!singleReview.clickable}}" class="heart">
+      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}">
+        <image src="{{afterLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
+      </button>
+    </view>
+    <view wx:else class="heart">
+      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}" bindtap="likes">
         <image src="{{beforeLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
         <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
       </button>
