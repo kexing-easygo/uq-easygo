@@ -128,6 +128,7 @@ Page({
    */
   data: {
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
+    noteFlag: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表小旗子.png",
     detailShow: false,
     detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],
@@ -145,6 +146,19 @@ Page({
     //颜色按钮flag
     color: 0,
     clicked_1: false,
+    afterGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后灰色选择器.png",
+    afterRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后红色选择器.png",
+    afterYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后黄色选择器.png",
+    afterGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后绿色选择器.png",
+    afterBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后蓝色选择器.png",
+
+    beforeGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未灰色选择器.png",
+    beforeRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未红色选择器.png",
+    beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
+    beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
+    beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
+
+
 
   },
   timeDetail: function (event) {
@@ -369,6 +383,7 @@ Page({
         that.setData({
           userCourseTime: temp
         });
+        console.log(temp);
       }
     });
   },
@@ -383,7 +398,8 @@ Page({
       clicked_5: false,
     });
   },
-  bindPink: function() {
+
+  bindYellow: function() {
     this.setData({
       color: "#FFB300",
       clicked_1: false,
@@ -393,7 +409,8 @@ Page({
       clicked_5: false,
     });
   },
-  bindLightBlue: function() {
+
+  bindGreen: function() {
     this.setData({
       color: "#8BC34A",
       clicked_1: false,
@@ -403,7 +420,8 @@ Page({
       clicked_5: false,
     });
   },
-  bindPurple: function() {
+
+  bindBlue: function() {
     this.setData({
       color: "#29B6F6",
       clicked_1: false,
@@ -413,7 +431,8 @@ Page({
       clicked_5: false,
     });
   },
-  bindYellow: function() {
+
+  bindGrey: function() {
     this.setData({
       color: "#576B95",
       clicked_1: false,

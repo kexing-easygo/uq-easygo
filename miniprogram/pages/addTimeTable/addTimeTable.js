@@ -121,7 +121,7 @@ Page({
               temp["start"] = startTime;
               temp["hours"] = time / 60;
               temp["week_pattern"] = res.data[0][key][keyItem]["week_pattern"];
-              temp["notes"] = "Nothing";
+              temp["notes"] = null;
               dic[mode].push(temp);
             }
           }

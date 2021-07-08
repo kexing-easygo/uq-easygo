@@ -112,6 +112,9 @@
     <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index" >
       <view class="class" data-courseindex="{{index}}" bindtap="timeDetail"
         style="{{item.left}} {{item.top}} {{item.color}} {{item.height}} {{item.width}}" wx:if="{{item.display == 'yes'}}">
+
+        <view class="noteFlag" wx:if="{{item.notes!=null}}"><image style="width: 22rpx; height: 28rpx" src="{{noteFlag}}" /></view>
+
         <text style="font-size: 22rpx; color: #FFFFFF;">{{item.courseName}}</text>
         <text style="font-size: 18rpx; color: #FFFFFF;">{{item.classTime.type}}</text>
         <text style="font-size: 18rpx; color: #FFFFFF;">{{item.classTime.location}}</text>
@@ -158,14 +161,30 @@
 
       <view class="colours">
         <view class="cdDetail ">
-            <button class="{{clicked_1? 'colorButton clicked_1':'colorButton'}}" type="primary" size="mini" style="background-color: #FF7043;" bindtap="bindRed"></button>
-            <button class="{{clicked_2? 'colorButton clicked_2':'colorButton'}}" type="primary" size="mini" style="background-color: #FFB300" bindtap="bindPink"></button>
+            <button class="colorButton" size="mini" bindtap="bindRed" hover-class="none">
+              <image class="{{clicked_1? 'hide':''}}" src="{{beforeRed}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_1? '':'hide'}}" src="{{afterRed}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
 
-            <button class="{{clicked_3? 'colorButton clicked_3':'colorButton'}}" type="primary" size="mini" style="background-color: #8BC34A;" bindtap="bindLightBlue"></button>
+            <button class="colorButton" size="mini" bindtap="bindYellow" hover-class="none">
+              <image class="{{clicked_2? 'hide':''}}" src="{{beforeYellow}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_2? '':'hide'}}" src="{{afterYellow}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
 
-            <button class="{{clicked_4? 'colorButton clicked_4':'colorButton'}}" type="primary" size="mini" style="background-color: #29B6F6;" bindtap="bindPurple"></button>
+            <button class="colorButton" size="mini" bindtap="bindGreen" hover-class="none">
+              <image class="{{clicked_3? 'hide':''}}" src="{{beforeGreen}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_3? '':'hide'}}" src="{{afterGreen}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
 
-            <button class="{{clicked_5? 'colorButton clicked_5':'colorButton'}}" type="primary" size="mini" style="background-color: #576B95;" bindtap="bindYellow"></button>
+            <button class="colorButton" size="mini" bindtap="bindBlue" hover-class="none">
+              <image class="{{clicked_4? 'hide':''}}" src="{{beforeBlue}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_4? '':'hide'}}" src="{{afterBlue}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindGrey" hover-class="none">
+              <image class="{{clicked_5? 'hide':''}}" src="{{beforeGrey}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_5? '':'hide'}}" src="{{afterGrey}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
         </view>
       </view>
 
@@ -198,10 +217,12 @@
     </view>
 
     <view class="inforContent">
-      <!-- <text style="color:rgba(0,0,0,0.5)">我是一个没有感情的备注框。。。可以随时修改我</text> -->
-      <input bindinput="add_note" class="input" value="{{selectClass.notes}}"/>
-      <button class="mini-btn" type="primary" plain="true" size="mini" bindtap="update_note" 
-      style="position: fixed; right:40rpx;">添加</button>
+      <!-- <input bindinput="add_note" class="input" value="{{selectClass.notes}}" placeholder="点击输入备注"/> -->
+      <textarea bindinput="add_note" class="input" value="{{selectClass.notes}}" placeholder="点击输入备注"></textarea>
     </view>
+  </view>
+  <view style="width: 100%; display: flex; justify-contents: center; align-items: center;">
+  <button class="mini-btn" type="primary" size="mini" bindtap="update_note" 
+      style="width: 50%; margin-top: 40rpx; margin-bottom: 10rpx;">添加</button>
   </view>
 </view>
