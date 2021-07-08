@@ -15,7 +15,7 @@ Page({
     calcIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/计算器.png",
     countdownIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/倒计时.png",
     timetableIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课表图标.png",
-    inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/敬请期待.png",
+    inComingIcon:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课评图标.png",
     // 下方非滚动海报
     PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报一.png",
     PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",

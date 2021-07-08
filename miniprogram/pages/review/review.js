@@ -64,19 +64,21 @@ Page({
   onLoad: function (options) {
     let that = this
     let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2];
-    // 如果页面是从搜索过来
-    if ("route" in prevPage) {
-      if (prevPage.route == "pages/searchReview/searchReview") {
-        const eventChannel = that.getOpenerEventChannel()
-        eventChannel.on('acceptDataFromOpenerPage', function (e) {
-          app.globalData._openid = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8";
-          var raw = JSON.parse(e)
-          var data = raw.data;
-          // 缓存globalData
-          app.globalData.reviewData = data;
-          app.globalData.reviewCourseName = data.course_name;
-        })
+    if (pages.length > 1) {
+      let prevPage = pages[pages.length - 2];
+      // 如果页面是从搜索过来
+      if ("route" in prevPage) {
+        if (prevPage.route == "pages/searchReview/searchReview") {
+          const eventChannel = that.getOpenerEventChannel()
+          eventChannel.on('acceptDataFromOpenerPage', function (e) {
+            // app.globalData._openid = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8";
+            var raw = JSON.parse(e)
+            var data = raw.data;
+            // 缓存globalData
+            app.globalData.reviewData = data;
+            app.globalData.reviewCourseName = data.course_name;
+          })
+        }
       }
     }
     
@@ -88,27 +90,29 @@ Page({
    */
   onReady: function () {
     let pages = getCurrentPages();
-    let prevPage = pages[pages.length - 2];
-    if ("route" in prevPage) {
-      if (prevPage == "pages/searchReview/searchReview") {
-        db.collection("MainUser")
-        .where({
-          _openid: app.globalData._openid
-        })
-        .get()
-        .then(
-          res => {
-            if (res.data.length == 0) {
-  
-            } else {
-              if ("classMode" in res.data) {
-                app.globalData.classMode = res.data.classMode;
+    if (pages.length > 1) {
+      let prevPage = pages[pages.length - 2];
+      if ("route" in prevPage) {
+        if (prevPage == "pages/searchReview/searchReview") {
+          db.collection("MainUser")
+          .where({
+            _openid: app.globalData._openid
+          })
+          .get()
+          .then(
+            res => {
+              if (res.data.length == 0) {
+    
               } else {
-  
+                if ("classMode" in res.data) {
+                  app.globalData.classMode = res.data.classMode;
+                } else {
+    
+                }
               }
             }
-          }
-        )
+          )
+        }
       }
     }
     // 赋值

@@ -17,7 +17,7 @@ Page({
     })
   },
   fetchCourseInfo: function () {
-    var title = this.data.searchBarValue;
+    var title = this.data.searchBarValue.toUpperCase();
     db.collection("CourseReview")
     .where({
       course_name: title
@@ -52,7 +52,32 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // const _ = db.command
+    // var temp = 
+    // {
+    //   poster_name: "Null🐷",
+    //   poster_open_id: "oe4Eh5Slt8P3MIQIq-UwMuE3pyHg",
+    //   mode: "Internal",
+    //   outstanding: true,
+    //   post_date: "2021-07-02",
+    //   post_time: "12:00",
+    //   likes: 1,
+    //   review: "这课真的巨难", 
+    //   semester_enrolled: "2020 s2",
+    //   liked_by: ["oe4Eh5Slt8P3MIQIq-UwMuE3pyHg"]
+    // }
+    // db.collection("CourseReview")
+    //   .where({
+    //     course_name: "CSSE1001"
+    //   })
+    //   .update({
+    //     data: {
+    //       reviews: _.push(temp)
+    //     },
+    //     success: function (res) {
+          
+    //     }
+    //   })
   },
 
   /**

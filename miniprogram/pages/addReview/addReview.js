@@ -125,7 +125,8 @@ Page({
                   var page = getCurrentPages().pop()
                   if (page == undefined || page == null) return;
                   // 刷新页面
-                  page.onLoad()
+                  page.onLoad();
+                  page.onReady();
                 }
               })     
             } else {
