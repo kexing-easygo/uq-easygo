@@ -74,44 +74,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
-    // var temp = [
-    //   {
-    //     poster_name: "Apocalypse",
-    //     poster_open_id: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
-    //     mode: "external",
-    //     outstanding: true,
-    //     post_date: "2021-06-01",
-    //     post_time: "15:00",
-    //     likes: 23,
-    //     review: "这课安排挺合理的", 
-    //     semester_enrolled: "2017 s1"
-    //   },
-    //   {
-    //     poster_name: "Null🐷",
-    //     poster_open_id: "oe4Eh5Slt8P3MIQIq-UwMuE3pyHg",
-    //     mode: "Internal",
-    //     outstanding: false,
-    //     post_date: "2021-06-03",
-    //     post_time: "12:00",
-    //     likes: 2,
-    //     review: "这课好难啊", 
-    //     semester_enrolled: "2018 s2"
-    //   }
-    // ]
-    // db.collection("CourseReview")
-    // .where({
-    //   course_name: "CSSE1001"
-    // })
-    // .update({
-    //   data: {
-    //     reviews:temp
-    //   },
-    //   success: function (res) {
-    //     console.log(res.stats.updated);
-    //   }
-    // })
-    // console.log(this.data.reviews);
     let pages = getCurrentPages();
     let prevPage = pages[pages.length - 2];
     if ("route" in prevPage) {
@@ -177,6 +139,14 @@ Page({
       }
     })
   },
+  likes: function (e) {
+    var index = e.currentTarget.dataset['reviewindex'];
+    var review = this.data.reviews[index];
+    review["likes"] += 1;
+    review["liked_by"].push(app.globalData._openid);
+    app.globalData.reviewData.reviews = this.data.reviews;
+    this.onReady();
+  },
   /**
    * 生命周期函数--监听页面显示
    */
@@ -195,7 +165,24 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    let that = this;
+    db.collection("CourseReview")
+    .where({
+      course_name: app.globalData.reviewCourseName
+    })
+    .update({
+      data: {
+        reviews: that.data.reviews
+      }, 
+      success: function (res)  {
+        if (res.stats.updated > 0) {
+          wx.showToast({
+            title: '点赞成功',
+            icon: 'none'
+          })
+        }
+      }
+    })
   },
 
   /**

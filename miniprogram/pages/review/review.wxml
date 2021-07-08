@@ -66,7 +66,7 @@
     </view>
 
     <view class="heart">
-      <button style="width: 100rpx; height: 64rpx;">
+      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}"  bindtap="likes">
         <image src="{{beforeLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
         <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
       </button>

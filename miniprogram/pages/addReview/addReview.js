@@ -101,7 +101,8 @@ Page({
         post_time: s2,
         likes: 0,
         review: reviewTxt, 
-        semester_enrolled: semester
+        semester_enrolled: semester,
+        liked_by: []
       }
       db.collection("CourseReview")
         .where({
