@@ -6,7 +6,7 @@
 		<view class="cdDetail">
 			<input focus= "{{inputFocus}}" type="text" maxlength="20" 
 			bindinput="bindTitleInput" bindfocus="bindFocus" bindblur="bindBlur"
-			placeholder="{{title}}" placeholder-style="color: {{cursorColor}}"/>
+			value="{{title}}" placeholder-style="color: {{cursorColor}}"/>
 		</view>
 	</view>
 
