@@ -10,10 +10,14 @@
   </view>
 
   <view class="semester">
-    <view class="semesterHead">学习学期</view>
-    <view style="margin-left: 80rpx; color:black; font-size: 36rpx;">
-      <input value="{{semester}}" type="text" maxlength="8" placeholder="2021 s1" bindinput="getSemester"/>
+    <view class="semesterHead">
+      学习学期
+      
     </view>
+    <picker class="picker" bindchange="getSemester" value="{{semesterIndex}}" range="{{semesterArray}}">{{semester}}</picker>
+    <!-- <view style="margin-left: 80rpx; color:black; font-size: 36rpx;">
+      <input value="{{semester}}" type="text" maxlength="8" placeholder="2021 s1" bindinput="getSemester"/>
+    </view> -->
     
   </view>
 

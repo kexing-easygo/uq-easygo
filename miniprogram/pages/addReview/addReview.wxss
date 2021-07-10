@@ -73,6 +73,11 @@
   margin-left: 60rpx;
   color: black;
   font-weight: 300;
+
+}
+
+.picker {
+  margin-left: 60rpx;
 }
 
 .content {

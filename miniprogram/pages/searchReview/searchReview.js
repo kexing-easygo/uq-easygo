@@ -16,6 +16,9 @@ Page({
       searchBarValue: e.detail.value
     })
   },
+  /**
+   * 返回某门课的全部信息，并跳转至review界面
+   */
   fetchCourseInfo: function () {
     var title = this.data.searchBarValue.toUpperCase();
     db.collection("CourseReview")
@@ -29,19 +32,21 @@ Page({
           wx.showModal({
             title: 'UU妹提醒',
             content: '这门课超出了U妹的搜索范围。请确认好课号重新输入或微信联系U妹～',
-            success(res) {}
+            success(res) {
+              return;
+            }
           })
-          return;
+          
         } else {
-          var temp = res.data[0];
-          var query = JSON.stringify({
-            data: temp
-          })
+          // var temp = res.data[0];
+          // var query = JSON.stringify({
+          //   data: temp
+          // })
+          app.globalData.reviewCourseName = title;
           wx.navigateTo({
             url: '/pages/review/review',
             success: function (res) {
-              // 通过eventChannel向被打开页面传送正在被点击的assignment信息
-              res.eventChannel.emit('acceptDataFromOpenerPage', query)
+              // res.eventChannel.emit('acceptDataFromOpenerPage', query)
             }
           })
         }

@@ -17,6 +17,10 @@
         <view>{{coursePre}}</view>
       </view>
       <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Incompatible</view>
+        <view>{{courseIncompatible}}</view>
+      </view>
+      <view class="courseElement">
         <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Semester(s)</view>
         <view>{{courseSemester}}</view>
       </view>
@@ -66,7 +70,7 @@
     </button>
   </view>
 
-  <view class="reviewBlock" wx:for="{{reviews}}" wx:for-index="index" wx:for-item="singleReview" wx:for-key="index">
+  <view class="reviewBlock" wx:for="{{reviews}}" wx:for-index="index" wx:for-item="singleReview" wx:key="index">
     <view class="reviewerInfo">
       <view style="margin-left: 50rpx;">{{singleReview.poster_name}} - {{singleReview.semester_enrolled}}</view>
       <view wx:if="{{singleReview.outstanding == true}}" style="margin-left: 150rpx;">优秀回答</view>
@@ -75,12 +79,14 @@
     <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" data-reviewindex="{{index}}" bindtap="modifyReview">
           {{singleReview.review}}
+          {{singleReview.post_date}} {{singleReview.post_time}}
       </view>
     </view>
 
     <view wx:else class="reviewContent"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" >
           {{singleReview.review}}
+          {{singleReview.post_date}} {{singleReview.post_time}}
       </view>
     </view>
 
@@ -103,7 +109,7 @@
     <navigator class="createReview" url="/pages/addReview/addReview">
       <view>发表评论</view>
     </navigator>
-    <!-- <button class="createReview" bindtap="">
+    <!-- <button class="createReview" bindtap="addSingleReview">
       <view>发表评论</view>
     </button> -->
   </view>

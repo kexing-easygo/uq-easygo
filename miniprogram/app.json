@@ -2,8 +2,8 @@
   "pages": [
     "pages/home/home",
     "pages/searchReview/searchReview",
-    "pages/review/review",
     "pages/addReview/addReview",
+    "pages/review/review",
     "pages/profile/profile",
     "pages/calc/calc",
     "pages/countdown/countdown",

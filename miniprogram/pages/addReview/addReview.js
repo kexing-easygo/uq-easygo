@@ -11,9 +11,24 @@ Page({
     maxlength: 140,
     reviewTxt: '',
     nickName: "",
-    semester: "",
-    course_name: app.globalData.reviewCourseName,
-    heading: ""
+    semester: "2021 s1",
+    course_name: "",
+    heading: "",
+    isModified: false,
+    semesterArray : [
+      "2017 s1",
+      "2017 s2",
+      "2018 s1",
+      "2018 s2",
+      "2019 s1",
+      "2019 s2",
+      "2020 s1",
+      "2020 s2",
+      "2021 s1",
+      "2021 s2",
+    ],
+    semesterIndex: 0,
+    index: null
   },
 
   
@@ -26,16 +41,30 @@ Page({
     eventChannel.on('acceptDataFromOpenerPage', function (e) {
       // 解码json数据
       var raw = JSON.parse(e)
-      var data = raw.data
-      if (Object.keys(data).length > 0) {
-        that.setData({
-          nickName: data.poster_name,
-          semester: data.semester_enrolled,
-          reviewTxt: data.review,
-          currentWord: data.review.length
-        })
-      }
+      // raw是所有评论数据
+      var index = raw.index;
+      var reviews = raw.reviewData.reviews;
+      var review = reviews[index];
+      that.setData({
+        // 上一级页面发送来的课程数据
+        reviewData: raw.reviewData,
+        // 课程数据的reviews字段
+        reviews: reviews,
+        nickName: review.poster_name,
+        semester: review.semester_enrolled,
+        reviewTxt: review.review,
+        currentWord: review.review.length,
+        // 被修改的评论的索引
+        index: index,
+        // 被修改的评论
+        modifiedReview: review,
+        isModified : true
+      })
     })
+    that.setData({
+      course_name: app.globalData.reviewCourseName
+    })
+    
   },
   getName: function (e) {
     this.setData({
@@ -44,7 +73,7 @@ Page({
   },
   getSemester: function (e) {
     this.setData({
-      semester: e.detail.value
+      semester: this.data.semesterArray[e.detail.value]
     })
   },
   getReview: function(e) {
@@ -71,13 +100,6 @@ Page({
       })
       return
     }
-    if (semester == '') {
-      wx.showToast({
-        title: '大侠是哪学期学的呀～',
-        icon: 'none'
-      })
-      return
-    }
     if (reviewTxt.length <= 10) {
       wx.showToast({
         title: '大侠多说点吧（10字以上喔）～',
@@ -85,67 +107,106 @@ Page({
       })
       return
     }
+    
     var d = new Date();
     var year = d.getFullYear();
-    var month = d.getMonth() + 1;
-    var date = d.getDate();
-    var s2 = d.getHours() + ":" + d.getMinutes();
-    if (app.globalData.hasUserInfo) {
-      var temp = 
-      {
+    var month = (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1);
+    var date = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
+    var temp = {}
+    // 修改评论
+    if (that.data.isModified == true) {
+      temp = that.data.reviews[that.data.index];
+      temp.poster_name = nickName;
+      temp.post_date =  year + "-" + month + "-" + date,
+      temp.post_time = d.toTimeString().split(" ")[0],
+      temp.semester_enrolled = semester,
+      temp.review = reviewTxt
+      // 更新评论数据
+      that.data.reviews[that.data.index] = temp;
+      // 更新课程数据
+      that.data.reviewData.reviews = that.data.reviews;
+      db.collection("CourseReview")
+      .where({
+        course_name: that.data.course_name
+      })
+      .update({
+        data: {
+          reviews: that.data.reviewData.reviews
+        },
+        success: function (res) {
+          console.log(res)
+          if (res.stats.updated > 0) {
+            // app.globalData.reviewsData = that.data.reviewData
+            // app.globalData.reviewsData.reviews = that.data.reviewData.reviews
+            var pages = getCurrentPages();
+            var prev = pages[pages.length - 2];
+            if (prev == undefined || prev == null) return;
+            // 刷新页面
+            prev.onLoad();
+            wx.redirectTo({
+              url: '/pages/review/review',
+            })
+          } else {
+            // wx.showToast({
+            //   title: '修改失败',
+            //   icon: 'error',
+            //   duration: 1000
+            // })  
+            // return
+          }
+        }
+      })
+    } else {
+      temp = {
         poster_name: nickName,
         poster_open_id: app.globalData._openid,
-        mode: app.globalData.classMode,
+        // mode: app.globalData.classMode,
         outstanding: false,
         post_date: year + "-" + month + "-" + date,
-        post_time: s2,
+        post_time: d.toTimeString().split(" ")[0],
         likes: 0,
         review: reviewTxt, 
         semester_enrolled: semester,
         liked_by: []
       }
-      db.collection("CourseReview")
-        .where({
-          course_name: that.data.course_name
-        })
-        .update({
-          data: {
-            reviews: _.push(temp)
-          },
-          success: function (res) {
-            if (res.stats.updated > 0) {
-              wx.showToast({
-                title: '发表成功',
-                icon: 'success',
-                duration: 1000
-              })         
-              wx.redirectTo({
-                url: '/pages/review/review',
-                success: function (res) {
-                  var page = getCurrentPages().pop()
-                  if (page == undefined || page == null) return;
-                  // 刷新页面
-                  page.onLoad();
-                  page.onReady();
-                }
-              })     
-            } else {
-              wx.showToast({
-                title: '发表失败',
-                icon: 'error',
-                duration: 1000
-              })  
-              return
+      wx.showModal({
+        title: 'UU妹提醒',
+        content: '发布的评论是无法删除的哦，你确定要发布嘛？',
+        success(res) {
+          db.collection("CourseReview")
+          .where({
+            course_name: that.data.course_name
+          })
+          .update({
+            data: {
+              reviews: _.push(temp)
+            },
+            success: function (res) {
+                var pages = getCurrentPages();
+                var prev = pages[pages.length - 2];
+                if (prev == undefined || prev == null) return;
+                // 刷新页面
+                prev.onLoad();
+                wx.redirectTo({
+                  url: '/pages/review/review',
+                  success: function (res) {}
+                })     
+              
+                // wx.showToast({
+                //   title: '发表失败',
+                //   icon: 'error',
+                //   duration: 1000
+                // })  
+                // return
+              
             }
-          }
-        })
-    } else {
-      wx.showToast({
-        title: '你需要登陆才能发布评论哦！',
-        icon: "none"
+          })
+        }
       })
-      return
     }
+
+    
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -158,11 +219,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      heading: app.globalData.reviewCourseName
+    let that = this;
+    that.setData({
+      heading: that.data.course_name
     })
     wx.setNavigationBarTitle({
-      title: app.globalData.reviewCourseName,
+      title:that.data.course_name
     })
   },
 
