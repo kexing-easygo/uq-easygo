@@ -34,39 +34,39 @@
 
   <view class="likeBar">
     <button wx:if="{{easy_pass_clickable}}" class="likeButton" bindtap="easyPass"> 
-      <image src="{{img1}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text1}}</view>
+      <image src="{{img1}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text1}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img1}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text1}}</view>
+      <image src="{{img1}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text1}}</view>
     </button>
 
     <button wx:if="{{hard_pass_clickable}}" class="likeButton" bindtap="hardPass"> 
-      <image src="{{img2}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text2}}</view>
+      <image src="{{img2}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text2}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img2}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text2}}</view>
+      <image src="{{img2}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text2}}</view>
     </button>
 
     <button wx:if="{{easy_hd_clickable}}" class="likeButton" bindtap="easyHd"> 
-      <image src="{{img3}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text3}}</view>
+      <image src="{{img3}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text3}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img3}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text3}}</view>
+      <image src="{{img3}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text3}}</view>
     </button>
 
     <button wx:if="{{good_luck_clickable}}" class="likeButton" bindtap="goodLuck"> 
-      <image src="{{img4}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text4}}</view>
+      <image src="{{img4}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text4}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img4}}" style="width: 35rpx; height: 35rpx;"></image>
-      <view>{{text4}}</view>
+      <image src="{{img4}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text4}}</view>
     </button>
   </view>
 
@@ -79,14 +79,14 @@
     <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" data-reviewindex="{{index}}" bindtap="modifyReview">
           {{singleReview.review}}
-          {{singleReview.post_date}} {{singleReview.post_time}}
+          <view style="width: 100%; font-size:25rpx;">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
       </view>
     </view>
 
     <view wx:else class="reviewContent"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" >
           {{singleReview.review}}
-          {{singleReview.post_date}} {{singleReview.post_time}}
+          <view style="width: 100%; font-size:25rpx;">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
       </view>
     </view>
 

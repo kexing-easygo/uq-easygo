@@ -67,6 +67,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 50rpx;
+  margin-bottom: 50rpx;
   border-top: 2rpx solid #FFFFFF;
   border-bottom: 2rpx solid #95B9FF;
 }
@@ -74,11 +75,18 @@
 .likeBar .likeButton {
     display: flex;
     flex-direction: row;
-    width: 30%;
+    width: 25%;
     height: 66rpx;
-    font-size: 28rpx;
     font-weight: lighter;
-    line-height: 35rpx;
+    line-height: 50rpx;
+    justify-content: center;
+    align-items: center;
+}
+
+.likeTxt {
+  font-size:25rpx; 
+  width: 100rpx;
+  white-space: nowrap;
 }
 
 .likeBar .likeButton image {
@@ -91,7 +99,7 @@
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  margin-top: 50rpx;
+  margin-bottom: 45rpx;
 }
 
 .reviewerInfo {
@@ -128,7 +136,7 @@
   width: 90%;
   margin: 20rpx 0;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
 }
 
 .heart {
@@ -157,6 +165,7 @@
   align-items: center;
   position: fixed;
   bottom: 0;
+  z-index: 999;
 }
 
 .createReview {
