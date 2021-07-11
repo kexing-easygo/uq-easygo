@@ -38,15 +38,11 @@ Page({
           })
           
         } else {
-          // var temp = res.data[0];
-          // var query = JSON.stringify({
-          //   data: temp
-          // })
+
           app.globalData.reviewCourseName = title;
           wx.navigateTo({
             url: '/pages/review/review',
             success: function (res) {
-              // res.eventChannel.emit('acceptDataFromOpenerPage', query)
             }
           })
         }
@@ -89,10 +85,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      searchBarValue: "CSSE1001"
-    })
-    this.fetchCourseInfo();
+    // this.setData({
+    //   searchBarValue: "CSSE1001"
+    // })
+    // this.fetchCourseInfo();
   },
 
   /**

@@ -65,7 +65,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
   },
 
   /**
@@ -85,8 +85,8 @@ Page({
           title: data.course_name,
         })
         var prerequisite = "None"
-        if ("prerequisite" in data.external) {
-          prerequisite = data.external.prerequisite.replace("<p>", "").replace("</p>", "");
+        if ("prerequisites" in data.external) {
+          prerequisite = data.external.prerequisites.replace("<p>", "").replace("</p>", "");
         }
         var incompatible = "None"
         if ("incompatible" in data.external) {
@@ -385,7 +385,6 @@ Page({
    */
   onUnload: function () {
     let that = this;
-    console.log(that.data.reviews);
     db.collection("CourseReview")
     .where({
       course_name: that.courseName
