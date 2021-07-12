@@ -187,7 +187,7 @@ Page({
   },
   bindRed: function () {
     this.setData({
-      color: "#FA5151",
+      color: "#FF7043",
       clicked_1: true,
       clicked_2: false,
       clicked_3: false,
@@ -197,7 +197,7 @@ Page({
   },
   bindPink: function () {
     this.setData({
-      color: "#FFC300",
+      color: "#FFB300",
       clicked_1: false,
       clicked_2: true,
       clicked_3: false,
@@ -207,7 +207,7 @@ Page({
   },
   bindLightBlue: function () {
     this.setData({
-      color: "#07C160",
+      color: "#8BC34A",
       clicked_1: false,
       clicked_2: false,
       clicked_3: true,
@@ -217,7 +217,7 @@ Page({
   },
   bindPurple: function () {
     this.setData({
-      color: "#1485EE",
+      color: "#29B6F6",
       clicked_1: false,
       clicked_2: false,
       clicked_3: false,

@@ -21,19 +21,19 @@
     <text class="cdtitle">设置颜色</text>
     <view class="cdDetail">
       <view>
-        <button class="{{clicked_1? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FA5151;"
+        <button class="{{clicked_1? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FF7043;"
           bindtap="bindRed"></button>
       </view>
       <view>
-        <button class="{{clicked_2? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FFC300;"
+        <button class="{{clicked_2? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #FFB300;"
           bindtap="bindPink"></button>
       </view>
       <view>
-        <button class="{{clicked_3? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #07C160;"
+        <button class="{{clicked_3? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #8BC34A;"
           bindtap="bindLightBlue"></button>
       </view>
       <view>
-        <button class="{{clicked_4? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #1485EE;"
+        <button class="{{clicked_4? 'clicked':'colorButton'}}" type="primary" size="mini" style="background-color: #29B6F6;"
           bindtap="bindPurple"></button>
       </view>
       <view>

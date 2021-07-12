@@ -225,10 +225,10 @@
   outline: 1px solid #ff7043;
 }
 .clicked_2 {
-  outline: 1px solid #ffca28;
+  outline: 1px solid #ffb300;
 }
 .clicked_3 {
-  outline: 1px solid #9ccc65;
+  outline: 1px solid #8bc34c;
 }
 .clicked_4 {
   outline: 1px solid #29B6F6;
