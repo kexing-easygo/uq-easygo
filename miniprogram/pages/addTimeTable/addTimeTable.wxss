@@ -28,7 +28,7 @@
   border-radius: 10rpx;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 }
 
@@ -71,14 +71,32 @@
   
 }
 
-.cdDetail {
+/* .cdDetail {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
-  margin-left: 30rpx;
   
-  /* background-color: blue; */
+} */
+
+.cdDetail {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30rpx;
+}
+
+.colorButton {
+  width: 10rpx;
+  height: 45rpx;
+  /* border-radius: 50%; */
+  margin-left: -20rpx;
+  overflow: visible;
+}
+
+.hide {
+  display: none;
 }
 
 .searchbutton {
