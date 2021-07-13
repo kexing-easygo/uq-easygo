@@ -441,7 +441,7 @@ Page({
     let that = this;
     db.collection("CourseReview")
     .where({
-      course_name: that.courseName
+      course_name: that.data.courseName
     })
     .update({
       data: {
