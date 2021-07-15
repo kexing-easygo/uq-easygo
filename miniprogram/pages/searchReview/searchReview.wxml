@@ -13,12 +13,14 @@
   <view class="searchRank">
     <view class="searchHeading">火热查询榜</view>
     <view class="items">
+      <view class="item" wx:for="{{hotSearch}}" 
+      wx:for-index="index" wx:for-item="item" 
+      wx:key="index" data-name="{{item}}" bindtap="bindHotSearch">{{item}}</view>
+      <!-- <view class="item">CSSE1001</view>
       <view class="item">CSSE1001</view>
       <view class="item">CSSE1001</view>
       <view class="item">CSSE1001</view>
-      <view class="item">CSSE1001</view>
-      <view class="item">CSSE1001</view>
-      <view class="item">CSSE1001</view>
+      <view class="item">CSSE1001</view> -->
     </view>
   </view>
 

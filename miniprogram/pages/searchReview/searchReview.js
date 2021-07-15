@@ -9,12 +9,27 @@ Page({
   data: {
     searchError: false,
     buttons: [{text: '取消'}, {text: '确认'}],
-    searchBarValue: ''
+    searchBarValue: '',
+    hotSearch: [
+      "CSSE1001", 
+      "CSSE2002", 
+      "CSSE2310", 
+      "COMP3506", 
+      "COMP3702", 
+      "MATH1050"
+    ]
   },
   bindCourseInput: function (e) {
     this.setData({
       searchBarValue: e.detail.value
     })
+  },
+  bindHotSearch: function (e) {
+    var name = e.currentTarget.dataset['name'];
+    this.setData({
+      searchBarValue: name
+    })
+    this.fetchCourseInfo();
   },
   /**
    * 返回某门课的全部信息，并跳转至review界面
