@@ -32,6 +32,7 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  font-size: 34rpx;
 }
 
 .searchButton {
@@ -44,7 +45,6 @@
   height: 84rpx;
   margin-right: 20rpx;
   text-align: center;
-  font-weight: lighter;
   font-size: 32rpx;
   line-height: 84rpx;
   box-shadow: 0 10rpx 10rpx 2rpx #cccccc;

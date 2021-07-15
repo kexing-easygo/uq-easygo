@@ -6,7 +6,7 @@
 
   <view class="name">
     <view class="nameHead">大佬姓名</view>
-    <input value="{{nickName}}" type="text" maxlength="8" placeholder="Lewis" bindinput="getName"/>
+    <input value="{{nickName}}" type="text" maxlength="8" placeholder="留下你的名字" bindinput="getName"/>
   </view>
 
   <view class="semester">

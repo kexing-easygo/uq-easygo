@@ -12,7 +12,7 @@
 }
 
 .courseName {
-  width:95%;
+  width: 95%;
   height: 74rpx;
   background-color: #FFA9A3;
   border: 5rpx solid #FFA9A3;
@@ -21,9 +21,9 @@
   justify-content: center;
   align-items: center;
   color: black;
-  font-weight: 300;
   z-index: 999;
 }
+
 
 .courseInfo {
   margin-top: 20rpx;
@@ -49,7 +49,6 @@
 
 .courseElement {
   color: black;
-  font-weight: 300;
   font-size: 30rpx;
   width: 90%;
   border-bottom: 1rpx solid #EDEDED;
@@ -77,7 +76,7 @@
     flex-direction: row;
     width: 25%;
     height: 66rpx;
-    font-weight: lighter;
+    font-weight: 400;
     line-height: 50rpx;
     justify-content: center;
     align-items: center;
@@ -103,7 +102,7 @@
 }
 
 .reviewerInfo {
-  width:95%;
+  width: 95%;
   height: 74rpx;
   background-color: #95B9FF;
   border: 5rpx solid #95B9FF;
@@ -112,12 +111,12 @@
   flex-flow: row;
   align-items: center;
   color: black;
-  font-weight: 300;
   z-index: 999;
+  font-size: 32rpx;
 }
 
 .reviewContent {
-  /* background-color: #FFFFFF; */
+  background-color: #FFFFFF;
   width: 95%;
   margin-top: -25rpx;
   display: flex;
@@ -131,12 +130,16 @@
 
 .reviewTxt {
   color: black;
-  font-weight: 300;
   font-size: 30rpx;
   width: 90%;
   margin: 20rpx 0;
   display: flex;
   flex-flow: column nowrap;
+}
+.TimeTxt{
+  width: 100%;
+  font-size: 22rpx;
+  color: #797979;
 }
 
 .heart {
@@ -157,7 +160,7 @@
 
 .bottomBar {
   width: 100%;
-  height: 66rpx;
+  height: 78rpx;
   background-color: #FFA9A3;
   display: flex;
   flex-flow: row nowrap;
@@ -168,13 +171,15 @@
   z-index: 999;
 }
 
+
 .createReview {
   width: 90%;
-  height: 40rpx;
-  line-height: 40rpx;
-  font-size: 24rpx;
+  height: 54rpx;
   color: #000000 0.5;
   background-color: #FFFFFF;
   border-radius: 20rpx;
-  padding-left: 30rpx;
+  padding-left: 26rpx;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
 }

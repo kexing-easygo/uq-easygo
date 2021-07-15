@@ -19,20 +19,22 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
+    "useMultiFrameRuntime": false,
     "useApiHook": true,
-    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "showES6CompileOption": false
+    "minifyWXSS": true
   },
   "appid": "wxc51fd512a103a723",
   "projectname": "404",
@@ -41,12 +43,6 @@
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
@@ -83,6 +79,17 @@
           "name": "pages/otherSettings/otherSettings",
           "pathName": "pages/otherSettings/otherSettings",
           "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/review/review",
+          "pathName": "pages/review/review",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/addReview/addReview",
+          "pathName": "pages/addReview/addReview",
           "scene": null
         }
       ]

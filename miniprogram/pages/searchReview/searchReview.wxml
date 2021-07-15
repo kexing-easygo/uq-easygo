@@ -2,7 +2,7 @@
 <view class="container">
 	<view class="searchArea">
     <view class="searchBar">
-      <icon class="icon-small" type="search" size="34"></icon>
+      <icon class="icon-small" type="search" size="30"></icon>
       <input style="padding-left:40rpx;" type="text" maxlength="8" bindinput="bindCourseInput" placeholder="CSSE1001"/>
     </view>
 		<view class="searchButton">

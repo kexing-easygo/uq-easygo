@@ -2,7 +2,6 @@
 <view class="container">
   <view class="courseInfo">
     <view class="courseName">{{courseName}}</view>
-
     <view class="courseBoard">
       <view class="courseElement" style="margin-top: 50rpx;">
         <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Lecturer</view>
@@ -79,14 +78,14 @@
     <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" data-reviewindex="{{index}}" bindtap="modifyReview">
           {{singleReview.review}}
-          <view style="width: 100%; font-size:25rpx;">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
+          <view class="TimeTxt">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
       </view>
     </view>
 
     <view wx:else class="reviewContent"> 
       <view class="reviewTxt" style="margin-top: 50rpx;" >
           {{singleReview.review}}
-          <view style="width: 100%; font-size:25rpx;">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
+          <view class="TimeTxt">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
       </view>
     </view>
 
