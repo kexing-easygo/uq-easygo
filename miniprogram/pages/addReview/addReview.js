@@ -60,6 +60,7 @@ Page({
         modifiedReview: review,
         isModified : true
       })
+      console.log(index);
     })
     that.setData({
       course_name: app.globalData.reviewCourseName
@@ -87,6 +88,45 @@ Page({
     });
   },
   formatDate: function () {
+  },
+  deleteReview: function () {
+   
+    var course = this.data.course_name;
+    var index = this.data.index;
+    var temp = [];
+    db.collection("CourseReview")
+    .where({
+      course_name: course
+    })
+    .get().then(
+      res => {
+        //更新数据
+        for (var i = 0; i < res.data[0].reviews.length; i++) {
+          if (i != index) {
+            temp.push(res.data[0].reviews[i]);
+            console.log(temp);
+          }
+        }
+        db.collection("CourseReview")
+        .where({
+          course_name: course
+        }).update({
+          data: {
+            reviews: temp
+          }
+        });
+        //跳转界面
+        wx.redirectTo({
+          url: '/pages/review/review',
+          success: function (res) {}
+        })
+        
+      }
+    );
+    
+    
+
+
   },
   postReview: function () {
     let that = this
