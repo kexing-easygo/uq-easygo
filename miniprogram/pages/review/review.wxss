@@ -65,8 +65,8 @@
   flex-direction: row nowrap;
   justify-content: center;
   align-items: center;
-  margin-top: 50rpx;
-  margin-bottom: 50rpx;
+  margin-top: 40rpx;
+  margin-bottom: 40rpx;
   border-top: 2rpx solid #FFFFFF;
   border-bottom: 2rpx solid #95B9FF;
 }
@@ -80,16 +80,13 @@
     line-height: 50rpx;
     justify-content: center;
     align-items: center;
+    padding: 8rpx 26rpx;
 }
 
 .likeTxt {
   font-size:25rpx; 
   width: 100rpx;
   white-space: nowrap;
-}
-
-.likeBar .likeButton image {
-  margin-right: 10rpx;
 }
 
 .reviewBlock {
