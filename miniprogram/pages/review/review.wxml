@@ -33,38 +33,38 @@
 
   <view class="likeBar">
     <button wx:if="{{easy_pass_clickable}}" class="likeButton" bindtap="easyPass"> 
-      <image src="{{img1}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img1}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text1}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img1}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img1}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text1}}</view>
     </button>
 
     <button wx:if="{{hard_pass_clickable}}" class="likeButton" bindtap="hardPass"> 
-      <image src="{{img2}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img2}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text2}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img2}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img2}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text2}}</view>
     </button>
 
     <button wx:if="{{easy_hd_clickable}}" class="likeButton" bindtap="easyHd"> 
-      <image src="{{img3}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img3}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text3}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img3}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img3}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text3}}</view>
     </button>
 
     <button wx:if="{{good_luck_clickable}}" class="likeButton" bindtap="goodLuck"> 
-      <image src="{{img4}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img4}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text4}}</view>
     </button>
     <button wx:else class="likeButton"> 
-      <image src="{{img4}}" style="width: 50rpx; height: 50rpx;" mode="aspectFit"></image>
+      <image src="{{img4}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
       <view class="likeTxt">{{text4}}</view>
     </button>
   </view>
