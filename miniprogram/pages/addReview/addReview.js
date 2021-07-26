@@ -45,6 +45,7 @@ Page({
       var index = raw.index;
       var reviews = raw.reviewData.reviews;
       var review = reviews[index];
+      var dataBaseIndex = raw.dataBaseIndex;
       that.setData({
         // 上一级页面发送来的课程数据
         reviewData: raw.reviewData,
@@ -55,7 +56,7 @@ Page({
         reviewTxt: review.review,
         currentWord: review.review.length,
         // 被修改的评论的索引
-        index: index,
+        index: dataBaseIndex,
         // 被修改的评论
         modifiedReview: review,
         isModified : true

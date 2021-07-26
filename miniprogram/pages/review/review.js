@@ -57,6 +57,7 @@ Page({
     reviewData: {},
     // reviewData内的reviews数据
     reviews: [],
+    reviewIndex: [],
     showInfo: false,
     userOpenid: app.globalData._openid
   },
@@ -71,7 +72,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onReady: function () {
     let that = this
     db.collection("CourseReview")
     .where({
@@ -110,6 +111,7 @@ Page({
         // 对reviews进行重排
         // 优秀答案放第一，然后是自己的，最后是别人的
         var temp = [];
+        var tempIndex = [];
         var userOpenid = that.data.userOpenid;
         // 先根据liked_by字段判断是否可以被点赞
         for (var i = 0; i < data.reviews.length; i++) {
@@ -121,27 +123,34 @@ Page({
         }
         // 排优秀答案
         for (var i = 0; i < data.reviews.length; i++) {
-          if (data.reviews[i].outstanding == true) {
+          if (data.reviews[i].outstanding == true && tempIndex.indexOf(i) < 0) {
             temp.push(data.reviews[i]);
-            data.reviews.splice(i, 1);
-            continue
+            tempIndex.push(i);
+            //data.reviews.splice(i, 1);
+            //continue
           }
         }
         // 排自己的
         for (var i = 0; i < data.reviews.length; i++) {
-          if (data.reviews[i].poster_open_id == userOpenid) {
+          if (data.reviews[i].poster_open_id == userOpenid && tempIndex.indexOf(i) < 0) {
             temp.push(data.reviews[i]);
-            data.reviews.splice(i, 1);
-            continue
+            tempIndex.push(i);
+            // data.reviews.splice(i, 1);
+            // continue
           }
         }
         // 排其他的
         for (var i = 0; i < data.reviews.length; i++) {
-          temp.push(data.reviews[i]);
-          data.reviews.splice(i, 1);
+          if (  tempIndex.indexOf(i) < 0) {
+            temp.push(data.reviews[i]);
+            tempIndex.push(i);
+            //data.reviews.splice(i, 1);
+          }
+          
         }
         that.data.reviews = temp;
         that.data.reviewData.reviews = temp;
+        that.data.reviewIndex = tempIndex;
     
         // 变量
         var easy_hd_clickable = that.data.easy_hd_clickable;
@@ -251,10 +260,12 @@ Page({
    */
   modifyReview: function (e) {
     var index = e.currentTarget.dataset['reviewindex'];
+    var databaseIndex = this.data.reviewIndex.indexOf(index);
     var query = JSON.stringify(
       {
         reviewData: this.data.reviewData,
         index: index,
+        dataBaseIndex: databaseIndex,
         course_name: this.data.courseName
       }
     )
@@ -291,7 +302,8 @@ Page({
     }
     this.setData({
       reviews: reviews
-    })
+    });
+    this.updateDatabase();
 
   },
   /**
@@ -323,7 +335,8 @@ Page({
         text2: "好难(" + this.data.hard_pass.num + ")",
         text3: "好7(" + this.data.easy_hd.num + ")",
         text4: "运气(" + this.data.good_luck.num + ")",
-      })
+      });
+      this.updateDatabase();
     }
     
   },
@@ -356,7 +369,8 @@ Page({
         text1: "好过(" + this.data.easy_pass.num + ")",
         text3: "好7(" + this.data.easy_hd.num + ")",
         text4: "运气(" + this.data.good_luck.num + ")",
-      })
+      });
+      this.updateDatabase();
     }
   },
   /**
@@ -388,7 +402,8 @@ Page({
         text1: "好过(" + this.data.easy_pass.num + ")",
         text2: "好难(" + this.data.hard_pass.num + ")",
         text4: "运气(" + this.data.good_luck.num + ")",
-      })
+      });
+      this.updateDatabase();
     }
     
   },
@@ -421,7 +436,8 @@ Page({
         text1: "好过(" + this.data.easy_pass.num + ")",
         text2: "好难(" + this.data.hard_pass.num + ")",
         text3: "好7(" + this.data.easy_hd.num + ")",
-      })
+      });
+      this.updateDatabase();
     }
     
   },
@@ -435,9 +451,9 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面卸载
+   * 更新数据库
    */
-  onUnload: function () {
+  updateDatabase: function () {
     let that = this;
     db.collection("CourseReview")
     .where({
