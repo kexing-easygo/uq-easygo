@@ -11,19 +11,31 @@
   flex-wrap: wrap;
 }
 
-.courseName {
+.courseHeading {
   width: 95%;
   height: 74rpx;
   background-color: #FFA9A3;
   border: 5rpx solid #FFA9A3;
   border-radius: 50rpx;
   display: flex;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
   color: black;
   z-index: 999;
+
+}
+.courseName {
+  line-height: 36rpx;
+  font-size: 36rpx;
 }
 
+.courseTitle {
+  line-height: 24rpx;
+  font-size: 24rpx;
+  margin-top: 5rpx;
+  font-weight: 100rpx;
+}
 
 .courseInfo {
   margin-top: 20rpx;

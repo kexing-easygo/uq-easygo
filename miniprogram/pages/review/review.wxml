@@ -1,7 +1,12 @@
 <!--miniprogram/pages/review/review.wxml-->
 <view class="container">
   <view class="courseInfo">
-    <view class="courseName">{{courseName}}{{courseTitle}}</view>
+    <view class="courseHeading">
+      <view class="courseName"> {{courseName}} </view>
+      <view class="courseTitle"> {{courseTitle}} </view>
+    </view>
+
+
     <view class="courseBoard">
       <view class="courseElement" style="margin-top: 50rpx;">
         <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Lecturer</view>

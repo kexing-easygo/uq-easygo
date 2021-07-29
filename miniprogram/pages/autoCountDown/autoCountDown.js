@@ -19,10 +19,17 @@ Page({
   data: {
     color: 0,
     clicked_1: false,
-    clicked_2: false,
-    clicked_3: false,
-    clicked_4: false,
-    clicked_5: false,
+    afterGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后灰色选择器.png",
+    afterRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后红色选择器.png",
+    afterYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后黄色选择器.png",
+    afterGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后绿色选择器.png",
+    afterBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后蓝色选择器.png",
+
+    beforeGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未灰色选择器.png",
+    beforeRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未红色选择器.png",
+    beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
+    beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
+    beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
 
     setClassMode: true,
     buttons: [{text: '好的'}, {text: '这就去设置'}],
@@ -41,7 +48,7 @@ Page({
 
   bindRed: function() {
     this.setData({
-      color: "#FA5151",
+      color: "#FF7043",
       clicked_1: true,
       clicked_2: false,
       clicked_3: false,
@@ -49,9 +56,10 @@ Page({
       clicked_5: false,
     });
   },
-  bindPink: function() {
+
+  bindYellow: function() {
     this.setData({
-      color: "#FFC300",
+      color: "#FFB300",
       clicked_1: false,
       clicked_2: true,
       clicked_3: false,
@@ -59,9 +67,10 @@ Page({
       clicked_5: false,
     });
   },
-  bindLightBlue: function() {
+
+  bindGreen: function() {
     this.setData({
-      color: "#07C160",
+      color: "#8BC34A",
       clicked_1: false,
       clicked_2: false,
       clicked_3: true,
@@ -69,9 +78,10 @@ Page({
       clicked_5: false,
     });
   },
-  bindPurple: function() {
+
+  bindBlue: function() {
     this.setData({
-      color: "#1485EE",
+      color: "#29B6F6",
       clicked_1: false,
       clicked_2: false,
       clicked_3: false,
@@ -79,7 +89,8 @@ Page({
       clicked_5: false,
     });
   },
-  bindYellow: function() {
+
+  bindGrey: function() {
     this.setData({
       color: "#576B95",
       clicked_1: false,
@@ -210,10 +221,10 @@ Page({
       ass[i].color = color;
       ass[i].name = course + "-" + ass[i].name;
       // TODO: 解析到TBD，自动变为30天后
-      if (ass[i].date == "TBD") {
-        ass[i].date = GetDateStr(30);
-        ass[i].time = "00:00"
-      }
+      // if (ass[i].date == "TBD") {
+      //   ass[i].date = GetDateStr(30);
+      //   ass[i].time = "00:00"
+      // }
       db.collection("MainUser")
       .where({
         _openid: app.globalData._openid

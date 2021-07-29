@@ -139,16 +139,18 @@ checkbox .wx-checkbox-input{
 
 .cdDetail {
   display: flex;
+  height: 50rpx;
   flex-flow: row nowrap;
-  justify-content: flex-start;
-  margin-left: 30rpx;
+  justify-content: center;
+  align-items: center;
 }
 
 .colorButton {
-  width: 40rpx;
-  height: 40rpx;
-  border-radius: 50%;
-  margin-right: 22rpx;
+  width: 10rpx;
+  height: 45rpx;
+  /* border-radius: 50%; */
+  margin-left: -15rpx;
+  overflow: visible;
 }
 
 .clicked_1 {

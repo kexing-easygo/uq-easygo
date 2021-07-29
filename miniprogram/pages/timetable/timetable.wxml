@@ -92,7 +92,7 @@
 
   <view class="weekClass1"  wx:for="{{weekdays}}"  wx:for-item="item" wx:for-index="index">
     <view class="weekDate">
-      <view class="weekDateitem" wx:if="{{index + 1 == currentDay && selectWeek==0}}">
+      <view class="weekDateitem" wx:if="{{index + 1 == currentDay && selectWeek==thisWeek}}">
         <view class="weekDateitemContent" style="background-color: rgba(152, 95, 254, 0.7);">
           <text>{{item}}</text>
         </view>
@@ -105,7 +105,7 @@
     </view>
   </view>
 
-  <view  wx:if="{{selectWeek==0}}" style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1180rpx; width: 130rpx; top: 195rpx; left: calc(50rpx - 140rpx + (140rpx * {{currentDay}}))"></view>
+  <view  wx:if="{{selectWeek >= 0}}" style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1180rpx; width: 130rpx; top: 195rpx; left: calc(50rpx - 140rpx + (140rpx * {{currentDay}}))"></view>
 
   <view class="weekClass">
 

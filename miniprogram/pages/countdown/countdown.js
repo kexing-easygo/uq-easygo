@@ -257,12 +257,23 @@ Page({
                     userAssignments[i]["date"] = d2;
                   }
                 }
-                var date = userAssignments[i]["date"]
+                // var date = userAssignments[i]["date"]
+                if (userAssignments[i]["date"] == "TBD") {
+                  var date = "999"
+                } else {
+                  var date = userAssignments[i]["date"]
+                }
                 var time = userAssignments[i]["time"]
                 var string = date + "T" + time + ":00"
                 var d = new Date(string).getTime()
-                var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                diffs.push(diff)
+                if (userAssignments[i]["date"] == "TBD") {
+                  var diff = 999
+                } else {
+                  var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                  diffs.push(diff)
+                }
+                // var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
+                // diffs.push(diff)
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
                 userAssignments[i]["countdown"] = diff
@@ -290,6 +301,7 @@ Page({
               })
             }
             app.globalData.userAssignments = userAssignments;
+            console.log(userAssignments);
           }
         })
     } else {

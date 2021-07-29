@@ -140,6 +140,9 @@
   color: rgba(255, 255, 255, 1);
   text-align: center;
   line-height: 72rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .red_day {
