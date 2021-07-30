@@ -1,0 +1,116 @@
+<!--miniprogram/pages/review/review.wxml-->
+<view class="container">
+  <view class="courseInfo">
+    <view class="courseName">{{courseName}}{{courseTitle}}</view>
+    <view class="courseBoard">
+      <view class="courseElement" style="margin-top: 50rpx;">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Lecturer</view>
+        <view>{{courseLecturer}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Faculty</view>
+        <view>{{courseFaculty}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Prequisites</view>
+        <view>{{coursePre}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Incompatible</view>
+        <view>{{courseIncompatible}}</view>
+      </view>
+      <view class="courseElement">
+        <view style="width: 50rpx; overflow: visible; margin-right: 250rpx;">Semester(s)</view>
+        <view>{{courseSemester}}</view>
+      </view>
+
+      <view style="font-size: 24rpx; margin-bottom: 20rpx; font-weight: 300;">
+      想知道更多记得去看官方ECP哦
+      </view>
+    </view>
+
+  </view>
+
+  <view class="likeBar">
+    <button wx:if="{{easy_pass_clickable}}" class="likeButton" bindtap="easyPass"> 
+      <image src="{{img1}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text1}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img1}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text1}}</view>
+    </button>
+
+    <button wx:if="{{hard_pass_clickable}}" class="likeButton" bindtap="hardPass"> 
+      <image src="{{img2}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text2}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img2}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text2}}</view>
+    </button>
+
+    <button wx:if="{{easy_hd_clickable}}" class="likeButton" bindtap="easyHd"> 
+      <image src="{{img3}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text3}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img3}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text3}}</view>
+    </button>
+
+    <button wx:if="{{good_luck_clickable}}" class="likeButton" bindtap="goodLuck"> 
+      <image src="{{img4}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text4}}</view>
+    </button>
+    <button wx:else class="likeButton"> 
+      <image src="{{img4}}" style="width: 40rpx; height: 40rpx;" mode="aspectFit"></image>
+      <view class="likeTxt">{{text4}}</view>
+    </button>
+  </view>
+
+  <view class="reviewBlock" wx:for="{{reviews}}" wx:for-index="index" wx:for-item="singleReview" wx:key="index">
+    <view class="reviewerInfo">
+      <view style="margin-left: 50rpx;">{{singleReview.poster_name}} - {{singleReview.semester_enrolled}}</view>
+      <view wx:if="{{singleReview.outstanding == true}}" style="margin-left: 150rpx;">优秀回答</view>
+    </view>
+
+    <view wx:if="{{singleReview.poster_open_id == userOpenid}}" class="reviewContent" style="background-color: #FFF176;"> 
+      <view class="reviewTxt" style="margin-top: 50rpx;" data-reviewindex="{{index}}" bindtap="modifyReview">
+          {{singleReview.review}}
+          <view class="TimeTxt">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
+      </view>
+    </view>
+
+    <view wx:else class="reviewContent"> 
+      <view class="reviewTxt" style="margin-top: 50rpx;" >
+          {{singleReview.review}}
+          <view class="TimeTxt">编辑于{{singleReview.post_date}} {{singleReview.post_time}}</view>
+      </view>
+    </view>
+
+    <view wx:if="{{!singleReview.clickable}}" class="heart">
+      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}">
+        <image src="{{afterLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
+      </button>
+    </view>
+    <view wx:else class="heart">
+      <button style="width: 100rpx; height: 64rpx;" data-reviewindex="{{index}}" bindtap="likes">
+        <image src="{{beforeLikeImg}}" style="width: 30rpx; height: 30rpx;"></image>
+        <view style="font-size:25rpx; margin-left:10rpx; font-weight:300;">{{singleReview.likes}}</view>
+      </button>
+    </view>
+  </view>
+
+
+  <view class="bottomBar">
+    <navigator class="createReview" url="/pages/addReview/addReview">
+      <view>发表评论</view>
+    </navigator>
+    <!-- <button class="createReview" bindtap="addSingleReview">
+      <view>发表评论</view>
+    </button> -->
+  </view>
+
+</view>

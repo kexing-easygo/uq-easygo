@@ -22,7 +22,7 @@
 	<navigator url="/pages/timetable/timetable">
 		<image src="{{timetableIcon}}" />
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
+	<navigator url="/pages/searchReview/searchReview">
 		<image src="{{reviewIcon}}" />
 	</navigator>
 </view>
@@ -37,7 +37,7 @@
 	<navigator url="/pages/timetable/timetable">
 		课程表
 	</navigator>
-	<navigator url="/pages/nonfunction/nonfunction">
+	<navigator url="/pages/searchReview/searchReview">
 		课评
 	</navigator>
 </view>

@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/home/home",
+    "pages/searchReview/searchReview",
+    "pages/review/review",
+    "pages/addReview/addReview",
     "pages/timetable/timetable",
     "pages/addTimeTable/addTimeTable",
     "pages/autoCountDown/autoCountDown",
