@@ -65,7 +65,7 @@
 	<!-- 信息提示区 -->
 	<view class="{{!showResult? 'notiBoard':'hide'}}">
 		<view class="info">
-			搜索时请输入大写字母～最终交付时间要以BlackBoard为准，大家随时查看并更新倒计时的时间哦～
+			作业的最终交付时间要以BlackBoard为准，大家随时查看并更新倒计时的时间哦～
 		</view>
 	</view>
 

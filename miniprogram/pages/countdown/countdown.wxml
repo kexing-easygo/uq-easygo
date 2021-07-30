@@ -77,12 +77,12 @@
 	<view class="shade">
 		<!--蒙板内部-->
 		<view class="contents">
-			<!-- <view>
+			<view>
 				<text>自动添加</text>
 				<navigator url="/pages/autoCountDown/autoCountDown">
 					<image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
 				</navigator>
-			</view> -->
+			</view>
 			<view>
 				<text>手动添加</text>
 				<navigator url="/pages/addCountDown/addCountDown">
