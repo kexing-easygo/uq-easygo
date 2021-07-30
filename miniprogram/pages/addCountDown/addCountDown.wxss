@@ -34,13 +34,14 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  margin-left: 40rpx;
 }
 
 .colorButton {
   width: 10rpx;
   height: 45rpx;
   /* border-radius: 50%; */
-  margin-left: -15rpx;
+  margin-left: -20rpx;
   overflow: visible;
 }
 
@@ -58,6 +59,7 @@
 }
 
 .picker {
+  margin-left: -20rpx;
   margin-right: 30rpx;
 }
 
