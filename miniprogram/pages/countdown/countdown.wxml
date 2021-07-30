@@ -79,7 +79,7 @@
 			<view>
 				<text>自动添加</text>
 				<navigator url="/pages/autoCountDown/autoCountDown">
-					<image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+					<image style="width: 88rpx; height: 88rpx" src="{{autoCountDown}}" />
 				</navigator>
 			</view>
 			<view>
