@@ -217,6 +217,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.cloud.callFunction({
+      name: 'calcTimeTableUse',
+      data: {},
+      success: function(res) {
+        console.log(res.result.sum) 
+      },
+      fail: console.error
+    })
+
     this.setData({
       thisWeek: currentWeek,
       selectWeek: currentWeek,
