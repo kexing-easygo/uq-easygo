@@ -30,6 +30,7 @@ Page({
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
     addBlack: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/黑色按钮.png",
     historyIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
+    autoCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/自动添加.png",
     showTrue: false,
     showAll: true,
     d1,
