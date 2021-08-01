@@ -28,11 +28,11 @@
   </view>
 
   <button type="primary" style="margin-top: 50rpx; box-shadow: 0 10rpx 10rpx 2rpx #cccccc;" bindtap="postReview">
-    确认上传
+    确认
   </button>
 
   <button wx:if="{{isModified}}" type="primary" style="margin-top: 50rpx; box-shadow: 0 10rpx 10rpx 2rpx #cccccc;background-color: #FA5151;" bindtap="deleteReview">
-    删除评论
+    删除
   </button>
 
 </view>

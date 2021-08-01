@@ -30,12 +30,56 @@ Page({
     semesterIndex: 0,
     index: null
   },
-
+  /**
+   * 对reviews进行重排
+   * 优秀答案放第一，然后是自己的，最后是别人的
+   * 
+   * @param {*} reviews 
+   */
+  sortReviews: function (reviewData) {
+    let that = this;
+    var reviews = reviewData.reviews;
+    var temp = [];
+    var tempIndex = [];
+    var userOpenid = app.globalData._openid;
+    for (var i = 0; i < reviews.length; i++) {
+      if (reviews[i].liked_by.indexOf(userOpenid) > -1) {
+        reviews[i]["clickable"] = false;
+      } else {
+        reviews[i]["clickable"] = true;
+      }
+    }
+    // 排优秀答案
+    for (var i = 0; i < reviews.length; i++) {
+      if (reviews[i].outstanding == true && tempIndex.indexOf(i) < 0) {
+        temp.push(reviews[i]);
+        tempIndex.push(i);
+      }
+    }
+    // 排自己的
+    for (var i = 0; i < reviews.length; i++) {
+      if (reviews[i].poster_open_id == userOpenid && tempIndex.indexOf(i) < 0) {
+        temp.push(reviews[i]);
+        tempIndex.push(i);
+      }
+    }
+    // 排其他的
+    for (var i = 0; i < reviews.length; i++) {
+      if (tempIndex.indexOf(i) < 0) {
+        temp.push(reviews[i]);
+        tempIndex.push(i);
+      }
+    }
+    reviewData.reviews = temp;
+    console.log(temp);
+    return reviewData;
+  },
   
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     let that = this
     const eventChannel = this.getOpenerEventChannel()
     eventChannel.on('acceptDataFromOpenerPage', function (e) {
@@ -43,14 +87,12 @@ Page({
       var raw = JSON.parse(e)
       // raw是所有评论数据
       var index = raw.index;
-      var reviews = raw.reviewData.reviews;
-      var review = reviews[index];
+      var review = raw.reviewData.reviews[index];
       var dataBaseIndex = raw.dataBaseIndex;
       that.setData({
         // 上一级页面发送来的课程数据
         reviewData: raw.reviewData,
         // 课程数据的reviews字段
-        reviews: reviews,
         nickName: review.poster_name,
         semester: review.semester_enrolled,
         reviewTxt: review.review,
@@ -61,11 +103,34 @@ Page({
         modifiedReview: review,
         isModified : true
       })
-      console.log(index);
+
     })
     that.setData({
       course_name: app.globalData.reviewCourseName
     })
+    // db.collection("CourseNew")
+    // .where({
+    //   course_name: app.globalData.reviewCourseName
+    // })
+    // .get()
+    // .then(res => {
+    //   var d = that.sortReviews(res.data[0]);
+    //   console.log(d.reviews)
+    //   db.collection("CourseNew")
+    //   .where({
+    //     course_name: app.globalData.reviewCourseName
+    //   })
+    //   .update({
+    //     data: {
+    //       reviews: d.reviews
+    //     }, success: function(res) {
+    //       console.log(res)
+    //     }
+    //   })     
+    // })
+    
+  },
+  onReady: function (e) {
     
   },
   getName: function (e) {
@@ -88,46 +153,44 @@ Page({
       reviewTxt: review
     });
   },
-  formatDate: function () {
-  },
+
   deleteReview: function () {
-   
-    var course = this.data.course_name;
-    var index = this.data.index;
-    var temp = [];
-    db.collection("CourseNew")
-    .where({
-      course_name: course
-    })
-    .get().then(
-      res => {
-        //更新数据
-        for (var i = 0; i < res.data[0].reviews.length; i++) {
-          if (i != index) {
-            temp.push(res.data[0].reviews[i]);
-            console.log(temp);
-          }
+    let that = this;
+    var reviewData = that.data.reviewData;
+    var course_name = that.data.course_name;
+    var index = that.data.index;
+    // 删除这条评论
+    reviewData.reviews.splice(index, 1);
+    // 重排
+    that.sortReviews(reviewData);
+    wx.showModal({
+      title: 'UU妹提醒',
+      content: "你确定要删除你的评论嘛",
+      success(res) {
+        if (res.confirm) {
+          db.collection("CourseNew")
+          .where({
+            course_name: course_name
+          }).update({
+            data: {
+              reviews: reviewData.reviews
+            }
+          });
+          //跳转界面
+          wx.redirectTo({
+            url: '/pages/review/review',
+            success: function (res) {
+              var pages = getCurrentPages();
+              var prev = pages[pages.length - 2];
+              if (prev == undefined || prev == null) return;
+              // 刷新页面
+              prev.onLoad();
+            }
+          })
         }
-        db.collection("CourseNew")
-        .where({
-          course_name: course
-        }).update({
-          data: {
-            reviews: temp
-          }
-        });
-        //跳转界面
-        wx.redirectTo({
-          url: '/pages/review/review',
-          success: function (res) {}
-        })
-        
       }
-    );
+    })
     
-    
-
-
   },
   postReview: function () {
     let that = this
@@ -153,19 +216,18 @@ Page({
     var year = d.getFullYear();
     var month = (d.getMonth() + 1 < 10 ? '0' + (d.getMonth() + 1) : d.getMonth() + 1);
     var date = d.getDate() < 10 ? '0' + d.getDate() : d.getDate();
-    var temp = {}
+    var temp = {};
+    
     // 修改评论
     if (that.data.isModified == true) {
-      temp = that.data.reviews[that.data.index];
+      temp = that.data.reviewData.reviews[that.data.index];
       temp.poster_name = nickName;
       temp.post_date =  year + "-" + month + "-" + date,
       temp.post_time = d.toTimeString().split(" ")[0],
       temp.semester_enrolled = semester,
       temp.review = reviewTxt
       // 更新评论数据
-      that.data.reviews[that.data.index] = temp;
-      // 更新课程数据
-      that.data.reviewData.reviews = that.data.reviews;
+      that.data.reviewData.reviews[that.data.index] = temp;
       db.collection("CourseNew")
       .where({
         course_name: that.data.course_name
@@ -175,10 +237,7 @@ Page({
           reviews: that.data.reviewData.reviews
         },
         success: function (res) {
-          console.log(res)
           if (res.stats.updated > 0) {
-            // app.globalData.reviewsData = that.data.reviewData
-            // app.globalData.reviewsData.reviews = that.data.reviewData.reviews
             var pages = getCurrentPages();
             var prev = pages[pages.length - 2];
             if (prev == undefined || prev == null) return;
@@ -187,67 +246,63 @@ Page({
             wx.redirectTo({
               url: '/pages/review/review',
             })
-          } else {
-            // wx.showToast({
-            //   title: '修改失败',
-            //   icon: 'error',
-            //   duration: 1000
-            // })  
-            // return
           }
         }
       })
     } else {
-      temp = {
-        poster_name: nickName,
-        poster_open_id: app.globalData._openid,
-        // mode: app.globalData.classMode,
-        outstanding: false,
-        post_date: year + "-" + month + "-" + date,
-        post_time: d.toTimeString().split(" ")[0],
-        likes: 0,
-        review: reviewTxt, 
-        semester_enrolled: semester,
-        liked_by: []
-      }
-      wx.showModal({
-        title: 'UU妹提醒',
-        content: "你确定要发表评论嘛",
-        success(res) {
-          db.collection("CourseNew")
-          .where({
-            course_name: that.data.course_name
-          })
-          .update({
-            data: {
-              reviews: _.push(temp)
-            },
-            success: function (res) {
-                var pages = getCurrentPages();
-                var prev = pages[pages.length - 2];
-                if (prev == undefined || prev == null) return;
-                // 刷新页面
-                prev.onLoad();
-                wx.redirectTo({
-                  url: '/pages/review/review',
-                  success: function (res) {}
-                })     
-              
-                // wx.showToast({
-                //   title: '发表失败',
-                //   icon: 'error',
-                //   duration: 1000
-                // })  
-                // return
-              
+      // 推送到现有的review中
+      db.collection("CourseNew")
+      .where({
+        course_name: that.data.course_name
+      })
+      .get()
+      .then(res => {
+        var reviewData = res.data[0];
+        reviewData.reviews.push(
+          {
+            poster_name: nickName,
+            poster_open_id: app.globalData._openid,
+            outstanding: false,
+            post_date: year + "-" + month + "-" + date,
+            post_time: d.toTimeString().split(" ")[0],
+            likes: 0,
+            review: reviewTxt, 
+            semester_enrolled: semester,
+            liked_by: []
+          }
+        );
+        that.sortReviews(reviewData);
+        wx.showModal({
+          title: 'UU妹提醒',
+          content: "你确定要发表评论嘛",
+          success(res) {
+            if (res.confirm) {
+              db.collection("CourseNew")
+              .where({
+                course_name: that.data.course_name
+              })
+              .update({
+                data: {
+                  reviews: reviewData.reviews
+                },
+                success: function (res) {
+                  var pages = getCurrentPages();
+                  var prev = pages[pages.length - 2];
+                  if (prev == undefined || prev == null) return;
+                  // 刷新页面
+                  prev.onLoad();
+                  wx.redirectTo({
+                    url: '/pages/review/review',
+                    success: function (res) {}
+                  })     
+                  
+                }
+              })
             }
-          })
-        }
+          }
+        })
       })
     }
-
-    
-
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

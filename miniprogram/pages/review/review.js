@@ -111,50 +111,48 @@ Page({
           reviews: data.reviews,
           userOpenid: app.globalData._openid
         })
-        // 对reviews进行重排
-        // 优秀答案放第一，然后是自己的，最后是别人的
-        var temp = [];
-        var tempIndex = [];
+        // // 对reviews进行重排
+        // // 优秀答案放第一，然后是自己的，最后是别人的
+        // var temp = [];
+        // var tempIndex = [];
         var userOpenid = that.data.userOpenid;
-        // 先根据liked_by字段判断是否可以被点赞
+        // // 先根据liked_by字段判断是否可以被点赞
+        // for (var i = 0; i < data.reviews.length; i++) {
+        //   if (data.reviews[i].liked_by.indexOf(userOpenid) > -1) {
+        //     data.reviews[i]["clickable"] = false;
+        //   } else {
+        //     data.reviews[i]["clickable"] = true;
+        //   }
+        // }
+        // // 排优秀答案
+        // for (var i = 0; i < data.reviews.length; i++) {
+        //   if (data.reviews[i].outstanding == true && tempIndex.indexOf(i) < 0) {
+        //     temp.push(data.reviews[i]);
+        //     tempIndex.push(i);
+        //   }
+        // }
+        // // 排自己的
+        // for (var i = 0; i < data.reviews.length; i++) {
+        //   if (data.reviews[i].poster_open_id == userOpenid && tempIndex.indexOf(i) < 0) {
+        //     temp.push(data.reviews[i]);
+        //     tempIndex.push(i);
+        //   }
+        // }
+        // // 排其他的
+        // for (var i = 0; i < data.reviews.length; i++) {
+        //   if (  tempIndex.indexOf(i) < 0) {
+        //     temp.push(data.reviews[i]);
+        //     tempIndex.push(i);
+        //   }
+        // }
+        // that.data.reviews = temp;
+        // that.data.reviewData.reviews = temp;
+        // that.data.reviewIndex = tempIndex;
+        // 构建reviewIndex
+        var tempIndex = [];
         for (var i = 0; i < data.reviews.length; i++) {
-          if (data.reviews[i].liked_by.indexOf(userOpenid) > -1) {
-            data.reviews[i]["clickable"] = false;
-          } else {
-            data.reviews[i]["clickable"] = true;
-          }
+          tempIndex.push(i);
         }
-        // 排优秀答案
-        for (var i = 0; i < data.reviews.length; i++) {
-          if (data.reviews[i].outstanding == true && tempIndex.indexOf(i) < 0) {
-            temp.push(data.reviews[i]);
-            tempIndex.push(i);
-            //data.reviews.splice(i, 1);
-            //continue
-          }
-        }
-        // 排自己的
-        for (var i = 0; i < data.reviews.length; i++) {
-          if (data.reviews[i].poster_open_id == userOpenid && tempIndex.indexOf(i) < 0) {
-            temp.push(data.reviews[i]);
-            tempIndex.push(i);
-            // data.reviews.splice(i, 1);
-            // continue
-          }
-        }
-        // 排其他的
-        for (var i = 0; i < data.reviews.length; i++) {
-          if (  tempIndex.indexOf(i) < 0) {
-            temp.push(data.reviews[i]);
-            tempIndex.push(i);
-            //data.reviews.splice(i, 1);
-          }
-          
-        }
-        that.data.reviews = temp;
-        that.data.reviewData.reviews = temp;
-        that.data.reviewIndex = tempIndex;
-    
         // 变量
         var easy_hd_clickable = that.data.easy_hd_clickable;
         var easy_pass_clickable = that.data.easy_pass_clickable;
@@ -224,7 +222,7 @@ Page({
           img4 = that.data.afterGoodLuckImg;
         }
         that.setData({
-          reviews: temp,
+          reviewIndex: tempIndex,
           easy_hd_clickable: easy_hd_clickable,
           easy_pass_clickable: easy_pass_clickable,
           good_luck_clickable: good_luck_clickable,
@@ -240,21 +238,6 @@ Page({
         })
       }
     )
-    // let pages = getCurrentPages();
-    // let that = this
-    // if (pages.length > 1) {
-    //   let prevPage = pages[pages.length - 2];
-    //   if ("route" in prevPage) {
-    //     if (prevPage.route == "pages/searchReview/searchReview") {
-    //       if (!app.globalData.hasUserInfo) {
-    //         wx.showToast({
-    //           title: '登录才能使用课评的完整功能哦',
-    //           icon: 'none'
-    //         })
-    //       }
-    //     }
-    //   }
-    // }
     
   },
   /**
