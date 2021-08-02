@@ -168,57 +168,32 @@ Page({
         var img4 = that.data.img4;
         // 检查是否有likeBar
         // 如果有点击过
-        if (that.data.easy_pass.users.indexOf(userOpenid) > -1) {
+        text1 = "好过(" + that.data.easy_pass.num + ")";
+        text2 = "好难(" + that.data.hard_pass.num + ")";
+        text3 = "好7(" + that.data.easy_hd.num + ")";
+        text4 = "运气(" + that.data.good_luck.num + ")";
+        if (that.data.easy_pass.users.indexOf(userOpenid) > -1 || 
+        that.data.hard_pass.users.indexOf(userOpenid) > -1 || 
+        that.data.easy_hd.users.indexOf(userOpenid) > -1 || 
+        that.data.good_luck.users.indexOf(userOpenid) > -1) {
           easy_pass_clickable = false;
           hard_pass_clickable = false;
           easy_hd_clickable = false;
           good_luck_clickable = false;
-          text1 = "好过(" + that.data.easy_pass.num + ")";
-          text2 = "好难(" + that.data.hard_pass.num + ")";
-          text3 = "好7(" + that.data.easy_hd.num + ")";
-          text4 = "运气(" + that.data.good_luck.num + ")";
+        }
+        if (that.data.easy_pass.users.indexOf(userOpenid) > -1) {
           img1 = that.data.afterEasyPassImg;
         }
     
         if (that.data.hard_pass.users.indexOf(userOpenid) > -1) {
-          // hard_pass_clickable = false;
-          // text2 = "好难(" + that.data.hard_pass.num + ")";
-          easy_pass_clickable = false;
-          hard_pass_clickable = false;
-          easy_hd_clickable = false;
-          good_luck_clickable = false;
-          text1 = "好过(" + that.data.easy_pass.num + ")";
-          text2 = "好难(" + that.data.hard_pass.num + ")";
-          text3 = "好7(" + that.data.easy_hd.num + ")";
-          text4 = "运气(" + that.data.good_luck.num + ")";
           img2 = that.data.afterHardPassImg;
         }
     
         if (that.data.easy_hd.users.indexOf(userOpenid) > -1) {
-          // easy_hd_clickable = false;
-          // text3 = "好7(" + that.data.easy_hd.num + ")";
-          easy_pass_clickable = false;
-          hard_pass_clickable = false;
-          easy_hd_clickable = false;
-          good_luck_clickable = false;
-          text1 = "好过(" + that.data.easy_pass.num + ")";
-          text2 = "好难(" + that.data.hard_pass.num + ")";
-          text3 = "好7(" + that.data.easy_hd.num + ")";
-          text4 = "运气(" + that.data.good_luck.num + ")";
           img3 = that.data.afterEasyHdImg;
         }
     
         if (that.data.good_luck.users.indexOf(userOpenid) > -1) {
-          // good_luck_clickable = false;
-          // text4 = "运气(" + that.data.good_luck.num + ")";
-          easy_pass_clickable = false;
-          hard_pass_clickable = false;
-          easy_hd_clickable = false;
-          good_luck_clickable = false;
-          text1 = "好过(" + that.data.easy_pass.num + ")";
-          text2 = "好难(" + that.data.hard_pass.num + ")";
-          text3 = "好7(" + that.data.easy_hd.num + ")";
-          text4 = "运气(" + that.data.good_luck.num + ")";
           img4 = that.data.afterGoodLuckImg;
         }
         that.setData({
