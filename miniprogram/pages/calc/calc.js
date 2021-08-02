@@ -13,10 +13,10 @@ Page({
     semester: "select semester",
     assessments: [],
     course: "",
-    semester_array: ['Semester 1, 2021','Semester 2, 2021'],
+    semester_array: ['Semester 2, 2021','Summer Semester, 2021'],
     objectArray: [
-      {id: 0, name: 'Semester 1, 2021'},
-      {id: 1, name: 'Semester 2, 2021'},
+      {id: 0, name: 'Semester 2, 2021'},
+      {id: 1, name: 'Summer Semester, 2021'},
     ],
     index: 0,
     // 获得总分
@@ -177,10 +177,8 @@ Page({
    * Lifecycle function--Called when page load
    */
   onLoad: function (options) {
-    // var score = this.data.totalScore/100;
     this.drawCirclebg(); 
     this.drawCirclefront(0);
-    // this.searchCourse();
     
   },
   /**
@@ -189,16 +187,16 @@ Page({
    * 如果有，进一步检查是否登录
    */
   searchCourse: function() {
-    let value = this.data.course
+    let value = this.data.course.toUpperCase()
     let _this = this
     // 数据库搜索
-    db.collection("Courses").where({
-      name: db.RegExp({
-        options: 'i',
-        regexp: '^' + value
-      })
-    }).get({
+    db.collection("CourseNew")
+    .where({
+      course_name: value
+    })
+    .get({
       success: function(res) {
+        console.log(res)
         if (res.data.length == 0) {
           wx.showModal({
             title: '温馨提示',
@@ -208,7 +206,8 @@ Page({
             }
           })
         }
-        var assessments = res.data[0].assessment
+        
+        var assessments = res.data[0].external.assessments
         if (assessments[assessments.length - 1].doublepass == true) {
           _this.setData({
             doublePass: true

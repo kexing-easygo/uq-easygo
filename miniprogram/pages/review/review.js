@@ -306,24 +306,36 @@ Page({
         }
       })
     }
-    var data = this.data.easy_pass;
-    if (data["users"].indexOf(app.globalData._openid) == -1) {
-      data["num"] += 1;
-      data["users"].push(app.globalData._openid);
-      this.setData({
-        easy_pass: data,
-        easy_pass_clickable: false,
-        hard_pass_clickable: false,
-        easy_hd_clickable: false,
-        good_luck_clickable: false,
-        img1: this.data.afterEasyPassImg,
-        text1: "好过(" + data.num + ")",
-        text2: "好难(" + this.data.hard_pass.num + ")",
-        text3: "好7(" + this.data.easy_hd.num + ")",
-        text4: "运气(" + this.data.good_luck.num + ")",
-      });
-      this.updateDatabase();
-    }
+    let that = this;
+    wx.showModal({
+      title: 'UU妹提醒',
+      content: '世上没有后悔药，点过以后不能再来，你确定要给予这个评价嘛～',
+      success(res) {
+        if (!res.confirm) {
+          return;
+        }
+        
+        var data = that.data.easy_pass;
+        if (data["users"].indexOf(app.globalData._openid) == -1) {
+          data["num"] += 1;
+          data["users"].push(app.globalData._openid);
+          that.setData({
+            easy_pass: data,
+            easy_pass_clickable: false,
+            hard_pass_clickable: false,
+            easy_hd_clickable: false,
+            good_luck_clickable: false,
+            img1: that.data.afterEasyPassImg,
+            text1: "好过(" + data.num + ")",
+            text2: "好难(" + that.data.hard_pass.num + ")",
+            text3: "好7(" + that.data.easy_hd.num + ")",
+            text4: "运气(" + that.data.good_luck.num + ")",
+          });
+          that.updateDatabase();
+        }
+      }
+    })
+    
     
   },
   /**
@@ -340,24 +352,35 @@ Page({
         }
       })
     }
-    var data = this.data.hard_pass;
-    if (data["users"].indexOf(app.globalData._openid) == -1) {
-      data["num"] += 1;
-      data["users"].push(app.globalData._openid);
-      this.setData({
-        hard_pass: data,
-        hard_pass_clickable: false,
-        easy_pass_clickable: false,
-        easy_hd_clickable: false,
-        good_luck_clickable: false,
-        img2: this.data.afterHardPassImg,
-        text2: "好难(" + data.num + ")",
-        text1: "好过(" + this.data.easy_pass.num + ")",
-        text3: "好7(" + this.data.easy_hd.num + ")",
-        text4: "运气(" + this.data.good_luck.num + ")",
-      });
-      this.updateDatabase();
-    }
+    let that = this;
+    wx.showModal({
+      title: 'UU妹提醒',
+      content: '世上没有后悔药，点过以后不能再来，你确定要给予这个评价嘛～',
+      success(res) {
+        if (!res.confirm) {
+          return;
+        }
+        var data = that.data.hard_pass;
+        if (data["users"].indexOf(app.globalData._openid) == -1) {
+          data["num"] += 1;
+          data["users"].push(app.globalData._openid);
+          that.setData({
+            hard_pass: data,
+            hard_pass_clickable: false,
+            easy_pass_clickable: false,
+            easy_hd_clickable: false,
+            good_luck_clickable: false,
+            img2: that.data.afterHardPassImg,
+            text2: "好难(" + data.num + ")",
+            text1: "好过(" + that.data.easy_pass.num + ")",
+            text3: "好7(" + that.data.easy_hd.num + ")",
+            text4: "运气(" + that.data.good_luck.num + ")",
+          });
+          that.updateDatabase();
+        }
+      }
+    })
+    
   },
   /**
    * 登录用户可以评价该门课是否好拿7。
@@ -373,24 +396,35 @@ Page({
         }
       })
     }
-    var data = this.data.easy_hd;
-    if (data["users"].indexOf(app.globalData._openid) == -1) {
-      data["num"] += 1;
-      data["users"].push(app.globalData._openid);
-      this.setData({
-        easy_hd: data,
-        easy_hd_clickable: false,
-        hard_pass_clickable: false,
-        easy_pass_clickable: false,
-        good_luck_clickable: false,
-        img3: this.data.afterEasyHdImg,
-        text3: "好7(" + data.num + ")",
-        text1: "好过(" + this.data.easy_pass.num + ")",
-        text2: "好难(" + this.data.hard_pass.num + ")",
-        text4: "运气(" + this.data.good_luck.num + ")",
-      });
-      this.updateDatabase();
-    }
+    let that = this;
+    wx.showModal({
+      title: 'UU妹提醒',
+      content: '世上没有后悔药，点过以后不能再来，你确定要给予这个评价嘛～',
+      success(res) {
+        if (!res.confirm) {
+          return;
+        }
+        var data = that.data.easy_hd;
+        if (data["users"].indexOf(app.globalData._openid) == -1) {
+          data["num"] += 1;
+          data["users"].push(app.globalData._openid);
+          that.setData({
+            easy_hd: data,
+            easy_hd_clickable: false,
+            hard_pass_clickable: false,
+            easy_pass_clickable: false,
+            good_luck_clickable: false,
+            img3: that.data.afterEasyHdImg,
+            text3: "好7(" + data.num + ")",
+            text1: "好过(" + that.data.easy_pass.num + ")",
+            text2: "好难(" + that.data.hard_pass.num + ")",
+            text4: "运气(" + that.data.good_luck.num + ")",
+          });
+          that.updateDatabase();
+        }
+      }
+    })
+    
     
   },
   /**
@@ -407,24 +441,35 @@ Page({
         }
       })
     }
-    var data = this.data.good_luck;
-    if (data["users"].indexOf(app.globalData._openid) == -1) {
-      data["num"] += 1;
-      data["users"].push(app.globalData._openid);
-      this.setData({
-        good_luck: data,
-        good_luck_clickable: false,
-        hard_pass_clickable: false,
-        easy_pass_clickable: false,
-        easy_hd_clickable: false,
-        img4: this.data.afterGoodLuckImg,
-        text4: "运气(" + data.num + ")",
-        text1: "好过(" + this.data.easy_pass.num + ")",
-        text2: "好难(" + this.data.hard_pass.num + ")",
-        text3: "好7(" + this.data.easy_hd.num + ")",
-      });
-      this.updateDatabase();
-    }
+    let that = this;
+    wx.showModal({
+      title: 'UU妹提醒',
+      content: '世上没有后悔药，点过以后不能再来，你确定要给予这个评价嘛～',
+      success(res) {
+        if (!res.confirm) {
+          return;
+        }
+        var data = that.data.good_luck;
+        if (data["users"].indexOf(app.globalData._openid) == -1) {
+          data["num"] += 1;
+          data["users"].push(app.globalData._openid);
+          that.setData({
+            good_luck: data,
+            good_luck_clickable: false,
+            hard_pass_clickable: false,
+            easy_pass_clickable: false,
+            easy_hd_clickable: false,
+            img4: that.data.afterGoodLuckImg,
+            text4: "运气(" + data.num + ")",
+            text1: "好过(" + that.data.easy_pass.num + ")",
+            text2: "好难(" + that.data.hard_pass.num + ")",
+            text3: "好7(" + that.data.easy_hd.num + ")",
+          });
+          that.updateDatabase();
+        }
+      }
+    })
+    
     
   },
   
