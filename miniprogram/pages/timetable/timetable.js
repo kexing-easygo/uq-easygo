@@ -48,22 +48,19 @@ function generateTeachingWeeks() {
   teachingStartMonday.setDate(26);
   teachingStartMonday.setMonth(6);
   var teaching_weeks = {
-    31: teachingStartMonday
+    30: new Date(teachingStartMonday)
+  };
+  var newDate = teachingStartMonday;
+  for (var i = 31; i < 39; i++) {
+    newDate.setDate(newDate.getDate() + 7);
+    teaching_weeks[i] = new Date(newDate);
   }
-  for (var i = 32; i < 40; i++) {
-    var newDate = new Date();
-    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
-    teaching_weeks[i] = newDate;
+  newDate.setDate(newDate.getDate() + 7);
+  for (var i = 40; i < 46; i++) {
+    newDate.setDate(newDate.getDate() + 7);
+    teaching_weeks[i] = new Date(newDate);
   }
-  var teachingStartMonday = new Date();
-  teachingStartMonday.setDate(26);
-  teachingStartMonday.setMonth(7);
-  for (var i = 41; i < 46; i++) {
-    var newDate = new Date();
-    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
-    teaching_weeks[i] = newDate;
-  }
-  // cl(teaching_weeks)
+  cl(teaching_weeks)
   return teaching_weeks;
 }
 
@@ -79,18 +76,12 @@ function cl(content) {
 function current_week() {
   const targetDate = new Date();
   const startDate = new Date(targetDate);
-
-  targetDate.setDate(26);
-  targetDate.setMonth(7);
-  startDate.setMonth(0);
-  startDate.setDate(1);
+  startDate.setMonth(6);
+  startDate.setDate(26);
   startDate.setHours(0, 0, 0, 0);
-
   const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
-
   const diff = targetDate.valueOf() - startDate.valueOf();
-
-  return Math.ceil(diff / millisecondsOfWeek) - 3
+  return Math.ceil(diff / millisecondsOfWeek)
 }
 
 /**
@@ -100,6 +91,7 @@ function current_week() {
 function GetMonday(date) {
   var dd = new Date(date)
   var week = dd.getDay(); //获取时间的星期数
+  cl(week);
   var minus = week ? week - 1 : 6;
   dd.setDate(dd.getDate() - minus); //获取周一日期
   return dd;
@@ -113,6 +105,7 @@ var currentMonth = today.getMonth() + 1;
 var currentDay = today.getDay();
 // 当前第几周没想好，写死了10
 var currentWeek = current_week();
+cl(currentWeek);
 var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
   1: "周一",
@@ -137,9 +130,9 @@ Page({
     weekdays: [],
     currentWeek: current_week(),
     currentDay: currentDay,
-    weekTitleStyle: ["", "","","","","","","","","","","","",""],
+    weekTitleStyle: ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     selectWeekStyle: selectWeekTitleStyle,
-    selectWeek: current_week ,
+    selectWeek: current_week,
     // 是否显示所有课程
     isAllWeek: false,
 
@@ -157,8 +150,6 @@ Page({
     beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
     beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
     beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
-
-
 
   },
   timeDetail: function (event) {
@@ -220,8 +211,8 @@ Page({
     wx.cloud.callFunction({
       name: 'calcTimeTableUse',
       data: {},
-      success: function(res) {
-        console.log(res.result.sum) 
+      success: function (res) {
+        //console.log(res.result.sum) 
       },
       fail: console.error
     })
@@ -233,7 +224,7 @@ Page({
       currentMonth: months[currentMonth],
     })
     this.generateWeekdays();
-    
+
   },
   add_note: function (e) {
     var temp = this.data.selectClass;
@@ -243,7 +234,7 @@ Page({
     });
   },
 
-  update_note: function(e) {
+  update_note: function (e) {
     var temp = this.data.userCourseTime;
     let that = this;
     temp[this.data.selectClass.index]["classTime"]['notes'] = this.data.selectClass.notes;
@@ -253,7 +244,7 @@ Page({
     }).update({
       data: {
         courseTime: temp,
-      }, 
+      },
       success: function (res) {
         wx.showToast({
           title: '更新成功',
@@ -284,26 +275,26 @@ Page({
     return time_series;
   },
 
-  change_week: function(e) {
-    var tmpSelect = parseInt(e.currentTarget.dataset['week']) + current_week() -1;
-    if (tmpSelect >= 40) {
+  change_week: function (e) {
+    var tmpSelect = parseInt(e.currentTarget.dataset['week']);
+    if (tmpSelect >= 10) {
       tmpSelect += 1;
     }
-    var currentMonth = teachingWeeks[tmpSelect].getMonth() + 1;
+    var currentMonth = teachingWeeks[tmpSelect + 29].getMonth() + 1;
     this.setData({
       selectWeek: tmpSelect,
       isAllWeek: false,
       currentMonth: months[currentMonth]
     });
     this.onReady();
-    this.generateWeekdays(teachingWeeks[tmpSelect]);
-   
+    this.generateWeekdays(teachingWeeks[tmpSelect + 29]);
+
   },
 
   /**
    * 切换至所有课程都显示的模式
    */
-  changeAllWeek: function(e) {
+  changeAllWeek: function (e) {
     this.setData({
       selectWeek: 0,
       currentMonth: months[new Date().getMonth() + 1],
@@ -312,7 +303,7 @@ Page({
     this.onReady();
     this.generateWeekdays();
   },
-  generateWeekdays: function (startDate=null) {
+  generateWeekdays: function (startDate = null) {
     var weekdays = []
     var monday = '';
     for (var i = 0; i < 5; i++) {
@@ -361,7 +352,7 @@ Page({
             }
           }
         }
-        
+
         for (var i = 0; i < temp.length; i++) {
           var clash = temp[i]["clash"]
           if (temp[i].hasOwnProperty("clash")) {
@@ -372,7 +363,7 @@ Page({
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 1;
           }
           var start = temp[i]["classTime"]["start"].split(":")[0];
-          var top = 14 +  90 * (start - 8);
+          var top = 14 + 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
           temp[i]['top'] = "top:" + top + "rpx;"
           temp[i]["color"] = temp[i]['color'];
@@ -380,7 +371,7 @@ Page({
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // 通过isAllWeek控制显示全量还是按周显示
           if (that.data.isAllWeek == false) {
-            if (temp[i]["classTime"]["week_pattern"][selectWeek - 1] == 1) {
+            if (temp[i]["classTime"]["week_pattern"][selectWeek + 29] == 1) {
               temp[i]["display"] = "yes";
             } else {
               temp[i]["display"] = "no";
@@ -392,12 +383,12 @@ Page({
         that.setData({
           userCourseTime: temp
         });
-        console.log(temp);
+        //console.log(temp);
       }
     });
   },
 
-  bindRed: function() {
+  bindRed: function () {
     this.setData({
       color: "#FF7043",
       clicked_1: true,
@@ -408,7 +399,7 @@ Page({
     });
   },
 
-  bindYellow: function() {
+  bindYellow: function () {
     this.setData({
       color: "#FFB300",
       clicked_1: false,
@@ -419,7 +410,7 @@ Page({
     });
   },
 
-  bindGreen: function() {
+  bindGreen: function () {
     this.setData({
       color: "#8BC34A",
       clicked_1: false,
@@ -430,7 +421,7 @@ Page({
     });
   },
 
-  bindBlue: function() {
+  bindBlue: function () {
     this.setData({
       color: "#29B6F6",
       clicked_1: false,
@@ -441,7 +432,7 @@ Page({
     });
   },
 
-  bindGrey: function() {
+  bindGrey: function () {
     this.setData({
       color: "#576B95",
       clicked_1: false,
