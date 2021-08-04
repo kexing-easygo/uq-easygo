@@ -234,11 +234,11 @@
 .shade{   
   width:100%;   
   height:100%;   
-  top:0;   
+  top:0;  
+  bottom: 0;
   background:rgba(247, 247, 247, 0.9);   
-  overflow: hidden;   
   z-index: 1;   
-  position: absolute;  
+  position: fixed;  
   }   
   
 /*显示与隐藏的内容即点击核算后所展示的详细内容 */  
