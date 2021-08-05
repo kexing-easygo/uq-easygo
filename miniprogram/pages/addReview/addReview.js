@@ -11,7 +11,7 @@ Page({
     maxlength: 140,
     reviewTxt: '',
     nickName: "",
-    semester: "2021 s1",
+    semester: "2021 s2",
     course_name: "",
     heading: "",
     isModified: false,
