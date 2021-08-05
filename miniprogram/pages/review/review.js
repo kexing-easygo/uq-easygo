@@ -96,7 +96,6 @@ Page({
           incompatible = data.external.incompatible.replace("<p>", "").replace("</p>", "");
         }
         that.setData({
-          reviewData: data,
           courseTitle: data.title,
           courseName: data.course_name,
           courseLecturer: data.external.lecturer,
@@ -108,46 +107,18 @@ Page({
           easy_pass: data.easy_pass,
           good_luck: data.good_luck,
           hard_pass: data.hard_pass,
-          reviews: data.reviews,
           userOpenid: app.globalData._openid
         })
-        // // 对reviews进行重排
-        // // 优秀答案放第一，然后是自己的，最后是别人的
-        // var temp = [];
-        // var tempIndex = [];
         var userOpenid = that.data.userOpenid;
         // // 先根据liked_by字段判断是否可以被点赞
-        // for (var i = 0; i < data.reviews.length; i++) {
-        //   if (data.reviews[i].liked_by.indexOf(userOpenid) > -1) {
-        //     data.reviews[i]["clickable"] = false;
-        //   } else {
-        //     data.reviews[i]["clickable"] = true;
-        //   }
-        // }
-        // // 排优秀答案
-        // for (var i = 0; i < data.reviews.length; i++) {
-        //   if (data.reviews[i].outstanding == true && tempIndex.indexOf(i) < 0) {
-        //     temp.push(data.reviews[i]);
-        //     tempIndex.push(i);
-        //   }
-        // }
-        // // 排自己的
-        // for (var i = 0; i < data.reviews.length; i++) {
-        //   if (data.reviews[i].poster_open_id == userOpenid && tempIndex.indexOf(i) < 0) {
-        //     temp.push(data.reviews[i]);
-        //     tempIndex.push(i);
-        //   }
-        // }
-        // // 排其他的
-        // for (var i = 0; i < data.reviews.length; i++) {
-        //   if (  tempIndex.indexOf(i) < 0) {
-        //     temp.push(data.reviews[i]);
-        //     tempIndex.push(i);
-        //   }
-        // }
-        // that.data.reviews = temp;
-        // that.data.reviewData.reviews = temp;
-        // that.data.reviewIndex = tempIndex;
+        for (var i = 0; i < data.reviews.length; i++) {
+          if (data.reviews[i].liked_by.indexOf(userOpenid) > -1) {
+            data.reviews[i]["clickable"] = false;
+          } else {
+            data.reviews[i]["clickable"] = true;
+          }
+        }
+        
         // 构建reviewIndex
         var tempIndex = [];
         for (var i = 0; i < data.reviews.length; i++) {
@@ -197,6 +168,8 @@ Page({
           img4 = that.data.afterGoodLuckImg;
         }
         that.setData({
+          reviewData: data,
+          reviews: data.reviews,
           reviewIndex: tempIndex,
           easy_hd_clickable: easy_hd_clickable,
           easy_pass_clickable: easy_pass_clickable,
