@@ -92,17 +92,19 @@ Page({
   addCountDown: function () {
     // 用户只有输入完题目、设置好时间日期后，才可以进行下一步
     // 表明是在修改作业条目
-    let temp = app.globalData.userAssignments
+    var temp = app.globalData.userAssignments
+
     let that = this
-    if (this.data.buttonText == "确认") {
+    if (that.data.buttonText == "确认") {
       // 更新指定条目
-      temp[this.data.index] = {
-        date: this.data.dueDate,
-        name: this.data.title,
+      temp[that.data.index] = {
+        date: that.data.dueDate,
+        name: that.data.title,
         // color是颜色板选择的颜色
-        color: this.data.color,
-        time: this.data.dueTime
+        color: that.data.color,
+        time: that.data.dueTime
       }
+      console.log(that.data.color);
       if (app.globalData.hasUserInfo) {
         db.collection("MainUser")
           .where({
@@ -113,19 +115,20 @@ Page({
               userAssignments: temp
             },
             success: function (res) {
-              if (res.stats.updated > 0) {
-                console.log("作业条目更新成功")
-                app.globalData.userAssignments = temp
-                wx.reLaunch({
-                  url: '/pages/countdown/countdown',
-                  success: function (res) {
-                    var page = getCurrentPages().pop()
-                    if (page == undefined || page == null) return;
-                    // 刷新页面
-                    page.onLoad()
-                  }
-                })
-              }
+              // if (res.stats.updated > 0) {
+              // console.log("作业条目更新成功")
+              // console.log(temp[that.data.index]);
+              app.globalData.userAssignments = temp;
+              wx.redirectTo({
+                url: '../countdown/countdown',
+                success: function (res) {
+                  var page = getCurrentPages().pop()
+                  if (page == undefined || page == null) return;
+                  // 刷新页面
+                  page.onLoad()
+                }
+              })
+              // }
             }
           })
       }

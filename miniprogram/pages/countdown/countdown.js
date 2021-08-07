@@ -229,7 +229,6 @@ Page({
       search: this.search.bind(this)
     })
     let that = this
-
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
       var temp = []
@@ -243,7 +242,7 @@ Page({
             // 如果用户有登记过assignment
             if (temp.length > 0) {
               var userAssignments = temp;
-              var diffs = [];
+              // var diffs = [];
               if (res.data[0].notification.location == "AU") {
                 // 转化为澳洲时间计算
                 now += 2 * 60 * 60 * 1000;
@@ -258,23 +257,18 @@ Page({
                     userAssignments[i]["date"] = d2;
                   }
                 }
-                // var date = userAssignments[i]["date"]
                 if (userAssignments[i]["date"] == "TBD") {
-                  var date = "999"
+                  var date = "999";
+                  var diff = 999;
                 } else {
                   var date = userAssignments[i]["date"]
+                  var time = userAssignments[i]["time"]
+                  var string = date + "T" + time + ":00"
+                  var d = new Date(string).getTime()
+                  now = new Date().getTime();
+                  var diff = Math.ceil((d - now) / (1000 * 3600 * 24))
+                  console.log(diff)
                 }
-                var time = userAssignments[i]["time"]
-                var string = date + "T" + time + ":00"
-                var d = new Date(string).getTime()
-                if (userAssignments[i]["date"] == "TBD") {
-                  var diff = 999
-                } else {
-                  var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                  diffs.push(diff)
-                }
-                // var diff = parseInt((d - now) / (1000 * 60 * 60 * 24))
-                // diffs.push(diff)
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
                 userAssignments[i]["countdown"] = diff
@@ -286,11 +280,10 @@ Page({
                 return a['diff'] - b['diff']
               });
               that.setData({
-                // headerAssignment: userAssignments[i],
+                userAssignments: userAssignments,
                 recentAssignmentName: userAssignments[0]['name'],
                 recentAssignmentDate: userAssignments[0]['diff'],
                 recentAssignmentColor: userAssignments[0]['color'],
-                userAssignments: userAssignments,
                 history: res.data[0].history.search,
                 showAll: true,
                 selectMatchedItem: false,
@@ -302,7 +295,6 @@ Page({
               })
             }
             app.globalData.userAssignments = userAssignments;
-            console.log(userAssignments);
           }
         })
     } else {
@@ -315,17 +307,20 @@ Page({
     }
     
   },
+  onReady: function (options) {
+
+  },
   onShow: function () {
 
-    if (app.globalData._openid == '') {
-      wx.cloud.callFunction({
-        name: 'login',
-        data: {},
-        success: res => {
-          app.globalData._openid = res.result.openid
-        }
-      })
-    }
+    // if (app.globalData._openid == '') {
+    //   wx.cloud.callFunction({
+    //     name: 'login',
+    //     data: {},
+    //     success: res => {
+    //       app.globalData._openid = res.result.openid
+    //     }
+    //   })
+    // }
   },
   /**
    * 用户点击单项作业时，可以跳转到showCountDown页面

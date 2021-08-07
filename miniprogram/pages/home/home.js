@@ -44,6 +44,7 @@ Page({
             if (res.data.length == 0) {
               app.globalData.hasUserInfo = false;
             } else {
+              console.log("?")
               app.globalData.hasUserInfo = true;
             }
           }
