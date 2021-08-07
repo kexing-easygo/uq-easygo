@@ -1,24 +1,21 @@
 <!--pages/countdown/countdown.wxml-->
+<wxs src="../../utils/string.wxs" module="tools" />
 <view class="container">
 	<view class="header" style="background-color: {{recentAssignmentColor}}">
-
-		<view class="header_subject">{{recentAssignmentName}}
+		<!-- 只显示最多15个字符 -->
+		<view class="header_subject">{{tools.my_slice(recentAssignmentName, 0, 15) + "..."}}
 		</view>
 		<view class="remain_day">{{recentAssignmentDate}}</view>
 		<view class="days red_day{{recentAssignmentDate > 3 ? 'nored':''}} green_day{{recentAssignmentDate < 0 ? '':'nog'}}">Days</view>
 
 	</view>
-	<view class="searchbar">
-		<!-- <mp-searchbar ext-class="{{showResult}}" bindselectresult="selectResult" 
-		bindfocus="startsearch" bindclear="clear"  
-		value="{{searchBarValue}}" search="{{search}}"
-		placeholder="搜索你的作业"></mp-searchbar> -->
 
+	<!-- <view class="searchbar">
 		<searchbar  ext-class="{{showResult}}" bindselectresult="selectResult" 
 		bindfocus="startsearch" bindclear="clear"  
 		value="{{searchBarValue}}" search="{{search}}"
 		placeholder="搜索你的作业"></searchbar>
-	</view>
+	</view> -->
 
 	
 
@@ -31,9 +28,13 @@
 						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						</view>
 						<text class="subject">{{item.name}}</text>
+						<!-- <text class="subject">{{tools.my_slice(item.name, 0, 10) + "..."}}</text> -->
 					</view>
 					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}} green_day{{item.countdown < 0 ? '':'nog'}}">
-						{{item.countdown}} Days
+						<view wx:if="{{item.countdown == 999}}"> 
+							<icon class="icon-small" type="warn" size="30" style="margin-top: 35rpx;"></icon>
+						</view>
+						<view wx:else> {{item.countdown}} Days</view>
 					</view>
 				<!-- </view> -->
 			</view>
@@ -78,7 +79,7 @@
 			<view>
 				<text>自动添加</text>
 				<navigator url="/pages/autoCountDown/autoCountDown">
-					<image style="width: 88rpx; height: 88rpx" src="{{notificationSetting}}" />
+					<image style="width: 88rpx; height: 88rpx" src="{{autoCountDown}}" />
 				</navigator>
 			</view>
 			<view>

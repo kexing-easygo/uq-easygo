@@ -25,14 +25,28 @@ Page({
     title: "",
     dueDate: "2020-12-31",
     dueTime: '23:59',
-    color: "#7986CB",
     years,
     showDelete: false,
     index: 0,
     buttonText: "确认添加",
     inputDisabled: false, 
     inputFocus: false,
-    cursorColor: "black"
+    cursorColor: "black",
+
+    //color flags
+    color: "#7986CB",
+    clicked_1: false,
+    afterGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后灰色选择器.png",
+    afterRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后红色选择器.png",
+    afterYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后黄色选择器.png",
+    afterGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后绿色选择器.png",
+    afterBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后蓝色选择器.png",
+
+    beforeGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未灰色选择器.png",
+    beforeRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未红色选择器.png",
+    beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
+    beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
+    beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png"
   },
 
   /**
@@ -78,17 +92,19 @@ Page({
   addCountDown: function () {
     // 用户只有输入完题目、设置好时间日期后，才可以进行下一步
     // 表明是在修改作业条目
-    let temp = app.globalData.userAssignments
+    var temp = app.globalData.userAssignments
+
     let that = this
-    if (this.data.buttonText == "确认") {
+    if (that.data.buttonText == "确认") {
       // 更新指定条目
-      temp[this.data.index] = {
-        date: this.data.dueDate,
-        name: this.data.title,
+      temp[that.data.index] = {
+        date: that.data.dueDate,
+        name: that.data.title,
         // color是颜色板选择的颜色
-        color: this.data.color,
-        time: this.data.dueTime
+        color: that.data.color,
+        time: that.data.dueTime
       }
+      console.log(that.data.color);
       if (app.globalData.hasUserInfo) {
         db.collection("MainUser")
           .where({
@@ -99,19 +115,20 @@ Page({
               userAssignments: temp
             },
             success: function (res) {
-              if (res.stats.updated > 0) {
-                console.log("作业条目更新成功")
-                app.globalData.userAssignments = temp
-                wx.reLaunch({
-                  url: '/pages/countdown/countdown',
-                  success: function (res) {
-                    var page = getCurrentPages().pop()
-                    if (page == undefined || page == null) return;
-                    // 刷新页面
-                    page.onLoad()
-                  }
-                })
-              }
+              // if (res.stats.updated > 0) {
+              // console.log("作业条目更新成功")
+              // console.log(temp[that.data.index]);
+              app.globalData.userAssignments = temp;
+              wx.redirectTo({
+                url: '../countdown/countdown',
+                success: function (res) {
+                  var page = getCurrentPages().pop()
+                  if (page == undefined || page == null) return;
+                  // 刷新页面
+                  page.onLoad()
+                }
+              })
+              // }
             }
           })
       }
@@ -171,10 +188,8 @@ Page({
               }
             })
         }
-        
-    }
-    
-      
+      }
+
   },
   bindTitleInput: function (e) {
     // 获取assignment名称
@@ -196,6 +211,7 @@ Page({
     this.setData({
       dueDate: e.detail.value
     })
+
   },
   bindTimeChange: function (e) {
     this.setData({
@@ -203,30 +219,59 @@ Page({
     })
 
   },
-  bindRed: function () {
+  bindRed: function() {
     this.setData({
-      color: "#FF8A65"
-    })
+      color: "#FF7043",
+      clicked_1: true,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
   },
-  bindPink: function () {
+
+  bindYellow: function() {
     this.setData({
-      color: "#FFF176"
-    })
+      color: "#FFB300",
+      clicked_1: false,
+      clicked_2: true,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
   },
-  bindLightBlue: function () {
+
+  bindGreen: function() {
     this.setData({
-      color: "#81C784"
-    })
+      color: "#8BC34A",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: true,
+      clicked_4: false,
+      clicked_5: false,
+    });
   },
-  bindPurple: function () {
+
+  bindBlue: function() {
     this.setData({
-      color: "#64B5F6"
-    })
+      color: "#29B6F6",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: true,
+      clicked_5: false,
+    });
   },
-  bindYellow: function () {
+
+  bindGrey: function() {
     this.setData({
-      color: "#7986CB"
-    })
+      color: "#576B95",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: true,
+    });
   },
   deleteCountdown: function () {
     let temp = app.globalData.userAssignments
@@ -256,20 +301,19 @@ Page({
                 success: function (res) {
                   if (res.stats.updated > 0) {
                     console.log("作业条目删除成功")
-                    wx.reLaunch({
-                      url: '/pages/countdown/countdown',
-                      success: function (res) {
-                        var page = getCurrentPages().pop()
-                        if (page == undefined || page == null) return;
-                        // 刷新页面
-                        page.onLoad()
-                      }
-                    })
                   }
                 }
               })
           }
-          
+          wx.reLaunch({
+            url: '/pages/countdown/countdown',
+            success: function (res) {
+              var page = getCurrentPages().pop()
+              if (page == undefined || page == null) return;
+              // 刷新页面
+              page.onLoad()
+            }
+          })
         }
       }
     })

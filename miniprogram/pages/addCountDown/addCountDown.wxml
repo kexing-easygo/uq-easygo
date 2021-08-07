@@ -6,7 +6,7 @@
 		<view class="cdDetail">
 			<input focus= "{{inputFocus}}" type="text" maxlength="20" 
 			bindinput="bindTitleInput" bindfocus="bindFocus" bindblur="bindBlur"
-			placeholder="{{title}}" placeholder-style="color: {{cursorColor}}"/>
+			value="{{title}}" placeholder-style="color: {{cursorColor}}"/>
 		</view>
 	</view>
 
@@ -29,22 +29,31 @@
 	<view class="colours">
 		<text class = "cdtitle">设置颜色</text>
 		<view class="cdDetail ">
-			<view>
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FF8A65;" bindtap="bindRed"></button>
-			</view>
-			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #FFF176;" bindtap="bindPink"></button>
-			</view>
-			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #81C784;" bindtap="bindLightBlue"></button>
-			</view>
-			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #64B5F6;" bindtap="bindPurple"></button>
-			</view>
-			<view>	
-				<button class="mini-btn colorButton" type="primary" size="mini" style="background-color: #7986CB;" bindtap="bindYellow"></button>
-			</view>
-		</view>
+            <button class="colorButton" size="mini" bindtap="bindRed" hover-class="none">
+              <image class="{{clicked_1? 'hide':''}}" src="{{beforeRed}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_1? '':'hide'}}" src="{{afterRed}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindYellow" hover-class="none">
+              <image class="{{clicked_2? 'hide':''}}" src="{{beforeYellow}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_2? '':'hide'}}" src="{{afterYellow}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindGreen" hover-class="none">
+              <image class="{{clicked_3? 'hide':''}}" src="{{beforeGreen}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_3? '':'hide'}}" src="{{afterGreen}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindBlue" hover-class="none">
+              <image class="{{clicked_4? 'hide':''}}" src="{{beforeBlue}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_4? '':'hide'}}" src="{{afterBlue}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindGrey" hover-class="none">
+              <image class="{{clicked_5? 'hide':''}}" src="{{beforeGrey}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_5? '':'hide'}}" src="{{afterGrey}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+        </view>
 	</view>
 
 	<view class="confirm ">
