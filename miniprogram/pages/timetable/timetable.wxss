@@ -2,6 +2,7 @@
 
 .allWeeks {
   margin-top: 40rpx;
+  margin-bottom: 10rpx;
   display: flex;
   flex-flow: row nowrap;
   font-size: 30rpx;
@@ -10,14 +11,31 @@
   overflow: scroll;
 }
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 .week {
   background-color: #ffffff;
   border-radius: 10rpx;
-  height: 48rpx;
-  width: 104rpx;
+  height: 50rpx;
+  width: 100rpx;
   margin-right: 20rpx;
+  padding-left: 25rpx;
+  padding-right: 30rpx;
   text-align: center;
 }
+
+.weekall {
+  background-color: #ffffff;
+  border-radius: 10rpx;
+  height: 50rpx;
+  width: 100rpx;
+  margin-right: 20rpx;
+  padding-right: 30rpx;
+  text-align: center;
+}
+
 
 .selectWeek {
   background-color: rgba(100, 103, 204, 0.7);
@@ -40,23 +58,26 @@
 .time .month {
   text-align: center;
   height: 76rpx;
-  /* background-color: rgba(100, 103, 204, 0.7); */
   background-color: rgba(152, 95, 254, 0.7);
   writing-mode: vertical-lr;
-  width: 100%;
+  width: 50rpx;
 }
 
 .time .timePoint {
   background-color: #ffffff;
-  text-align: center;
-  height: 88rpx;
+  height: 90rpx;
+  width: 50rpx;
+  /* margin-top: 2rpx; */
+  display: flex;
+  justify-content: center;
+  border-bottom: 1rpx rgba(0, 0, 0, 0.1) solid;
 }
 
 .weekClass {
   width: 696rpx;
   position: absolute;
   font-size: 24rpx;
-  margin-left: 48rpx;
+  margin-left: 50rpx;
   margin-top: 60rpx;
 }
 
@@ -64,6 +85,7 @@
   width: 696rpx;
   position: relative;
   font-size: 24rpx;
+  /* background-color: cornflowerblue; */
 }
 
 
@@ -73,17 +95,25 @@
   flex-flow: row nowrap;
   text-align: center;
   background-color: #ffffff;
+  /* justify-content: center; */
 }
 
 .weekDateitem {
   height: 76rpx;
-  width: 140rpx;
-  line-height: 24rpx;
-  position: relative;
+  width: 130rpx;
+  line-height: 30rpx;
+  /* position: relative; */
+  /* margin-right: 5rpx; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .weekDateitemContent {
-  margin-top: 14rpx;
+  height: 56rpx;
+  width: 135rpx;
+  /* padding: 5rpx; */
+  /* margin-top: 14rpx; */
   /* border: 5rpx rgba(0, 0, 0, 0.5) solid; */
 }
 
@@ -92,19 +122,22 @@
 }
 
 .class {
-  /* width: 130rpx; */
-  /* background-color: #576b95; */
   border-radius: 10rpx;
-  /* height: 176rpx; */
   word-wrap: break-word;
   position: absolute;
   display: flex;
   flex-flow: column nowrap;
   overflow: hidden;
-  /* left: 200rpx; 140rpx * 周几
-  top: 720rpx; 90rpx * 第几节 */
 }
 
+.noteFlag {
+  width: 98%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+  align-items: flex-end;
+}
 
 
 /* add course*/
@@ -123,7 +156,7 @@
   /* bottom: 0;
   animation: detailDownUp 1s; */
   width: 100%;
-  height: 545rpx;
+  height: 645rpx;
   background-color: white;
   position: absolute;
 
@@ -149,14 +182,20 @@
   }
 }
 
+.classHead {
+  font-size: 44rpx;
+  font-weight: 300;
+  margin: 14rpx;
+  font-size:44rpx; 
+  margin-left: 50rpx
+}
 
 
 .detailHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom-style: solid;
-  border-bottom-width: 2rpx;
+  border-bottom:rgba(237, 237, 237, 0.9) solid 1rpx;
 }
 
 .detailInfor {
@@ -165,6 +204,39 @@
   width: 100%;
   font-size: 34rpx;
 }
+
+.cdDetail {
+  display: flex;
+  height: 50rpx;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.colorButton {
+  width: 10rpx;
+  height: 45rpx;
+  /* border-radius: 50%; */
+  margin-left: -20rpx;
+  overflow: visible;
+}
+
+.clicked_1 {
+  outline: 1px solid #ff7043;
+}
+.clicked_2 {
+  outline: 1px solid #ffb300;
+}
+.clicked_3 {
+  outline: 1px solid #8bc34c;
+}
+.clicked_4 {
+  outline: 1px solid #29B6F6;
+}
+.clicked_5 {
+  outline: 1px solid #576B95;
+}
+
 
 .inforname,
 .inforcolor,
@@ -175,6 +247,8 @@
   justify-content: flex-start;
   align-items: center;
   height: 70rpx;
+  font-size: 34rpx;
+  font-weight: 300;
 }
 
 .inforcomment {
@@ -183,6 +257,8 @@
   justify-content: flex-start;
   align-items: flex-start;
   height: fit-content;
+  font-size: 34rpx;
+  font-weight: 300;
 }
 
 .infortitle {
@@ -192,18 +268,18 @@
 
 .inforContent {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: center;
   width: 500rpx;
 }
 
-.colorButton {
+/* .colorButton {
   width: 40rpx;
   height: 40rpx;
   border-radius: 80%;
   margin-right: 22rpx;
-}
+} */
 
 .hide {
   display: none;
@@ -214,4 +290,10 @@
   height: 100%;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.input {
+  width: 100%;
+  height: 100rpx;
+  justify-self: center;
 }

@@ -1,5 +1,6 @@
 // miniprogram/pages/timetable/timetable.js
-import util from '../../utils/util.js';
+// import util from '../../utils/util.js'
+
 var deatilTime;
 const db = wx.cloud.database();
 const app = getApp();
@@ -22,6 +23,22 @@ const series = {
   "19:00": 11
 }
 
+// 中文数字和英文数字
+const months = {
+  1: "一",
+  2: "二",
+  3: "三",
+  4: "四",
+  5: "五",
+  6: "六",
+  7: "七",
+  8: "八",
+  9: "九",
+  10: "十",
+  11: "十一",
+  12: "十二"
+}
+
 /**
  * 从7.26开始，将第几周和那周的周一日期对应起来，以便于生成当周的
  * 五天日期。
@@ -31,22 +48,19 @@ function generateTeachingWeeks() {
   teachingStartMonday.setDate(26);
   teachingStartMonday.setMonth(6);
   var teaching_weeks = {
-    31: teachingStartMonday
+    30: new Date(teachingStartMonday)
+  };
+  var newDate = teachingStartMonday;
+  for (var i = 31; i < 39; i++) {
+    newDate.setDate(newDate.getDate() + 7);
+    teaching_weeks[i] = new Date(newDate);
   }
-  for (var i = 32; i < 40; i++) {
-    var newDate = new Date();
-    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
-    teaching_weeks[i] = newDate;
+  newDate.setDate(newDate.getDate() + 7);
+  for (var i = 40; i < 46; i++) {
+    newDate.setDate(newDate.getDate() + 7);
+    teaching_weeks[i] = new Date(newDate);
   }
-  var teachingStartMonday = new Date();
-  teachingStartMonday.setDate(26);
-  teachingStartMonday.setMonth(7);
-  for (var i = 41; i < 46; i++) {
-    var newDate = new Date();
-    newDate.setDate(teachingStartMonday.getDate() + 7 * (i - 31));
-    teaching_weeks[i] = newDate;
-  }
-  // cl(teaching_weeks)
+  cl(teaching_weeks)
   return teaching_weeks;
 }
 
@@ -62,18 +76,12 @@ function cl(content) {
 function current_week() {
   const targetDate = new Date();
   const startDate = new Date(targetDate);
-
-  targetDate.setDate(26);
-  targetDate.setMonth(7);
-  startDate.setMonth(0);
-  startDate.setDate(1);
+  startDate.setMonth(6);
+  startDate.setDate(26);
   startDate.setHours(0, 0, 0, 0);
-
   const millisecondsOfWeek = 1000 * 60 * 60 * 24 * 7;
-
   const diff = targetDate.valueOf() - startDate.valueOf();
-
-  return Math.ceil(diff / millisecondsOfWeek) - 3
+  return Math.ceil(diff / millisecondsOfWeek)
 }
 
 /**
@@ -83,6 +91,7 @@ function current_week() {
 function GetMonday(date) {
   var dd = new Date(date)
   var week = dd.getDay(); //获取时间的星期数
+  cl(week);
   var minus = week ? week - 1 : 6;
   dd.setDate(dd.getDate() - minus); //获取周一日期
   return dd;
@@ -96,6 +105,7 @@ var currentMonth = today.getMonth() + 1;
 var currentDay = today.getDay();
 // 当前第几周没想好，写死了10
 var currentWeek = current_week();
+cl(currentWeek);
 var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
   1: "周一",
@@ -111,31 +121,47 @@ Page({
    */
   data: {
     add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
+    noteFlag: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表小旗子.png",
     detailShow: false,
     detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],
     selectClass: {},
-    currentMonth: currentMonth,
+    currentMonth: months[currentMonth],
     weekdays: [],
     currentWeek: current_week(),
     currentDay: currentDay,
-    weekTitleStyle: ["", "","","","","","","","","","","","",""],
+    weekTitleStyle: ["", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     selectWeekStyle: selectWeekTitleStyle,
-    selectWeek: current_week ,
+    selectWeek: current_week,
     // 是否显示所有课程
-    isAllWeek: false
+    isAllWeek: false,
+
+    //颜色按钮flag
+    color: 0,
+    clicked_1: false,
+    afterGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后灰色选择器.png",
+    afterRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后红色选择器.png",
+    afterYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后黄色选择器.png",
+    afterGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后绿色选择器.png",
+    afterBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/后蓝色选择器.png",
+
+    beforeGrey: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未灰色选择器.png",
+    beforeRed: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未红色选择器.png",
+    beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
+    beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
+    beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
 
   },
   timeDetail: function (event) {
-    console.log(event.currentTarget.dataset['courseindex']);
     var courseIndex = event.currentTarget.dataset['courseindex'];
     var temp = this.data.userCourseTime[courseIndex];
     temp['courseindex'] = courseIndex;
+
     this.setData({
       detailShow: true,
+      color: temp["color"].split(":")[1].split(";")[0],
       selectClass: temp
     });
-    // cl(this.data.selectClass);
   },
 
   timeDetailDown: function (event) {
@@ -152,18 +178,17 @@ Page({
     clearTimeout(deatilTime);
   },
   deleteClass: function (e) {
-    // cl(e.currentTarget.dataset['classindex']);
     var temp = this.data.userCourseTime;
     temp.splice(e.currentTarget.dataset['classindex'], 1);
     let that = this;
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var list = res.data[0]['courseTime'];
         list.splice(e.currentTarget.dataset['classindex'], 1);
         db.collection("MainUser").where({
-          _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+          _openid: app.globalData._openid
         }).update({
           data: {
             courseTime: list
@@ -173,6 +198,7 @@ Page({
           userCourseTime: temp,
           detailShow: false,
         });
+        that.onReady();
       }
     })
   },
@@ -182,20 +208,23 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    wx.cloud.callFunction({
+      name: 'calcTimeTableUse',
+      data: {},
+      success: function (res) {
+        //console.log(res.result.sum) 
+      },
+      fail: console.error
+    })
+
     this.setData({
-      selectWeek: 0,
-      isAllWeek: true
+      thisWeek: currentWeek,
+      selectWeek: currentWeek,
+      isAllWeek: true,
+      currentMonth: months[currentMonth],
     })
     this.generateWeekdays();
-    // var selectWeek = this.data.selectWeek;
-    // 根据第几周，返回那周的周一日期
-    // var startDate = teachingWeeks[selectWeek];
-    // 默认查看所有周的课
-    this.setData({
-      currentMonth: currentMonth,
-    })
-    
+
   },
   add_note: function (e) {
     var temp = this.data.selectClass;
@@ -205,14 +234,25 @@ Page({
     });
   },
 
-  update_note: function(e) {
+  update_note: function (e) {
     var temp = this.data.userCourseTime;
+    let that = this;
     temp[this.data.selectClass.index]["classTime"]['notes'] = this.data.selectClass.notes;
+    temp[this.data.selectClass.index]["color"] = "background-color:" + this.data.color + ";"
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8",
+      _openid: app.globalData._openid,
     }).update({
       data: {
         courseTime: temp,
+      },
+      success: function (res) {
+        wx.showToast({
+          title: '更新成功',
+          icon: "none",
+          duration: 1000
+        })
+        that.onReady();
+        that.quitShade();
       }
     });
   },
@@ -235,35 +275,35 @@ Page({
     return time_series;
   },
 
-  change_week: function(e) {
-    var tmpSelect = parseInt(e.currentTarget.dataset['week']) + current_week() -1;
-    if (tmpSelect >= 40) {
+  change_week: function (e) {
+    var tmpSelect = parseInt(e.currentTarget.dataset['week']);
+    if (tmpSelect >= 10) {
       tmpSelect += 1;
     }
-    var currentMonth = teachingWeeks[tmpSelect].getMonth() + 1;
+    var currentMonth = teachingWeeks[tmpSelect + 29].getMonth() + 1;
     this.setData({
       selectWeek: tmpSelect,
       isAllWeek: false,
-      currentMonth: currentMonth
+      currentMonth: months[currentMonth]
     });
     this.onReady();
-    this.generateWeekdays(teachingWeeks[tmpSelect]);
-   
+    this.generateWeekdays(teachingWeeks[tmpSelect + 29]);
+
   },
 
   /**
    * 切换至所有课程都显示的模式
    */
-  changeAllWeek: function(e) {
+  changeAllWeek: function (e) {
     this.setData({
       selectWeek: 0,
-      currentMonth: new Date().getMonth() + 1,
+      currentMonth: months[new Date().getMonth() + 1],
       isAllWeek: true
     })
     this.onReady();
     this.generateWeekdays();
   },
-  generateWeekdays: function (startDate=null) {
+  generateWeekdays: function (startDate = null) {
     var weekdays = []
     var monday = '';
     for (var i = 0; i < 5; i++) {
@@ -279,8 +319,6 @@ Page({
     this.setData({
       weekdays: weekdays,
     })
-
-
   },
 
   /**
@@ -290,7 +328,7 @@ Page({
     let that = this;
     var selectWeek = this.data.selectWeek;
     db.collection("MainUser").where({
-      _openid: "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+      _openid: app.globalData._openid
     }).get({
       success: function (res) {
         var temp = res.data[0]['courseTime'];
@@ -314,18 +352,18 @@ Page({
             }
           }
         }
-        
+
         for (var i = 0; i < temp.length; i++) {
           var clash = temp[i]["clash"]
           if (temp[i].hasOwnProperty("clash")) {
-            temp[i]['width'] = "width:" + "67.5rpx;"
+            temp[i]['width'] = "width:" + "65rpx;"
             var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 70 * clash;
           } else {
-            temp[i]['width'] = "width:" + "135rpx;"
-            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"]));
+            temp[i]['width'] = "width:" + "130rpx;"
+            var left = 140 * (weeks.indexOf(temp[i]["classTime"]["weekday"])) + 1;
           }
           var start = temp[i]["classTime"]["start"].split(":")[0];
-          var top = 25 + 90 * (start - 8);
+          var top = 14 + 90 * (start - 8);
           temp[i]['left'] = "left:" + left + "rpx;"
           temp[i]['top'] = "top:" + top + "rpx;"
           temp[i]["color"] = temp[i]['color'];
@@ -333,7 +371,7 @@ Page({
           temp[i]["notes"] = temp[i]['classTime']["notes"];
           // 通过isAllWeek控制显示全量还是按周显示
           if (that.data.isAllWeek == false) {
-            if (temp[i]["classTime"]["week_pattern"][selectWeek - 1] == 1) {
+            if (temp[i]["classTime"]["week_pattern"][selectWeek + 29] == 1) {
               temp[i]["display"] = "yes";
             } else {
               temp[i]["display"] = "no";
@@ -341,14 +379,68 @@ Page({
           } else {
             temp[i]["display"] = "yes";
           }
-          
         }
         that.setData({
           userCourseTime: temp
         });
+        //console.log(temp);
       }
     });
-    
+  },
+
+  bindRed: function () {
+    this.setData({
+      color: "#FF7043",
+      clicked_1: true,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+
+  bindYellow: function () {
+    this.setData({
+      color: "#FFB300",
+      clicked_1: false,
+      clicked_2: true,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+
+  bindGreen: function () {
+    this.setData({
+      color: "#8BC34A",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: true,
+      clicked_4: false,
+      clicked_5: false,
+    });
+  },
+
+  bindBlue: function () {
+    this.setData({
+      color: "#29B6F6",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: true,
+      clicked_5: false,
+    });
+  },
+
+  bindGrey: function () {
+    this.setData({
+      color: "#576B95",
+      clicked_1: false,
+      clicked_2: false,
+      clicked_3: false,
+      clicked_4: false,
+      clicked_5: true,
+    });
   },
 
 })

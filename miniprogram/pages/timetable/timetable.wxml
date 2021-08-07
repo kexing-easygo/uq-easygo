@@ -1,46 +1,46 @@
 <!--miniprogram/pages/timetable/timetable.wxml-->
 <view class="allWeeks" >
-  <view class="week selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
-    <text>All weeks</text>
+  <!-- <view class="weekall selectWeek{{selectWeek==0?'':'none'}}"  data-week="0" bindtap="changeAllWeek">
+    <text decode="true">All&nbsp;Week</text>
+  </view> -->
+  <view class="week selectWeek{{selectWeek==1?'':'none'}}"  data-week="1" bindtap="change_week">
+    <text decode="true">Week1</text>
   </view>
-  <view class="week selectWeek{{selectWeek==31?'':'none'}}"  data-week="1" bindtap="change_week">
-    <text>w1</text>
+  <view class="week selectWeek{{selectWeek==2?'':'none'}}" data-week="2" bindtap="change_week" >
+    <text decode="true">Week2</text>
   </view>
-  <view class="week selectWeek{{selectWeek==32?'':'none'}}" data-week="2" bindtap="change_week" >
-    <text>w2</text>
+  <view class="week selectWeek{{selectWeek==3?'':'none'}}" data-week="3" bindtap="change_week" >
+    <text decode="true">Week3</text>
   </view>
-  <view class="week selectWeek{{selectWeek==33?'':'none'}}" data-week="3" bindtap="change_week" >
-    <text>w3</text>
+  <view class="week selectWeek{{selectWeek==4?'':'none'}}" data-week="4" bindtap="change_week">
+    <text>Week4</text>
   </view>
-  <view class="week selectWeek{{selectWeek==34?'':'none'}}" data-week="4" bindtap="change_week">
-    <text>w4</text>
+  <view class="week selectWeek{{selectWeek==5?'':'none'}}" data-week="5" bindtap="change_week" >
+    <text>Week5</text>
   </view>
-  <view class="week selectWeek{{selectWeek==35?'':'none'}}" data-week="5" bindtap="change_week" >
-    <text>w5</text>
+  <view class="week selectWeek{{selectWeek==6?'':'none'}}" data-week="6" bindtap="change_week" >
+    <text>Week6</text>
   </view>
-  <view class="week selectWeek{{selectWeek==36?'':'none'}}" data-week="6" bindtap="change_week" >
-    <text>w6</text>
+  <view class="week selectWeek{{selectWeek==7?'':'none'}}" data-week="7" bindtap="change_week" >
+    <text>Week7</text>
   </view>
-  <view class="week selectWeek{{selectWeek==37?'':'none'}}" data-week="7" bindtap="change_week" >
-    <text>w7</text>
+  <view class="week selectWeek{{selectWeek==8?'':'none'}}" data-week="8" bindtap="change_week" >
+    <text>Week8</text> 
   </view>
-  <view class="week selectWeek{{selectWeek==38?'':'none'}}" data-week="8" bindtap="change_week" >
-    <text>w8</text> 
+  <view class="week selectWeek{{selectWeek==9?'':'none'}}" data-week="9" bindtap="change_week" >
+    <text>Week9</text>
   </view>
-  <view class="week selectWeek{{selectWeek==39?'':'none'}}" data-week="9" bindtap="change_week" >
-    <text>w9</text>
+  <view class="week selectWeek{{selectWeek==11?'':'none'}}" data-week="10" bindtap="change_week" >
+    <text>Week10</text>
   </view>
-  <view class="week selectWeek{{selectWeek==41?'':'none'}}" data-week="10" bindtap="change_week" >
-    <text>w10</text>
+  <view class="week selectWeek{{selectWeek==12?'':'none'}}" data-week="11" bindtap="change_week" >
+    <text>Week11</text>
   </view>
-  <view class="week selectWeek{{selectWeek==42?'':'none'}}" data-week="11" bindtap="change_week" >
-    <text>w11</text>
+  <view class="week selectWeek{{selectWeek==13?'':'none'}}" data-week="12" bindtap="change_week" >
+    <text>Week12</text>
   </view>
-  <view class="week selectWeek{{selectWeek==43?'':'none'}}" data-week="12" bindtap="change_week" >
-    <text>w12</text>
-  </view>
-  <view class="week selectWeek{{selectWeek==44?'':'none'}}" data-week="13" bindtap="change_week" >
-    <text>w13</text>
+  <view class="week selectWeek{{selectWeek==14?'':'none'}}" data-week="13" bindtap="change_week" >
+    <text>Week13</text>
   </view>
 </view>
 
@@ -92,7 +92,7 @@
 
   <view class="weekClass1"  wx:for="{{weekdays}}"  wx:for-item="item" wx:for-index="index">
     <view class="weekDate">
-      <view class="weekDateitem" wx:if="{{index + 1 == currentDay}}">
+      <view class="weekDateitem" wx:if="{{index + 1 == currentDay && selectWeek==thisWeek}}">
         <view class="weekDateitemContent" style="background-color: rgba(152, 95, 254, 0.7);">
           <text>{{item}}</text>
         </view>
@@ -105,15 +105,19 @@
     </view>
   </view>
 
+  <view  wx:if="{{selectWeek >= 0}}" style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1180rpx; width: 130rpx; top: 195rpx; left: calc(50rpx - 140rpx + (140rpx * {{currentDay}}))"></view>
+
   <view class="weekClass">
-    <view style="position: fixed; background-color: rgba(152, 95, 254, 0.2); height: 1100rpx; width: 140rpx; top: 100rpx; left: calc(47rpx + 140rpx * {{currentDay}} - 140rpx"></view>
 
     <view class="classes" wx:for="{{userCourseTime}}" wx:for-item="item" wx:for-index="index" >
       <view class="class" data-courseindex="{{index}}" bindtap="timeDetail"
         style="{{item.left}} {{item.top}} {{item.color}} {{item.height}} {{item.width}}" wx:if="{{item.display == 'yes'}}">
-        <text>{{item.courseName}}</text>
-        <text>{{item.classTime.type}}</text>
-        <text>{{item.classTime.location}}</text>
+
+        <view class="noteFlag" wx:if="{{item.notes!=null}}"><image style="width: 22rpx; height: 28rpx" src="{{noteFlag}}" /></view>
+
+        <text style="font-size: 22rpx; color: #FFFFFF;">{{item.courseName}}</text>
+        <text style="font-size: 18rpx; color: #FFFFFF;">{{item.classTime.type}}</text>
+        <text style="font-size: 18rpx; color: #FFFFFF;">{{item.classTime.location}}</text>
       </view>
     </view>
   </view>
@@ -134,7 +138,7 @@
 </view>
 <view class="classDetail hide{{detailShow?'no':''}}" style="{{detailAnimation}}">
   <view class="detailHeader">
-    <text style="font-size:44rpx; padding-left:48rpx">课程详情</text>
+    <text class="classHead">课程详情</text>
     <text data-classindex="{{selectClass.courseindex}}" bindtap="deleteClass"
       style="padding-right:48rpx; color:red">删除</text>
   </view>
@@ -155,12 +159,33 @@
         <text>颜色</text>
       </view>
 
-      <view class="inforContent">
-        <view>
-          <button class="mini-btn colorButton" type="primary" size="mini" style="{{selectClass.color}}"
-            bindtap="bindRed"></button>
-        </view>
+      <view class="colours">
+        <view class="cdDetail ">
+            <button class="colorButton" size="mini" bindtap="bindRed" hover-class="none">
+              <image class="{{clicked_1? 'hide':''}}" src="{{beforeRed}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_1? '':'hide'}}" src="{{afterRed}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
 
+            <button class="colorButton" size="mini" bindtap="bindYellow" hover-class="none">
+              <image class="{{clicked_2? 'hide':''}}" src="{{beforeYellow}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_2? '':'hide'}}" src="{{afterYellow}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindGreen" hover-class="none">
+              <image class="{{clicked_3? 'hide':''}}" src="{{beforeGreen}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_3? '':'hide'}}" src="{{afterGreen}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindBlue" hover-class="none">
+              <image class="{{clicked_4? 'hide':''}}" src="{{beforeBlue}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_4? '':'hide'}}" src="{{afterBlue}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+
+            <button class="colorButton" size="mini" bindtap="bindGrey" hover-class="none">
+              <image class="{{clicked_5? 'hide':''}}" src="{{beforeGrey}}" style="width: 40rpx; height: 40rpx;" />
+              <image class="{{clicked_5? '':'hide'}}" src="{{afterGrey}}" style="width: 40rpx; height: 40rpx;" />
+            </button>
+        </view>
       </view>
 
     </view>
@@ -192,9 +217,12 @@
     </view>
 
     <view class="inforContent">
-      <!-- <text style="color:rgba(0,0,0,0.5)">我是一个没有感情的备注框。。。可以随时修改我</text> -->
-      <input bindinput="add_note" class="input" value="{{selectClass.notes}}"/>
-      <button class="mini-btn" type="primary" size="mini" bindtap="update_note" style="margin-left:35rpx">添加</button>
+      <!-- <input bindinput="add_note" class="input" value="{{selectClass.notes}}" placeholder="点击输入备注"/> -->
+      <textarea bindinput="add_note" class="input" value="{{selectClass.notes}}" placeholder="点击输入备注"></textarea>
     </view>
+  </view>
+  <view style="width: 100%; display: flex; justify-contents: center; align-items: center;">
+  <button class="mini-btn" type="primary" size="mini" bindtap="update_note" 
+      style="width: 50%; margin-top: 40rpx; margin-bottom: 10rpx;">添加</button>
   </view>
 </view>
