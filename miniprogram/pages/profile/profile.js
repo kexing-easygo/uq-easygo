@@ -38,32 +38,30 @@ Page({
   onLoad: function (options) {
     let that = this
     //从云数据库中检索该openid是否存在
-    db.collection('MainUser')
-      .where({
-        _openid: app.globalData._openid
+    if (!app.globalData.hasUserInfo) {
+      that.setData({
+        hasUserInfo: false
       })
-      .get().then(
-        res => {
-          if (res.data.length > 0) {
-            // 将读取到的所有用户的信息均更新至全局变量中
-            app.globalData.userInfo = res.data[0].userInfo
-            app.globalData.userEmail = res.data[0].userEmail
-            app.globalData.notification = res.data[0].notification
-            app.globalData.hasUserInfo = true
-            // 开放特殊窗口，给错误备注的用户一个机会
-            if (res.data[0].userInfo.nickName == "微信用户") {
-              that.setData({
-                hasUserInfo: false
-              })
-              app.globalData.hasUserInfo = false
-            } else {
-              that.setData({
-                userInfo: res.data[0].userInfo,
-                hasUserInfo: true
-              })
-            }
-          }
-        })
+      return;
+    }
+    db.collection('MainUser')
+    .where({
+      _openid: app.globalData._openid
+    })
+    .get().then(
+      res => {
+        if (res.data.length > 0) {
+          // 将读取到的所有用户的信息均更新至全局变量中
+          app.globalData.userInfo = res.data[0].userInfo
+          app.globalData.userEmail = res.data[0].userEmail
+          app.globalData.notification = res.data[0].notification
+          app.globalData.hasUserInfo = true
+          that.setData({
+            userInfo: res.data[0].userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
 
   },
 
