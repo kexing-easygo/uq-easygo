@@ -24,6 +24,10 @@ Page({
    * Page initial data
    */
   data: {
+    // touch flag
+    touchStartX: "",
+    // isTouchMove: false, //左滑动为true 
+
     // 用户所有的作业
     addCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
     notificationSetting: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
@@ -275,6 +279,7 @@ Page({
                 userAssignments[i]["id"] = i
                 userAssignments[i]["percentage"] = percentage
                 userAssignments[i]["diff"] = diff
+                userAssignments[i]["isTouchMove"] = false
               }
               userAssignments = userAssignments.sort(function (a, b) {
                 return a['diff'] - b['diff']
@@ -328,12 +333,12 @@ Page({
    */
   bindTap: function (e) {
     var index = e.currentTarget.dataset.index
+    console.log(this.data.userAssignments[index])
     // 将数据通过json格式传递到下一个页面
     var query = JSON.stringify({
         index: index,
         data: this.data.userAssignments[index]
       }
-
     )
     wx.navigateTo({
       url: '/pages/addCountDown/addCountDown',
@@ -341,6 +346,48 @@ Page({
         // 通过eventChannel向被打开页面传送正在被点击的assignment信息
         res.eventChannel.emit('acceptDataFromOpenerPage', query)
       }
+    })
+  },
+
+  _touchStart(e, items) {
+    items.forEach(function(v, i) {
+      if(v.isTouchMove)
+        v.isTouchMove = false;
+    })
+    this.setData({
+      touchStartX: e.changedTouches[0].clientX
+    })
+    return items
+  },
+
+  _touchMove(e, items, id) {
+    var index = e.currentTarget.dataset.index
+    var touchMoveX = e.changedTouches[0].clientX;
+    var x = this.data.touchStartX;
+
+    items.forEach(function(v,i){
+      v.isTouchMove = false 
+      if (i == id) {
+        if (touchMoveX > x) {
+          v.isTouchMove = false
+        } else {
+          v.isTouchMove = true
+        }
+      }
+    })
+    return items
+  },
+
+  touchStart(e){
+    let data = this._touchStart(e, this.data.userAssignments)
+    this.setData({
+      userAssignments: data
+    })
+  },
+  touchMove(e){
+    let data = this._touchMove(e, this.data.userAssignments, e.currentTarget.dataset.index)
+    this.setData({
+      userAssignments: data
     })
   }
 })

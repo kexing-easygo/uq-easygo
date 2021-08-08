@@ -54,7 +54,7 @@
   display: none;
 }
 
-.assignment-list .countdown movable-area {
+/* .assignment-list .countdown movable-area {
   height: 500rpx;
   width: 700rpx;
 }
@@ -63,7 +63,7 @@
   height: 120rpx;
   width: 700rpx;
   z-index: 999;
-}
+} */
 
 .assignment-list .countdown .delete-btn {
   position: relative;
@@ -80,25 +80,26 @@
 }
 
 .countdown {
-  width: 90%;
+  width: 100%;
   height: fit-content;
   margin: 40rpx 5% 0 5%;
 }
 .countdown_event {
-  width: 100%;
+  width: 1500rpx;
   display: flex;
   flex-flow: row nowrap;
+  /* justify-content: center; */
   align-content: center;
   /* margin-bottom: 40rpx; */
 }
 .progress-bar{
   background-color: white;
-  width: 492rpx;
+  width: 500rpx;
   height: 72rpx;
   box-shadow: 0 6rpx 10rpx 2rpx #cccccc;
   color: #707070;
   border-radius: 5px;
-  margin-right: 20rpx;
+  margin-right: 35rpx;
   position: relative;
 }
 
@@ -130,9 +131,45 @@
 }
 
 /* .test  */
+.normal_view {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  align-content: center;
+  margin-left: -185rpx;
+  /* transform: translateX(180rpx); */
+  -webkit-transition: all 0.3s;
+  -webkit-transform: translateX(185rpx);
+  transition: all 0.3s;
+  transform: translateX(185rpx);
+  overflow: visible;
+}
+
+.delete_button {
+  width: 145rpx;
+  height: 72rpx;
+  font-size: 34rpx;
+  border-radius: 5px;
+  background-color: #FFB300;
+  color:black;
+  text-align: center;
+  line-height: 72rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 35rpx;
+}
+
+/* move left */
+.left {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
 
 .countdown_days {
-  width: 142rpx;
+  width: 145rpx;
   height: 72rpx;
   font-size: 34rpx;
   border-radius: 5px;

@@ -17,13 +17,12 @@
 		placeholder="搜索你的作业"></searchbar>
 	</view> -->
 
-	
-
-
 	<view class="assignment-list"  wx:if="{{showAll}}">
 		<view class="countdown" wx:for="{{userAssignments}}" wx:for-index="index" wx:for-item="item">
 			<view class="countdown_event" data-index="{{index}}">
 				<!-- <view class="test"> -->
+				<view class="normal_view {{item.isTouchMove? 'left':''}}" data-index="{{index}}"
+				bindtouchstart="touchStart" bindtouchmove="touchMove"> 
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 						<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						</view>
@@ -36,6 +35,14 @@
 						</view>
 						<view wx:else> {{item.countdown}} Days</view>
 					</view>
+
+					<!-- assignment delete -->
+					<view class="delete_button">
+						删除
+					</view>
+
+					<!-- test end --> </view>
+
 				<!-- </view> -->
 			</view>
 		</view>
@@ -44,15 +51,16 @@
 		<view class="countdown" wx:for="{{selectedAssignments}}" wx:for-index="index"
 			wx:key="name">
 			<view class="countdown_event" data-index="{{index}}">
+				<!-- assignment name -->
 				<view wx:if="{{item}}" class="progress-bar" bindtap="bindTap" data-index="{{index}}">
 					<view class="progress" style="--percent: {{item.percentage}}; background-color: {{item.color}}">
 						<text class="subject">{{item.name}}</text>
 					</view>
 				</view>
-					<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}}">
-						{{item.countdown}} Days
-					</view>
-				<!-- </view> -->
+				<!-- assignment days -->
+				<view class="countdown_days red_day{{item.countdown > 3 ? 'nored':''}}">
+					{{item.countdown}} Days
+				</view>
 			</view>
 		</view>
 	</view>
