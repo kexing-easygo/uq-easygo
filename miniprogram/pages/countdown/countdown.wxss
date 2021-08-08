@@ -8,6 +8,7 @@
   align-items: center;
   margin-top: 4rpx;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 .header {
   height: 312rpx;
@@ -83,13 +84,15 @@
   width: 100%;
   height: fit-content;
   margin: 40rpx 5% 0 5%;
+  overflow: hidden;
 }
 .countdown_event {
-  width: 1500rpx;
+  width: 100%;
   display: flex;
   flex-flow: row nowrap;
-  /* justify-content: center; */
+  justify-content: flex-start;
   align-content: center;
+  overflow: hidden;
   /* margin-bottom: 40rpx; */
 }
 .progress-bar{
@@ -132,7 +135,7 @@
 
 /* .test  */
 .normal_view {
-  width: 100%;
+  width: 1000rpx;
   height: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -143,7 +146,7 @@
   -webkit-transform: translateX(185rpx);
   transition: all 0.3s;
   transform: translateX(185rpx);
-  overflow: visible;
+  overflow: hidden;
 }
 
 .delete_button {
