@@ -288,30 +288,32 @@ Page({
       content: "是否确定要删除？",
       success(res) {
         if (res.confirm) {
-          if (app.globalData.hasUserInfo) {
-            temp.splice(that.data.index, 1)
-            db.collection("MainUser")
-              .where({
-                _openid: app.globalData._openid
-              })
-              .update({
-                data: {
-                  userAssignments: temp
-                },
-                success: function (res) {
-                  if (res.stats.updated > 0) {
-                    console.log("作业条目删除成功")
-                  }
-                }
-              })
-          }
-          wx.reLaunch({
-            url: '/pages/countdown/countdown',
+          temp.splice(that.data.index, 1)
+          db.collection("MainUser")
+          .where({
+            _openid: app.globalData._openid
+          })
+          .update({
+            data: {
+              userAssignments: temp
+            },
             success: function (res) {
-              var page = getCurrentPages().pop()
-              if (page == undefined || page == null) return;
-              // 刷新页面
-              page.onLoad()
+              if (res.stats.updated > 0) {
+                wx.showToast({
+                  title: '作业条目删除成功',
+                  duration: 1000,
+                  icon: "success"
+                })
+                wx.reLaunch({
+                  url: '/pages/countdown/countdown',
+                  success: function (res) {
+                    var page = getCurrentPages().pop()
+                    if (page == undefined || page == null) return;
+                    // 刷新页面
+                    page.onLoad()
+                  }
+                })
+              }
             }
           })
         }

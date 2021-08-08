@@ -60,16 +60,16 @@ function generateTeachingWeeks() {
     newDate.setDate(newDate.getDate() + 7);
     teaching_weeks[i] = new Date(newDate);
   }
-  cl(teaching_weeks)
+  //cl(teaching_weeks)
   return teaching_weeks;
 }
 
 // 教学周，将week num和第一天绑定
 const teachingWeeks = generateTeachingWeeks();
 
-function cl(content) {
-  console.log(content);
-}
+// function cl(content) {
+//   console.log(content);
+// }
 /**
  * 基于7/26为第二学期第一周第一天，计算现在是第几周
  */
@@ -91,7 +91,7 @@ function current_week() {
 function GetMonday(date) {
   var dd = new Date(date)
   var week = dd.getDay(); //获取时间的星期数
-  cl(week);
+  // cl(week);
   var minus = week ? week - 1 : 6;
   dd.setDate(dd.getDate() - minus); //获取周一日期
   return dd;
@@ -105,7 +105,7 @@ var currentMonth = today.getMonth() + 1;
 var currentDay = today.getDay();
 // 当前第几周没想好，写死了10
 var currentWeek = current_week();
-cl(currentWeek);
+// cl(currentWeek);
 var selectWeekTitleStyle = "background-color: rgba(100, 103, 204, 0.7);";
 const weekday_mapper = {
   1: "周一",
@@ -150,17 +150,28 @@ Page({
     beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
     beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
     beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
+    timeZoneStart: 8,
+    courseDetailTime: "",
 
   },
   timeDetail: function (event) {
     var courseIndex = event.currentTarget.dataset['courseindex'];
     var temp = this.data.userCourseTime[courseIndex];
     temp['courseindex'] = courseIndex;
-
+    var time = temp.classTime["start-end"];
+    var start = time.split(" ")[0].split(":");
+    start[0] = (parseInt(start[0]) - (8 - this.data.timeZoneStart)).toString();
+    var newStart = start.join(":"); 
+    var end = time.split(" ")[2].split(":");
+    end[0] = (parseInt(end[0]) - (8 - this.data.timeZoneStart)).toString();
+    var newEnd = end.join(":"); 
+    var timeWithZone = newStart + " - " + newEnd;
+    
     this.setData({
       detailShow: true,
       color: temp["color"].split(":")[1].split(";")[0],
-      selectClass: temp
+      selectClass: temp,
+      courseDetailTime: timeWithZone,
     });
   },
 
@@ -208,23 +219,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.cloud.callFunction({
-      name: 'calcTimeTableUse',
-      data: {},
-      success: function (res) {
-        //console.log(res.result.sum) 
-      },
-      fail: console.error
-    })
+    var now = new Date();
+    var timeDiff = (now.getTimezoneOffset() - (-600)) / 60;
+    var timeZoneStart = 8 - timeDiff;
+    
+    // wx.cloud.callFunction({
+    //   name: 'calcTimeTableUse',
+    //   data: {},
+    //   success: function (res) {
+    //     //console.log(res.result.sum) 
+    //   },
+    //   fail: console.error
+    // })
 
     this.setData({
       thisWeek: currentWeek,
       selectWeek: currentWeek,
       isAllWeek: true,
       currentMonth: months[currentMonth],
+      timeZoneStart: timeZoneStart,
     })
     this.generateWeekdays();
-
+    if (timeDiff == 2) {
+      wx.showToast({
+        title: '中国时间',
+        duration: 1500,
+        icon: "success"
+      })
+    } else {
+      wx.showToast({
+        title: '澳洲时间',
+        duration: 1500,
+        icon: "success"
+      })
+    }
   },
   add_note: function (e) {
     var temp = this.data.selectClass;

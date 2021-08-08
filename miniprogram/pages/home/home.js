@@ -37,20 +37,20 @@ Page({
         // 如果数据库内没有对应openid，就视为未登录
         db.collection('MainUser')
         .where({
-          _openid: app.globalData._openid
+          _openid: app.globalData._openid,
         })
         .get({
           success: function (res) {
             if (res.data.length == 0) {
               app.globalData.hasUserInfo = false;
             } else {
-              console.log("?")
               app.globalData.hasUserInfo = true;
             }
           }
         })
       }
     })
+
     
 
   },

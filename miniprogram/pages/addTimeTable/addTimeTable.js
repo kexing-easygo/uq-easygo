@@ -3,11 +3,12 @@ const db = wx.cloud.database()
 const app = getApp()
 const _ = db.command
 
-function get_class_start_end(start, duration) {
+function get_class_start_end(start, duration, timeDiff) {
   var hour = duration / 60;
   var starts = start.split(":");
-  var end = parseInt(starts[0]) + hour + ":" + starts[1];
-  return start + " - " + end;
+  var stHour =  parseInt(starts[0]) - timeDiff;
+  var endHour =  stHour + hour;
+  return stHour + ":" + starts[1] + " - " + endHour + ":" + starts[1] ;
 }
 
 // function cl(content) {
@@ -43,8 +44,14 @@ Page({
     beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
     beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
     beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
+    timeZoneDiff: 0,
   },
   onLoad: function(options) {
+    var now = new Date();
+    var timeDiff = (now.getTimezoneOffset() - (-600)) / 60;
+    this.setData({
+      timeZoneDiff: timeDiff
+    });
     let that = this;
     db.collection("MainUser")
     .where({
@@ -96,6 +103,7 @@ Page({
   },
   searchCourseTime: function () {
     var dic = {};
+    var timediff = this.data.timeZoneDiff;
     let that = this;
     db.collection('TimetableNew').where({
       course_name: that.data.courseTitle.toUpperCase(),
@@ -129,7 +137,8 @@ Page({
               temp["weekday"] = res.data[0][key][keyItem]["day_of_week"];
               var startTime = res.data[0][key][keyItem]["start_time"];
               var time = res.data[0][key][keyItem]["duration"];
-              temp["start-end"] = get_class_start_end(startTime, time);
+              temp["start-end"] = get_class_start_end(startTime, time, 0);
+              temp["start-end-display"] = get_class_start_end(startTime, time, timediff);
               temp["start"] = startTime;
               temp["hours"] = time / 60;
               temp["week_pattern"] = res.data[0][key][keyItem]["week_pattern"];

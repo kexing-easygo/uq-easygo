@@ -37,7 +37,7 @@
 					</view>
 
 					<!-- assignment delete -->
-					<view class="delete_button">
+					<view class="delete_button" bindtap="delete" data-index="{{index}}">
 						删除
 					</view>
 

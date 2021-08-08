@@ -16,7 +16,6 @@ exports.main = async (event, context) => {
       classTime: _.exists(true)
     }
   }).count()
-  // const sum = await db.collection('MainUser').count()
 
   return {
     sum: sum,

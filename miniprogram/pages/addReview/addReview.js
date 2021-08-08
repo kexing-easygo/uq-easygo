@@ -171,22 +171,26 @@ Page({
           db.collection("CourseNew")
           .where({
             course_name: course_name
-          }).update({
+          })
+          .update({
             data: {
               reviews: reviewData.reviews
+            }, 
+            success: function (res) {
+              //跳转界面
+              wx.reLaunch({
+                url: '/pages/review/review',
+                success: function (res) {
+                  var pages = getCurrentPages();
+                  var prev = pages[pages.length - 2];
+                  if (prev == undefined || prev == null) return;
+                  // 刷新页面
+                  prev.onLoad();
+                }
+              })
             }
           });
-          //跳转界面
-          wx.redirectTo({
-            url: '/pages/review/review',
-            success: function (res) {
-              var pages = getCurrentPages();
-              var prev = pages[pages.length - 2];
-              if (prev == undefined || prev == null) return;
-              // 刷新页面
-              prev.onLoad();
-            }
-          })
+          
         }
       }
     })
@@ -238,13 +242,15 @@ Page({
         },
         success: function (res) {
           if (res.stats.updated > 0) {
-            var pages = getCurrentPages();
-            var prev = pages[pages.length - 2];
-            if (prev == undefined || prev == null) return;
-            // 刷新页面
-            prev.onLoad();
-            wx.redirectTo({
+            wx.reLaunch({
               url: '/pages/review/review',
+              success: function (res) {
+                var pages = getCurrentPages();
+                var prev = pages[pages.length - 2];
+                if (prev == undefined || prev == null) return;
+                // 刷新页面
+                prev.onLoad();
+              }
             })
           }
         }
@@ -286,16 +292,16 @@ Page({
                   reviews: reviewData.reviews
                 },
                 success: function (res) {
-                  var pages = getCurrentPages();
-                  var prev = pages[pages.length - 2];
-                  if (prev == undefined || prev == null) return;
-                  // 刷新页面
-                  prev.onLoad();
-                  wx.redirectTo({
+                  wx.reLaunch({
                     url: '/pages/review/review',
-                    success: function (res) {}
-                  })     
-                  
+                    success: function (res) {
+                      var pages = getCurrentPages();
+                      var prev = pages[pages.length - 2];
+                      if (prev == undefined || prev == null) return;
+                      // 刷新页面
+                      prev.onLoad();
+                    }
+                  })
                 }
               })
             }

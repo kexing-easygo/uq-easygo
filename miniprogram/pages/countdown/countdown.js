@@ -389,5 +389,50 @@ Page({
     this.setData({
       userAssignments: data
     })
+  },
+  /**
+   * 滑动删除倒计时的回调函数
+   * @param {*} e 
+   */
+  delete: function(e) {
+    let temp = this.data.userAssignments;
+    var index = e.currentTarget.dataset.index;
+    let that = this
+    if (!app.globalData.hasUserInfo) {
+      wx.showToast({
+        title: '你需要登陆才能使用倒计时的删除功能哦！',
+        icon: "none"
+      })
+      return
+    }
+    wx.showModal({
+      title: "删除倒计时",
+      content: "是否确定要删除？",
+      success(res) {
+        if (res.confirm) {
+          temp.splice(index, 1)
+          db.collection("MainUser")
+          .where({
+            _openid: app.globalData._openid
+          })
+          .update({
+            data: {
+              userAssignments: temp
+            },
+            success: function (res) {
+              if (res.stats.updated > 0) {
+                wx.showToast({
+                  title: '作业条目删除成功',
+                  duration: 1000,
+                  icon: "success"
+                })
+                that.onLoad();
+              }
+            }
+          })
+         
+        }
+      }
+    })
   }
 })

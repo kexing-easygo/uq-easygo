@@ -76,7 +76,7 @@
   <checkbox-group bindchange="chooseClass">
   <view class="timeContainer" wx:for="{{courseTimeDeatial}}" wx:for-item="item" wx:for-index="index">
     <view class="timeItem">
-      <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end"]}}</text>
+      <text class="timeDetail">{{item.type}} {{item.location}} {{item.weekday}} {{item["start-end-display"]}}</text>
       <checkbox class="checkoption"  value="{{index}}"  />
     </view>
   </view>

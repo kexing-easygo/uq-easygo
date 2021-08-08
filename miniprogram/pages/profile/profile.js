@@ -102,17 +102,13 @@ Page({
               userInfo: r.userInfo,
               userEmail: "",
               notification: {
-                emailNotification: "",
-                wechatNotification: "",
-                oneDay: "",
-                threeDay: "",
-                oneWeek: "",
+                emailNotification: false,
+                wechatNotification: false,
+                oneDay: false,
+                threeDay: false,
+                oneWeek: false,
                 location: "AU"
               },
-              history: {
-                calculator: {},
-                search: {}
-              }
             }
           })
       },
