@@ -60,7 +60,7 @@ function generateTeachingWeeks() {
     newDate.setDate(newDate.getDate() + 7);
     teaching_weeks[i] = new Date(newDate);
   }
-  cl(teaching_weeks)
+  //cl(teaching_weeks)
   return teaching_weeks;
 }
 
@@ -150,17 +150,28 @@ Page({
     beforeYellow: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未黄色选择器.png",
     beforeGreen: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未绿色选择器.png",
     beforeBlue: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/颜色选择器/未蓝色选择器.png",
+    timeZoneStart: 8,
+    courseDetailTime: "",
 
   },
   timeDetail: function (event) {
     var courseIndex = event.currentTarget.dataset['courseindex'];
     var temp = this.data.userCourseTime[courseIndex];
     temp['courseindex'] = courseIndex;
-
+    var time = temp.classTime["start-end"];
+    var start = time.split(" ")[0].split(":");
+    start[0] = (parseInt(start[0]) - (8 - this.data.timeZoneStart)).toString();
+    var newStart = start.join(":"); 
+    var end = time.split(" ")[2].split(":");
+    end[0] = (parseInt(end[0]) - (8 - this.data.timeZoneStart)).toString();
+    var newEnd = end.join(":"); 
+    var timeWithZone = newStart + " - " + newEnd;
+    
     this.setData({
       detailShow: true,
       color: temp["color"].split(":")[1].split(";")[0],
-      selectClass: temp
+      selectClass: temp,
+      courseDetailTime: timeWithZone,
     });
   },
 
@@ -208,6 +219,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var now = new Date();
+    var timeDiff = (now.getTimezoneOffset() - (-600)) / 60;
+    var timeZoneStart = 8 - timeDiff;
     wx.cloud.callFunction({
       name: 'calcTimeTableUse',
       data: {},
@@ -222,6 +236,7 @@ Page({
       selectWeek: currentWeek,
       isAllWeek: true,
       currentMonth: months[currentMonth],
+      timeZoneStart: timeZoneStart,
     })
     this.generateWeekdays();
 
