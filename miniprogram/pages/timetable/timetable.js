@@ -120,8 +120,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    noteFlag: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表小旗子.png",
+    add: "../../images/icons/倒计时/添加按钮.png",
+    noteFlag: "../../images/icons/课表/课程表小旗子.png",
     detailShow: false,
     detailAnimation: "bottom: 0;animation: detailDownUp 1s;",
     userCourseTime: [],

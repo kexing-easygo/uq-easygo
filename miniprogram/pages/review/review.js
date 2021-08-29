@@ -16,31 +16,31 @@ Page({
     coursePre: ['DECO1100', 'DECO1100'],
     courseSemester: ['Semester1', 'Semester2'],
     courseIncompatible: "DECO1100",
-    likeUrl: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
-    img1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好过.png",
-    img2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好难.png",
-    img3: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好7.png",
-    img4: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未看运气.png",
+    likeUrl: "../../images/icons/课评/未点赞.png",
+    img1: "../../images/icons/课评/未好过.png",
+    img2: "../../images/icons/课评/未好难.png",
+    img3: "../../images/icons/课评/未好7.png",
+    img4: "../../images/icons/课评/未看运气.png",
     // 未点赞图标
-    beforeLikeImg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未点赞.png",
+    beforeLikeImg:"../../images/icons/课评/未点赞.png",
     // 点赞图标
-    afterLikeImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/点赞.png",
+    afterLikeImg: "../../images/icons/课评/点赞.png",
     // 未好过
-    beforeEasyPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好过.png",
+    beforeEasyPassImg: "../../images/icons/课评/未好过.png",
     // 未好难
-    beforeHardPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好难.png",
+    beforeHardPassImg: "../../images/icons/课评/未好难.png",
     // 未好7
-    beforeEasyHdImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未好7.png",
+    beforeEasyHdImg: "../../images/icons/课评/未好7.png",
     // 未看运气
-    beforeGoodLuckImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/未看运气.png",
+    beforeGoodLuckImg: "../../images/icons/课评/未看运气.png",
     // 好过
-    afterEasyPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好过.png",
+    afterEasyPassImg: "../../images/icons/课评/好过.png",
     // 好难
-    afterHardPassImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好难.png",
+    afterHardPassImg: "../../images/icons/课评/好难.png",
     // 好7
-    afterEasyHdImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/好7.png",
+    afterEasyHdImg: "../../images/icons/课评/好7.png",
     // 运气
-    afterGoodLuckImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/看运气.png",
+    afterGoodLuckImg: "../../images/icons/课评/看运气.png",
     easy_hd: {},
     easy_pass: {},
     good_luck: {},

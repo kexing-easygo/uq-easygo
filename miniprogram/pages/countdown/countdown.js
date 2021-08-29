@@ -29,12 +29,11 @@ Page({
     // isTouchMove: false, //左滑动为true 
 
     // 用户所有的作业
-    addCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加倒计时.png",
-    notificationSetting: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/提醒设置.png",
-    add: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    addBlack: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/黑色按钮.png",
-    historyIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/添加按钮.png",
-    autoCountDown: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/自动添加.png",
+    addCountDown: "/images/icons/倒计时/添加倒计时.png",
+    notificationSetting: "/images/icons/倒计时/提醒设置.png",
+    add: "/images/icons/倒计时/添加按钮.png",
+    addBlack: "/images/icons/倒计时/黑色按钮.png",
+    autoCountDown: "/images/icons/倒计时/自动添加.png",
     showTrue: false,
     showAll: true,
     d1,
