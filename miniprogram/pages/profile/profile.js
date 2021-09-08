@@ -23,10 +23,10 @@ Page({
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
-    basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本信息.png",
-    basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本设置.png",
-    bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/邮箱绑定.png",
-    bindingPhoneIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/手机绑定.png",
+    basicInfoIcon: "../../images/icons/个人中心/基本信息.png",
+    basicSettingIcon: "../../images/icons/个人中心/基本设置.png",
+    bindingEmailIcon: "../../images/icons/个人中心/邮箱绑定.png",
+    bindingPhoneIcon: "../../images/icons/个人中心/手机绑定.png",
     contactUs: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们.png"
   },
 
@@ -38,19 +38,14 @@ Page({
   onLoad: function (options) {
     let that = this
     //从云数据库中检索该openid是否存在
-    if (!app.globalData.hasUserInfo) {
-      that.setData({
-        hasUserInfo: false
+    // 如果用户已经登录
+    if (app.globalData.hasUserInfo) {
+      db.collection('MainUser')
+      .where({
+        _openid: app.globalData._openid
       })
-      return;
-    }
-    db.collection('MainUser')
-    .where({
-      _openid: app.globalData._openid
-    })
-    .get().then(
-      res => {
-        if (res.data.length > 0) {
+      .get().then(
+        res => {
           // 将读取到的所有用户的信息均更新至全局变量中
           app.globalData.userInfo = res.data[0].userInfo
           app.globalData.userEmail = res.data[0].userEmail
@@ -60,8 +55,33 @@ Page({
             userInfo: res.data[0].userInfo,
             hasUserInfo: true
           })
-        }
-      })
+        
+        })
+    }
+    // if (!app.globalData.hasUserInfo) {
+    //   that.setData({
+    //     hasUserInfo: false
+    //   })
+    //   return;
+    // }
+    // db.collection('MainUser')
+    // .where({
+    //   _openid: app.globalData._openid
+    // })
+    // .get().then(
+    //   res => {
+    //     if (res.data.length > 0) {
+    //       // 将读取到的所有用户的信息均更新至全局变量中
+    //       app.globalData.userInfo = res.data[0].userInfo
+    //       app.globalData.userEmail = res.data[0].userEmail
+    //       app.globalData.notification = res.data[0].notification
+    //       app.globalData.hasUserInfo = true
+    //       that.setData({
+    //         userInfo: res.data[0].userInfo,
+    //         hasUserInfo: true
+    //       })
+    //     }
+    //   })
 
   },
 
@@ -80,37 +100,40 @@ Page({
         })
         app.globalData.hasUserInfo = true
         db.collection("MainUser")
-          .add({
-            data: {
-              nickName: r.userInfo.nickName,
-              userAssignments: [
-                {
-                  'color': '#7986CB',
-                  'name': "CSSE1001 A1 (示例)",
-                  "date": d1,
-                  "time": "00:00",
-                  "default": true
-                },
-                {
-                  'color': '#7986CB',
-                  'name': "点我查看更多",
-                  "date": d2,
-                  "time": "00:00",
-                  "default": true
-                }
-              ],
-              userInfo: r.userInfo,
-              userEmail: "",
-              notification: {
-                emailNotification: false,
-                wechatNotification: false,
-                oneDay: false,
-                threeDay: false,
-                oneWeek: false,
-                location: "AU"
+        .where({
+          _openid: app.globalData._openid
+        })
+        .set({
+          data: {
+            nickName: r.userInfo.nickName,
+            userAssignments: [
+              {
+                'color': '#7986CB',
+                'name': "CSSE1001 A1 (示例)",
+                "date": d1,
+                "time": "00:00",
+                "default": true
               },
-            }
-          })
+              {
+                'color': '#7986CB',
+                'name': "点我查看更多",
+                "date": d2,
+                "time": "00:00",
+                "default": true
+              }
+            ],
+            userInfo: r.userInfo,
+            userEmail: "",
+            notification: {
+              emailNotification: false,
+              wechatNotification: false,
+              oneDay: false,
+              threeDay: false,
+              oneWeek: false,
+              location: "AU"
+            },
+          }
+        })
       },
     })
   },

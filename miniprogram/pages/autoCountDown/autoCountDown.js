@@ -223,11 +223,6 @@ Page({
       // 更新color字段
       ass[i].color = color;
       ass[i].name = course + "-" + ass[i].name;
-      // TODO: 解析到TBD，自动变为30天后
-      // if (ass[i].date == "TBD") {
-      //   ass[i].date = GetDateStr(30);
-      //   ass[i].time = "00:00"
-      // }
     }
     //获取数据库的原有内容，本地修改，然后直接替换
     db.collection('MainUser')
@@ -236,7 +231,7 @@ Page({
       })
       .get({
         success: function (res) {
-          var temp = res.data[0].userAssignments;
+          let temp = res.data[0].userAssignments;
           console.log(temp);
           for (var i = 0; i < temp.length; i++) {
             ass.push(temp[i]);

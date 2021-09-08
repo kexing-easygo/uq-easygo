@@ -54,17 +54,15 @@ Page({
         "default": true
       }
     ],
-    userAssignments: [
-
-    ],
-    matchedItems: [],
-    selectMatchedItem: false,
-    selectedAssignments: [],
-    showResult: "",
-    history: [],
-    startsearch: false,
-    searchFocus: false,
-    searchBarValue: "",
+    userAssignments: [],
+    // matchedItems: [],
+    // selectMatchedItem: false,
+    // selectedAssignments: [],
+    // showResult: "",
+    // history: [],
+    // startsearch: false,
+    // searchFocus: false,
+    // searchBarValue: "",
     style: "countdown_days",
     recentAssignmentDate: "∞",
     recentAssignmentName: "None",
@@ -234,7 +232,7 @@ Page({
     let that = this
     if (app.globalData.hasUserInfo) {
       // 获取用户所有的assignments
-      var temp = []
+      let temp = []
       db.collection('MainUser')
         .where({
           _openid: app.globalData._openid
@@ -270,7 +268,6 @@ Page({
                   var d = new Date(string).getTime()
                   now = new Date().getTime();
                   var diff = Math.ceil((d - now) / (1000 * 3600 * 24))
-                  console.log(diff)
                 }
                 // 计算style中的进度条百分比
                 var percentage = that.calculatePercentage(diff)
@@ -288,14 +285,8 @@ Page({
                 recentAssignmentName: userAssignments[0]['name'],
                 recentAssignmentDate: userAssignments[0]['diff'],
                 recentAssignmentColor: userAssignments[0]['color'],
-                history: res.data[0].history.search,
                 showAll: true,
-                selectMatchedItem: false,
-                selectedAssignments: [],
-                matchedItems: [],
-                showResult: "",
-                showHistory: false,
-                searchFocus: false,
+
               })
             }
             app.globalData.userAssignments = userAssignments;
