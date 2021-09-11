@@ -1,6 +1,7 @@
 // pages/home/home.js
 const app = getApp()
 const db = wx.cloud.database()
+const _ = db.command
 Page({
 
   /**
@@ -20,6 +21,7 @@ Page({
     PostHolderOne:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报一.png",
     PostHolderTwo:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/Bug征集.png",
     PostHolderThree:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报三.png",
+    classToday: [],
   },
 
   /**
@@ -33,6 +35,8 @@ Page({
       data: {},
       success: res => {
         app.globalData._openid = res.result.openid
+        console.log(app.globalData._openid);
+        app.globalData._openid
         // 拿到openid后，检索数据库
         // 如果数据库内没有对应openid，就视为未登录
         db.collection('MainUser')
@@ -45,6 +49,28 @@ Page({
               app.globalData.hasUserInfo = false;
             } else {
               app.globalData.hasUserInfo = true;
+              db.collection("MainUser").where({
+                _openid: app.globalData._openid
+              }).get({
+                success: function(res) {
+                  var temp = res.data[0]['courseTime'];
+                  console.log(temp);
+                  var week = new Date().getDay(),
+                  arr = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                  today = arr[week];
+                  console.log(today);
+
+                  var todayResult = [];
+                  for (var i = 0; i < temp.length; i++) {
+                    if (temp[i]['classTime']["weekday"] == today) {
+                      //console.log(temp[i]);
+                      todayResult.push(temp[i]);
+                    }
+                  }
+                  //显示结果
+                  console.log(todayResult);
+                }
+              })
             }
           }
         })

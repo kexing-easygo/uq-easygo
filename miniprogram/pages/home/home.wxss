@@ -37,7 +37,7 @@
     height: 100%;
     width: 88rpx;
 }
-.in-coming {
+.in-coming, .class-today {
     width: 654rpx;
     margin: 0 auto;
     margin-top: 40rpx;
@@ -50,4 +50,27 @@
 .in-coming image {
     height: 100%;
     width: 100%;
+}
+
+.class-today {
+    display: flex;
+    align-items: flex-start;
+}
+
+.class-list {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start; 
+    background-color: blue;
+}
+
+.class-detail {
+    display: flex;
+    background-color: brown;
+    flex-flow: column wrap;
+    width: 99%;
+    height: 50%;
 }
