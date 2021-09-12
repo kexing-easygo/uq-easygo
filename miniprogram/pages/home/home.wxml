@@ -43,19 +43,22 @@
 </view>
 
 
-<!-- <view class="class-today">
-前段有bug，先不搞
-	<image style="width:86rpx; height:98rpx;margin:30rpx;" src="{{reviewIcon}}" />
+<view class="class-today">
+	<image style="width:86rpx; height:98rpx; margin: 40rpx;" src="{{reviewIcon}}" />
 
 	<view class="class-list">
 		<view class="class-detail">
-			<text style="background-color: brown;">12:00-13:00</text>
-			<text style="background-color: brown;">12:00-13:00</text>
-			<text style="background-color: brown;">12:00-13:00</text>
-		
+			<text>12:00</text>
+			<text style="color:#7A7A7A;">CSSE1001 TUT01</text>
 		</view>
+
+		<view class="class-detail">
+			<text>12:00</text>
+			<text style="color:#7A7A7A;">CSSE1001 TUT01</text>
+		</view>
+
 	</view>
-</view> -->
+</view>
 
 <view class="in-coming">
 	<image src="{{PostHolderOne}}" bindtap="clickImage" data-model="one" />

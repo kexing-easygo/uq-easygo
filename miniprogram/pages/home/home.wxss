@@ -54,23 +54,28 @@
 
 .class-today {
     display: flex;
-    align-items: flex-start;
 }
 
 .class-list {
     height: 100%;
     width: 70%;
     display: flex;
-    flex-direction: column;
+    flex-flow: column nowrap;
     justify-content: flex-start;
     align-items: flex-start; 
-    background-color: blue;
 }
 
 .class-detail {
     display: flex;
-    background-color: brown;
-    flex-flow: column wrap;
-    width: 99%;
+    flex-flow: column nowrap;
     height: 50%;
+    width: 100%;
+    line-height: 150%;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 30rpx;
+}
+
+.class-detail text {
+    font-size: 32rpx;
 }
