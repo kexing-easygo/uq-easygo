@@ -103,7 +103,7 @@ Page({
         .where({
           _openid: app.globalData._openid
         })
-        .set({
+        .add({
           data: {
             nickName: r.userInfo.nickName,
             userAssignments: [
