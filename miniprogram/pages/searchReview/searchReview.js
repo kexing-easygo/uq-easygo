@@ -5,7 +5,7 @@ const _ = db.command
 //要random结果的list (Arthur ever been here)
 var EAITcourse = ["CSSE1001", "CSSE2002", "CSSE2310", "COMP3506", "COMP3702", "MATH1050", "CSSE2010", "INFS1200", "INFS2200", "INFS3200", "INFS3200", "INFS3202", "DECO3801", "DECO1400", "DECO3800"];
 
-var BScourse = ["ACCT1110", "LAWS1100", "ACCT1102", "MGST1301", "ECON1301", "ECON1011", "ECON1310", "FINM1415", "ACCT1102", "BISM1201", "ACCT2102", "FINM7401", "ECON7000", "ECON7310", "FINM2415"];
+var BScourse = ["ACCT1110", "LAWS1100", "MGST1301", "ECON1310", "ECON1011", "ECON1310", "FINM1415", "BISM1201", "ACCT2102", "FINM7401", "ECON7000", "ECON7310", "FINM2415"];
 
 //生成随机数 (Arthur ever been here)
 function make_random(min, max, numbers) {

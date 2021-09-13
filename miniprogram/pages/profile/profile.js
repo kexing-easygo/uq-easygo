@@ -27,7 +27,7 @@ Page({
     basicSettingIcon: "../../images/icons/个人中心/基本设置.png",
     bindingEmailIcon: "../../images/icons/个人中心/邮箱绑定.png",
     bindingPhoneIcon: "../../images/icons/个人中心/手机绑定.png",
-    contactUs: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们.png"
+    contactUs: "../../images/icons/个人中心/联系我们.png"
   },
 
   /**

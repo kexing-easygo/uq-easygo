@@ -1,7 +1,7 @@
 <!-- <image src="cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们页面.png" mode="widthFix" style="width:100%;"></image> -->
 <view class="container">
   <view class="logo">
-      <image src="{{logoimg}}" style="width: 180rpx; height:180rpx; margin-bottom: 40rpx;" />
+      <image src="{{logoimg}}" />
       <view style="font-size:50rpx;">UQ校园通</view>
       <view style="font-size:34rpx;">Version 1.0.4</view>
   </view>
@@ -30,14 +30,14 @@
 
   <view class="arcode">
     <view class="down"> 👇 </view>
-    <image src="{{kefuimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;"/>
-    <view class="down"> 👇 </view>
-    <image src="{{accountimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;"/>
+    <image src="{{kefuimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;" data-url="{{kefuimg}}" bindtap="click"/>
+    <!-- <view class="down"> 👇 </view> -->
+    <!-- <image src="{{accountimg}}" style="width: 200rpx; height:200rpx; margin-top: 10rpx;" data-url="{{accountimg}}" bindtap="click"/> -->
   </view>
 
   <view class="footer">
-    <view>开发者组织</view>
-    <view>404 有限bug公司</view>
+    <view>开发者组织: 课行 kexing</view>
+    <!-- <image src="{{companyLogo}}" style="width: 300rpx; height:100rpx; margin-top: 10rpx;"/> -->
     <view class="developers">
       <view>
         <image src="{{developer1}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
@@ -48,16 +48,26 @@
         亚瑟王
       </view>
       <view>
+        <image src="{{developer3}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        顾某
+      </view>
+    </view>
+    <view class="developers">
+      <view>
         <image src="{{operator2}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
         乐爷
       </view>
       <view>
-        <image src="{{developer3}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
-        顾某
-      </view>
-      <view>
         <image src="{{operator1}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
         佳熹
+      </view>
+      <view>
+        <image src="{{operator3}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        玉欣
+      </view>
+      <view>
+        <image src="{{designer1}}" style="width: 40rpx; height:40rpx; margin-left: 10rpx;" />
+        羊毛卷
       </view>
     </view>
   </view>

@@ -7,12 +7,15 @@ Page({
   data: {
     logoimg:"cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/UQ_EASY GO.png",
     kefuimg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/微信客服号.JPG",
+    companyLogo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课行.png",
     accountimg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/微信公众号.jpg",
     developer1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/lewis.JPG",
     developer2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/arthur.JPG",
     developer3: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/nine1ie.JPG",
     operator1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/jessica.JPG",
-    operator2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/xiaole.JPG"
+    operator2: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/xiaole.JPG",
+    operator3: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/jianguiren.JPG",
+    designer1: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/kaylee.jpg"
   },
 
   /**
@@ -69,5 +72,17 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  click: function (e) {
+    let that = this;
+    // console.log()
+    var url = e.currentTarget.dataset.url
+    wx.previewImage({
+      urls: [url], //需要预览的图片http链接列表，注意是数组
+      current: '', // 当前显示图片的http链接，默认是第一个
+      success: function (res) { },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
   }
 })
