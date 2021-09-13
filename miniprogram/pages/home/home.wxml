@@ -1,7 +1,7 @@
 <!--pages/home/home.wxml-->
-<swiper autoplay circular indicator-dots interval="2000" class="swiper" bindtap="clickImages">
+<swiper autoplay circular indicator-dots interval="2000" class="swiper">
 	<swiper-item>
-		<image src="{{swiperPlaceholderOne}}" />
+		<image src="{{swiperPlaceholderOne}}" bindtap="clickHotResearch"/>
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderTwo}}" />
@@ -43,7 +43,7 @@
 </view>
 
 
-<view class="class-today">
+<!-- <view class="class-today">
 	<image style="width:86rpx; height:98rpx; margin: 40rpx;" src="{{reviewIcon}}" />
 
 	<view class="class-list">
@@ -58,7 +58,7 @@
 		</view>
 
 	</view>
-</view>
+</view> -->
 
 <view class="in-coming">
 	<image src="{{PostHolderOne}}" bindtap="clickImage" data-model="one" />
