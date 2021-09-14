@@ -3,21 +3,22 @@ const app = getApp()
 const db = wx.cloud.database()
 const _ = db.command
 //要random结果的list (Arthur ever been here)
-var EAITcourse = ["CSSE1001", "CSSE2002", "CSSE2310", "COMP3506", "COMP3702", "MATH1050", "CSSE2010", "INFS1200", "INFS2200", "INFS3200", "INFS3200", "INFS3202", "DECO3801", "DECO1400", "DECO3800"];
+var EAITcourse = ["MATH1061", "MATH7861", 'STAT2203', "STAT7203", "INFS2200", "INFS7903", "COMP3506", "COMP7505", "MATH1051", "MATH1052"];
 
-var BScourse = ["ACCT1110", "LAWS1100", "MGST1301", "ECON1310", "ECON1011", "ECON1310", "FINM1415", "BISM1201", "ACCT2102", "FINM7401", "ECON7000", "ECON7310", "FINM2415"];
+var BScourse = ["FINM7401", "ACCT7101", "LAWS7023", "ACCT7107", "ECON7300","FINM1415", "ACCT1110", "LAWS1100", "ACCT1102", "ECON1310"];
 
 //生成随机数 (Arthur ever been here)
 function make_random(min, max, numbers) {
   var result = [];
   while (result.length < numbers) {
     var number = Math.floor(Math.random() * (max - min) + min);
-    console.log(number);
+    //console.log(number);
     if (result.indexOf(number) < 0) {
       result.push(number);
-      console.log(number);
+      
     }
   }
+  console.log(result);
   return result;
 }
 
@@ -92,7 +93,7 @@ Page({
    */
   onLoad: function (options) {
     //生成随机数 (Arthur ever been here)
-    var chosenCourseIndex = make_random(0, 14, 6);
+    var chosenCourseIndex = make_random(0, 10, 6);
     var SearchIT = [];
     var SearchBS = [];
     //6是有6个要展示的(Arthur ever been here)
