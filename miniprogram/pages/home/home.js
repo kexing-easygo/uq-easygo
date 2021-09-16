@@ -25,7 +25,9 @@ Page({
     PostHolderOne: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报一.png",
     PostHolderTwo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报二.png",
     PostHolderThree: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报三.png",
+    classNotice: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/shangkeling.png",
     classToday: [],
+    haveClass: false,
   },
 
   /**
@@ -73,10 +75,14 @@ Page({
 
                       }
                     }
-                    //显示结果
-                    that.setData({
-                      classToday: todayResult
-                    });
+                    if (todayResult.length > 0) {
+                      //显示结果
+                      that.setData({
+                        classToday: todayResult,
+                        haveClass: true
+                      });
+                    }
+
 
                   }
                 })

@@ -37,14 +37,14 @@
       {
         "pagePath": "pages/home/home",
         "text": "首页",
-        "iconPath": "images/icons/首页前.png",
-        "selectedIconPath": "images/icons/首页后.png"
+        "iconPath": "images/icons/homeProfile.png",
+        "selectedIconPath": "images/icons/home.png"
       },
       {
         "pagePath": "pages/profile/profile",
         "text": "我的",
-        "iconPath": "images/icons/个人中心前.png",
-        "selectedIconPath": "images/icons/个人中心后.png"
+        "iconPath": "images/icons/profileHome.png",
+        "selectedIconPath": "images/icons/profile.png"
       }
     ]
   },

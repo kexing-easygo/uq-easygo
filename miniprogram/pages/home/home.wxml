@@ -44,13 +44,17 @@
 
 <text class="homePageTile">今日课程</text>
 <view class="class-today">
-	<image style="width:86rpx; height:98rpx; margin: 40rpx;" src="{{reviewIcon}}" />
+	<image style="width:150rpx; height:98rpx; margin: 40rpx;" src="{{classNotice}}" />
 
-	<view class="class-list">
+	<view class="class-list" wx:if="{{haveClass}}">
 		<view class="class-detail" wx:for="{{classToday}}" wx:for-item="item" wx:for-index="index">
 			<text>{{item.classTime.start}}</text>
 			<text style="color:#7A7A7A;">{{item.courseName}} {{item.classTime.type}}</text>
 		</view>
+	</view>
+
+	<view wx:if="{{!haveClass}}">
+		<text>No class today</text>
 	</view>
 </view>
 
