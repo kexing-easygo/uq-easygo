@@ -1,4 +1,11 @@
 /* pages/home/home.wxss */
+#tileImg {
+    height:50px;
+    width: 200rpx;
+    padding-left: 24rpx;
+    padding-top: 50rpx;
+}
+
 .swiper {
     width: 654rpx;
     height: 274rpx;

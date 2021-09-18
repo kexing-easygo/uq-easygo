@@ -26,6 +26,7 @@ Page({
     PostHolderTwo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报二.png",
     PostHolderThree: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报三.png",
     classNotice: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/shangkeling.png",
+    tileImg: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/titleImg.png",
     classToday: [],
     haveClass: false,
   },
