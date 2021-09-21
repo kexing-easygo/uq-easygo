@@ -93,17 +93,17 @@ Page({
    */
   onLoad: function (options) {
     //生成随机数 (Arthur ever been here)
-    var chosenCourseIndex = make_random(0, 10, 6);
-    var SearchIT = [];
-    var SearchBS = [];
-    //6是有6个要展示的(Arthur ever been here)
-    for (var i = 0; i < 6; i++) {
-      SearchIT.push(EAITcourse[chosenCourseIndex[i]]);
-      SearchBS.push(BScourse[chosenCourseIndex[i]]);
-    }
+    // var chosenCourseIndex = make_random(0, 14, 6);
+    // var SearchIT = [];
+    // var SearchBS = [];
+    // //6是有6个要展示的(Arthur ever been here)
+    // for (var i = 0; i < 6; i++) {
+    //   SearchIT.push(EAITcourse[chosenCourseIndex[i]]);
+    //   SearchBS.push(BScourse[chosenCourseIndex[i]]);
+    // }
     this.setData({
-      hotSearchIT: SearchIT,
-      hotSearchBS: SearchBS
+      hotSearchIT: EAITcourse,
+      hotSearchBS: BScourse
     });
 
 

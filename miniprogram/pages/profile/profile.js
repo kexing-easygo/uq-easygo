@@ -23,11 +23,11 @@ Page({
     userInfo: {},
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     hasUserInfo: false,
-    basicInfoIcon: "../../images/icons/个人中心/基本信息.png",
-    basicSettingIcon: "../../images/icons/个人中心/基本设置.png",
-    bindingEmailIcon: "../../images/icons/个人中心/邮箱绑定.png",
-    bindingPhoneIcon: "../../images/icons/个人中心/手机绑定.png",
-    contactUs: "../../images/icons/个人中心/联系我们.png"
+    basicInfoIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本信息.png",
+    basicSettingIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/基本设置.png",
+    bindingEmailIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/邮箱绑定.png",
+    bindingPhoneIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/手机绑定.png",
+    contactUs: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/联系我们.png"
   },
 
   /**

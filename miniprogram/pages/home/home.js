@@ -17,10 +17,10 @@ Page({
     swiperPlaceholderTwo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/轮播图二.png",
     swiperPlaceholderThree: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课程表宣传图.png",
     // 功能图标
-    calcIcon: "../../images/icons/新计算器图标.png",
-    countdownIcon: "../../images/icons/新倒计时图标.png",
-    timetableIcon: "../../images/icons/新课表图标.png",
-    reviewIcon: "../../images/icons/新课评图标.png",
+    calcIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/新计算器图标.png",
+    countdownIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/新倒计时图标.png",
+    timetableIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/新课表图标.png",
+    reviewIcon: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/新课评图标.png",
     // 下方非滚动海报
     PostHolderOne: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报一.png",
     PostHolderTwo: "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/非滚动海报二.png",

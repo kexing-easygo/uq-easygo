@@ -34,10 +34,7 @@
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true,
-    "disableUseStrict": false,
-    "showES6CompileOption": false,
-    "useSummerCompiler": false,
-    "minifyWXML": true
+    "showES6CompileOption": false
   },
   "appid": "wxc51fd512a103a723",
   "projectname": "404",
