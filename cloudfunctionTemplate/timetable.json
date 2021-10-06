@@ -1,0 +1,9 @@
+[
+  {
+    "name": "fetchByWeek",
+    "value": {
+      "branch": "USYD",
+      "method": "fetchByWeek"
+    }
+  }
+]
