@@ -29,7 +29,8 @@ async function createUser(openid, userInfo, collectionName) {
         oneWeek: false,
         location: "AU"
       },
-      courseTime: []
+      courseTime: [],
+      classMode: ""
     }
   })
   .then(res => {
@@ -56,6 +57,22 @@ async function getUserInfo(openid, collectionName) {
     _openid: openid
   }).get()
   return result.data[0]
+}
+
+
+async function updateClassMode(openid, collectionName, mode) {
+  db.collection(collectionName)
+  .where({
+    _openid: openid
+  })
+  .update({
+    data: {
+      classMode: mode
+    }
+  })
+  .then(res => {
+    return res;
+  })
 }
 
 /**
@@ -100,7 +117,10 @@ exports.main = async (event, context) => {
     return await loginStatus(openid, collectionName);
   }
   if (event.method == "getUserInfo") {
-
     return await getUserInfo(openid, collectionName)
+  }
+  if (method == "updateClassMode") {
+    var mode = event.classMode
+    return await updateClassMode(openid, collectionName, mode)
   }
 }

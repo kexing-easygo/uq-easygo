@@ -99,7 +99,7 @@ async function fetchAll(openid, collectionName) {
       return a['diff'] - b['diff']
     });
     fetchRes["assignments"] = userAssignments
-    fetchRes["headerAssignments"] = userAssignments[0]
+    fetchRes["headerAssignment"] = userAssignments[0]
     return fetchRes
   }
 }

@@ -68,29 +68,6 @@ async function updateUserClasses(openid, collectionName, courseTime) {
 }
 
 
-// week: week1, week2, week3, week4
-async function fetchUserClassesByWeek(openid, collectionName, weekData) {
-  var allClasses = await fetchUserClasses(openid, collectionName);
-  var result = {}
-  if (allClasses.length > 0) {
-    // var courseTime = allClasses[0].courseTime
-    for (var i = 0; i < weekData.length; i++) {
-      var temp = []
-      var weekday = weekData[i]
-      for (var j = 0; j < allClasses.length; j++) {
-        var item = allClasses[j]
-        var activitiesDays = item["activitiesDays"]
-        // 直接判断weekday在不在里面
-        if (activitiesDays.indexOf(weekday) != -1) {
-          // 存在，则推入
-          temp.push(item)
-        }
-      }
-      result[weekday] = temp
-    }
-    return result
-  }
-}
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -109,12 +86,6 @@ exports.main = async (event, context) => {
       msg: "缺少method"
     }
   }
-  // if (openid == undefined) {
-  //   return {
-  //     code: -1,
-  //     msg: "缺少openid"
-  //   }
-  // }
   if (method == "fetchCourseInfo") {
     var courseName = event.courseName
     var collectionName = branch + TIMETABLE_USER_SUFFIX
@@ -130,20 +101,10 @@ exports.main = async (event, context) => {
     var collectionName = branch + MAIN_USER_SUFFIX
     return await fetchUserClasses(openid, collectionName)
   }
-  if (method == "fetchByWeek") {
-    var collectionName = branch + MAIN_USER_SUFFIX
-    var weekData = event.weekData;
-    if (weekData == undefined) {
-      return {
-        code: -1,
-        msg: "缺少weekData"
-      }
-    }
-    return await fetchUserClassesByWeek(openid, collectionName, weekData);
-  }
   if (method == "updateUserClasses") {
     var collectionName = branch + MAIN_USER_SUFFIX
     var courseTime = event.courseTime
     return await updateUserClasses(openid, collectionName, courseTime)
   }
+
 }
