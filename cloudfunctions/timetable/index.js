@@ -1,6 +1,6 @@
 // import moment from 'moment'
 // 云函数入口文件
-const moment = require('moment');
+var moment = require('moment-timezone');
 const cloud = require('wx-server-sdk')
 const MAIN_USER_SUFFIX = "_MainUser"
 const TIMETABLE_USER_SUFFIX = "_Timetable"
@@ -18,7 +18,7 @@ function timeCompare(h1, m1, h2, m2) {
 
 async function fetchCourseInfo(courseName, collectionName) {
   try {
-    return await db.collection(collectionName).where ({
+    return await db.collection(collectionName).where({
       name: courseName
     }).get()
   } catch (e) {
@@ -42,7 +42,7 @@ async function appendUserClasses(openid, courseTime, collectionName) {
       console.log(res)
       return res
     })
-  
+
 }
 
 async function fetchUserClasses(openid, collectionName) {
@@ -97,55 +97,27 @@ function timeCompare(h1, m1, h2, m2) {
 }
 
 async function fetchToday(openid, collectionName, date) {
-  var classes = await fetchUserClasses(openid, collectionName)
-  var result =[]
-  // date: 28/10/2021
-  var week = new Date().getDay()
-  var weekdayOfToday = WEEKDAYS[week];
-  for (var i = 0; i < classes.length; i++) {
-    var item = classes[i]
-    if (item.day_of_week == weekdayOfToday) {
-      if (!hasClassFinished(item)) {
-        result.push(item)
-      }
-    }
-  }
-  // 按照开始时间先后来排序
-  result.sort((a, b) => {
-    return a.start_time - b.start_time
-  })
-  // return result
-  // console.log(result)
-  var new_result = {
+  const allCourses = await fetchUserClasses(openid, collectionName)  // 获取所有的课程
+  const todayCourses = {
     now: [],
-    next: [],
-    r: []
-  }
-  for (var i = 0; i < result.length; i++) {
-    var item = result[i]
-    var now = new Date()
-    var start = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + item.start_time
-    var end = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + item.end_time
-    d1 = moment(start).unix()
-    d2 = moment(end).unix()
-    var unixNow = moment().unix()
-    var new_item = {
-      activity_group_code: item["activity_group_code"],
-      start_time: start,
-      end_time: end,
-      a: [d1, unixNow, d2],
-      next: unixNow >= d1 && unixNow < d2
+    next: []
+  };
+  const todayDate = moment.tz('Asia/Shanghai');
+  const currentTime = todayDate.get('hour')
+  const today = `${todayDate.get('date')}/${todayDate.get('month') + 1}/${todayDate.get('year')}`.split('/').map(n => parseInt(n)).join('/');
+  if (allCourses == undefined) return [];
+  allCourses.map(course => {
+    if (course.activitiesDays.includes(today)) {
+      const startTime = parseInt(course.start_time.split(":")[0]);
+      const endTime = parseInt(course.end_time.split(":")[0]);
+      if (currentTime >= startTime && currentTime < endTime) todayCourses["now"].push(course);
+      else if (currentTime <= startTime) todayCourses["next"].push(course);
     }
-    new_result["r"].push(new_item)
-    // if (unixNow < d1) {
-    //   new_result["next"].push(new_item)
-    // } 
-    // if (unixNow >= d1 && unixNow < d2) {
-    //   new_result["now"].push(new_item)
-    // }
-    
-  }
-  return new_result
+  })
+  const compareCourse = (a, b) =>
+    a.start_time.split(":")[0] - b.start_time.split(":")[0];
+  todayCourses["next"] = todayCourses["next"].sort((a, b) => compareCourse(a, b));
+  return todayCourses;
 }
 
 
@@ -191,8 +163,8 @@ exports.main = async (event, context) => {
     var date = event.date
     return await fetchToday(openid, collectionName, date)
     // fetchToday(openid, collectionName, date).then(res => {
-      // console.log(res)
-      // return res
+    // console.log(res)
+    // return res
     // })
   }
 
