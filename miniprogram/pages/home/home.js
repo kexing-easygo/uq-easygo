@@ -1,4 +1,5 @@
 // pages/home/home.js
+// const moment = require('../../utils/moment.min')
 const app = getApp()
 const db = wx.cloud.database()
 const _ = db.command
@@ -38,6 +39,7 @@ Page({
 
   onLoad: function (options) {
     var that = this;
+
     wx.cloud.callFunction({
       name: 'login',
       data: {},
@@ -83,8 +85,6 @@ Page({
                         haveClass: true
                       });
                     }
-
-
                   }
                 })
               }
@@ -92,9 +92,6 @@ Page({
           })
       }
     })
-
-
-
   },
 
   /**

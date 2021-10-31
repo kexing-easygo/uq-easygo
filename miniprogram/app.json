@@ -30,8 +30,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "UQ校园通",
-    "navigationBarTextStyle": "black",
-    "navigationStyle": "custom" 
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "list": [
