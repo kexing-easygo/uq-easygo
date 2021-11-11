@@ -2,7 +2,7 @@
 <!-- <image id="tileImg" src="{{tileImg}}"  /> -->
 <swiper autoplay circular indicator-dots interval="2000" class="swiper">
 	<swiper-item>
-		<image src="{{swiperPlaceholderOne}}" bindtap="clickHotResearch" />
+		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderTwo}}" />
