@@ -2,7 +2,7 @@
 <!-- <image id="tileImg" src="{{tileImg}}"  /> -->
 <swiper autoplay circular indicator-dots interval="2000" class="swiper">
 	<swiper-item>
-		<image src="{{swiperPlaceholderOne}}" bindtap="clickHotResearch" />
+		<image src="{{swiperPlaceholderOne}}" />
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderTwo}}" />
@@ -14,7 +14,7 @@
 </swiper>
 
 <view class="nav-icons">
-	<navigator url="/pages/calc/calc">
+	<navigator url="/pages/calcOffline/calcOffline">
 		<image src="{{calcIcon}}" />
 	</navigator>
 	<navigator url="/pages/countdown/countdown">

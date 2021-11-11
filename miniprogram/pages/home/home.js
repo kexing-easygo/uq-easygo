@@ -161,7 +161,7 @@ Page({
     if (model == "one") {
       imageUrl = this.data.PostHolderOne
     } else if (model == "two") {
-      imageUrl = "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课行热搜.png"
+      imageUrl = this.data.PostHolderTwo
     } else {
       imageUrl = this.data.PostHolderThree
     }
