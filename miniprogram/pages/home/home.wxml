@@ -14,7 +14,7 @@
 </swiper>
 
 <view class="nav-icons">
-	<navigator url="/pages/calc/calc">
+	<navigator url="/pages/calcOffline/calcOffline">
 		<image src="{{calcIcon}}" />
 	</navigator>
 	<navigator url="/pages/countdown/countdown">
