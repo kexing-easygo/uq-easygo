@@ -1,9 +1,9 @@
 /* pages/home/home.wxss */
 #tileImg {
-    height:50px;
     width: 200rpx;
-    padding-left: 24rpx;
-    padding-top: 50rpx;
+    height: 75rpx;
+    padding-left: 35rpx;
+    padding-top: 75rpx;
 }
 
 .swiper {
