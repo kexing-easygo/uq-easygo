@@ -165,14 +165,16 @@ Page({
     } else {
       imageUrl = this.data.PostHolderThree
     }
-
-    wx.previewImage({
-      urls: [imageUrl], //需要预览的图片http链接列表，注意是数组
-      current: '', // 当前显示图片的http链接，默认是第一个
-      success: function (res) {},
-      fail: function (res) {},
-      complete: function (res) {},
+    wx.navigateTo({
+      url: "/pages/webView/webView"
     })
+    // wx.previewImage({
+    //   urls: [imageUrl], //需要预览的图片http链接列表，注意是数组
+    //   current: '', // 当前显示图片的http链接，默认是第一个
+    //   success: function (res) {},
+    //   fail: function (res) {},
+    //   complete: function (res) {},
+    // })
   },
   clickImages: function (e) {
     wx.previewImage({
