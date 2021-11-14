@@ -21,13 +21,13 @@ async function fetchAssessments(course, semester, collectionName) {
   }
   var data = data[0]
   if (data.academic_detail.semester_available != semester) {
-    return []
-  } else {
     return {
       "code": -2,
       "msg": "this course is not available in this semester", 
       "data": []
     }
+  } else {
+      return data.assessments
   }
 }
 
