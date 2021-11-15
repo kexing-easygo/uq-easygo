@@ -120,6 +120,61 @@ async function fetchToday(openid, collectionName, date) {
   return todayCourses;
 }
 
+async function getSelectedCourses(openid, collectionName) {
+  const result = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  })
+  .get()
+  const data = result.data[0]
+  return data.selectedCourses == undefined? [] : data.selectedCourses
+
+}
+
+async function addSelectedCourses(openid, collectionName, course, semester) {
+  var selectedCourses = await getSelectedCourses(openid, collectionName)
+  if (!selectedCourses.hasOwnProperty(semester)) {
+    // 如果本学期不存在，推送新的学期和课程进去
+    console.log("1")
+    selectedCourses[semester] = [
+      {
+        code: course,
+        results: []
+      }
+    ]
+  } else {
+    var semesterInfo = selectedCourses[semester]
+    for (var i = 0; i < semesterInfo.length; i++) {
+      var item = semesterInfo[i]
+      if (item["code"] == course) {
+        return
+      }
+    }
+    semesterInfo.push({
+      code: course,
+      results: []
+    })
+  }
+  // return selectedCourses
+  // console.log(selectedCourses)
+  db.collection(collectionName)
+  .where({
+    _openid: openid
+  })
+  .update({
+    data: {
+      selectedCourses: selectedCourses
+    }
+  })
+  .then(res => {
+    const updated = res.updated
+    if (updated == 0) {
+      return "更新失败"
+    } else {
+      return "更新成功"
+    }
+  })
+}
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -167,5 +222,14 @@ exports.main = async (event, context) => {
     // return res
     // })
   }
-
+  if (method == "getSelectedCourses") {
+    var collectionName = branch + MAIN_USER_SUFFIX
+    return await getSelectedCourses(openid, collectionName)
+  }
+  if (method == "addSelectedCourses") {
+    var collectionName = branch + MAIN_USER_SUFFIX
+    var course = event.course
+    var semester = event.semester
+    return await addSelectedCourses(openid, collectionName, course, semester)
+  }
 }
