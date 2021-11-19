@@ -13,7 +13,7 @@ const _ = db.command
 async function createUser(openid, userInfo, collectionName) {
   
   // try {
-  db.collection(collectionName)
+  const res = await db.collection(collectionName)
   .add({
     data : {
       _openid: openid,
@@ -22,25 +22,28 @@ async function createUser(openid, userInfo, collectionName) {
       userInfo: userInfo,
       userEmail: "",
       notification: {
-        emailNotification: false,
-        wechatNotification: false,
-        oneDay: false,
-        threeDay: false,
-        oneWeek: false,
-        location: "AU"
+        wechat: {
+          enabled: false,
+          attributes: [
+            0,
+            0,
+            0
+          ]
+        },
+        email: {
+          enabled: false,
+          attributes: [
+            0,
+            0,
+            0
+          ]
+        }
       },
-      courseTime: [],
+      selectedCourses: {},
       classMode: ""
     }
   })
-  .then(res => {
-    console.log(res)
-    return res
-  })
-  // } catch (e) {
-  //   console.error(e)
-  //   return e
-  // }
+  return res
   
 }
 
@@ -61,7 +64,7 @@ async function getUserInfo(openid, collectionName) {
 
 
 async function updateClassMode(openid, collectionName, mode) {
-  db.collection(collectionName)
+  var res = await db.collection(collectionName)
   .where({
     _openid: openid
   })
@@ -70,9 +73,7 @@ async function updateClassMode(openid, collectionName, mode) {
       classMode: mode
     }
   })
-  .then(res => {
-    return res;
-  })
+  return res
 }
 
 /**
