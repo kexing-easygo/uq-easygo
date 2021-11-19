@@ -193,10 +193,17 @@ async function __fetchAll(collectionName) {
     return data
 }
 
-function __push_notification(values, mode) {
+/**
+ * 中间接口，通过该接口调用推送微信消息的云函数
+ */
+async function __push_notification(values, mode) {
 
 }
 
+
+/**
+ * 中间接口，通过该接口调用发邮件的云函数
+ */
 async function __send_email(email, diff, assName) {
   var content = `您的作业: ${assName} 还有${diff}天就due啦！还不抓紧写？\n\n课行校园通团队`
   await cloud.callFunction({
