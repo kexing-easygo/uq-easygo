@@ -17,34 +17,30 @@ const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
  * 根据class的id，在数据库中搜索到对应的单节课信息。
  * 类似MySQL的外键
  */
-async function __fetchClassById(collectionName, cid) {
-  var course_code = cid.split("-")[0]
-  var res = await fetchCourseInfo(course_code, collectionName)
-  var info = res.data[0]
-  const prefix = cid.split("|")[0]
-  return info[prefix][cid]
+async function __fetchClassById(collectionName, classId) {
+  const courseId = classId.split("|")[0];
+  var res = await fetchCourseInfo(collectionName, courseId);
+  return {
+    "_id": classId,
+    "subject_code": classId.split("-")[0],
+    "activity_group_code": `${res[classId].activity_group_code}${res[classId].activity_code}`,
+    "location": res[classId].location,
+    "day_of_week": res[classId].day_of_week,
+    "start_time": res[classId].start_time,
+    "duration": res[classId].duration,
+    "activitiesDays": res[classId].activitiesDays
+  };
 }
 /**
  * 私有方法
  * 根据学期返回用户文档中的某一学期所有classes
  */
 async function __fetchCourseIdBySemester(openid, branch, semester) {
-  var res = await getSelectedCourses(openid, branch + MAIN_USER_SUFFIX)
-  if (!res.hasOwnProperty(semester)) {
-    return []
-  }
-  var res1 = res[semester]
-  var finalRes = []
-  for (var i = 0; i < res1.length; i++) {
-    var courseInfo = res1[i]
-    var classes = courseInfo["classes"]
-    // return classes
-    for (var j = 0; j < classes.length; j++) {  
-      var cid = classes[j]      
-      finalRes.push(cid)
-    }
-  }
-  return finalRes
+  const selectedCourses = await getSelectedCourses(openid, branch + MAIN_USER_SUFFIX);
+  if (!selectedCourses.hasOwnProperty(semester)) return [];
+  const classes = [];
+  selectedCourses[semester].forEach(course => classes.push(...course.classes));
+  return classes;
 }
 
 
@@ -52,15 +48,11 @@ async function __fetchCourseIdBySemester(openid, branch, semester) {
  * 根据课程代码，返回某一门课的所有信息
  * 包括所有单节课等
  */
-async function fetchCourseInfo(courseName, collectionName, courseId) {
-  var res =  await db.collection(collectionName).where({
-    name: courseName
-  }).get()
-  res = res.result
-  if (res.hasOwnProperty(courseId)) {
-    return res[courseId]
-  }
-  return []
+async function fetchCourseInfo(collectionName, courseId) {
+  var res = await db.collection(collectionName).where({
+    name: courseId.split('-')[0] // 根据courseCode搜索
+  }).get();
+  return res.data[0][courseId] || [];
 }
 
 
@@ -68,42 +60,53 @@ async function fetchCourseInfo(courseName, collectionName, courseId) {
  * 将对应的课程信息添加到用户的文档中
  */
 async function appendUserClasses(event) {
-  var res = await getSelectedCourses(event.openid, event.branch + MAIN_USER_SUFFIX)
-  const semester = event.semester
-  const courseCode = event.courseCode
-  var semesterInfo = res[semester]
-  for (var i = 0; i < semesterInfo.length; i++) {
-    var info = semesterInfo[i]
-    var code = info["code"]
-    if (code == courseCode) {
-      // 去重，不添加过多冗余数据
-      info["classes"] = Array.from(new Set(info["classes"].concat(event.classes)))
-    }
+  let selectedCourses = await getSelectedCourses(event.openid, event.branch + MAIN_USER_SUFFIX);
+  let { semester, courseCode, classes, openid, branch } = event;
+  let curSemCourses = selectedCourses[semester] || []; // 此学期的课程数组
+  let courseIndex = curSemCourses.findIndex(course => course.courseCode, courseCode);
+  let curClasses = courseIndex >= 0 ? curSemCourses[courseIndex].classes : [];
+  console.log('classes', curClasses, courseIndex);
+  curClasses.push(...classes);
+  
+  if (courseIndex < 0) { // 之前从未添加过该course，创建新的JSON并推入本学期课程
+    // 如果该学期尚未添加任何课程，开辟新的字段
+    if (!selectedCourses.hasOwnProperty(semester))
+      selectedCourses[semester] = [];
+    selectedCourses[semester].push({
+      'courseCode': courseCode,
+      'results': [],
+      'classes': curClasses
+    })
+  } else { // 之前已经添加过这门course，直接更改对应的classes list
+    selectedCourses[semester][courseIndex]['classes'] = curClasses;
   }
-  res[semester] = semesterInfo
-  var appendRes = await db.collection(event.branch + MAIN_USER_SUFFIX)
-  .where({
-    _openid: event.openid
-  })
-  .update({
-    data: {
-      selectedCourses: res
-    }
-  })
+  console.log('selected courses', selectedCourses);
+  let appendRes = await db.collection(branch + MAIN_USER_SUFFIX)
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        selectedCourses: selectedCourses
+      }
+    })
   return appendRes
 }
 
 
-
+/**
+ * 获取用户本学期已选择的class的具体信息和自定义内容
+ */
 async function fetchUserClasses(openid, branch, semester) {
-  const classIDs = await __fetchCourseIdBySemester(openid, branch, semester)
-  var res = []
-  const timetableCollection = branch + TIMETABLE_USER_SUFFIX
-  for (var i = 0; i < classIDs.length; i++) {
-    var cid = classIDs[i]
-    res.push(await __fetchClassById(timetableCollection, cid))
-  }
-  return res
+  const classes = await __fetchCourseIdBySemester(openid, branch, semester);
+  const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
+  const classesInfo = await Promise.all(classes.map(cl => __fetchClassById(timetableCollection, cl._id)));
+  // 与用户自定义的内容合并
+  const merged = classesInfo.map(classInfo => ({
+    ...classes.find(c => c._id === classInfo._id),
+    ...classInfo
+  }))
+  return merged;
 }
 
 async function updateUserClasses(openid, collectionName, courseTime) {
@@ -148,12 +151,9 @@ async function fetchToday(openid, branch) {
 
 async function getSelectedCourses(openid, collectionName) {
   const result = await db.collection(collectionName)
-  .where({
-    _openid: openid
-  })
-  .get()
-  var data = result.data[0]
-  return data.selectedCourses
+    .where({ _openid: openid })
+    .get()
+  return result.data[0].selectedCourses;
 
 }
 
@@ -189,14 +189,14 @@ async function addSelectedCourses(openid, collectionName, course, semester) {
     })
   }
   var result = await db.collection(collectionName)
-  .where({
-    _openid: openid
-  })
-  .update({
-    data: {
-      selectedCourses: selectedCourses
-    }
-  })
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        selectedCourses: selectedCourses
+      }
+    })
   return result
 }
 
@@ -215,14 +215,14 @@ async function deleteSelectedCourse(openid, collectionName, course, semester) {
       }
     }
     var result = await db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        selectedCourses: selectedCourses
-      }
-    })
+      .where({
+        _openid: openid
+      })
+      .update({
+        data: {
+          selectedCourses: selectedCourses
+        }
+      })
     return result
   }
 }
@@ -237,11 +237,11 @@ exports.main = async (event, context) => {
     }
   }
   var openid = event.openid;
-  var semester = event.semester == undefined? "" : event.semester
+  var semester = event.semester == undefined ? "" : event.semester
   if (method == "fetchCourseInfo") {
-    return await fetchCourseInfo(event.courseName, branch + TIMETABLE_USER_SUFFIX, event.courseId)
+    return await fetchCourseInfo(branch + TIMETABLE_USER_SUFFIX, event.courseId)
   }
-  
+
   var collectionName = branch + MAIN_USER_SUFFIX
   if (method == "appendUserClasses") {
     return await appendUserClasses(event)
@@ -257,7 +257,7 @@ exports.main = async (event, context) => {
     var courseTime = event.courseTime
     return await updateUserClasses(openid, collectionName, courseTime)
   }
-  
+
   if (method == "getSelectedCourses") {
     return await getSelectedCourses(openid, collectionName)
   }
@@ -271,5 +271,5 @@ exports.main = async (event, context) => {
     var semester = event.semester
     return await deleteSelectedCourse(openid, collectionName, course, semester)
   }
-  
+
 }
