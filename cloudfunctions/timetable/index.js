@@ -198,6 +198,25 @@ async function deleteSelectedCourse(openid, collectionName, course, semester) {
   }
 }
 
+/**
+ * 删除已选课程对应学期中该course的某节class
+ * @param {string} courseCode 课程代码
+ * @param {string} semester e.g. "Semester 2, 2021"
+ * @param {string} classId e.g. "INFO1113-S2C-ND-CC|LAB|01"
+ * @param {string} collectionName timetable collection
+ */
+async function deleteUserClass(openid, courseCode, semester, classId, branch) {
+  const userCollection = branch + MAIN_USER_SUFFIX;
+  const selectedCourses = await getSelectedCourses(openid, userCollection);
+  const courseIndex = selectedCourses[semester].findIndex(course => course.courseCode === courseCode);
+  const afterDeleted = selectedCourses[semester][courseIndex].classes.filter(cl => cl._id !== classId);
+  selectedCourses[semester][courseIndex].classes = afterDeleted;
+  // 更新class list
+  return await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+}
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   var branch = event.branch
@@ -243,4 +262,8 @@ exports.main = async (event, context) => {
     return await deleteSelectedCourse(openid, collectionName, course, semester)
   }
 
+  if (method === "deleteUserClass") {
+    const { openid, courseCode, semester, classId } = event;
+    return await deleteUserClass(openid, courseCode, semester, classId, branch);
+  }
 }
