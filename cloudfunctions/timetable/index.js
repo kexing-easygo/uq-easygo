@@ -94,19 +94,33 @@ async function fetchUserClasses(openid, branch, semester) {
   return merged;
 }
 
-async function updateUserClasses(openid, collectionName, courseTime) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        courseTime: courseTime
+async function updateUserClasses(event, collectionName) {
+  const {openid, course, semester, classInfo} = event
+  const res = await getSelectedCourses(openid, collectionName)
+  const semesterInfo = res[semester]
+  for (let i = 0; i < semesterInfo.length; i++) {
+    let courseInfo = semesterInfo[i]
+    if (courseInfo.courseCode == course) {
+      let classes = courseInfo.classes
+      for (let j = 0; j < classes.length; j++) {
+        let singleClass = classes[j]
+        if (singleClass["_id"] == classInfo["_id"]) {
+          classes[j] = classInfo
+          break
+        }
       }
-    })
-    .then(res => {
-      return res;
-    })
+    }
+  }
+  const finalRes = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  })
+  .update({
+    data: {
+      selectedCourses: res
+    }
+  })
+  return res
 }
 
 
@@ -232,8 +246,7 @@ exports.main = async (event, context) => {
     return await fetchUserClasses(openid, branch, semester)
   }
   if (method == "updateUserClass") {
-    var courseTime = event.courseTime
-    return await updateUserClasses(openid, userCollection, courseTime)
+    return await updateUserClasses(event, userCollection)
   }
 
   if (method == "getSelectedCourses") {
