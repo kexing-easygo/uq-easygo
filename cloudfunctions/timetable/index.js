@@ -171,31 +171,20 @@ async function addSelectedCourses(openid, collectionName, courseCode, semester) 
   return selectedCourses;
 }
 
-
-async function deleteSelectedCourse(openid, collectionName, course, semester) {
-  var selectedCourses = await getSelectedCourses(openid, collectionName)
-  // 如果用户确实在该学期有课 / 选择过课程
-  if (selectedCourses.hasOwnProperty(semester)) {
-    var courses = selectedCourses[semester]
-    for (var i = 0; i < courses.length; i++) {
-      var singleClass = courses[i]
-      if (singleClass.code == course) {
-        // 删除该课程
-        courses.splice(i, 1)
-        break
-      }
-    }
-    var result = await db.collection(collectionName)
-      .where({
-        _openid: openid
-      })
-      .update({
-        data: {
-          selectedCourses: selectedCourses
-        }
-      })
-    return result
-  }
+/**
+ * 删除整节course
+ * @param {string} openid 
+ * @param {string} userCollection 
+ * @param {string} courseCode 
+ * @param {string} semester 
+ */
+async function deleteSelectedCourse(openid, userCollection, courseCode, semester) {
+  const selectedCourses = await getSelectedCourses(openid, userCollection);
+  if (!selectedCourses.hasOwnProperty(semester)) return;
+  selectedCourses[semester] = selectedCourses[semester].filter(course => course.courseCode !== courseCode);
+  return await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
 }
 
 /**
@@ -205,8 +194,7 @@ async function deleteSelectedCourse(openid, collectionName, course, semester) {
  * @param {string} classId e.g. "INFO1113-S2C-ND-CC|LAB|01"
  * @param {string} collectionName timetable collection
  */
-async function deleteUserClass(openid, courseCode, semester, classId, branch) {
-  const userCollection = branch + MAIN_USER_SUFFIX;
+async function deleteUserClass(openid, courseCode, semester, classId, userCollection) {
   const selectedCourses = await getSelectedCourses(openid, userCollection);
   const courseIndex = selectedCourses[semester].findIndex(course => course.courseCode === courseCode);
   const afterDeleted = selectedCourses[semester][courseIndex].classes.filter(cl => cl._id !== classId);
@@ -232,7 +220,7 @@ exports.main = async (event, context) => {
     return await fetchCourseInfo(branch + TIMETABLE_USER_SUFFIX, event.courseId)
   }
 
-  var collectionName = branch + MAIN_USER_SUFFIX
+  const userCollection = branch + MAIN_USER_SUFFIX
   if (method == "appendUserClasses") {
     return await appendUserClasses(event)
   }
@@ -245,25 +233,24 @@ exports.main = async (event, context) => {
   }
   if (method == "updateUserClass") {
     var courseTime = event.courseTime
-    return await updateUserClasses(openid, collectionName, courseTime)
+    return await updateUserClasses(openid, userCollection, courseTime)
   }
 
   if (method == "getSelectedCourses") {
-    return await getSelectedCourses(openid, collectionName)
+    return await getSelectedCourses(openid, userCollection)
   }
   if (method == "addSelectedCourses") {
     var course = event.course
     var semester = event.semester
-    return await addSelectedCourses(openid, collectionName, course, semester)
+    return await addSelectedCourses(openid, userCollection, course, semester)
   }
   if (method == "deleteSelectedCourse") {
-    var course = event.course
-    var semester = event.semester
-    return await deleteSelectedCourse(openid, collectionName, course, semester)
+    const { courseCode, semester } = event;
+    return await deleteSelectedCourse(openid, userCollection, courseCode, semester)
   }
 
   if (method === "deleteUserClass") {
     const { openid, courseCode, semester, classId } = event;
-    return await deleteUserClass(openid, courseCode, semester, classId, branch);
+    return await deleteUserClass(openid, courseCode, semester, classId, userCollection);
   }
 }
