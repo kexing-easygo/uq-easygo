@@ -60,37 +60,22 @@ async function fetchCourseInfo(collectionName, courseId) {
  * 将对应的课程信息添加到用户的文档中
  */
 async function appendUserClasses(event) {
-  let selectedCourses = await getSelectedCourses(event.openid, event.branch + MAIN_USER_SUFFIX);
-  let { semester, courseCode, classes, openid, branch } = event;
-  let curSemCourses = selectedCourses[semester] || []; // 此学期的课程数组
-  let courseIndex = curSemCourses.findIndex(course => course.courseCode, courseCode);
-  let curClasses = courseIndex >= 0 ? curSemCourses[courseIndex].classes : [];
-  console.log('classes', curClasses, courseIndex);
-  curClasses.push(...classes);
-  
-  if (courseIndex < 0) { // 之前从未添加过该course，创建新的JSON并推入本学期课程
-    // 如果该学期尚未添加任何课程，开辟新的字段
-    if (!selectedCourses.hasOwnProperty(semester))
-      selectedCourses[semester] = [];
-    selectedCourses[semester].push({
-      'courseCode': courseCode,
-      'results': [],
-      'classes': curClasses
-    })
-  } else { // 之前已经添加过这门course，直接更改对应的classes list
-    selectedCourses[semester][courseIndex]['classes'] = curClasses;
-  }
-  console.log('selected courses', selectedCourses);
-  let appendRes = await db.collection(branch + MAIN_USER_SUFFIX)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        selectedCourses: selectedCourses
-      }
-    })
-  return appendRes
+  const { semester, courseCode, classes, openid, branch } = event;
+  const userCollection = branch + MAIN_USER_SUFFIX;
+  const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
+  // 初始化课程结构
+  const selectedCourses = await addSelectedCourses(openid, userCollection, courseCode, semester);
+  const courseIndex = selectedCourses[semester].findIndex(course => course.courseCode === courseCode);
+  selectedCourses[semester][courseIndex].classes.push(...classes); // 添加进class list
+  await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+  const newClassesInfo = await Promise.all(classes.map(cl => __fetchClassById(timetableCollection, cl._id)));
+  const merged = newClassesInfo.map(newClass => ({
+    ...newClass,
+    ...classes.find(c => c._id === newClass._id)
+  }))
+  return merged;
 }
 
 
@@ -161,43 +146,29 @@ async function getSelectedCourses(openid, collectionName) {
  * 用户在某个学期选择某门课的时间后，将该门课添加至用户的
  * selectedCourses字段内
  */
-async function addSelectedCourses(openid, collectionName, course, semester) {
-  var selectedCourses = await getSelectedCourses(openid, collectionName)
+async function addSelectedCourses(openid, collectionName, courseCode, semester) {
+  const selectedCourses = await getSelectedCourses(openid, collectionName);
   if (!selectedCourses.hasOwnProperty(semester)) {
     // 如果本学期不存在，推送新的学期和课程进去
-    selectedCourses[semester] = [
-      {
-        code: course,
-        results: [],
-        classes: []
-      }
-    ]
+    selectedCourses[semester] = [{
+      courseCode: courseCode,
+      results: [],
+      classes: []
+    }];
   } else {
-    // 存在这个学期
-    var semesterInfo = selectedCourses[semester]
-    for (var i = 0; i < semesterInfo.length; i++) {
-      var item = semesterInfo[i]
-      if (item["code"] == course) {
-        return
-      }
-    }
-    // 但不存在这门课的时候
+    const semesterInfo = selectedCourses[semester];
+    const courseIndex = semesterInfo.findIndex(course => course.courseCode === courseCode);
+    if (courseIndex >= 0) return selectedCourses; // 本学期已经存在这门课了
     semesterInfo.push({
-      code: course,
+      courseCode: courseCode,
       results: [],
       classes: []
     })
   }
-  var result = await db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        selectedCourses: selectedCourses
-      }
-    })
-  return result
+  await db.collection(collectionName)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+  return selectedCourses;
 }
 
 
