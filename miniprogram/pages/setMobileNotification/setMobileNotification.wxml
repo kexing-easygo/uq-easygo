@@ -1,9 +1,0 @@
-<!--pages/setMobileNotification/setMobileNotification.wxml-->
-<view>
-	<view class="left">
-		<text>短信提醒</text>
-	</view>
-	<view class="right">
-		<switch checked="{{mobileSwitch}}" bindchange="bindMobileSwitch"></switch>
-	</view>
-</view>

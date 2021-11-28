@@ -1,9 +1,0 @@
-<!--miniprogram/pages/testSearchBar.wxml-->
-<text>miniprogram/pages/testSearchBar.wxml</text>
-
-<searchbar bindselectresult="selectResult" search="{{search}}"></searchbar>
-<view>
-  <button  type="confirm" plain="true" bindtap="testCrontab" style="background-color:#17c783;margin-top:20%;border:none;" class="setting-confirm-button">
-    <text style="color:white">调试</text>
-  </button>
-</view>
