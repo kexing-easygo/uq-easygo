@@ -5,6 +5,7 @@ const cloud = require('wx-server-sdk')
 const MAIN_USER_SUFFIX = "_MainUser"
 const TIMETABLE_USER_SUFFIX = "_Timetable"
 const CURRENT_YEAR = 2021
+const COURSE_CODE_REGEX = /\w{4}\d{4,}/
 
 cloud.init()
 
@@ -49,8 +50,9 @@ async function __fetchCourseIdBySemester(openid, branch, semester) {
  * 包括所有单节课等
  */
 async function fetchCourseInfo(collectionName, courseId) {
+  let courseCode = courseId.match(COURSE_CODE_REGEX)[0]
   var res = await db.collection(collectionName).where({
-    name: courseId.split('-')[0] // 根据courseCode搜索
+    name: courseCode // 根据courseCode搜索
   }).get();
   return res.data[0][courseId] || [];
 }
