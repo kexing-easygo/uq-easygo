@@ -21,6 +21,7 @@ async function createUser(openid, userInfo, collectionName) {
       userAssignments: [],
       userInfo: userInfo,
       userEmail: "",
+      userMobile: "",
       notification: {
         wechat: {
           enabled: false,
@@ -92,6 +93,28 @@ async function manageCards(openid, collectioName, cardsInfo) {
   return res
 }
 
+async function updateEmail(openid, collectioName, email) {
+  const res = await db.collection(collectioName)
+  .where({_openid: openid})
+  .update({
+    data: {
+      userEmail: email
+    }
+  })
+  return res
+}
+
+async function updateMobile(openid, collectioName, mobile) {
+  const res = await db.collection(collectioName)
+  .where({_openid: openid})
+  .update({
+    data: {
+      userMobile: mobile
+    }
+  })
+  return res
+}
+
 /**
  * 这个示例将经自动鉴权过的小程序用户 openid 返回给小程序端
  * 
@@ -127,5 +150,13 @@ exports.main = async (event, context) => {
   if (method == "manageCards") {
     const { cardsInfo } = event
     return await manageCards(openid, collectionName, cardsInfo)
+  }
+  if (method == "updateEmail") {
+    const {email} = event
+    return await updateEmail(openid, collectionName, email)
+  }
+  if (method == "updateMobile") {
+    const {mobile} = event
+    return await updateMobile(openid, collectionName, mobile)
   }
 }

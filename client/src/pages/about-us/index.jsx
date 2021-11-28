@@ -8,13 +8,13 @@ import './index.less'
 export default function AboutUs() {
   return (
     <View className='about-us-view'>
-      <NavBar title="USYD校园通" backIcon />
+      <NavBar title="UQ校园通" backIcon />
       <View className='about-us-info'>
         <View className='about-us-wrapper'>
           <Image className='logo-img' src={logo} />
           <View className='center-text secondary-text'>
-            <View className='usyd-title'>USYD校园通</View>
-            <View>Version 1.0.0</View>
+            <View className='usyd-title'>UQ校园通</View>
+            <View>Version 1.1.0</View>
           </View>
           <View>
             <View className='response-view center-text'>扫码向开发者反馈</View>
@@ -33,8 +33,8 @@ export default function AboutUs() {
             <Image className='qr-code-img' src={QRCode} />
             <View className='view-more'>
               <View>关注我们 更多资讯等您获取</View>
-              <View>微信公众号：USYD校园通</View>
-              <View>小红书：USYD校园通</View>
+              <View>微信公众号：UQ校园通</View>
+              <View>小红书：UQ校园通</View>
             </View>
           </View>
           {/* <View className='center-text'>电子邮箱：uqzian.wang@qq.com</View> */}
