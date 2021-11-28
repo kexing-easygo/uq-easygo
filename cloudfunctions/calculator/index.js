@@ -13,7 +13,7 @@ async function fetchAssessments(course, semester, collectionName) {
   }).get()
   if (result.data.length == 0) return [];
   const data = result.data[0];
-  return data.academic_detail.semester_available == semester ?  data.assessments : [];
+  return data.academic_detail.semester_available == semester ? data.assessments : [];
 }
 
 async function fetchCalculatedResult(event) {
@@ -39,8 +39,8 @@ async function fetchCalculatedResult(event) {
 }
 
 async function setCalculatedResult(event) {
-  const { openid, branch } = event
-  const selectedCourses = await cloud.callFunction({
+  const { openid, branch, course, semester, info } = event;
+  const selectedCoursesRes = await cloud.callFunction({
     // 要调用的云函数名称
     name: 'timetable',
     // 传递给云函数的参数
@@ -50,23 +50,13 @@ async function setCalculatedResult(event) {
       "openid": openid,
     }
   })
-  const { course, semester, info } = event
-  const semesterInfo = selectedCourses[semester]
-  for (let i = 0; i < semesterInfo.length; i++) {
-    const courseInfo = semesterInfo[i]
-    if (courseInfo["courseCode"] == course) {
-      courseInfo["results"] = info
-    }
-  }
-  const collectionName = event.branch + MAIN_USER_SUFFIX
-  let finalRes = await db.collection(collectionName)
+  const selectedCourses = selectedCoursesRes.result;
+  const courseIndex = selectedCourses[semester].findIndex(_course => _course.courseCode === course);
+  selectedCourses[semester][courseIndex].results = info;
+  let finalRes = await db.collection(branch + MAIN_USER_SUFFIX)
     .where({ _openid: openid })
-    .update({
-      data: {
-        selectedCourses: selectedCourses
-      }
-    })
-  return finalRes
+    .update({ data: { selectedCourses: selectedCourses } })
+  return finalRes;
 }
 
 // 云函数入口函数
