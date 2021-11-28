@@ -1,0 +1,18 @@
+@import "../../../app.less";
+
+.time-bar {
+  overflow: hidden;
+  width: @timeBarWidth;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+
+  .time-point {
+    border-bottom: 1px solid lightgray;
+    flex-grow: 1;
+    
+    &:last-child {
+      border-bottom: 0px;
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
-  "name": "uq-easygo",
+  "name": "usyd-easygo",
   "version": "1.0.0",
   "private": true,
-  "description": "UQ校园通taro框架实现",
+  "description": "a miniprogram for usyd",
   "templateInfo": {
     "name": "wxcloud",
     "typescript": false,
@@ -32,27 +32,31 @@
   "license": "MIT",
   "dependencies": {
     "@babel/runtime": "^7.7.7",
-    "@tarojs/cli": "3.3.9",
-    "@tarojs/components": "3.3.9",
-    "@tarojs/runtime": "3.3.9",
-    "@tarojs/taro": "3.3.9",
+    "@reduxjs/toolkit": "^1.6.2",
+    "@tarojs/cli": "3.3.3",
+    "@tarojs/components": "3.3.3",
+    "@tarojs/react": "3.3.3",
+    "@tarojs/runtime": "3.3.3",
+    "@tarojs/taro": "3.3.3",
+    "immutable": "^4.0.0",
     "lodash": "4.17.15",
-    "@tarojs/react": "3.3.9",
     "react": "^17.0.0",
-    "react-dom": "^17.0.0"
+    "react-dom": "^17.0.0",
+    "react-redux": "^7.2.5",
+    "taro-ui": "^3.0.0-alpha.10"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
-    "@tarojs/mini-runner": "3.3.9",
-    "@tarojs/webpack-runner": "3.3.9",
-    "@types/webpack-env": "^1.13.6",
-    "babel-preset-taro": "3.3.9",
-    "eslint": "^6.8.0",
+    "@tarojs/mini-runner": "3.3.3",
+    "@tarojs/webpack-runner": "3.3.3",
     "@types/react": "^17.0.2",
-    "eslint-plugin-react": "^7.8.2",
+    "@types/webpack-env": "^1.13.6",
+    "babel-preset-taro": "3.3.3",
+    "eslint": "^6.8.0",
+    "eslint-config-taro": "3.3.3",
     "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-react": "^7.8.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "eslint-config-taro": "3.3.9",
     "stylelint": "9.3.0"
   }
 }

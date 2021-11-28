@@ -1,26 +1,23 @@
-import React, { Component } from 'react'
+import React, { useEffect, Component } from 'react'
 import Taro from '@tarojs/taro'
-
+import 'taro-ui/dist/style/index.scss'
 import './app.less'
+import { getLoginStatus } from './services/login'
+import store from './store'
+import { Provider } from 'react-redux'
 
-class App extends Component {
 
-  componentDidMount () {
-    if (process.env.TARO_ENV === 'weapp') {
-      Taro.cloud.init()
-    }
-  }
-
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
-
-  // this.props.children 是将要会渲染的页面
-  render () {
-    return this.props.children
-  }
+export default function App(props) {
+  useEffect(() => {
+    (async () => {
+      
+        const info = await Taro.getSystemInfo({})
+        Taro.$navBarMarginTop = info.statusBarHeight || 0
+    })()
+  }, [])
+  return (
+    <Provider store={store}>
+      {props.children}
+    </Provider>
+  );
 }
-
-export default App

@@ -1,0 +1,46 @@
+@import "../../../app.less";
+
+.week-days {
+  background-color: #FFFFFF;
+  height: 100px;
+
+  .month-view {
+    background-color: @highLight;
+    position: relative;
+    width: @timeBarWidth;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .triangle {
+      position: absolute;
+      bottom: 0;
+      width: 0;
+      height: 0;
+      border: calc(@timeBarWidth/2) solid transparent;
+      border-bottom: calc(@timeBarWidth/4) solid #FFFFFF;
+    }
+  }
+
+  .week-day-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    .date {
+      border-left: 1px solid lightgray;
+    }
+
+    .start-view {
+      border-left: 0px transparent;
+    }
+
+    .selected {
+      border-radius: 10px;
+      width: 80%;
+      margin: auto;
+      background-color: @highLight;
+    }
+  }
+}

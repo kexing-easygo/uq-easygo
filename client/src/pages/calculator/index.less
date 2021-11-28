@@ -1,0 +1,73 @@
+@import "../../app.less";
+
+page {
+  background-color: #ffffff;
+}
+.calc-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .top-background {
+    height: 30vh;
+    background-color: @highLight;
+    position: relative;
+
+    .score-board {
+      text-align: center;
+      font-weight: bolder;
+      position: absolute;
+      top: 30%;
+      left: 0;
+      right: 0;
+    }
+
+    .img-wrapper {
+      width: 80vw;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -40vw;
+
+      .calculator-img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .setting-view {
+    flex-grow: 1;
+    z-index: -1;
+    position: relative;
+  }
+
+  .fab-selector-view {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+
+    .fab-selector {
+      width: 60%;
+      position: absolute;
+      right: 40px;
+      bottom: 150px;
+    }
+  }
+
+  .score-option {
+    margin: 40px 0;
+    font-size: 30px;
+
+    .at-input-number {
+      height: 50px;
+      box-sizing: border-box;
+    }
+
+    .at-button {
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
