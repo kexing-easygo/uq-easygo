@@ -40,7 +40,12 @@ async function createUser(openid, userInfo, collectionName) {
         }
       },
       selectedCourses: {},
-      classMode: ""
+      classMode: "",
+      cardsInfo: {
+        todayClasses: 0,
+        recentAssignments: 0,
+        newActivities: 0
+      }
     }
   })
   return res
@@ -76,6 +81,17 @@ async function updateClassMode(openid, collectionName, mode) {
   return res
 }
 
+async function manageCards(openid, collectioName, cardsInfo) {
+  const res = await db.collection(collectioName)
+  .where({_openid: openid})
+  .update({
+    data: {
+      cardsInfo: cardsInfo
+    }
+  })
+  return res
+}
+
 /**
  * 这个示例将经自动鉴权过的小程序用户 openid 返回给小程序端
  * 
@@ -83,45 +99,33 @@ async function updateClassMode(openid, collectionName, mode) {
  * 
  */
 exports.main = async (event, context) => {
-  var branch = event.branch;
-  var method = event.method;
-  var openid = event.openid;
-  if (branch == undefined) {
-    return {
-      code: -1,
-      msg: "缺少branch"
-    }
-  }
-  if (method == undefined) {
-    return {
-      code: -1,
-      msg: "缺少method"
-    }
-  }
-  if (openid == undefined) {
-    return {
-      code: -1,
-      msg: "缺少openid"
-    }
+  const {branch, method} = event
+  if (branch == undefined || method == undefined) {
+    return {}
   }
   // branch: USYD / UMEL
   if (event.method == "getOpenID") {
     const wxContext = cloud.getWXContext()
     return wxContext.FROM_OPENID;
   }
-  var collectionName = branch + MAIN_USER_SUFFIX
-  if (event.method == "createUser") {
-    var userInfo = event.userInfo;
+  const collectionName = branch + MAIN_USER_SUFFIX
+  const {openid} = event
+  if (method == "createUser") {
+    const {userInfo} = event
     return await createUser(openid, userInfo, collectionName);
   }
-  if (event.method == "loginStatus") {
+  if (method == "loginStatus") {
     return await loginStatus(openid, collectionName);
   }
-  if (event.method == "getUserInfo") {
+  if (method == "getUserInfo") {
     return await getUserInfo(openid, collectionName)
   }
   if (method == "updateClassMode") {
-    var mode = event.classMode
+    const { mode } = event
     return await updateClassMode(openid, collectionName, mode)
+  }
+  if (method == "manageCards") {
+    const { cardsInfo } = event
+    return await manageCards(openid, collectionName, cardsInfo)
   }
 }
