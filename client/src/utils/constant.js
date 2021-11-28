@@ -1,5 +1,5 @@
 export const RESOURCE_ENV = 'uqeasygo1'
-
+export const BRANCH_NAME = "UQ"
 // 时间
 export const NUMBERS = {
   0: "Break",

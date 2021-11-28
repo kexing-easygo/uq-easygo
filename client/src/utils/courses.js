@@ -1,5 +1,12 @@
-import { DAY_OF_WEEK } from './constant';
-import { computeEndTime, formatDates, removeZero } from './time'
+import {
+  DAY_OF_WEEK,
+  BRANCH_NAME
+} from './constant';
+import {
+  computeEndTime,
+  formatDates,
+  removeZero
+} from './time'
 
 /**
  * 根据接口返回的有效日期，判断当周是否有课
@@ -27,7 +34,7 @@ export const computeAvailableCourses = (courses, dates) => {
  * @param {array} newClasses 
  */
 export const getDuplicateCourse = (currentClasses, newClasses) => {
-  if (currentClasses == null || newClasses == null) return[];
+  if (currentClasses == null || newClasses == null) return [];
   const newCoursesId = newClasses.map(newCourse => newCourse._id);
   const duplica = currentClasses.filter(course => newCoursesId.includes(course._id));
   return duplica.map(dup => dup.activity_group_code);
@@ -38,13 +45,13 @@ export const getDuplicateCourse = (currentClasses, newClasses) => {
  * @param {array} currentClasses 
  */
 export const computeClashCourses = (currentClasses) => {
-  if (currentClasses == null) return[];
+  if (currentClasses == null) return [];
   const clashes = [];
   const getTimePoint = startTime => parseInt(startTime.split(":")[0]);
   // 按照开始时间升序排列
   currentClasses.sort((a, b) =>
     DAY_OF_WEEK[a.day_of_week] === DAY_OF_WEEK[b.day_of_week] ?
-      getTimePoint(a.start_time) - getTimePoint(b.start_time) : DAY_OF_WEEK[a.day_of_week] - DAY_OF_WEEK[b.day_of_week]);
+    getTimePoint(a.start_time) - getTimePoint(b.start_time) : DAY_OF_WEEK[a.day_of_week] - DAY_OF_WEEK[b.day_of_week]);
   for (let i = 1; i < currentClasses.length; i++) {
     if (currentClasses[i].day_of_week !== currentClasses[i - 1].day_of_week) continue;
     let end_time = computeEndTime(currentClasses[i - 1].start_time, currentClasses[i - 1].duration)
@@ -95,8 +102,19 @@ export const getGPALevel = score => {
  */
 export const getUniqueCourse = courses => Array.from(new Set(courses.map(course => course.subject_code)));
 
-export const getCourseId = (courseCode, semester, classMode, time = 'ND') => {
-  const _semester = `S${semester[9]}C`;
-  const _classMode = classMode === 'Internal' ? 'CC' : 'RE';
-  return `${courseCode}-${_semester}-${time}-${_classMode}`;
+export const getCourseId = (courseCode, semester, classMode, time) => {
+  let _semester = ""
+  let _classMode = ""
+  switch (BRANCH_NAME) {
+    case "UQ":
+      _semester = `S${semester[9]}`;
+      _classMode = classMode === 'Internal' ? 'IN' : 'EX'
+      return `${courseCode}_${_semester}_STLUC_${_classMode}`
+    case "USYD":
+      _semester = `S${semester[9]}C`;
+      _classMode = classMode === 'Internal' ? 'CC' : 'RE';
+      return `${courseCode}-${_semester}-${time}-${_classMode}`;
+    default:
+      break
+  }
 }
