@@ -82,8 +82,8 @@ async function updateClassMode(openid, collectionName, mode) {
   return res
 }
 
-async function manageCards(openid, collectioName, cardsInfo) {
-  const res = await db.collection(collectioName)
+async function manageCards(openid, collectionName, cardsInfo) {
+  const res = await db.collection(collectionName)
   .where({_openid: openid})
   .update({
     data: {
@@ -94,14 +94,14 @@ async function manageCards(openid, collectioName, cardsInfo) {
 }
 
 async function getCardsInfo(openid, collectionName) {
-  const res =  await db.colection(collectionName)
+  const res =  await db.collection(collectionName)
   .where({_openid: openid})
   .get()
   return res.data[0].cardsInfo
 }
 
-async function updateEmail(openid, collectioName, email) {
-  const res = await db.collection(collectioName)
+async function updateEmail(openid, collectionName, email) {
+  const res = await db.collection(collectionName)
   .where({_openid: openid})
   .update({
     data: {
@@ -111,8 +111,8 @@ async function updateEmail(openid, collectioName, email) {
   return res
 }
 
-async function updateMobile(openid, collectioName, mobile) {
-  const res = await db.collection(collectioName)
+async function updateMobile(openid, collectionName, mobile) {
+  const res = await db.collection(collectionName)
   .where({_openid: openid})
   .update({
     data: {
