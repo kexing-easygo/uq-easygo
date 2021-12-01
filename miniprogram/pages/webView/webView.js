@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    url: "https://mp.weixin.qq.com/s?__biz=Mzg4NjU3Nzk3MQ==&mid=2247484246&idx=1&sn=cd9ae3860c4095edb4288a49b2527812&chksm=cf96cd0af8e1441c4e01873e561d9ee64addf10f155f9a852adba0afa4817a700ea5b72a4123&token=1054780380&lang=zh_CN#rd"
+    url: "https://mp.weixin.qq.com/s/8hrVH1Q28uGZaThl2aw0jg"
   },
 
   /**
