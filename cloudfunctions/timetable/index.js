@@ -4,100 +4,128 @@ var moment = require('moment-timezone');
 const cloud = require('wx-server-sdk')
 const MAIN_USER_SUFFIX = "_MainUser"
 const TIMETABLE_USER_SUFFIX = "_Timetable"
+const CURRENT_YEAR = 2021
+
 cloud.init()
 
 
 const db = cloud.database();
 const _ = db.command
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-
-
-function timeCompare(h1, m1, h2, m2) {
-  return h1 * 60 + m1 > h2 * 60 + m2;
-}
-
-async function fetchCourseInfo(courseName, collectionName) {
-  try {
-    return await db.collection(collectionName).where({
-      name: courseName
-    }).get()
-  } catch (e) {
-    console.error(e)
-  }
-}
-
-async function appendUserClasses(openid, courseTime, collectionName) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        courseTime: _.push(
-          courseTime
-        )
-      }
-    })
-    .then(res => {
-      console.log(res)
-      return res
-    })
-
-}
-
-async function fetchUserClasses(openid, collectionName) {
-  try {
-    var result = await db.collection(collectionName).where({
-      _openid: openid
-    }).get()
-    return result.data[0].courseTime;
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-async function updateUserClasses(openid, collectionName, courseTime) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        courseTime: courseTime
-      }
-    })
-    .then(res => {
-      return res;
-    })
+/**
+ * 私有方法
+ * 根据class的id，在数据库中搜索到对应的单节课信息。
+ * 类似MySQL的外键
+ */
+async function __fetchClassById(collectionName, classId) {
+  const courseId = classId.split("|")[0];
+  var res = await fetchCourseInfo(collectionName, courseId);
+  return {
+    "_id": classId,
+    "subject_code": classId.split("-")[0],
+    "activity_group_code": `${res[classId].activity_group_code}${res[classId].activity_code}`,
+    "location": res[classId].location,
+    "day_of_week": res[classId].day_of_week,
+    "start_time": res[classId].start_time,
+    "duration": res[classId].duration,
+    "activitiesDays": res[classId].activitiesDays
+  };
 }
 /**
- * 判断某节课是否已经上完
- * 如果上完了，返回true；否则返回false
+ * 私有方法
+ * 根据学期返回用户文档中的某一学期所有classes
  */
-function hasClassFinished(item) {
-  var now = new Date()
-  var duration = Number(item.duration)
-  // 转化start time，获得时间戳
-  var start = now.getFullYear() + "/" + (now.getMonth() + 1) + "/" + now.getDate() + " " + item.start_time
-  // 转中国时间
-  var startTimestamp = Date.parse(start) - 120 * 60 * 1000
-  // 获取end time时间戳
-  var endTimestamp = startTimestamp + duration * 60 * 1000 - 120 * 60 * 1000
-  // 判断当前时间戳在不在里面
-  var nowTimestamp = now.getTime()
-  if (nowTimestamp < endTimestamp) {
-    return false
+async function __fetchCourseIdBySemester(openid, branch, semester) {
+  const selectedCourses = await getSelectedCourses(openid, branch + MAIN_USER_SUFFIX);
+  if (!selectedCourses.hasOwnProperty(semester)) return [];
+  const classes = [];
+  selectedCourses[semester].forEach(course => classes.push(...course.classes));
+  return classes;
+}
+
+
+/**
+ * 根据课程代码，返回某一门课的所有信息
+ * 包括所有单节课等
+ */
+async function fetchCourseInfo(collectionName, courseId) {
+  var res = await db.collection(collectionName).where({
+    name: courseId.split('-')[0] // 根据courseCode搜索
+  }).get();
+  return res.data[0][courseId] || [];
+}
+
+
+/**
+ * 将对应的课程信息添加到用户的文档中
+ */
+async function appendUserClasses(event) {
+  const { semester, courseCode, classes, openid, branch } = event;
+  const userCollection = branch + MAIN_USER_SUFFIX;
+  const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
+  // 初始化课程结构
+  const selectedCourses = await addSelectedCourses(openid, userCollection, courseCode, semester);
+  const courseIndex = selectedCourses[semester].findIndex(course => course.courseCode === courseCode);
+  selectedCourses[semester][courseIndex].classes.push(...classes); // 添加进class list
+  await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+  const newClassesInfo = await Promise.all(classes.map(cl => __fetchClassById(timetableCollection, cl._id)));
+  const merged = newClassesInfo.map(newClass => ({
+    ...newClass,
+    ...classes.find(c => c._id === newClass._id)
+  }))
+  return merged;
+}
+
+
+/**
+ * 获取用户本学期已选择的class的具体信息和自定义内容
+ */
+async function fetchUserClasses(openid, branch, semester) {
+  const classes = await __fetchCourseIdBySemester(openid, branch, semester);
+  const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
+  const classesInfo = await Promise.all(classes.map(cl => __fetchClassById(timetableCollection, cl._id)));
+  // 与用户自定义的内容合并
+  const merged = classesInfo.map(classInfo => ({
+    ...classes.find(c => c._id === classInfo._id),
+    ...classInfo
+  }))
+  return merged;
+}
+
+async function updateUserClasses(event, collectionName) {
+  const {openid, course, semester, classInfo} = event
+  const res = await getSelectedCourses(openid, collectionName)
+  const semesterInfo = res[semester]
+  for (let i = 0; i < semesterInfo.length; i++) {
+    let courseInfo = semesterInfo[i]
+    if (courseInfo.courseCode == course) {
+      let classes = courseInfo.classes
+      for (let j = 0; j < classes.length; j++) {
+        let singleClass = classes[j]
+        if (singleClass["_id"] == classInfo["_id"]) {
+          classes[j] = classInfo
+          break
+        }
+      }
+    }
   }
-  return true
+  const finalRes = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  })
+  .update({
+    data: {
+      selectedCourses: res
+    }
+  })
+  return res
 }
 
 
-function timeCompare(h1, m1, h2, m2) {
-  return h1 * 60 + m1 > h2 * 60 + m2;
-}
-
-async function fetchToday(openid, collectionName, date) {
-  const allCourses = await fetchUserClasses(openid, collectionName)  // 获取所有的课程
+async function fetchToday(openid, branch) {
+  const allCourses = await fetchUserClasses(openid, branch, "Semester 2, 2021")  // 获取所有的课程
   const todayCourses = {
     now: [],
     next: []
@@ -120,52 +148,122 @@ async function fetchToday(openid, collectionName, date) {
   return todayCourses;
 }
 
+async function getSelectedCourses(openid, collectionName) {
+  const result = await db.collection(collectionName)
+    .where({ _openid: openid })
+    .get()
+  return result.data[0].selectedCourses;
+
+}
+
+/**
+ * 用户在某个学期选择某门课的时间后，将该门课添加至用户的
+ * selectedCourses字段内
+ */
+async function addSelectedCourses(openid, collectionName, courseCode, semester) {
+  const selectedCourses = await getSelectedCourses(openid, collectionName);
+  if (!selectedCourses.hasOwnProperty(semester)) {
+    // 如果本学期不存在，推送新的学期和课程进去
+    selectedCourses[semester] = [{
+      courseCode: courseCode,
+      results: [],
+      classes: []
+    }];
+  } else {
+    const semesterInfo = selectedCourses[semester];
+    const courseIndex = semesterInfo.findIndex(course => course.courseCode === courseCode);
+    if (courseIndex >= 0) return selectedCourses; // 本学期已经存在这门课了
+    semesterInfo.push({
+      courseCode: courseCode,
+      results: [],
+      classes: []
+    })
+  }
+  await db.collection(collectionName)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+  return selectedCourses;
+}
+
+/**
+ * 删除整节course
+ * @param {string} openid 
+ * @param {string} userCollection 
+ * @param {string} courseCode 
+ * @param {string} semester 
+ */
+async function deleteSelectedCourse(openid, userCollection, courseCode, semester) {
+  const selectedCourses = await getSelectedCourses(openid, userCollection);
+  if (!selectedCourses.hasOwnProperty(semester)) return;
+  selectedCourses[semester] = selectedCourses[semester].filter(course => course.courseCode !== courseCode);
+  return await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+}
+
+/**
+ * 删除已选课程对应学期中该course的某节class
+ * @param {string} courseCode 课程代码
+ * @param {string} semester e.g. "Semester 2, 2021"
+ * @param {string} classId e.g. "INFO1113-S2C-ND-CC|LAB|01"
+ * @param {string} collectionName timetable collection
+ */
+async function deleteUserClass(openid, courseCode, semester, classId, userCollection) {
+  const selectedCourses = await getSelectedCourses(openid, userCollection);
+  const courseIndex = selectedCourses[semester].findIndex(course => course.courseCode === courseCode);
+  const afterDeleted = selectedCourses[semester][courseIndex].classes.filter(cl => cl._id !== classId);
+  selectedCourses[semester][courseIndex].classes = afterDeleted;
+  // 更新class list
+  return await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+}
 
 // 云函数入口函数
 exports.main = async (event, context) => {
   var branch = event.branch
   var method = event.method
+  if (branch == undefined || method == undefined) {
+    return {
+      data: "缺少必须的元素"
+    }
+  }
   var openid = event.openid;
-  if (branch == undefined) {
-    return {
-      code: -1,
-      msg: "缺少branch"
-    }
-  }
-  if (method == undefined) {
-    return {
-      code: -1,
-      msg: "缺少method"
-    }
-  }
+  var semester = event.semester == undefined ? "" : event.semester
   if (method == "fetchCourseInfo") {
-    var courseName = event.courseName
-    var collectionName = branch + TIMETABLE_USER_SUFFIX
-    return await fetchCourseInfo(courseName, collectionName)
+    return await fetchCourseInfo(branch + TIMETABLE_USER_SUFFIX, event.courseId)
   }
+
+  const userCollection = branch + MAIN_USER_SUFFIX
   if (method == "appendUserClasses") {
-    var collectionName = branch + MAIN_USER_SUFFIX
-    var courseTime = event.courseTime
-    return await appendUserClasses(openid, courseTime, collectionName)
+    return await appendUserClasses(event)
+  }
+  if (method == "fetchToday") {
+    return await fetchToday(openid, branch)
   }
 
   if (method == "fetchUserClasses") {
-    var collectionName = branch + MAIN_USER_SUFFIX
-    return await fetchUserClasses(openid, collectionName)
+    return await fetchUserClasses(openid, branch, semester)
   }
-  if (method == "updateUserClasses") {
-    var collectionName = branch + MAIN_USER_SUFFIX
-    var courseTime = event.courseTime
-    return await updateUserClasses(openid, collectionName, courseTime)
-  }
-  if (method == "fetchToday") {
-    var collectionName = branch + MAIN_USER_SUFFIX
-    var date = event.date
-    return await fetchToday(openid, collectionName, date)
-    // fetchToday(openid, collectionName, date).then(res => {
-    // console.log(res)
-    // return res
-    // })
+  if (method == "updateUserClass") {
+    return await updateUserClasses(event, userCollection)
   }
 
+  if (method == "getSelectedCourses") {
+    return await getSelectedCourses(openid, userCollection)
+  }
+  if (method == "addSelectedCourses") {
+    var course = event.course
+    var semester = event.semester
+    return await addSelectedCourses(openid, userCollection, course, semester)
+  }
+  if (method == "deleteSelectedCourse") {
+    const { courseCode, semester } = event;
+    return await deleteSelectedCourse(openid, userCollection, courseCode, semester)
+  }
+
+  if (method === "deleteUserClass") {
+    const { openid, courseCode, semester, classId } = event;
+    return await deleteUserClass(openid, courseCode, semester, classId, userCollection);
+  }
 }

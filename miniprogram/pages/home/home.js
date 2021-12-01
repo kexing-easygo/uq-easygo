@@ -146,7 +146,7 @@ Page({
     return {
       title: 'UQ校园通',
       path: '/pages/home/home',
-      imageUrl: this.data.PostHolderOne
+      imageUrl: this.data.PostHolderTwo
     }
   },
   navigateToWaiting: function () {
@@ -154,7 +154,11 @@ Page({
       url: '/pages/waiting/waiting',
     })
   },
-
+  clickWebview: function(e) {
+    wx.navigateTo({
+      url: "/pages/webView/webView"
+    })
+  },
   clickImage: function (e) {
     var model = e.currentTarget.dataset.model
     var imageUrl = ''
@@ -187,14 +191,4 @@ Page({
       complete: function (res) {},
     })
   },
-  clickHotResearch: function () {
-    var img = "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/课行热搜.png"
-    wx.previewImage({
-      urls: [img], //需要预览的图片http链接列表，注意是数组
-      current: '', // 当前显示图片的http链接，默认是第一个
-      success: function (res) {},
-      fail: function (res) {},
-      complete: function (res) {},
-    })
-  }
 })

@@ -2,7 +2,7 @@
 <image id="tileImg" src="{{tileImg}}"  />
 <swiper autoplay circular indicator-dots interval="2000" class="swiper">
 	<swiper-item>
-		<image src="{{swiperPlaceholderOne}}" />
+		<image src="{{swiperPlaceholderOne}}" bindtap="clickWebview" />
 	</swiper-item>
 	<swiper-item>
 		<image src="{{swiperPlaceholderTwo}}" />
@@ -64,7 +64,7 @@
 	<image src="{{PostHolderOne}}" bindtap="clickImage" data-model="one" />
 </view>
 <view class="in-coming">
-	<image src="{{PostHolderTwo}}" bindtap="clickImage" data-model="two" />
+	<image src="{{PostHolderTwo}}" bindtap="clickWebview" data-model="two" />
 </view>
 <view class="in-coming">
 	<image src="{{PostHolderThree}}" bindtap="clickImage" data-model="three" />
