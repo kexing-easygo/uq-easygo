@@ -43,9 +43,9 @@ async function createUser(openid, userInfo, collectionName) {
       selectedCourses: {},
       classMode: "",
       cardsInfo: {
-        todayClasses: 0,
-        recentAssignments: 0,
-        newActivities: 0
+        todayClasses: 1,
+        recentAssignments: 1,
+        newActivities: 1
       }
     }
   })
@@ -91,6 +91,13 @@ async function manageCards(openid, collectioName, cardsInfo) {
     }
   })
   return res
+}
+
+async function getCardsInfo(openid, collectionName) {
+  const res =  await db.colection(collectionName)
+  .where({_openid: openid})
+  .get()
+  return res.data[0].cardsInfo
 }
 
 async function updateEmail(openid, collectioName, email) {
@@ -146,6 +153,9 @@ exports.main = async (event, context) => {
   if (method == "updateClassMode") {
     const { mode } = event
     return await updateClassMode(openid, collectionName, mode)
+  }
+  if (method == "getCardsInfo") {
+    return await getCardsInfo(openid, collectionName)
   }
   if (method == "manageCards") {
     const { cardsInfo } = event

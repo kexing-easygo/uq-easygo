@@ -76,6 +76,8 @@ async function setCalculatedResult(event) {
   return finalRes
 }
 
+async function calculateGPA()
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   const {branch, method, course, semester} = event
