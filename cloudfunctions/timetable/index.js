@@ -219,6 +219,16 @@ async function deleteUserClass(openid, courseCode, semester, classId, userCollec
     .update({ data: { selectedCourses: selectedCourses } });
 }
 
+
+
+async function deleteWholeSemester(openid, semester, userCollection) {
+  const selectedCourses = await getSelectedCourses(openid, userCollection);
+  delete selectedCourses[semester]
+  return await db.collection(userCollection)
+    .where({ _openid: openid })
+    .update({ data: { selectedCourses: selectedCourses } });
+}
+
 // 云函数入口函数
 exports.main = async (event, context) => {
   var branch = event.branch
@@ -265,5 +275,10 @@ exports.main = async (event, context) => {
   if (method === "deleteUserClass") {
     const { openid, courseCode, semester, classId } = event;
     return await deleteUserClass(openid, courseCode, semester, classId, userCollection);
+  }
+
+  if (method == "deleteWholeSemester") {
+    const { openid, semester } = event;
+    return await deleteWholeSemester(openid, semester, userCollection);
   }
 }
