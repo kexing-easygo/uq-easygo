@@ -56,10 +56,15 @@ async function loginStatus(openid, collectionName) {
 }
 
 async function getUserInfo(openid, collectionName) {
-  var result = await db.collection(collectionName).where({
+  const result = await db.collection(collectionName).where({
     _openid: openid
   }).get()
-  return result.data[0]
+  const res = result.data[0]
+  return {
+    ...res.userInfo,
+    ...res.userEmail,
+    ...res.userMobile
+  }
 }
 
 
