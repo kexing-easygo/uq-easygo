@@ -68,8 +68,9 @@ async function getUserInfo(openid, collectionName) {
   const res = result.data[0]
   return {
     ...res.userInfo,
-    ...res.userEmail,
-    ...res.userMobile
+    userEmail: res.userEmail, 
+    userMobile: res.userMobile,
+    classMode: res.classMode
   }
 }
 

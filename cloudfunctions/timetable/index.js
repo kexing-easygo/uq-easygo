@@ -222,8 +222,9 @@ async function deleteUserClass(openid, courseCode, semester, classId, userCollec
 
 
 async function deleteWholeSemester(openid, semester, userCollection) {
-  const selectedCourses = await getSelectedCourses(openid, userCollection);
-  delete selectedCourses[semester]
+  let selectedCourses = await getSelectedCourses(openid, userCollection);
+  // delete selectedCourses.`${semester}`
+  selectedCourses[semester] = []
   return await db.collection(userCollection)
     .where({ _openid: openid })
     .update({ data: { selectedCourses: selectedCourses } });
