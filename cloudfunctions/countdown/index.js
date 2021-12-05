@@ -335,16 +335,16 @@ exports.main = async (event, context) => {
   if (method == "fetchUserAssignments") {
     return await fetchAll(openid, collectionName)
   }
-  // if (method == "setNotification") {
-  //   var notification = event.notification
-  //   if (notification == undefined) {
-  //     return {
-  //       code: -1,
-  //       msg: "缺少notification"
-  //     }
-  //   }
-  //   return await setNotification(openid, collectionName, notification)
-  // }
+  if (method == "setNotification") {
+    var notification = event.notification
+    if (notification == undefined) {
+      return {
+        code: -1,
+        msg: "缺少notification"
+      }
+    }
+    return await setNotification(openid, collectionName, notification)
+  }
   if (method == "appendAssignments") {
     var ass = event.assignment
     if (ass == undefined) {

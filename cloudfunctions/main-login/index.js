@@ -77,6 +77,60 @@ async function updateClassMode(openid, collectionName, mode) {
 }
 
 /**
+ * get the card information of the user
+ * @param {*} openid 
+ * @param {*} collectionName 
+ */
+async function getCardsInfo(openid, collectionName) {
+  var res = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  }).get()
+  return res.data[0].cardsInfo
+}
+
+/**
+ * update the card information of the user
+ * @param {*} openid 
+ * @param {*} collectionName 
+ * @param {*} cardsInfo 
+ */
+async function manageCards(openid, collectionName, cardsInfo) {
+  var res = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  }).update({
+    data: {
+      cardsInfo: cardsInfo
+    }
+  })
+  return res
+}
+
+async function updateEmail(openid, collectionName, email) {
+  var res = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  }).update({
+    data: {
+      email: email
+    }
+  })
+  return res
+}
+
+async function updateMobile(openid, collectionName, mobile) {
+  var res = await db.collection(collectionName)
+  .where({
+    _openid: openid
+  }).update({
+    data: {
+      mobile: mobile
+    }
+  })
+  return res
+}
+/**
  * 这个示例将经自动鉴权过的小程序用户 openid 返回给小程序端
  * 
  * event 参数包含小程序端调用传入的 data
@@ -123,5 +177,21 @@ exports.main = async (event, context) => {
   if (method == "updateClassMode") {
     var mode = event.classMode
     return await updateClassMode(openid, collectionName, mode)
+  }
+  if (method == "getCardsInfo") {
+    const openid = event.openid
+    return await getCardsInfo(openid, collectionName)
+  }
+  if (method == "manageCards") {
+    const { openid, cardsInfo } = event
+    return await manageCards(openid, collectionName, cardsInfo)
+  }
+  if (method == "updateEmail") {
+    const { openid, email } = event
+    return await updateEmail(openid, collectionName, email)
+  }
+  if (method == "updateMobile") {
+    const { openid, mobile } = event
+    return await updateMobile(openid, collectionName, mobile)
   }
 }
