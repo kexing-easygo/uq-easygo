@@ -95,7 +95,7 @@ async function fetchUserClasses(openid, branch, semester) {
 }
 
 async function updateUserClasses(event, collectionName) {
-  const {openid, course, semester, classInfo} = event
+  const { openid, course, semester, classInfo } = event
   const res = await getSelectedCourses(openid, collectionName)
   const semesterInfo = res[semester]
   for (let i = 0; i < semesterInfo.length; i++) {
@@ -112,14 +112,14 @@ async function updateUserClasses(event, collectionName) {
     }
   }
   const finalRes = await db.collection(collectionName)
-  .where({
-    _openid: openid
-  })
-  .update({
-    data: {
-      selectedCourses: res
-    }
-  })
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        selectedCourses: res
+      }
+    })
   return res
 }
 
@@ -155,7 +155,22 @@ async function getSelectedCourses(openid, collectionName) {
   return result.data[0].selectedCourses;
 
 }
-
+/**
+ * delete the all assgiment in that semester
+ * @param {*} openid 
+ * @param {*} semester 
+ * @param {*} userCollection 
+ */
+async function deleteWholeSemester(openid, semester, userCollection) {
+  db.collection(userCollection)
+    .where({ _openid: openid }).update({
+      data: {
+        userAssignments: _.pull({
+          semester: _.eq(semester)
+        })
+      }
+    })
+}
 /**
  * 用户在某个学期选择某门课的时间后，将该门课添加至用户的
  * selectedCourses字段内
@@ -265,5 +280,10 @@ exports.main = async (event, context) => {
   if (method === "deleteUserClass") {
     const { openid, courseCode, semester, classId } = event;
     return await deleteUserClass(openid, courseCode, semester, classId, userCollection);
+  }
+
+  if (method == "deleteWholeSemester") {
+    const { openid, semester } = event;
+    return await deleteWholeSemester(openid, semester, userCollection)
   }
 }
