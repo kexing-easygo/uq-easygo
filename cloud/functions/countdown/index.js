@@ -18,12 +18,12 @@ const _ = db.command
 function GetDateStr(AddDayCount) {
   var dd = new Date();
   //获取AddDayCount天后的日期
-  dd.setDate(dd.getDate() + AddDayCount); 
+  dd.setDate(dd.getDate() + AddDayCount);
   var y = dd.getFullYear();
   //获取当前月份的日期，不足10补0
-  var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1); 
+  var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);
   //获取当前几号，不足10补0
-  var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate(); 
+  var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
   return y + "-" + m + "-" + d;
 }
 
@@ -122,18 +122,18 @@ async function fetchAll(openid, collectionName) {
 
 async function setNotification(openid, collectionName, notification) {
   db.collection(collectionName)
-  .where({
-    _openid: openid
-  })
-  .update({
-    data: {
-      notification: notification
-    }
-  })
-  .then(res => {
-    console.log(res)
-    return res
-  })
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        notification: notification
+      }
+    })
+    .then(res => {
+      console.log(res)
+      return res
+    })
 }
 
 async function appendAssignments(openid, collectionName, ass) {
@@ -142,18 +142,18 @@ async function appendAssignments(openid, collectionName, ass) {
     wechat: [0, 0, 0]
   }
   db.collection(collectionName)
-  .where({
-    _openid: openid
-  })
-  .update({
-    data: {
-      userAssignments: _.push(ass)
-    }
-  })
-  .then(res => {
-    console.log(res)
-    return res
-  })
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        userAssignments: _.push(ass)
+      }
+    })
+    .then(res => {
+      console.log(res)
+      return res
+    })
 }
 
 async function updateAssignments(openid, collectionName, asses) {
@@ -172,6 +172,23 @@ async function updateAssignments(openid, collectionName, asses) {
     })
 }
 
+async function deleteUserAssignments(openid, collectionName, ass) {
+  db.collection(collectionName)
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        userAssignments: _.pull({
+          assignment: _.eq(ass)
+        })
+      }
+    })
+    .then(res => {
+      console.log(res)
+      return res;
+    })
+}
 /**
  * 获取某个用户数据库内所有用户的数据
  */
@@ -179,18 +196,18 @@ async function __fetchAll(collectionName) {
   const res = await db.collection(collectionName).count()
   const totalDocuments = res.total
   const fetchTimes = Math.ceil(totalDocuments / MAX_LIMIT)
-    const tasks = []
-    for (let i = 0; i < fetchTimes; i++) {
-        const promise = db.collection(collectionName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
-        tasks.push(promise)
-    }
-    // 等待所有数据取出后返回所有数据
-    var response = (await Promise.all(tasks)).reduce((acc, cur) => ({
-        data: acc.data.concat(cur.data),
-        errMsg: acc.errMsg,
-    }))
-    var data = response.data
-    return data
+  const tasks = []
+  for (let i = 0; i < fetchTimes; i++) {
+    const promise = db.collection(collectionName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+    tasks.push(promise)
+  }
+  // 等待所有数据取出后返回所有数据
+  var response = (await Promise.all(tasks)).reduce((acc, cur) => ({
+    data: acc.data.concat(cur.data),
+    errMsg: acc.errMsg,
+  }))
+  var data = response.data
+  return data
 }
 
 /**
@@ -222,62 +239,62 @@ async function __send_email(email, diff, assName) {
 async function push(collectionName) {
   var data = await __fetchAll(collectionName)
   // for (var i = 0; i < data.length; i++) {
-    var item = data[0]
-    var openid = item._openid
-    const mode = item.classMode
-    const email = item.userEmail
-    var todayDate = moment.tz('Asia/Shanghai')
-    if (mode == "Internal" || mode == "internal") {
-      todayDate = moment.tz('Australia/Brisbane')
+  var item = data[0]
+  var openid = item._openid
+  const mode = item.classMode
+  const email = item.userEmail
+  var todayDate = moment.tz('Asia/Shanghai')
+  if (mode == "Internal" || mode == "internal") {
+    todayDate = moment.tz('Australia/Brisbane')
+  }
+  var assignments = item.userAssignments
+  for (var j = 0; j < assignments.length; j++) {
+    var assignment = assignments[j]  // 单条作业
+    // 默认的示例不提醒
+    if (assignment.hasOwnProperty("default")) {
+      continue
     }
-    var assignments = item.userAssignments
-    for (var j = 0; j < assignments.length; j++) {
-      var assignment = assignments[j]  // 单条作业
-      // 默认的示例不提醒
-      if (assignment.hasOwnProperty("default")) {
-        continue
+    var date = assignment["date"]
+    var time = assignment["time"]
+    var d1 = moment(`${date} ${time}`)
+    var diff = d1.diff(todayDate, 'days')
+    // 0表示没有提醒过，1表示提醒过
+    if (item.notification.wechat.enabled == true) {
+      var values = item.notification.wechat.attributes
+      var assValues = assignment.attributes.wechat
+      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+        // send wechat 
+        assValues[ONE_WEEK_INDEX] = 1
       }
-      var date = assignment["date"]
-      var time = assignment["time"]
-      var d1 = moment(`${date} ${time}`)
-      var diff = d1.diff(todayDate, 'days')
-      // 0表示没有提醒过，1表示提醒过
-      if (item.notification.wechat.enabled == true) {
-        var values = item.notification.wechat.attributes
-        var assValues = assignment.attributes.wechat
-        if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-          // send wechat 
-          assValues[ONE_WEEK_INDEX] = 1
-        }
-        if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-          // send wechat 
-          assValues[THREE_DAY_INDEX] = 1
-        }
-        if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-          // send wechat
-          assValues[ONE_DAY_INDEX] = 1
-        }
-        
+      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+        // send wechat 
+        assValues[THREE_DAY_INDEX] = 1
       }
-      if (item.notification.email.enabled == true) {
-        var values = item.notification.email.attributes
-        var assValues = assignment.attributes.email
-        if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-          // send email 
-          assValues[ONE_WEEK_INDEX] = 1
-        }
-        if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-          // send email 
-          assValues[THREE_DAY_INDEX] = 1
-        }
-        if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-          // send email
-          assValues[ONE_DAY_INDEX] = 1
-        }
-        await __send_email(email, diff, assignment["name"])
+      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+        // send wechat
+        assValues[ONE_DAY_INDEX] = 1
       }
+
     }
-    db.collection(collectionName)
+    if (item.notification.email.enabled == true) {
+      var values = item.notification.email.attributes
+      var assValues = assignment.attributes.email
+      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+        // send email 
+        assValues[ONE_WEEK_INDEX] = 1
+      }
+      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+        // send email 
+        assValues[THREE_DAY_INDEX] = 1
+      }
+      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+        // send email
+        assValues[ONE_DAY_INDEX] = 1
+      }
+      await __send_email(email, diff, assignment["name"])
+    }
+  }
+  db.collection(collectionName)
     .where({
       _openid: openid
     })
@@ -318,16 +335,16 @@ exports.main = async (event, context) => {
   if (method == "fetchUserAssignments") {
     return await fetchAll(openid, collectionName)
   }
-  // if (method == "setNotification") {
-  //   var notification = event.notification
-  //   if (notification == undefined) {
-  //     return {
-  //       code: -1,
-  //       msg: "缺少notification"
-  //     }
-  //   }
-  //   return await setNotification(openid, collectionName, notification)
-  // }
+  if (method == "setNotification") {
+    var notification = event.notification
+    if (notification == undefined) {
+      return {
+        code: -1,
+        msg: "缺少notification"
+      }
+    }
+    return await setNotification(openid, collectionName, notification)
+  }
   if (method == "appendAssignments") {
     var ass = event.assignment
     if (ass == undefined) {
@@ -340,5 +357,26 @@ exports.main = async (event, context) => {
   }
   if (method == "push") {
     return await push("UQ_MainUser")
+  }
+  if (method == "deleteUserAssignments") {
+    var assName = event.assignment
+    if (assName == undefined) {
+      return {
+        code: -1,
+        msg: "缺少ass"
+      }
+    }
+    return await deleteUserAssignments(openid, collectionName, assName)
+  }
+  if (method == "updateAssignments") {
+    var allAss = event.newAssignment
+    if (allAss == undefined) {
+      return {
+        code: -1,
+        msg: "缺少ass"
+      }
+    }
+    return await updateAssignments(openid, collectionName, allAss)
+
   }
 }

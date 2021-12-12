@@ -13,6 +13,12 @@ import NewActivities from '../../components/index/new-activities/index'
 
 export default function Index() {
 
+  const {
+    newActivities,
+    todayClasses,
+    recentAssignments
+  } = useSelector(state => state.user.cardsInfo);
+
   return (
     <View className='index-container'>
       <View className='usyd-easygo-title' style={{ paddingTop: Taro.$navBarMarginTop + 'px' }}>
@@ -75,8 +81,9 @@ export default function Index() {
 
       </View>
 
-      <TodayCourse />
-      <NewActivities />
+      {/* 根据用户自定义显示情况展示对应卡片 */}
+      {todayClasses && <TodayCourse />}
+      {newActivities && <NewActivities />}
     </View>
   )
 }

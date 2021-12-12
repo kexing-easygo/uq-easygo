@@ -5,9 +5,8 @@ import { getLoginStatus } from '../../services/login'
 import { initCloud } from '../../utils/cloud'
 import { useDispatch } from 'react-redux'
 import { setLoginStatus } from '../../features/user-slice'
-import { fetchSelectedClasses } from '../../services/course'
-import { fetchUserInfo } from '../../services/profile'
-
+import { fetchSelectedCourses } from '../../services/course'
+import { fetchUserInfo, getCardsInfo } from '../../services/profile'
 /**
  * 启动页执行
  * 1. 初始化云环境
@@ -29,6 +28,8 @@ export default function Launch() {
         dispatch(setLoginStatus(loginStatus));
         if (loginStatus) {
           dispatch(fetchUserInfo());
+          dispatch(getCardsInfo());
+          dispatch(fetchSelectedCourses());
         }
         Taro.switchTab({ url: '/pages/index/index' })
       }

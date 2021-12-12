@@ -4,7 +4,7 @@ import { View, Text } from '@tarojs/components'
 import { AtFloatLayout, AtList, AtListItem, AtModal, AtInput, AtButton } from "taro-ui"
 import ColorPicker from '../color-picker'
 import { toggleDisplayDetail } from '../../../features/course-slice'
-import { deleteClass, editCourse } from '../../../services/course'
+import { deleteClass, updateClass } from '../../../services/course'
 import { CURRENT_SEMESTER, DEFAULT_REMARK } from '../../../utils/constant'
 import { computeEndTime, convert2CST } from '../../../utils/time'
 import { useSelector, useDispatch } from 'react-redux'
@@ -58,12 +58,16 @@ export default function SessionDetails(props) {
       })
       return;
     }
-    const editContent = {
-      "background": currentBackground,
-      "remark": remark
+    const _classInfo = {
+      _id: clickedClass._id,
+      background: currentBackground,
+      remark: remark
     }
-    const edited = Object.assign({}, clickedClass, editContent);
-    dispatch(editCourse(edited));
+    dispatch(updateClass({
+      semester: CURRENT_SEMESTER,
+      courseCode: clickedClass.subject_code,
+      classInfo: _classInfo
+    }));
   }
 
   // 更新备注

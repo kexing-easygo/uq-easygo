@@ -1,11 +1,12 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchSelectedClasses, deleteCourse, editCourse, appendClass, deleteClass } from '../services/course'
+import { fetchCurrentClasses, appendClass, deleteClass, updateClass, fetchSelectedCourses, deleteCourses, deleteSemester } from '../services/course'
 import { computeAvailableCourses, computeClashCourses } from '../utils/courses'
 import { CURRENT_SEMESTER } from '../utils/constant'
 
 // 初始化状态
 const initialState = {
+  selectedCourses: {},
   currentClasses: [],
   availCourses: [],
   clickedClass: {},
@@ -40,8 +41,11 @@ export const courseSlice = createSlice({
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
     builder
-      // 获取所有课程
-      .addCase(fetchSelectedClasses.fulfilled, (state, action) => {
+      .addCase(fetchSelectedCourses.fulfilled, (state, action) => {
+        state.selectedCourses = action.payload;
+      })
+      // 获取本学期已选择的课程
+      .addCase(fetchCurrentClasses.fulfilled, (state, action) => {
         state.currentClasses = action.payload;
         console.log('fetch selected courses fulfilled', action.payload)
       })
@@ -54,29 +58,20 @@ export const courseSlice = createSlice({
         Taro.showToast({ title: '添加出错' })
       })
       .addCase(appendClass.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.currentClasses.push(...action.payload)
         Taro.showToast({ title: "添加完毕", icon: "success" })
       })
-      // 删除课程
-      .addCase(deleteCourse.pending, () => {
-        Taro.showToast({ icon: 'loading', title: '删除中' })
-      })
-      .addCase(deleteCourse.rejected, () => {
-        Taro.showToast({ title: '删除中失败' })
-      })
-      .addCase(deleteCourse.fulfilled, (state, action) => {
-        state.currentClasses = action.payload;
-      })
       // 修改课程设置
-      .addCase(editCourse.pending, () => {
+      .addCase(updateClass.pending, () => {
         Taro.showToast({ icon: 'loading', title: '修改中' })
       })
-      .addCase(editCourse.rejected, () => {
+      .addCase(updateClass.rejected, (state, action) => {
         Taro.showToast({ title: '修改失败' })
       })
-      .addCase(editCourse.fulfilled, (state, action) => {
-        state.currentClasses = action.payload;
+      .addCase(updateClass.fulfilled, (state, action) => {
+        const target = state.currentClasses.find(cl => cl._id === action.payload._id);
+        target.background = action.payload.background;
+        target.remark = action.payload.remark;
         Taro.showToast({ title: '修改成功', icon: "none" })
       })
       // 删除class
@@ -86,6 +81,28 @@ export const courseSlice = createSlice({
       .addCase(deleteClass.fulfilled, (state, action) => {
         state.currentClasses = state.currentClasses.filter(cl => cl._id !== action.payload);
         Taro.showToast({ title: '删除成功', icon: "none" })
+      })
+      .addCase(deleteCourses.pending, () => {
+        Taro.showToast({ icon: 'loading', title: '删除中...' })
+      })
+      .addCase(deleteCourses.fulfilled, (state, action) => {
+        const { courses, semester } = action.payload;
+        // update selectedCourses
+        state.selectedCourses[semester] = state.selectedCourses[semester]
+          .filter(course => !courses.includes(course.courseCode));
+        if (semester !== CURRENT_SEMESTER) return;
+        // update currentClasses
+        state.currentClasses = state.currentClasses
+          .filter(clas => !courses.includes(clas.subject_code));
+      })
+      .addCase(deleteSemester.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
+      .addCase(deleteSemester.pending, (state, action) => {
+        Taro.showToast({ icon: 'loading', title: '删除中...' })
+      })
+      .addCase(deleteSemester.fulfilled, (state, action) => {
+        delete state.selectedCourses[action.payload];
       })
   },
 })

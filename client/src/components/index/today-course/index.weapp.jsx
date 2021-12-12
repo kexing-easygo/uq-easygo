@@ -4,11 +4,12 @@ import { AtActivityIndicator, AtCard } from 'taro-ui'
 import { useSelector } from 'react-redux'
 import { getTodayCourses } from '../../../services/course'
 import { alert } from '../../../assets/images/icon.json'
+import { CURRENT_SEMESTER } from '../../../utils/constant'
 
 function TodayCourse(props) {
 
   const { loginStatus } = useSelector(state => state.user);
-  const { currentClasses } = useSelector(state => state.course);
+  const { currentClasses, selectedCourses } = useSelector(state => state.course);
   const [currentCourse, setCurrentCourse] = useState([]);
   const [nextCourse, setNextCourse] = useState([])
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +74,10 @@ function TodayCourse(props) {
             {currentCourse.length === 0 && nextCourse.length === 0 &&
               <View className='course-cell info-text'>
                 {loginStatus ?
-                  (currentClasses.length === 0 ? '你还没有选课哦，快去课程表添加课程吧' : '今日无课') :
+                  (!selectedCourses[CURRENT_SEMESTER] ?
+                    '你还没有选课哦，快去课程表添加课程吧' :
+                    (selectedCourses[CURRENT_SEMESTER].length === 0 ?
+                      '你还没有选课哦，快去课程表添加课程吧' : '今日无课')) :
                   '登录后体验更多功能'}
               </View>}
           </View>}

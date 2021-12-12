@@ -5,7 +5,7 @@ export default {
     'pages/profile/index',
     'pages/basic-setting/index',
     'pages/basic-info/index',
-    'pages/bind-phone/index',
+    'pages/bind-mobile/index',
     'pages/bind-email/index',
     'pages/timetable/index',
     'pages/add-class/index',
@@ -13,6 +13,8 @@ export default {
     'pages/calculator/index',
     'pages/calculator-result/index',
     'pages/card-management/index',
+    'pages/course-management/index',
+    'pages/delete-course/index',
   ],
   window: {
     navigationBarTitleText: 'WeChat',

@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Input } from '@tarojs/components'
-import { AtIcon, AtActionSheet, AtActionSheetItem, AtRadio } from 'taro-ui'
+import { AtIcon } from 'taro-ui'
 import { fetchAssessments } from '../../../services/calculator'
-import { SEMESTERS } from '../../../utils/constant'
 import { useDispatch } from 'react-redux'
 import './index.less'
 import { setSearchedCourse } from '../../../features/calculator-slice'
 import { debounce } from '../../../utils/opt'
-
+import SemesterSelector from '../../semesters-selector'
 /**
  * 计算器中选择学期和课程代码
  * @param {object} props 
@@ -19,13 +18,6 @@ export default function CalculatorSelector(props) {
   const [semester, setSemester] = useState(''); // 默认值应为当前学期
   const [courseCode, setCourseCode] = useState('');
   const [toggleActionSheet, setToggleActionSheet] = useState(false);
-
-  const semesterOptions = SEMESTERS.map(sem => {
-    return {
-      label: sem,
-      value: sem
-    }
-  })
 
   const handleSearchAssessment = async () => {
     if (semester.length === 0) {
@@ -43,7 +35,7 @@ export default function CalculatorSelector(props) {
       return;
     }
     const params = {
-      courseCode: courseCode,
+      course: courseCode,
       semester: semester
     }
     dispatch(setSearchedCourse(courseCode));
@@ -55,7 +47,7 @@ export default function CalculatorSelector(props) {
       <View className='semester-selector input-element'>
         <Input
           className='calculator-input'
-          placeholder={'选择学期'}
+          placeholder={'Semester 2, 2021'}
           value={semester}
           disabled
         />
@@ -79,20 +71,12 @@ export default function CalculatorSelector(props) {
           onClick={debounce(handleSearchAssessment, 1000)}
         >GO</View>
       </View>
-
-      <AtActionSheet
+      <SemesterSelector
         isOpened={toggleActionSheet}
-        cancelText='确定'
-        title='选择学期'
-        onCancel={() => setToggleActionSheet(false)}
-        onClose={() => setToggleActionSheet(false)}
-      >
-        <AtRadio
-          options={semesterOptions}
-          value={semester}
-          onClick={setSemester}
-        />
-      </AtActionSheet>
+        setOpened={setToggleActionSheet}
+        semester={semester}
+        setSemester={setSemester}
+      />
     </View>
   )
 }

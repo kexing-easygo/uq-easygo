@@ -4,53 +4,55 @@ import { View } from '@tarojs/components'
 import { AtAccordion, AtList, AtListItem } from 'taro-ui'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchAssessments } from '../../../services/calculator'
-import { setSearchedCourse } from '../../../features/calculator-slice'
+import { setSearchedCourse, setSearchedSemester } from '../../../features/calculator-slice'
+import './index.less'
 
 function CourseList(props) {
 
   const dispatch = useDispatch();
-  const { currentClasses } = useSelector(state => state.course);
+  const { selectedCourses } = useSelector(state => state.course);
   const [opens, setOpens] = useState([]);
-  const selectedCourse = {
-    'Semester 2, 2021': ['AMME5060', 'BMET5790', 'CSYS5040'],
-    'Semester 1, 2021': ['XXXX', 'XXXX', 'XXXX'],
-    'Semester 1, 2022': ['COMP9444', 'COMP9417', 'COMP9900'],
-  }
+  console.log('calc selec', selectedCourses)
 
   useEffect(() => {
-    setOpens(new Array(Object.keys(selectedCourse).length).fill(false));
-  }, [currentClasses]); // should be selectedCourse
+    setOpens(new Array(Object.keys(selectedCourses).length).fill(false));
+  }, [selectedCourses]);
 
   const toggleAccordion = (value, i) =>
     setOpens(opens.map((open, j) => j === i ? value : open));
 
   const checkScore = async (semester, courseCode) => {
     const params = {
-      courseCode: courseCode,
+      course: courseCode,
       semester: semester
     }
+    dispatch(setSearchedSemester(semester));
     dispatch(setSearchedCourse(courseCode));
     dispatch(fetchAssessments(params));
   }
-
+  
   return (
     <View>
-      {Object.keys(selectedCourse).map((semester, i) =>
-        <AtAccordion
-          open={opens[i]}
-          onClick={(value) => toggleAccordion(value, i)}
-          title={semester}
-        >
-          <AtList hasBorder={false}>
-            {selectedCourse[semester].map(course =>
-              <AtListItem
-                title={course}
-                arrow='right'
-                onClick={() => checkScore(semester, course)}
-              />)}
-          </AtList>
-        </AtAccordion>)
-      }
+      {Object.keys(selectedCourses).map((semester, i) => {
+        console.log(`"在course-list选择的学期: ${semester}"`)
+        if (!selectedCourses[semester]) return null;
+        return (
+          <AtAccordion
+            open={opens[i]}
+            onClick={(value) => toggleAccordion(value, i)}
+            title={semester}
+          >
+            <AtList hasBorder={false}>
+              {selectedCourses[semester].map(course =>
+                <AtListItem
+                  title={course.courseCode}
+                  arrow='right'
+                  onClick={() => checkScore(semester, course.courseCode)}
+                />)}
+            </AtList>
+          </AtAccordion>
+        )
+      })}
     </View>
   )
 }

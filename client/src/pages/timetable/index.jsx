@@ -15,7 +15,7 @@ import { getUserProfile } from '../../services/login'
 import { AtModal } from "taro-ui"
 import './index.less'
 import { AU_TIME_ZONE } from '../../utils/constant'
-import { fetchSelectedClasses } from '../../services/course'
+import { fetchCurrentClasses } from '../../services/course'
 
 export default function TimeTable() {
 
@@ -43,9 +43,11 @@ export default function TimeTable() {
   const initialize = async () => {
     // 根据当前日期计算课程表日期和月份
     let today = new Date();
+    today.setMonth(6)
+    today.setDate(26)
     let currentMonth = today.getMonth() + 1;
     let currentWeek = getCurrentWeek();
-    let _dates = getDates();
+    let _dates = getDates(today);
     let selectedDay = today.getDay() === 0 ? 6 : today.getDay() - 1;
     setCurrentWeek(currentWeek);
     setCurrentMonth(currentMonth);
@@ -80,12 +82,12 @@ export default function TimeTable() {
   // 下拉刷新，重置回当前日期和课程
   usePullDownRefresh(() => {
     initialize();
-    if (handleLoginStatus()) dispatch(fetchSelectedClasses());
+    if (handleLoginStatus()) dispatch(fetchCurrentClasses());
   });
 
   useEffect(() => {
     initialize();
-    if (handleLoginStatus()) dispatch(fetchSelectedClasses());
+    if (handleLoginStatus()) dispatch(fetchCurrentClasses());
   }, []);
 
   // 登录后或上课模式发生变化时，初始化界面，获取日期，周数，月份数以及获取课程

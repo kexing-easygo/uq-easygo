@@ -34,7 +34,6 @@ export default function Calculator() {
             <CalculatorSelector />
           </View>
         </View>
-        <View className='setting-view'></View>
       </View>
     </View>
   )

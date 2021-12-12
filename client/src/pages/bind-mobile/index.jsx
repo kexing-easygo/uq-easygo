@@ -2,31 +2,31 @@ import React, { useState } from 'react'
 import NavBar from '../../components/navbar'
 import { AtButton, AtForm, AtInput } from 'taro-ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateEmail } from '../../services/profile'
+import { updateMobile } from '../../services/profile'
 import './index.less'
 
-export default function BindEmail() {
+export default function BindMobile() {
 
   const dispatch = useDispatch();
-  const { userEmail } = useSelector(state => state.user);
-  const [email, setEmail] = useState('')
+  const { userMobile } = useSelector(state => state.user);
+  const [mobile, setMobile] = useState('')
 
   return (
     <>
-      <NavBar title="邮箱绑定" backIcon />
+      <NavBar title="手机绑定" backIcon />
       <AtForm>
         <AtInput
-          name='email'
-          title='邮箱'
+          name='mobile'
+          title='手机号'
           type='text'
-          placeholder={userEmail || '请输入邮箱'}
-          value={email}
-          onChange={setEmail}
+          placeholder={userMobile || '请输入手机号'}
+          value={mobile}
+          onChange={setMobile}
         />
       </AtForm>
       <AtButton
         type='primary'
-        onClick={() => dispatch(updateEmail(email))}
+        onClick={() => dispatch(updateMobile(mobile))}
         customStyle={{ width: '90vw', margin: '24rpx auto' }}
       >确定</AtButton>
     </>

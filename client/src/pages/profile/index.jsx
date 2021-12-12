@@ -58,6 +58,7 @@ export default function Profile() {
           title='课程管理'
           arrow='right'
           iconInfo={getIcon('calendar')}
+          onClick={() => Taro.navigateTo({ url: '/pages/course-management/index' })}
         />
         <AtListItem
           title='卡片管理'

@@ -1,5 +1,8 @@
+// 环境变量
+export const APPID = 'wx363ec811fefffb9b';
+export const RESOURCE_APP_ID = 'wxc51fd512a103a723'
 export const RESOURCE_ENV = 'uqeasygo1'
-export const BRANCH_NAME = "UQ"
+export const BRANCH_NAME = 'UQ'
 // 时间
 export const NUMBERS = {
   0: "Break",
@@ -27,9 +30,9 @@ export const DAY_OF_WEEK = {
 export const WEEK_DAYS = ["周一", "周二", "周三", "周四", "周五"];
 export const HOURS = 13; // 每一天的小时数，即课程表格子的行数
 export const WEEKS_NO = 14; // 包含break一共14周
-export const BREAK = 8; // 第八周为break
+export const BREAK = 10; // 第八周为break
 export const AU_TIME_ZONE = 'AEDT' // AEST(冬令时 CST-2) or AEDT(夏令时 CST-3)
-export const START_DATE = new Date("Mon Aug 9 2021 00:00:00 GMT+1000 (Australian Eastern Standard Time)");
+export const START_DATE = new Date("Mon Jul 26 2021 00:00:00 GMT+1000 (Australian Eastern Standard Time)");
 export const MILLI_SECONDS_OF_WEEK = 1000 * 60 * 60 * 24 * 7;
 
 // 课程表

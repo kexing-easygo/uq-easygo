@@ -14,7 +14,7 @@ export default function AboutUs() {
           <Image className='logo-img' src={logo} />
           <View className='center-text secondary-text'>
             <View className='usyd-title'>UQ校园通</View>
-            <View>Version 1.1.0</View>
+            <View>Version 1.0.5</View>
           </View>
           <View>
             <View className='response-view center-text'>扫码向开发者反馈</View>

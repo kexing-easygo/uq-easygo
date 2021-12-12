@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { callCloud } from '../utils/cloud'
+import { getLocalOpenId } from './login'
 
 /**
  * 根据课程代码和学期获取当学期课程的assessment
@@ -9,12 +10,22 @@ import { callCloud } from '../utils/cloud'
 export const fetchAssessments = createAsyncThunk(
   'calculator/fetchAssessments',
   async (param) => {
-    try {
-      const assRes = await callCloud('calculator', 'fetchAssessments', param);
-      return assRes.result;
-    } catch (err) {
-      console.log('获取ass失败', ass);
-      return [];
-    }
+    const assRes = await callCloud('calculator', 'fetchAssessments', param);
+    return assRes.result;
+  }
+)
+
+/**
+ * 用户同意保存分数计算结果后将结果储存至数据库
+ */
+export const saveCourseScore = createAsyncThunk(
+  'calculator/saveCourseScore',
+  async (param) => {
+    console.log('saving score', param);
+    const saveRes = await callCloud('calculator', 'setCalculatedResult', {
+      ...param,
+      openid: await getLocalOpenId()
+    });
+    return saveRes;
   }
 )

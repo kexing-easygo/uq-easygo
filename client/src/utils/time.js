@@ -88,6 +88,8 @@ export const getDates = (date = new Date()) => {
  */
 export const getCurrentWeek = () => {
   const targetDate = new Date();
+  targetDate.setMonth(6)
+  targetDate.setDate(26)
   const diff = targetDate.valueOf() - START_DATE.valueOf();
   return Math.ceil(diff / MILLI_SECONDS_OF_WEEK)
 }

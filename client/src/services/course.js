@@ -15,7 +15,7 @@ import { computeEndTime } from '../utils/time'
 /**
  * 获取用户已选择过的所有课程
  */
-export const fetchSelectedClasses = createAsyncThunk(
+export const fetchCurrentClasses = createAsyncThunk(
   'courses/fetchCurrentClasses',
   async () => {
     console.log('fetcing courses...');
@@ -25,41 +25,13 @@ export const fetchSelectedClasses = createAsyncThunk(
   }
 )
 
-/**
- * 更改数据库中存储的所有课程，删除和修改课程的共用方法
- * @param {array} newCourses 
- */
-const updateClasses = async (newCourses) => {
-  const params = {
-    openid: await getLocalOpenId(),
-    courseTime: newCourses,
-  }
-  await callCloud('timetable', 'updateUserClasses', params);
-}
-/**
- * 删除某节课程
- */
-export const deleteCourse = createAsyncThunk(
-  'courses/deleteCourse',
-  async (deletedCourse, { getState }) => {
-    const { currentClasses } = getState().course;
-    const newCourses = currentClasses.filter(course => course._id !== deletedCourse._id);
-    await updateClasses(newCourses);
-    return newCourses;
-  }
-)
-
-/**
- * 修改某节课程
- */
-export const editCourse = createAsyncThunk(
-  'courses/editCourse',
-  async (editedCourse, { getState }) => {
-    const { currentClasses } = getState().course;
-    const newCourses = currentClasses.map(course =>
-      course._id === editedCourse._id ? editedCourse : course);
-    await updateClasses(newCourses);
-    return newCourses;
+export const fetchSelectedCourses = createAsyncThunk(
+  'courses/fetchSelectedCourses',
+  async () => {
+    console.log('fetching selected courses...')
+    const selectedCourses = await callCloud('timetable', 'getSelectedCourses', { openid: await getLocalOpenId() });
+    console.log('selected', selectedCourses.result);
+    return selectedCourses.result;
   }
 )
 
@@ -68,10 +40,8 @@ export const editCourse = createAsyncThunk(
  */
 export const getTodayCourses = async () => {
   try {
-    const params = {
-      openid: await getLocalOpenId(),
-    }
-    const res = await callCloud('timetable', 'fetchToday', params);
+    const openId = await getLocalOpenId();
+    const res = await callCloud('timetable', 'fetchToday', { openid: openId });
     return res.result;
   } catch (err) {
     console.log('获取当前课程失败', err);
@@ -174,5 +144,55 @@ export const deleteClass = createAsyncThunk(
     }
     await callCloud('timetable', 'deleteUserClass', args);
     return classId;
+  }
+)
+
+export const updateClass = createAsyncThunk(
+  'courses/updateClass',
+  async ({ courseCode, semester, classInfo }, { getState }) => {
+    const { currentClasses } = getState().course;
+    const args = {
+      openid: await getLocalOpenId(),
+      course: courseCode,
+      semester: semester,
+      classInfo: classInfo
+    }
+    await callCloud('timetable', 'updateUserClass', args);
+    const updated = {
+      ...currentClasses.find(cl => cl._id === classInfo._id),
+      ...classInfo
+    }
+    return updated;
+  }
+)
+
+/**
+ * 删除某学期选中的course，
+ * 更新selectedCourses，可能需要更新currentClasses
+ */
+export const deleteCourses = createAsyncThunk(
+  'courses/deleteCourses',
+  async ({ courses, semester }) => {
+    const openId = await getLocalOpenId();
+    await Promise.all(courses.map(courseCode => {
+      const params = {
+        openid: openId,
+        courseCode: courseCode,
+        semester: semester
+      }
+      return callCloud('timetable', 'deleteSelectedCourse', params);
+    }));
+    return { courses, semester }
+  }
+)
+
+export const deleteSemester = createAsyncThunk(
+  'courses/deleteSemester',
+  async (semester) => {
+    const res = await callCloud('timetable', 'deleteWholeSemester', {
+      openid: await getLocalOpenId(),
+      semester: semester
+    });
+    return semester;
   }
 )

@@ -19,14 +19,17 @@ export default function AddClass() {
 
   const dispatch = useDispatch();
   const { currentClasses } = useSelector(state => state.course);
+  const { classMode } = useSelector(state => state.user);
 
   const handleSearchCourse = async () => {
     if (courseCode.length === 0)
       return Taro.showToast({ title: '请输入课程代码', icon: 'none' });
-    const searchRes = await searchCourseTime(courseCode.toUpperCase(), CURRENT_SEMESTER, 'Internal');
+    const searchRes = await searchCourseTime(courseCode.toUpperCase(), CURRENT_SEMESTER, classMode);
     console.log('add class page', searchRes)
     setSessions(searchRes);
   }
+
+  useEffect(() => setSelectedSessions([]), [sessions]);
 
   const handleConfirm = () => {
     if (selectedColor === '') {

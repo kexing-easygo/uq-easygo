@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import './index.less'
 export default function BasicInfo() {
 
-  const { loginStatus, nickName } = useSelector(state => state.user);
+  const { loginStatus, nickName, userEmail, userMobile } = useSelector(state => state.user);
   const username = loginStatus ? nickName : '尚未登录';
 
   return (
@@ -23,12 +23,14 @@ export default function BasicInfo() {
         <AtListItem
           title='手机号'
           arrow='right'
-          onClick={() => Taro.navigateTo({ url: '/pages/bind-phone/index' })}
+          extraText={userMobile || '未绑定'}
+          onClick={() => Taro.navigateTo({ url: '/pages/bind-mobile/index' })}
         />
 
         <AtListItem
           title='邮箱'
           arrow='right'
+          extraText={userEmail || '未绑定'}
           onClick={() => Taro.navigateTo({ url: '/pages/bind-email/index' })}
         />
       </AtList>
