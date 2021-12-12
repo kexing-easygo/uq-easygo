@@ -13,8 +13,6 @@ import './index.less'
 import { getGPALevel } from '../../utils/courses'
 import { saveCourseScore } from '../../services/calculator'
 import { getResults, resetAskSave } from '../../features/calculator-slice'
-import { fetchSelectedCourses } from '../../services/course'
-import { HTML5_FMT } from 'moment'
 import { CURRENT_SEMESTER } from '../../utils/constant'
 
 
@@ -28,8 +26,6 @@ export default function CalculatorResult() {
   const searchedSemester = CURRENT_SEMESTER
   useEffect(() => {
     dispatch(resetAskSave());
-    // console.log(`"搜索的学期：${searchedSemester}"`) 
-    // console.log(`"搜索到的课程：${selectedCourses}"`)
     const results = selectedCourses[CURRENT_SEMESTER].find(course =>
       course.courseCode === searchedCourse)?.results;
     if (!results?.length) return;
