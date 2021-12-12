@@ -188,46 +188,46 @@ async function updateMobile(openid, collectionName, mobile) {
  * event 参数包含小程序端调用传入的 data
  * 
  */
-exports.main = async(event, context) => {
-    const { branch, method } = event
-    if (branch == undefined || method == undefined) {
-        return {}
-    }
-    // branch: USYD / UMEL
-    if (event.method == "getOpenID") {
-        const wxContext = cloud.getWXContext()
-        return wxContext.FROM_OPENID;
-    }
-    const collectionName = branch + MAIN_USER_SUFFIX
-    const { openid } = event
-    if (method == "createUser") {
-        const { userInfo } = event
-        return await createUser(openid, userInfo, collectionName);
-    }
-    if (method == "loginStatus") {
-        return await loginStatus(openid, collectionName);
-    }
-    if (method == "getUserInfo") {
-        return await getUserInfo(openid, collectionName)
-    }
-    if (method == "updateClassMode") {
-        const { mode } = event
-        return await updateClassMode(openid, collectionName, mode)
-    }
-    if (method == "getCardsInfo") {
-        const openid = event.openid
-        return await getCardsInfo(openid, collectionName)
-    }
-    if (method == "manageCards") {
-        const { openid, cardsInfo } = event
-        return await manageCards(openid, collectionName, cardsInfo)
-    }
-    if (method == "updateEmail") {
-        const { openid, email } = event
-        return await updateEmail(openid, collectionName, email)
-    }
-    if (method == "updateMobile") {
-        const { openid, mobile } = event
-        return await updateMobile(openid, collectionName, mobile)
-    }
+
+exports.main = async (event, context) => {
+  const {branch, method} = event
+  if (branch == undefined || method == undefined) {
+    return {}
+  }
+  // branch: USYD / UMEL
+  if (event.method == "getOpenID") {
+    const wxContext = cloud.getWXContext()
+    return wxContext.FROM_OPENID;
+  }
+  const collectionName = branch + MAIN_USER_SUFFIX
+  const {openid} = event
+  if (method == "createUser") {
+    const {userInfo} = event
+    return await createUser(openid, userInfo, collectionName);
+  }
+  if (method == "loginStatus") {
+    return await loginStatus(openid, collectionName);
+  }
+  if (method == "getUserInfo") {
+    return await getUserInfo(openid, collectionName)
+  }
+  if (method == "updateClassMode") {
+    const { classMode } = event
+    return await updateClassMode(openid, collectionName, classMode)
+  }
+  if (method == "getCardsInfo") {
+    return await getCardsInfo(openid, collectionName)
+  }
+  if (method == "manageCards") {
+    const { cardsInfo } = event
+    return await manageCards(openid, collectionName, cardsInfo)
+  }
+  if (method == "updateEmail") {
+    const {email} = event
+    return await updateEmail(openid, collectionName, email)
+  }
+  if (method == "updateMobile") {
+    const {mobile} = event
+    return await updateMobile(openid, collectionName, mobile)
+  }
 }

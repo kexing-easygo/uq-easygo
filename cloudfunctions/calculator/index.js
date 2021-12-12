@@ -66,70 +66,70 @@ async function setCalculatedResult(event) {
   return finalRes;
 }
 
-async function getCumulativeGPA(openid, branch) {
-  const selectedCourses = await cloud.callFunction({
-    // 要调用的云函数名称
-    name: 'timetable',
-    // 传递给云函数的参数
-    data: {
-      "branch": branch,
-      "method": "getSelectedCourses",
-      "openid": openid,
-    }
-  })
-  let GPA = 0
-  let numOfSemesters = Object.keys(selectedCourses).length
-  if (numOfSemesters == 0) return 0
-  Object.keys(selectedCourses).forEach(function (semester) {
-    const semesterInfo = selectedCourses[semester]
-    // 计算单学期的GPA
-    let semesterGPA = 0
-    let totalUnits = 0
-    for (let i = 0; i < semesterInfo.length; i++) {
-      const courseInfo = semesterInfo[i]
-      const calculatorResults = courseInfo["results"]
-      const courseCode = courseInfo["courseCode"]
-      // 计算某门课的GPA
-      semesterGPA += getCourseGPA(calculatorResults)
-      if (branch in ["USYD", "UMEL"]) {
-        // 加权
-        const res = await db.collection(branch + CALCULATOR_SUFFIX)
-        .where({
-          _id: courseCode
-        }).get()
-        const units = parseFloat(res.data[0].academic_detail.credits)
-        semesterGPA = semesterGPA * units
-        totalUnits += units
-      }
-    }
-    GPA += semesterGPA / totalUnits
-  })
-  return GPA / numOfSemesters
-}
-/**
- * 计算并返回一节course的GPA
- * @param {*} calculatorResults object
- */
-function getCourseGPA(calculatorResults) {
-  let courseGPA = 0
-  for (let j = 0; j < calculatorResults.length; j++) {
-    const assessmentInfo = calculatorResults[j]
-    let percent = assessmentInfo["percent"]
-    let weight = parseFloat(assessmentInfo["weight"].replace("%", ""))
-    let score = percent * weight
-    courseGPA += score
-  }
-  if (courseGPA < 50) {
-    return FAIL
-  } else if (courseGPA < 65) {
-    return PASS
-  } else if (courseGPA < 75) {
-    return CREDIT
-  } else if (courseGPA < 85) {
-    return DISTINCTION
-  } 
-  return HIGH_DISTINCTION
-}
+// async function getCumulativeGPA(openid, branch) {
+//   const selectedCourses = await cloud.callFunction({
+//     // 要调用的云函数名称
+//     name: 'timetable',
+//     // 传递给云函数的参数
+//     data: {
+//       "branch": branch,
+//       "method": "getSelectedCourses",
+//       "openid": openid,
+//     }
+//   })
+//   let GPA = 0
+//   let numOfSemesters = Object.keys(selectedCourses).length
+//   if (numOfSemesters == 0) return 0
+//   Object.keys(selectedCourses).forEach(function (semester) {
+//     const semesterInfo = selectedCourses[semester]
+//     // 计算单学期的GPA
+//     let semesterGPA = 0
+//     let totalUnits = 0
+//     for (let i = 0; i < semesterInfo.length; i++) {
+//       const courseInfo = semesterInfo[i]
+//       const calculatorResults = courseInfo["results"]
+//       const courseCode = courseInfo["courseCode"]
+//       // 计算某门课的GPA
+//       semesterGPA += getCourseGPA(calculatorResults)
+//       if (branch in ["USYD", "UMEL"]) {
+//         // 加权
+//         const res = await db.collection(branch + CALCULATOR_SUFFIX)
+//         .where({
+//           _id: courseCode
+//         }).get()
+//         const units = parseFloat(res.data[0].academic_detail.credits)
+//         semesterGPA = semesterGPA * units
+//         totalUnits += units
+//       }
+//     }
+//     GPA += semesterGPA / totalUnits
+//   })
+//   return GPA / numOfSemesters
+// }
+// /**
+//  * 计算并返回一节course的GPA
+//  * @param {*} calculatorResults object
+//  */
+// function getCourseGPA(calculatorResults) {
+//   let courseGPA = 0
+//   for (let j = 0; j < calculatorResults.length; j++) {
+//     const assessmentInfo = calculatorResults[j]
+//     let percent = assessmentInfo["percent"]
+//     let weight = parseFloat(assessmentInfo["weight"].replace("%", ""))
+//     let score = percent * weight
+//     courseGPA += score
+//   }
+//   if (courseGPA < 50) {
+//     return FAIL
+//   } else if (courseGPA < 65) {
+//     return PASS
+//   } else if (courseGPA < 75) {
+//     return CREDIT
+//   } else if (courseGPA < 85) {
+//     return DISTINCTION
+//   } 
+//   return HIGH_DISTINCTION
+// }
 
 
 // 云函数入口函数
