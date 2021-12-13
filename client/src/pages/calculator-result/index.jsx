@@ -26,6 +26,7 @@ export default function CalculatorResult() {
   const searchedSemester = CURRENT_SEMESTER
   useEffect(() => {
     dispatch(resetAskSave());
+    if (!selectedCourses?.CURRENT_SEMESTER) return;
     const results = selectedCourses[CURRENT_SEMESTER].find(course =>
       course.courseCode === searchedCourse)?.results;
     if (!results?.length) return;

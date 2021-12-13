@@ -1,9 +1,9 @@
-import React, { memo } from 'react'
+import React, { memo, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleModal, addScore, addTotalScore, calcPercent } from '../../../features/calculator-slice'
-import { AtList, AtListItem, AtButton, AtInputNumber, AtTag } from "taro-ui"
+import { AtList, AtListItem, AtButton, AtInputNumber, AtTag, AtInput } from "taro-ui"
 import { AtFloatLayout } from "taro-ui"
 import './index.less'
 
@@ -11,7 +11,6 @@ function ScoreModal(props) {
 
   const dispatch = useDispatch();
   const { assessments, clickedAss, showModal } = useSelector(state => state.calculator);
-
   const ScoreInput = () =>
     <View
       className='at-row at-row__justify--end at-row__align--center'
@@ -20,15 +19,16 @@ function ScoreModal(props) {
         min={0}
         step={1}
         value={assessments[clickedAss].score ?? 0}
-        onChange={value => dispatch(addScore((value)))}
+        onBlur={e=>dispatch(addScore(e.detail.value))}
       />
       <View>{`\/`}</View>
       <AtInputNumber
         min={0}
         step={1}
         value={assessments[clickedAss].totalScore ?? 0}
-        onChange={value => dispatch(addTotalScore((value)))}
+        onBlur={e=>dispatch(addTotalScore(e.detail.value))}
       />
+
       <View>=</View>
       <AtTag>{parseFloat((assessments[clickedAss].score / assessments[clickedAss].totalScore * 100).toFixed(1)) || 0}%</AtTag>
     </View>

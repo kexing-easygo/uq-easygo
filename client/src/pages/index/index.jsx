@@ -47,36 +47,45 @@ export default function Index() {
           <Image
             className='function-icon'
             src={calculaterIcon}
+            mode="widthFix"
             onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}
           />
-          <View className='title-text'>计算器</View>
+          <View 
+          className='title-text'
+          onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}>计算器</View>
         </View>
 
         <View className='function-icon-view'>
           <Image
             className='function-icon'
             src={countDownIcon}
+            mode="widthFix"
             onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
           />
-          <View className='title-text'>倒计时</View>
+          <View className='title-text'
+          onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>倒计时</View>
         </View>
 
         <View className='function-icon-view'>
           <Image
             className='function-icon'
             src={timeTableIcon}
+            mode="widthFix"
             onClick={() => Taro.navigateTo({ url: '/pages/timetable/index' })}
           />
-          <View className='title-text'>课程表</View>
+          <View className='title-text'
+          onClick={() => Taro.navigateTo({ url: '/pages/timetable/index' })}>课程表</View>
         </View>
 
         <View className='function-icon-view'>
           <Image
             className='function-icon'
             src={courseReviewIcon}
+            mode="widthFix"
             onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
           />
-          <View className='title-text'>课评</View>
+          <View className='title-text'
+          onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>课评</View>
         </View>
 
       </View>

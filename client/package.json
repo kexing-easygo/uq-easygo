@@ -1,8 +1,8 @@
 {
-  "name": "usyd-easygo",
-  "version": "1.0.0",
+  "name": "uq-easygo",
+  "version": "1.0.5",
   "private": true,
-  "description": "a miniprogram for usyd",
+  "description": "a miniprogram for uq",
   "templateInfo": {
     "name": "wxcloud",
     "typescript": false,

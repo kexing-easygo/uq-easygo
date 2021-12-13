@@ -8,9 +8,9 @@ export default function LoadingPage() {
   return (
     <View className='loading-page'>
       <Image src={pizza} alt="a spinning glass of water with ice cubes in it" />
-      <Text>USYD-EasyGo!!</Text>
+      <Text>UQ-EasyGo!!</Text>
       <Text>这只是一个loading图片的示例</Text>
-      <Text>毕竟看起来这个小程序和pizza没什么关系Haha</Text>
+      <Text>毕竟看起来这个小程序和pizza没什么关系Hahahahaha</Text>
     </View>
   );
 }
