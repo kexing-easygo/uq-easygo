@@ -85,6 +85,18 @@ async function addSubReview(collectionName, courseName, reviewId, poster_name, r
         }
     })
 }
+
+/**
+ * get all review of a course
+ * @param {*} collectionName 
+ * @param {*} courseName 
+ */
+async function getAllReview(collectionName, courseName) {
+    let course = await db.collection(collectionName).where({
+        course_name: courseName,
+    }).get()
+    return course.data[0].review
+}
 // 云函数入口函数
 exports.main = async (event, context) => {
     const { branch, method } = event
@@ -101,5 +113,10 @@ exports.main = async (event, context) => {
     if (method == "addSubReview") {
         const { courseName, poster_name, reviewContent, reviewId } = event
         return await addSubReview(collectionName, courseName, reviewId, poster_name, reviewContent)
+    }
+
+    if (method == "getAllReview") {
+        const { courseName } = event
+        return await getAllReview(collectionName, courseName)
     }
 }
