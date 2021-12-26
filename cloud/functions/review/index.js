@@ -95,28 +95,50 @@ async function getAllReview(collectionName, courseName) {
     let course = await db.collection(collectionName).where({
         course_name: courseName,
     }).get()
-    return course.data[0].review
+    if (course.data.length > 0) {
+        return course.data[0].review
+    } else {
+        return {
+            "errMsg": "No reviews",
+            "review": false
+        }
+    }
 }
+
+
+async function topSearch(collectionName, topNumber) {
+    let courses = await db.collection(collectionName).orderBy("searchTimes", "desc").limit(topNumber).get()
+    return courses.data
+}
+
 // 云函数入口函数
 exports.main = async (event, context) => {
     const { branch, method } = event
     if (branch == undefined || method == undefined) {
         return {}
     }
-    const collectionName = branch + REVIEW_SUFFIX
+    const collectionName = "Test_review" //branch + REVIEW_SUFFIX
 
     if (method == "addReview") {
-        const { courseName, poster_name, reviewContent } = event
-        return await addReview(collectionName, courseName, poster_name, reviewContent)
+        const { courseCode, poster_name, reviewContent } = event
+        return await addReview(collectionName, courseCode.toUpperCase(), poster_name, reviewContent)
     }
 
     if (method == "addSubReview") {
-        const { courseName, poster_name, reviewContent, reviewId } = event
-        return await addSubReview(collectionName, courseName, reviewId, poster_name, reviewContent)
+        const { courseCode, poster_name, reviewContent, reviewId } = event
+        return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, poster_name, reviewContent)
     }
 
     if (method == "getAllReview") {
-        const { courseName } = event
-        return await getAllReview(collectionName, courseName)
+        const { courseCode } = event
+        return await getAllReview(collectionName, courseCode.toUpperCase())
+    }
+
+    if (method == "topSearch") {
+        const { topNumber } = event
+        if (topNumber == undefined) {
+            topNumber = 10
+        }
+        return await topSearch("CourseNew", topNumber)
     }
 }
