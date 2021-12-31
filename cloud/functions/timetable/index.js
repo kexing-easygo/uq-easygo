@@ -247,6 +247,27 @@ async function deleteWholeSemester(openid, semester, userCollection) {
         .update({ data: { selectedCourses: selectedCourses } });
 }
 
+async function fetchCurrentSemester(openid, collectionName) {
+    const res = await db.collection(collectionName)
+        .where({
+            _openid: openid
+        }).get()
+    return res.data[0].currentSemester
+}
+
+async function updateCurrentSemester(openid, collectionName, currentSemester) {
+    const res = await db.collection(collectionName)
+        .where({
+            _openid: openid
+        })
+        .update({
+            data: {
+                currentSemester: currentSemester
+            }
+        })
+    return res
+}
+
 // 云函数入口函数
 exports.main = async(event, context) => {
     var branch = event.branch
@@ -256,7 +277,7 @@ exports.main = async(event, context) => {
             data: "缺少必须的元素"
         }
     }
-    var openid = event.openid;
+    const { openid } = event
     var semester = event.semester == undefined ? "" : event.semester
     if (method == "fetchCourseInfo") {
         return await fetchCourseInfo(branch + TIMETABLE_USER_SUFFIX, event.courseId)
@@ -298,5 +319,12 @@ exports.main = async(event, context) => {
     if (method == "deleteWholeSemester") {
         const { openid, semester } = event;
         return await deleteWholeSemester(openid, semester, userCollection)
+    }
+    const { currentSemester } = event
+    if (method == "fetchCurrentSemester") {
+        return fetchCurrentSemester(openid, userCollection)
+    }
+    if (method == "updateCurrentSemester") {
+        return updateCurrentSemester(openid, userCollection, currentSemester)
     }
 }
