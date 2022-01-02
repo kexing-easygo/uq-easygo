@@ -22,6 +22,7 @@ async function createUser(openid, userInfo, collectionName) {
                 userInfo: userInfo,
                 userEmail: "",
                 userMobile: "",
+                currentSemester: "",
                 notification: {
                     wechat: {
                         enabled: false,
@@ -54,7 +55,7 @@ async function createUser(openid, userInfo, collectionName) {
 }
 
 async function loginStatus(openid, collectionName) {
-    var i = await db.collection(collectionName).where({
+    const i = await db.collection(collectionName).where({
             _openid: openid
         })
         .get()
@@ -76,7 +77,7 @@ async function getUserInfo(openid, collectionName) {
 
 
 async function updateClassMode(openid, collectionName, mode) {
-    var res = await db.collection(collectionName)
+    const res = await db.collection(collectionName)
         .where({
             _openid: openid
         })
@@ -134,7 +135,7 @@ async function updateMobile(openid, collectionName, mobile) {
  * @param {*} collectionName 
  */
 async function getCardsInfo(openid, collectionName) {
-    var res = await db.collection(collectionName)
+    const res = await db.collection(collectionName)
         .where({
             _openid: openid
         }).get()
@@ -148,7 +149,7 @@ async function getCardsInfo(openid, collectionName) {
  * @param {*} cardsInfo 
  */
 async function manageCards(openid, collectionName, cardsInfo) {
-    var res = await db.collection(collectionName)
+    const res = await db.collection(collectionName)
         .where({
             _openid: openid
         }).update({
@@ -160,24 +161,26 @@ async function manageCards(openid, collectionName, cardsInfo) {
 }
 
 async function updateEmail(openid, collectionName, email) {
-    var res = await db.collection(collectionName)
+    const res = await db.collection(collectionName)
         .where({
             _openid: openid
         }).update({
             data: {
-                email: email
+                userEmail: email
             }
         })
     return res
 }
 
+
+
 async function updateMobile(openid, collectionName, mobile) {
-    var res = await db.collection(collectionName)
+    const res = await db.collection(collectionName)
         .where({
             _openid: openid
         }).update({
             data: {
-                mobile: mobile
+                userMobile: mobile
             }
         })
     return res
