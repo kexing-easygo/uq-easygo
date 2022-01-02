@@ -360,6 +360,8 @@ async function autoAddTimeable(openid, timetableLink, userCollection) {
     };
     // return isuseless now, may improve in the future
     return autoAddContent.classesInfo
+}
+
 async function fetchCurrentSemester(openid, collectionName) {
     const res = await db.collection(collectionName)
         .where({
