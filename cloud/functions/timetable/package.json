@@ -11,6 +11,9 @@
   "dependencies": {
     "wx-server-sdk": "~2.5.3",
     "moment": "latest",
-    "moment-timezone": "latest"
+    "moment-timezone": "latest",
+    "cal-parser": "^1.0.1",
+    "request": "^2.88.2",
+    "stream": "0.0.2"
   }
 }

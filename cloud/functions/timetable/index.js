@@ -6,18 +6,104 @@ const MAIN_USER_SUFFIX = "_MainUser"
 const TIMETABLE_USER_SUFFIX = "_Timetable"
 const CURRENT_YEAR = 2021
 const COURSE_CODE_REGEX = /\w{4}\d{4,}/
-
+const ical = require("cal-parser");
+const request = require("request");
 cloud.init()
 
 
 const db = cloud.database();
 const _ = db.command
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-    /**
-     * 私有方法
-     * 根据class的id，在数据库中搜索到对应的单节课信息。
-     * 类似MySQL的外键
-     */
+
+/**
+ * set the stream to store the content from autoAddTimeLink
+ */
+const Stream = require("stream");
+const ws = new Stream();
+var autoAddContent = {
+    readyOrNot: false,
+    classesInfo: [] // store the analysed timetable information, may change later
+}
+ws.bytes = "";
+ws.write = function (buf) {
+    ws.bytes += buf;
+};
+
+
+/**
+ * get the date information based on Timestamp
+ * @param {*} timeItem  Timestamp
+ */
+function _getClassDate(timeItem) {
+    var dateTime = new Date(timeItem);
+    return (
+        dateTime.getUTCDate() +
+        "/" +
+        (parseInt(dateTime.getUTCMonth()) + 1) +
+        "/" +
+        dateTime.getUTCFullYear()
+    );
+}
+/**
+ * get time information based on Timestamp
+ * @param {*}} timeItem 
+ */
+function _getClassTime(timeItem) {
+    var dateTime = new Date(timeItem);
+    return (
+        dateTime.getUTCHours() +
+        ":" +
+        dateTime.getUTCMinutes() +
+        ":" +
+        dateTime.getUTCSeconds()
+    );
+}
+
+/**
+ * analyse the calendar information which read from the stream, return an array of the class time 
+ * @param {*} calender 
+ */
+function _analyseData(calender) {
+    var coursesTime = [];
+    var courses = [];
+    calender.forEach((element) => {
+        var description = element.description.value.split(", ");
+        var classTitle = description[0] + "|" + description[1];
+        if (courses.includes(classTitle)) {
+            coursesTime[coursesTime.length - 1].activitiesDays.push(
+                _getClassDate(element.dtstart.value)
+            );
+        } else {
+            courses.push(classTitle);
+            var classTimeItem = {
+                className: classTitle,
+                classDetail: element.summary.value,
+                location: element.location.value,
+                activitiesDays: [_getClassDate(element.dtstart.value)],
+                startTime: _getClassTime(element.dtstart.value),
+                startToEnd:
+                    _getClassTime(element.dtstart.value) +
+                    "-" +
+                    _getClassTime(element.dtend.value),
+                time:
+                    parseInt(
+                        new Date(element.dtend.value) - new Date(element.dtstart.value)
+                    ) /
+                    1000 /
+                    3600,
+            };
+            coursesTime.push(classTimeItem);
+        }
+    });
+    return coursesTime
+}
+
+
+/**
+ * 私有方法
+ * 根据class的id，在数据库中搜索到对应的单节课信息。
+ * 类似MySQL的外键
+ */
 async function __fetchClassById(collectionName, classId) {
     const courseId = classId.split("|")[0];
     var res = await fetchCourseInfo(collectionName, courseId);
@@ -247,8 +333,37 @@ async function deleteWholeSemester(openid, semester, userCollection) {
         .update({ data: { selectedCourses: selectedCourses } });
 }
 
+/**
+ * send the request based on the calendar url, and store the analysed information to db
+ * @param {*} openid 
+ * @param {*} timetableLink 
+ * @param {*} userCollection 
+ */
+async function autoAddTimeable(openid, timetableLink, userCollection) {
+    ws.writable = true
+    request(timetableLink).pipe(ws);
+    // set the event when the stream stop receiving content from the request
+    ws.end = function (buf) {
+        if (arguments.length) ws.write(buf);
+        ws.writable = false;
+        const parsed = ical.parseString(ws.bytes);
+        autoAddContent.classesInfo = _analyseData(parsed.events);
+        autoAddContent.readyOrNot = true;
+        db.collection(userCollection).where({
+            _openid: openid
+        }).update({
+            data: {
+                classTime: autoAddContent.classesInfo
+            }
+        })
+        ws.bytes = ""
+    };
+    // return isuseless now, may improve in the future
+    return autoAddContent.classesInfo
+}
+
 // 云函数入口函数
-exports.main = async(event, context) => {
+exports.main = async (event, context) => {
     var branch = event.branch
     var method = event.method
     if (branch == undefined || method == undefined) {
@@ -298,5 +413,10 @@ exports.main = async(event, context) => {
     if (method == "deleteWholeSemester") {
         const { openid, semester } = event;
         return await deleteWholeSemester(openid, semester, userCollection)
+    }
+
+    if (method == "autoAddTimeable") {
+        const { openid, timetableLink } = event;
+        return await autoAddTimeable(openid, timetableLink, userCollection)
     }
 }
