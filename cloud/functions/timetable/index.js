@@ -70,9 +70,14 @@ function _analyseData(calender) {
         var description = element.description.value.split(", ");
         var classTitle = description[0] + "|" + description[1];
         if (courses.includes(classTitle)) {
-            coursesTime[coursesTime.length - 1].activitiesDays.push(
-                _getClassDate(element.dtstart.value)
-            );
+            coursesTime.forEach((classItem) => {
+                if (classItem.className == classTitle) {
+                    classItem.activitiesDays.push(
+                        _getClassDate(element.dtstart.value)
+                    );
+                }
+            })
+            
         } else {
             courses.push(classTitle);
             var classTimeItem = {
