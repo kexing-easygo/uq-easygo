@@ -3,12 +3,13 @@ import Taro from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { pizza } from '../../assets/images/launch.json'
 import './index.less'
+import { WELCOME_MESSAGE } from "../../utils/constant";
 
 export default function LoadingPage() {
   return (
     <View className='loading-page'>
       <Image src={pizza} alt="a spinning glass of water with ice cubes in it" />
-      <Text>UQ-EasyGo!!</Text>
+      <Text>{WELCOME_MESSAGE}</Text>
       <Text>这只是一个loading图片的示例</Text>
       <Text>毕竟看起来这个小程序和pizza没什么关系Hahahahaha</Text>
     </View>

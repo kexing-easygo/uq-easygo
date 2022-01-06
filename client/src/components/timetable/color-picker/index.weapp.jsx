@@ -19,7 +19,7 @@ export default memo(function ColorPicker(props) {
     <View className="at-row at-row__justify--center at-row__align--center options-view">
       {COLORS.map((color, index) =>
         <View className="selected-color" style={{
-          border: selectedStatus[index] || currentSelect === color ? `1px solid ${color}` : '',
+          border: selectedStatus[index] || currentSelect === color ? `3px solid ${color}` : '',
         }}>
           <View
             onClick={() => handleColorSelect(index)}

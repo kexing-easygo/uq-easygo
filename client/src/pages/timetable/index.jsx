@@ -20,7 +20,8 @@ import { fetchCurrentClasses } from '../../services/course'
 export default function TimeTable() {
 
   const dispatch = useDispatch();
-  const { currentClasses } = useSelector(state => state.course);
+  const { currentClasses, currentSemester, startDate } = useSelector(state => state.course);
+  const CURRENT_SEMESTER = currentSemester
   const { loginStatus, classMode } = useSelector(state => state.user);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [currentWeek, setCurrentWeek] = useState(1);
@@ -43,10 +44,8 @@ export default function TimeTable() {
   const initialize = async () => {
     // 根据当前日期计算课程表日期和月份
     let today = new Date();
-    today.setMonth(6)
-    today.setDate(26)
     let currentMonth = today.getMonth() + 1;
-    let currentWeek = getCurrentWeek();
+    let currentWeek = getCurrentWeek(startDate);
     let _dates = getDates(today);
     let selectedDay = today.getDay() === 0 ? 6 : today.getDay() - 1;
     setCurrentWeek(currentWeek);
@@ -82,12 +81,12 @@ export default function TimeTable() {
   // 下拉刷新，重置回当前日期和课程
   usePullDownRefresh(() => {
     initialize();
-    if (handleLoginStatus()) dispatch(fetchCurrentClasses());
+    if (handleLoginStatus()) dispatch(fetchCurrentClasses(CURRENT_SEMESTER));
   });
 
   useEffect(() => {
     initialize();
-    if (handleLoginStatus()) dispatch(fetchCurrentClasses());
+    if (handleLoginStatus()) dispatch(fetchCurrentClasses(CURRENT_SEMESTER));
   }, []);
 
   // 登录后或上课模式发生变化时，初始化界面，获取日期，周数，月份数以及获取课程
@@ -97,7 +96,7 @@ export default function TimeTable() {
   // 切换week时计算对应日期，或添加/删除课程时，展示当周有效课程
   useEffect(() => {
     // 计算该周的日期
-    const _dates = getDatesByWeek(currentWeek);
+    const _dates = getDatesByWeek(currentWeek, startDate);
     setDates(formatDates(_dates, 'mm-dd'));
     setCurrentMonth(_dates[0].getMonth() + 1);
     if (!handleLoginStatus()) return;
@@ -116,17 +115,22 @@ export default function TimeTable() {
   return (
     <View className="container">
       <NavBar title="课程表" backIcon />
-      {classMode === 'External' && <AtNoticebar
+      {classMode === '中国境内' && <AtNoticebar
         close
         icon='volume-plus'>
         当前上课时间展示为北京时间哦~
+      </AtNoticebar>}
+      {classMode === '澳洲境内' && <AtNoticebar
+        close
+        icon='volume-plus'>
+        当前上课时间展示为澳洲当地院校时间哦~
       </AtNoticebar>}
       <AllWeeks currentWeek={currentWeek} setCurrentWeek={setCurrentWeek} />
       {/* 周一到周五以及对应日期 */}
       <WeekDays selectedDay={selectedDay} dates={dates} currentMonth={currentMonth} />
       <View className="time-course-view">
         {/* 左侧的时间列 */}
-        <TimeBar timeZoneStart={classMode === 'External' ? (AU_TIME_ZONE === 'AEDT' ? 5 : 6) : 8} />
+        <TimeBar timeZoneStart={classMode === '中国境内' ? (AU_TIME_ZONE === 'AEDT' ? 5 : 6) : 8} />
         {/* 课程表主体 */}
         <CourseTable />
       </View>

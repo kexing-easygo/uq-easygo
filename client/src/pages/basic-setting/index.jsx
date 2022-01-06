@@ -1,25 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Picker } from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import { AtList, AtListItem, AtActionSheet, AtRadio } from 'taro-ui'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateClassMode } from '../../services/profile'
-import { CLASS_MODE_OPTIONS } from '../../utils/constant'
+import { CLASS_MODE_OPTIONS, SUMMER_START_DATE, SUMMER_WEEKS, SEMESTER_START_DATE, SEMESTER_WEEKS } from '../../utils/constant'
 import './index.less'
+import SemesterSelector from '../../components/semesters-selector'
+import { setCurrentSemester } from '../../features/course-slice'
+import { updateCurrentSemester, fetchCurrentSemester } from "../../services/course";
+
 
 export default function BasicSetting() {
 
   const dispatch = useDispatch();
   const { loginStatus, classMode } = useSelector(state => state.user);
+  const { currentSemester } = useSelector(state => state.course)
   const [toggleOptions, setToggleOptions] = useState(false);
+  const [toggleActionSheet, setToggleActionSheet] = useState(false);
+  useEffect(() => {
+    dispatch(fetchCurrentSemester())
+  }, [currentSemester])
   const classModeOptions = CLASS_MODE_OPTIONS.map(cm => {
     return {
       label: cm,
       value: cm
     }
   })
-
   return (
     <View>
       <NavBar title="基本设置" backIcon />
@@ -46,6 +54,14 @@ export default function BasicSetting() {
           disabled={!loginStatus}
           onClick={() => setToggleOptions(true)}
         />
+        {/* 选择当前学期 */}
+        <AtListItem
+          title='当前学期'
+          extraText={loginStatus ? currentSemester || '未设置' : '未登录'}
+          arrow='right'
+          disabled={!loginStatus}
+          onClick={() => setToggleActionSheet(true)}
+        />
       </AtList>
 
       <AtActionSheet
@@ -61,6 +77,14 @@ export default function BasicSetting() {
           onClick={mode => dispatch(updateClassMode(mode))}
         />
       </AtActionSheet>
+      <SemesterSelector
+        isOpened={toggleActionSheet}
+        setOpened={setToggleActionSheet}
+        semester={currentSemester}
+        setSemester={s => {
+          dispatch(updateCurrentSemester(s))
+        }}
+      />
     </View>
   )
 }

@@ -5,7 +5,7 @@ import { getLoginStatus } from '../../services/login'
 import { initCloud } from '../../utils/cloud'
 import { useDispatch } from 'react-redux'
 import { setLoginStatus } from '../../features/user-slice'
-import { fetchSelectedCourses } from '../../services/course'
+import { fetchSelectedCourses, fetchCurrentSemester } from '../../services/course'
 import { fetchUserInfo, getCardsInfo } from '../../services/profile'
 /**
  * 启动页执行
@@ -30,6 +30,7 @@ export default function Launch() {
           dispatch(fetchUserInfo());
           dispatch(getCardsInfo());
           dispatch(fetchSelectedCourses());
+          dispatch(fetchCurrentSemester())
         }
         Taro.switchTab({ url: '/pages/index/index' })
       }

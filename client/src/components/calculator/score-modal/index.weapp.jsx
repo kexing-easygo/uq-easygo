@@ -1,8 +1,7 @@
-import React, { memo, useState } from 'react'
-import Taro from '@tarojs/taro'
+import React, { memo, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleModal, addScore, addTotalScore, calcPercent } from '../../../features/calculator-slice'
+import { toggleModal, addScore, addTotalScore, calcPercent, getResults } from '../../../features/calculator-slice'
 import { AtList, AtListItem, AtButton, AtInputNumber, AtTag, AtInput } from "taro-ui"
 import { AtFloatLayout } from "taro-ui"
 import './index.less'
@@ -19,14 +18,14 @@ function ScoreModal(props) {
         min={0}
         step={1}
         value={assessments[clickedAss].score ?? 0}
-        onBlur={e=>dispatch(addScore(e.detail.value))}
+        onBlur={e=>dispatch(addScore(parseFloat(e.detail.value)))}
       />
       <View>{`\/`}</View>
       <AtInputNumber
         min={0}
         step={1}
         value={assessments[clickedAss].totalScore ?? 0}
-        onBlur={e=>dispatch(addTotalScore(e.detail.value))}
+        onBlur={e=>dispatch(addTotalScore(parseFloat(e.detail.value)))}
       />
 
       <View>=</View>
@@ -35,6 +34,7 @@ function ScoreModal(props) {
 
   return (
     <AtFloatLayout
+      className='score-modal'
       isOpened={showModal}
       title="作业详情"
       onClose={() => dispatch(toggleModal(false))}>
@@ -42,8 +42,7 @@ function ScoreModal(props) {
         <>
           <AtList>
             <AtListItem title='类型' note={assessments[clickedAss].description} extraText={assessments[clickedAss].assessment_type} />
-            {/* <AtListItem title='描述' extraText={assessments[clickedAss].description} /> */}
-            <AtListItem title='日期' extraText={assessments[clickedAss].due} />
+            <AtListItem title='日期' extraText={assessments[clickedAss].date} />
             <AtListItem title='占比' extraText={assessments[clickedAss].weight} />
             <AtListItem title='时长' extraText={assessments[clickedAss].length} />
             <AtListItem title='分数' note={<ScoreInput />} />

@@ -1,3 +1,4 @@
+// 各项作业占比展示板
 import React, { memo } from 'react'
 import Taro from '@tarojs/taro'
 import { AtProgress } from 'taro-ui'

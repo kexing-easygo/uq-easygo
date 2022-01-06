@@ -9,10 +9,12 @@ import { CURRENT_SEMESTER, DEFAULT_REMARK } from '../../../utils/constant'
 import { computeEndTime, convert2CST } from '../../../utils/time'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
+import { current } from '@reduxjs/toolkit'
 
 export default function SessionDetails(props) {
 
-  const { clickedClass, displayDetail } = useSelector(state => state.course);
+  const { clickedClass, displayDetail, currentSemester } = useSelector(state => state.course);
+  const CURRENT_SEMESTER = currentSemester
   const { classMode } = useSelector(state => state.user);
   const [remark, setRemark] = useState(clickedClass.remark ?? DEFAULT_REMARK); // 备注信息
   const [isEditing, setIsEditing] = useState(false);
@@ -41,10 +43,11 @@ export default function SessionDetails(props) {
   const handleDeleteClass = () => {
     setModalOpened(false);
     dispatch(toggleDisplayDetail());
+    const courseCode = clickedClass.subject_code.split("_")[0]
     const args = {
       classId: clickedClass._id,
       semester: CURRENT_SEMESTER,
-      courseCode: clickedClass.subject_code
+      courseCode: courseCode
     }
     dispatch(deleteClass(args));
   }
@@ -63,11 +66,13 @@ export default function SessionDetails(props) {
       background: currentBackground,
       remark: remark
     }
+    const courseCode = clickedClass.subject_code.split("_")[0]
     dispatch(updateClass({
       semester: CURRENT_SEMESTER,
-      courseCode: clickedClass.subject_code,
+      courseCode: courseCode,
       classInfo: _classInfo
     }));
+    dispatch(toggleDisplayDetail())
   }
 
   // 更新备注

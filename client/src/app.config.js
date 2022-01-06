@@ -15,11 +15,15 @@ export default {
     'pages/card-management/index',
     'pages/course-management/index',
     'pages/delete-course/index',
+    'pages/web-view/index',
+    'pages/carousel-web-view/index',
   ],
   window: {
+    backgroundTextStyle: 'light',
+    navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black',
-    navigationStyle: 'custom',
+    navigationStyle: 'custom'
   },
   tabBar: {
     // custom: true, // 自定义全局tab组件仅限微信小程序，其他端和H5, RN均不支持
@@ -35,5 +39,6 @@ export default {
       iconPath: './assets/images/个人中心.png',
       selectedIconPath: './assets/images/个人中心.png'
     }]
-  }
+  },
+  cloud: true,
 }

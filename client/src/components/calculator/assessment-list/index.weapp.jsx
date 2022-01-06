@@ -14,11 +14,12 @@ export default function AssessmentList(props) {
   return (
     <View className='ass-list-container'>
       <AtList>
+        <AtListItem className='list-header' title={'输入作业得分'}/>
         {assessments.map((ass, i) =>
           <AtListItem
             title={ass.description}
             note={ass.assessment_type}
-            extraText={ass.weight}
+            // extraText={ass.weight}
             arrow='right'
             onClick={() => {
               dispatch(setClickedAss(i));

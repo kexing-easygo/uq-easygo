@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
-import { fetchAssessments, saveCourseScore } from '../services/calculator'
+import { fetchAssessments, saveCourseScore, getSemesterGPA } from '../services/calculator'
 import { mergeAssResult } from '../utils/assessments'
 // 初始化状态
 const initialState = {
@@ -10,6 +10,7 @@ const initialState = {
   showModal: false,
   searchedSemester: '',
   askSave: false,
+  gpa: 0
 }
 
 // 创建action
@@ -83,6 +84,15 @@ export const calculatorSlice = createSlice({
       })
       .addCase(saveCourseScore.fulfilled, (state, action) => {
 
+      })
+      .addCase(getSemesterGPA.pending, (state, action) => {
+        Taro.showToast({ title: '计算当前GPA', icon: 'loading', mask: true })
+      })
+      .addCase(getSemesterGPA.fulfilled, (state, action) => {
+        state.gpa = action.payload
+      })
+      .addCase(getSemesterGPA.rejected, (state, action) => {
+        Taro.showToast({ title: '出错了', icon: 'none' })
       })
 })
 

@@ -12,7 +12,6 @@ function CourseList(props) {
   const dispatch = useDispatch();
   const { selectedCourses } = useSelector(state => state.course);
   const [opens, setOpens] = useState([]);
-  console.log('calc selec', selectedCourses)
 
   useEffect(() => {
     setOpens(new Array(Object.keys(selectedCourses).length).fill(false));

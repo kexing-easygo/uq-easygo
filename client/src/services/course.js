@@ -17,10 +17,10 @@ import { computeEndTime } from '../utils/time'
  */
 export const fetchCurrentClasses = createAsyncThunk(
   'courses/fetchCurrentClasses',
-  async () => {
+  async (semester) => {
     console.log('fetcing courses...');
     const _openId = await getLocalOpenId();
-    const courses = await callCloud('timetable', 'fetchUserClasses', { openid: _openId, semester: CURRENT_SEMESTER });
+    const courses = await callCloud('timetable', 'fetchUserClasses', { openid: _openId, semester: semester });
     return courses.result;
   }
 )
@@ -42,6 +42,7 @@ export const getTodayCourses = async () => {
   try {
     const openId = await getLocalOpenId();
     const res = await callCloud('timetable', 'fetchToday', { openid: openId });
+    console.log("获取当前课程完成，为: ", res.result)
     return res.result;
   } catch (err) {
     console.log('获取当前课程失败', err);
@@ -115,10 +116,10 @@ export const searchCourseTime = async (courseCode, semester, classMode) => {
  */
 export const appendClass = createAsyncThunk(
   'courses/appendClass',
-  async ({ courseCode, classes }) => {
+  async ({ courseCode, classes, semester }) => {
     const args = {
       openid: await getLocalOpenId(),
-      semester: CURRENT_SEMESTER,
+      semester: semester,
       courseCode: courseCode.toUpperCase(),
       classes: classes
     }
@@ -194,5 +195,39 @@ export const deleteSemester = createAsyncThunk(
       semester: semester
     });
     return semester;
+  }
+)
+
+export const fetchCurrentSemester = createAsyncThunk(
+  "course/fetchCurrentSemester",
+  async () => {
+    try {
+      const _openId = await getLocalOpenId();
+      const res = await callCloud('timetable', 'fetchCurrentSemester', { 
+        openid: _openId 
+      });
+      return res.result;
+    } catch (err) {
+      console.log('获取当前学期失败', err);
+      return "Summer Semester"
+    }
+
+  }
+)
+
+export const updateCurrentSemester = createAsyncThunk(
+  'courses/updateCurrentSemester',
+  async (sem) => {
+    const _openId = await getLocalOpenId();
+    try {
+      await callCloud('timetable', 'updateCurrentSemester', {
+        openid: _openId,
+        currentSemester: sem
+      })
+      return sem
+    } catch (err) {
+      console.log(err)
+      return "Summer Semester"
+    }
   }
 )

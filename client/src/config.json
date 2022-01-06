@@ -1,0 +1,30 @@
+{
+  "RESOURCE_APP_ID": "wxc51fd512a103a723",
+  "PROGRAM_NAME": "UQ校园通",
+  "RESOURCE_ENV": "uqeasygo1",
+  "BRANCH_NAME": "UQ",
+  "SUMMER_WEEKS": 8,
+  "SUMMER_START_DATE_STRING": "Mon Jan 3 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
+  "SEMESTER_WEEKS": 14,
+  "SEMESTER_START_DATE_STRING": "Mon Jul 26 2021 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
+  "SEMESTERS": [
+    "Summer Semester",
+    "Semester 2, 2021",
+    "Semester 1, 2022"
+  ],
+  "CURRENT_SEMESTER": "Semester 1, 2022",
+  "CLASS_MODE_OPTIONS": [
+    "澳洲境内",
+    "中国境内"
+  ],
+  "AU_TIME_ZONE": "AEST",
+  "SEMESTER_BREAK": 9,
+  "WELCOME_MESSAGE": "UQ校园通!!!",
+  "SEARCHBAR_DEFAULT_PLACEHOLDER": "CSSE1001",
+  "activityUrl": "",
+  "carouselUrl": "",
+  "APPID": "wxc51fd512a103a723",
+  "RED_BOOK_ACCOUNT": "UQ校园通_U妹",
+  "WECHAT_ACCOUNT": "UQ校园通",
+  "VERSION": "Version 1.0.5"
+}

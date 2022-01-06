@@ -4,10 +4,12 @@ import { AtActivityIndicator, AtCard } from 'taro-ui'
 import { useSelector } from 'react-redux'
 import { getTodayCourses } from '../../../services/course'
 import { alert } from '../../../assets/images/icon.json'
-import { CURRENT_SEMESTER } from '../../../utils/constant'
+// import { CURRENT_SEMESTER } from '../../../utils/constant'
+
 
 function TodayCourse(props) {
-
+  const { currentSemester } = useSelector(state => state.course)
+  const CURRENT_SEMESTER = currentSemester
   const { loginStatus } = useSelector(state => state.user);
   const { currentClasses, selectedCourses } = useSelector(state => state.course);
   const [currentCourse, setCurrentCourse] = useState([]);
@@ -19,13 +21,11 @@ function TodayCourse(props) {
     (async () => {
       if (loginStatus) {
         const todayCourse = await getTodayCourses();
-        if (todayCourse.length === 0) {
+        if (todayCourse?.next.length === 0) {
           setIsLoading(false);
           return;
         }
-        setCurrentCourse(todayCourse.now);
-        if (todayCourse.now === 1) setNextCourse(todayCourse.next[0]);
-        else setNextCourse(todayCourse.next.slice(0, 2))
+        setNextCourse(todayCourse.next)
       }
       setIsLoading(false);
     })()

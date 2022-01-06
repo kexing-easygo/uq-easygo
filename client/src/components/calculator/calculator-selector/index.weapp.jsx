@@ -3,11 +3,13 @@ import Taro from '@tarojs/taro'
 import { View, Input } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import { fetchAssessments } from '../../../services/calculator'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './index.less'
 import { setSearchedCourse } from '../../../features/calculator-slice'
 import { debounce } from '../../../utils/opt'
 import SemesterSelector from '../../semesters-selector'
+import CourseListTest from '../course-list-test'
+import {SEARCHBAR_DEFAULT_PLACEHOLDER, CURRENT_SEMESTER} from '../../../config.json'
 /**
  * 计算器中选择学期和课程代码
  * @param {object} props 
@@ -15,18 +17,19 @@ import SemesterSelector from '../../semesters-selector'
 export default function CalculatorSelector(props) {
 
   const dispatch = useDispatch();
-  const [semester, setSemester] = useState(''); // 默认值应为当前学期
-  const [courseCode, setCourseCode] = useState('');
-  const [toggleActionSheet, setToggleActionSheet] = useState(false);
-
+  const { currentSemester } = useSelector(state => state.course)
+  // const [semester, setSemester] = useState(CURRENT_SEMESTER); // 默认值应为当前学期
+  const [courseCode, setCourseCode] = useState(SEARCHBAR_DEFAULT_PLACEHOLDER);
+  // const [toggleActionSheet, setToggleActionSheet] = useState(false);
+  const semester = currentSemester
   const handleSearchAssessment = async () => {
-    if (semester.length === 0) {
-      await Taro.showToast({
-        title: "请选择学期",
-        icon: "none"
-      })
-      return;
-    }
+    // if (semester.length === 0) {
+    //   await Taro.showToast({
+    //     title: "请选择学期",
+    //     icon: "none"
+    //   })
+    //   return;
+    // }
     if (courseCode.length === 0) {
       await Taro.showToast({
         title: "请填写课程代码",
@@ -44,7 +47,7 @@ export default function CalculatorSelector(props) {
 
   return (
     <View className='selector-container'>
-      <View className='semester-selector input-element'>
+      {/* <View className='semester-selector input-element'>
         <Input
           className='calculator-input'
           placeholder={'Semester 2, 2021'}
@@ -56,7 +59,7 @@ export default function CalculatorSelector(props) {
           onClick={() => setToggleActionSheet(true)}>
           <AtIcon className="at-fab__icon at-icon at-icon-menu"></AtIcon>
         </View>
-      </View>
+      </View> */}
 
       <View className='course-selector input-element'>
         <Input
@@ -71,12 +74,13 @@ export default function CalculatorSelector(props) {
           onClick={debounce(handleSearchAssessment, 1000)}
         >GO</View>
       </View>
-      <SemesterSelector
+      {/* <SemesterSelector
         isOpened={toggleActionSheet}
         setOpened={setToggleActionSheet}
         semester={semester}
         setSemester={setSemester}
-      />
+      /> */}
+      <CourseListTest semester={semester} />
     </View>
   )
 }

@@ -1,17 +1,23 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchCurrentClasses, appendClass, deleteClass, updateClass, fetchSelectedCourses, deleteCourses, deleteSemester } from '../services/course'
+import { fetchCurrentSemester, updateCurrentSemester } from '../services/course'
 import { computeAvailableCourses, computeClashCourses } from '../utils/courses'
-import { CURRENT_SEMESTER } from '../utils/constant'
+import { SEMESTERS, CURRENT_SEMESTER, SUMMER_START_DATE, SUMMER_WEEKS, SEMESTER_START_DATE, SEMESTER_WEEKS, WEEK, WEEKS_NO, START_DATE } from '../utils/constant'
 
 // 初始化状态
+// 开始周默认为summer
 const initialState = {
   selectedCourses: {},
   currentClasses: [],
   availCourses: [],
   clickedClass: {},
   clashCourses: [],
-  displayDetail: false
+  displayDetail: false,
+  managementClickedClass: {},
+  currentSemester: CURRENT_SEMESTER,
+  weeksNo: WEEKS_NO,
+  startDate: START_DATE
 }
 
 // 创建action
@@ -36,6 +42,26 @@ export const courseSlice = createSlice({
     // 当课程出现增删时需要重新计算冲突课程
     updateClashes: (state, action) => {
       state.clashCourses = computeClashCourses(action.payload);
+    },
+    setManagementClickedClass: (state, action) => {
+      state.managementClickedClass = action.payload
+    },
+    setCurrentSemester: (state, action) => {
+      state.currentSemester = action.payload
+      // console.log("现在的学期是:::", state.currentSemester)
+      if (action.payload === SEMESTERS[0]) {
+        state.weeksNo = SUMMER_WEEKS
+        state.startDate = SUMMER_START_DATE
+      } else if (action.payload == SEMESTERS[1]) {
+        state.weeksNo = SEMESTER_WEEKS
+        state.startDate = SEMESTER_START_DATE
+      }
+    },
+    setWeeksNo: (state, action) => {
+      state.weeksNo = action.payload
+    },
+    setStartDate: (state, action) => {
+      state.startDate = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -82,6 +108,9 @@ export const courseSlice = createSlice({
         state.currentClasses = state.currentClasses.filter(cl => cl._id !== action.payload);
         Taro.showToast({ title: '删除成功', icon: "none" })
       })
+      .addCase(deleteClass.rejected, (state, action) => {
+        Taro.showToast({ title: '删除失败', icon: "none" })
+      })
       .addCase(deleteCourses.pending, () => {
         Taro.showToast({ icon: 'loading', title: '删除中...' })
       })
@@ -90,7 +119,8 @@ export const courseSlice = createSlice({
         // update selectedCourses
         state.selectedCourses[semester] = state.selectedCourses[semester]
           .filter(course => !courses.includes(course.courseCode));
-        if (semester !== CURRENT_SEMESTER) return;
+        // if (semester !== CURRENT_SEMESTER) return;
+        if (semester !== state.currentSemester) return;
         // update currentClasses
         state.currentClasses = state.currentClasses
           .filter(clas => !courses.includes(clas.subject_code));
@@ -104,10 +134,40 @@ export const courseSlice = createSlice({
       .addCase(deleteSemester.fulfilled, (state, action) => {
         delete state.selectedCourses[action.payload];
       })
+      .addCase(fetchCurrentSemester.fulfilled, (state, action) => {
+        state.currentSemester = action.payload
+        if (action.payload === SEMESTERS[0]) {
+          state.weeksNo = SUMMER_WEEKS
+          state.startDate = SUMMER_START_DATE
+        } else if (action.payload == SEMESTERS[1]) {
+          state.weeksNo = SEMESTER_WEEKS
+          state.startDate = SEMESTER_START_DATE
+        }
+      })
+      .addCase(fetchCurrentSemester.rejected, (state, action) => {
+        Taro.showToast({ title: '获取当前学期失败，默认为summer', icon: "none" })
+        state.currentSemester = SEMESTERS[0]
+      })
+      .addCase(updateCurrentSemester.pending, (state, action) => {
+        Taro.showToast({ icon: 'loading', title: '更改中...' })
+      })
+      .addCase(updateCurrentSemester.fulfilled, (state, action) => {
+        state.currentSemester = action.payload
+        if (action.payload === SEMESTERS[0]) {
+          state.weeksNo = SUMMER_WEEKS
+          state.startDate = SUMMER_START_DATE
+        } else if (action.payload == SEMESTERS[1]) {
+          state.weeksNo = SEMESTER_WEEKS
+          state.startDate = SEMESTER_START_DATE
+        }
+      })
+      .addCase(updateCurrentSemester.rejected, (state, action) => {
+        Taro.showToast({ title: '更新失败', icon: "none" })
+      })
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes } = courseSlice.actions
+export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes, setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate } = courseSlice.actions
 
 export default courseSlice.reducer

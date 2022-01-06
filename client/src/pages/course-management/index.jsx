@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtList, AtAccordion, AtSwipeAction, AtActionSheet, AtActionSheetItem } from "taro-ui"
+import { AtList, AtModal, AtAccordion, AtSwipeAction, AtActionSheet, AtActionSheetItem } from "taro-ui"
 import NavBar from '../../components/navbar'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
 import { getClassCode } from '../../utils/courses'
-import { deleteSemester, fetchSelectedCourses } from '../../services/course'
-import { CURRENT_SEMESTER } from '../../utils/constant'
+import { setManagementClickedClass } from '../../features/course-slice'
+import { deleteClass, deleteSemester, fetchSelectedCourses } from '../../services/course'
 
 export default function CourseManagement() {
 
   const dispatch = useDispatch();
   const { loginStatus } = useSelector(state => state.user);
-  const { selectedCourses } = useSelector(state => state.course);
+  const [modalOpened, setModalOpened] = useState(false);
+  const { selectedCourses, managementClickedClass, currentSemester } = useSelector(state => state.course);
   const [opens, setOpens] = useState({});     // 控制AtAccordion的开关状态
   const [actionSheetOpen, setActionSheetOpen] = useState(false); // 控制AtActionSheet的开关
   const [managedSemester, setManagedSemester] = useState('');
@@ -40,10 +41,27 @@ export default function CourseManagement() {
     setOpens(newOpens)
   }, [])
 
+  useEffect(() => {
+    dispatch(fetchSelectedCourses());
+  }, [])
+
   const toggleAccordion = (semester, value, i) => {
     const opensCp = { ...opens }
     opensCp[semester] = opens[semester].map((open, j) => j === i ? value : open);
     setOpens(opensCp);
+  }
+  
+  const handleDeleteClass = () => {
+    const courseCode = managementClickedClass._id.split("_")[0]
+    const args = {
+      classId: managementClickedClass._id,
+      semester: managedSemester,
+      courseCode: courseCode
+    }
+    console.log("deleting class ::: ", args)
+    dispatch(deleteClass(args));
+    setModalOpened(false);
+    dispatch(fetchSelectedCourses());
   }
 
   return (
@@ -80,7 +98,10 @@ export default function CourseManagement() {
               key={course.courseCode}
               title={course.courseCode}
               open={opens[semester] && opens[semester][i]}
-              onClick={(value) => toggleAccordion(semester, value, i)}
+              onClick={(value) => {
+                setManagedSemester(semester)
+                toggleAccordion(semester, value, i)
+              }}
             >
               <View className='accordion-content'>
                 {course.classes.map((clas, j) =>
@@ -90,6 +111,8 @@ export default function CourseManagement() {
                       maxDistance={100}
                       areaWidth={Taro.getSystemInfoSync().screenWidth}
                       options={actionOptions}
+                      onOpened={() => dispatch(setManagementClickedClass(clas))}
+                      onClick={() => setModalOpened(true)}
                     >
                       <View className='class-view'>{getClassCode(clas._id)}</View>
                     </AtSwipeAction>
@@ -99,6 +122,15 @@ export default function CourseManagement() {
             </AtAccordion>)}
         </View>
       })}
+      <AtModal
+        isOpened={modalOpened}
+        cancelText='取消'
+        confirmText='确认'
+        onClose={() => setModalOpened(false)}
+        onCancel={() => setModalOpened(false)}
+        onConfirm={handleDeleteClass}
+        content='确定要删除吗'
+      />
       {/* 未登录时 */}
       {!loginStatus ?
         <View className='info-text empty-page-text center-text'>
@@ -107,7 +139,7 @@ export default function CourseManagement() {
         </View> :
         <View
           className='new-semester'
-          onClick={() => Taro.navigateTo({ url: `/pages/add-class/index?semester=${CURRENT_SEMESTER}` })}>
+          onClick={() => Taro.navigateTo({ url: `/pages/add-class/index?semester=${currentSemester}` })}>
           <Text className='at-icon at-icon-add info-text'></Text>
           <Text className='info-text'>添加课程</Text>
         </View>}

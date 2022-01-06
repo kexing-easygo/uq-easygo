@@ -11,6 +11,7 @@ export const fetchAssessments = createAsyncThunk(
   'calculator/fetchAssessments',
   async (param) => {
     const assRes = await callCloud('calculator', 'fetchAssessments', param);
+    console.log(assRes)
     return assRes.result;
   }
 )
@@ -27,5 +28,20 @@ export const saveCourseScore = createAsyncThunk(
       openid: await getLocalOpenId()
     });
     return saveRes;
+  }
+)
+
+export const getSemesterGPA = createAsyncThunk(
+  'calculator/getCumulativeGPA',
+  async (semester) => {
+    try {
+      const res = await callCloud('calculator', 'getCumulativeGPA', {
+        semester: semester,
+        openid: await getLocalOpenId()
+      })
+      return res.result
+    } catch (err) {
+      console.log(err)
+    }
   }
 )

@@ -1,6 +1,6 @@
 const config = {
-  projectName: 'uq-easygo',
-  date: '2021-11-28',
+  projectName: 'umel-easygo',
+  date: '2021-9-15',
   designWidth: 750,
   deviceRatio: {
     '640': 2.34 / 2,
@@ -43,6 +43,7 @@ const config = {
     }
   },
   h5: {
+    esnextModules: ['taro-ui'],
     publicPath: '/',
     staticDirectory: 'static',
     postcss: {

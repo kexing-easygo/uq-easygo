@@ -5,20 +5,27 @@ import NavBar from '../../components/navbar'
 import ColorPicker from '../../components/timetable/color-picker'
 import BackTop from '../../components/back-top'
 import { searchCourseTime, appendClass } from '../../services/course'
-import { AtSearchBar, AtCheckbox, AtButton } from 'taro-ui'
+import { AtSearchBar, AtCheckbox, AtButton, AtNoticebar } from 'taro-ui'
 import { getDuplicateCourse } from '../../utils/courses'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
-import { CURRENT_SEMESTER } from '../../utils/constant'
-
+import { CURRENT_SEMESTER, SEMESTERS, SEARCHBAR_DEFAULT_PLACEHOLDER } from '../../utils/constant'
+import SemesterSelector from '../../components/semesters-selector'
+import { setCurrentSemester } from '../../features/course-slice'
+import { current } from '@reduxjs/toolkit'
 export default function AddClass() {
   const [courseCode, setCourseCode] = useState('');
   const [sessions, setSessions] = useState([]);
   const [selectedSessions, setSelectedSessions] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('');
-
+  const [selectedColor, setSelectedColor] = useState('#FA5151');
+  // 兼容两个学期
+  // const [semester, setSemester] = useState('Semester 2, 2021'); // 默认值应为当前学期
+  // const [toggleActionSheet, setToggleActionSheet] = useState(false);
+  // 
   const dispatch = useDispatch();
-  const { currentClasses } = useSelector(state => state.course);
+  const { currentClasses, currentSemester } = useSelector(state => state.course);
+  const CURRENT_SEMESTER = currentSemester
+
   const { classMode } = useSelector(state => state.user);
 
   const handleSearchCourse = async () => {
@@ -65,22 +72,35 @@ export default function AddClass() {
     }))
     const data = {
       courseCode: courseCode,
-      classes: _classes
+      classes: _classes,
+      semester: CURRENT_SEMESTER
     }
     // 调用云函数储存课程
     dispatch(appendClass(data));
+    Taro.navigateBack()
   }
 
   return (
     <View>
       <NavBar title="添加课程" backIcon />
+      {currentSemester === SEMESTERS[0] && <AtNoticebar
+        close
+        icon='volume-plus'>
+        当前搜索出来的均为Summer的课哦～可以在个人中心-基本设置修改所在学期
+      </AtNoticebar>}
+      {currentSemester === SEMESTERS[1] && <AtNoticebar
+        close
+        icon='volume-plus'>
+        当前搜索出来的均为Semester 2, 2021的课哦～可以在个人中心-基本设置修改所在学期
+      </AtNoticebar>}
       <AtSearchBar
         actionName="搜索"
         showActionButton
-        placeholder="CSSE1001"
+        placeholder={SEARCHBAR_DEFAULT_PLACEHOLDER}
         value={courseCode}
         onChange={(value) => setCourseCode(value)}
         onActionClick={handleSearchCourse}
+        onConfirm={handleSearchCourse}
       />
       <View className="at-row at-row__align--center inner-container">
         <View className="at-col at-col-1 at-col--auto set-color">设置颜色</View>
