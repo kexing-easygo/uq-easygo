@@ -217,28 +217,93 @@ async function updateUserClasses(event, collectionName) {
 }
 
 
-async function fetchToday(openid, branch) {
-    const allCourses = await fetchUserClasses(openid, branch, "Semester 2, 2021") // 获取所有的课程
+
+const reformatTodayDate = (today) => {
+    const temp = today.clone()
+    const monthNumber = temp.get('month') + 1
+    const dateNumber = temp.get('date')
+    const month = monthNumber.toString().length === 1 ? `${0}${monthNumber}` : `${monthNumber}`
+    const date = dateNumber.toString().length === 1 ? `${0}${dateNumber}` : `${dateNumber}`
+    const today1 = `${temp.get('year')}-${month}-${date}`;
+    return today1
+}
+
+const getStartTime = (today, course, branch) => {
+    const {start_time} = course
+    const today1 = reformatTodayDate(today)
+    const startTimeDateString = `${today1} ${start_time}`
+    if (branch == "UQ") {
+        return moment.tz(startTimeDateString, "Australia/Brisbane")
+    } else if (branch == "USYD") {
+        return moment.tz(startTimeDateString, "Australia/Sydney")
+    } else if (branch == "UMEL") {
+        return moment.tz(startTimeDateString, "Australia/Melbourne")
+    }
+}
+
+const reformatHourAndMinutes = (momentTime) => {
+    const hours = momentTime.get('hour') === 0 ? '00' : momentTime.get('hour')
+    const minutes = momentTime.get('minutes') === 0 ? '00' : momentTime.get('minutes')
+    return `${hours}:${minutes}`
+}
+
+const getEndTime = (today, course, branch) => {
+    const startTime = getStartTime(today, course, branch)
+    const { duration } = course
+    return startTime.clone().add(parseInt(duration), 'minutes')
+}
+
+const fetchToday = async(openid, branch) => {
+    const res = await cloud.callFunction({
+        // 要调用的云函数名称
+        name: 'main-login',
+        // 传递给云函数的参数
+        data: {
+            "branch": branch,
+            "method": "getUserInfo",
+            "openid": openid,
+        }
+    })
+    // 获取用户的上课模式和当前学期
+    const currentSemester = await fetchCurrentSemester(openid, branch + MAIN_USER_SUFFIX)
+    const { classMode } = res.result
+    const allCourses = await fetchUserClasses(openid, branch, currentSemester) // 获取所有的课程
     const todayCourses = {
-        now: [],
         next: []
     };
-    const todayDate = moment.tz('Asia/Shanghai');
+    let tz = 'Asia/Shanghai'
+    if (classMode === "澳洲境内") {
+        if (branch === "UQ") {
+            tz = 'Australia/Brisbane'
+        } else if (branch === "USYD") {
+            tz = 'Australia/Sydney'
+        } else if (branch == "UMEL") {
+            tz = 'Australia/Melbourne'
+        }
+    }
+    const todayDate = moment.tz(tz);
     const currentTime = todayDate.get('hour')
     const today = `${todayDate.get('date')}/${todayDate.get('month') + 1}/${todayDate.get('year')}`.split('/').map(n => parseInt(n)).join('/');
     if (allCourses == undefined) return [];
     allCourses.map(course => {
         if (course.activitiesDays.includes(today)) {
-            const startTime = parseInt(course.start_time.split(":")[0]);
-            const endTime = parseInt(course.end_time.split(":")[0]);
-            if (currentTime >= startTime && currentTime < endTime) todayCourses["now"].push(course);
-            else if (currentTime <= startTime) todayCourses["next"].push(course);
+            // startTime和endTime默认为澳洲院校当地时间
+            let startTime = getStartTime(todayDate, course, branch)
+            let endTime = getEndTime(todayDate, course, branch)
+            // 考虑到如果是国内的同学，要再转成国内时间
+            if (tz == 'Asia/Shanghai') {
+                startTime = startTime.clone().tz(tz)
+                endTime = endTime.clone().tz(tz) 
+            }
+            course["start_time"] = reformatHourAndMinutes(startTime)
+            course["end_time"] = reformatHourAndMinutes(endTime)
+            if (currentTime <= startTime.get("hour")) todayCourses["next"].push(course);
         }
     })
     const compareCourse = (a, b) =>
         a.start_time.split(":")[0] - b.start_time.split(":")[0];
     todayCourses["next"] = todayCourses["next"].sort((a, b) => compareCourse(a, b));
-    return todayCourses;
+    return todayCourses
 }
 
 async function getSelectedCourses(openid, collectionName) {

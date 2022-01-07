@@ -71,7 +71,7 @@ function formatDate(dateObject, type) {
 
 async function fetchAll(openid, collectionName) {
   // result 是一个用户的文档数据，包含所有字段
-  var result = await db.collection("MainUser").where({
+  const result = await db.collection(collectionName).where({
     _openid: openid
   }).get()
   const userData = result.data[0]
@@ -217,6 +217,18 @@ async function __push_notification(values, mode) {
 
 }
 
+const sendVerificationCode = async () => {
+  await cloud.callFunction({
+    // 要调用的云函数名称
+    name: 'sendEmail',
+    // 传递给云函数的参数
+    data: {
+      "toAddr": email,
+      "subject": "作业提醒",
+      "content": content
+    }
+  })
+}
 
 /**
  * 中间接口，通过该接口调用发邮件的云函数

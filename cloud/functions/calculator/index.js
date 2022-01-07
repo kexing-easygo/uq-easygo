@@ -20,7 +20,9 @@ async function fetchAssessments(course, semester, collectionName) {
   }).get()
   if (result.data.length == 0) return [];
   const data = result.data[0];
-  return data.academic_detail.semester_available == semester ? data.assessments : [];
+  const semestersAvailable = data.academic_details.semester_available
+  if (semestersAvailable.includes(semester)) return data.assessments
+  return []
 }
 
 async function fetchCalculatedResult(event) {
@@ -66,83 +68,74 @@ async function setCalculatedResult(event) {
   return finalRes;
 }
 
-// async function getCumulativeGPA(openid, branch) {
-//   const selectedCourses = await cloud.callFunction({
-//     // 要调用的云函数名称
-//     name: 'timetable',
-//     // 传递给云函数的参数
-//     data: {
-//       "branch": branch,
-//       "method": "getSelectedCourses",
-//       "openid": openid,
-//     }
-//   })
-//   let GPA = 0
-//   let numOfSemesters = Object.keys(selectedCourses).length
-//   if (numOfSemesters == 0) return 0
-//   Object.keys(selectedCourses).forEach(function (semester) {
-//     const semesterInfo = selectedCourses[semester]
-//     // 计算单学期的GPA
-//     let semesterGPA = 0
-//     let totalUnits = 0
-//     for (let i = 0; i < semesterInfo.length; i++) {
-//       const courseInfo = semesterInfo[i]
-//       const calculatorResults = courseInfo["results"]
-//       const courseCode = courseInfo["courseCode"]
-//       // 计算某门课的GPA
-//       semesterGPA += getCourseGPA(calculatorResults)
-//       if (branch in ["USYD", "UMEL"]) {
-//         // 加权
-//         const res = await db.collection(branch + CALCULATOR_SUFFIX)
-//         .where({
-//           _id: courseCode
-//         }).get()
-//         const units = parseFloat(res.data[0].academic_detail.credits)
-//         semesterGPA = semesterGPA * units
-//         totalUnits += units
-//       }
-//     }
-//     GPA += semesterGPA / totalUnits
-//   })
-//   return GPA / numOfSemesters
-// }
-// /**
-//  * 计算并返回一节course的GPA
-//  * @param {*} calculatorResults object
-//  */
-// function getCourseGPA(calculatorResults) {
-//   let courseGPA = 0
-//   for (let j = 0; j < calculatorResults.length; j++) {
-//     const assessmentInfo = calculatorResults[j]
-//     let percent = assessmentInfo["percent"]
-//     let weight = parseFloat(assessmentInfo["weight"].replace("%", ""))
-//     let score = percent * weight
-//     courseGPA += score
-//   }
-//   if (courseGPA < 50) {
-//     return FAIL
-//   } else if (courseGPA < 65) {
-//     return PASS
-//   } else if (courseGPA < 75) {
-//     return CREDIT
-//   } else if (courseGPA < 85) {
-//     return DISTINCTION
-//   } 
-//   return HIGH_DISTINCTION
-// }
+const determineLevel = (res, branch) => {
+  switch (branch) {
+      case "UQ":
+          if (res < 50) return 3
+          else if (res < 65) return 4
+          else if (res < 75) return 5
+          else if (res < 75) return 6
+          return 7
+      default:
+          return res
+  }
+}
 
+/**
+ * 计算当前学期用户的GPA
+ * @param {string} openid openid
+ * @param {string} branch 院校分支
+ * @param {string} semester 学期，一般为当前学期
+ */
+const getCumulativeGPA = async(openid, branch, semester) => {
+  const selectedCoursesRes = await cloud.callFunction({
+    // 要调用的云函数名称
+    name: 'timetable',
+    // 传递给云函数的参数
+    data: {
+      "branch": branch,
+      "method": "getSelectedCourses",
+      "openid": openid,
+    }
+  })
+  const selectedCourses = selectedCoursesRes.result;
+  const semesterCourses = selectedCourses[semester]
+  let semesterGPA = 0
+  let totalUnits = 0.0
+  await Promise.all(semesterCourses.map(async(courseInfo) => {
+      // 单节课GPA
+      let singleCourseRes = 0
+      const { courseCode, results } = courseInfo
+      results.map((result) => {
+          let weight = result.weight.replace("%, ")
+          weight = parseFloat(result.weight)
+          let percent = result.percent
+          let singleItemScore = percent / 100 * weight
+          singleCourseRes += singleItemScore
+      })
+      const res = await db.collection(branch + "_Courses").where({
+        _id: courseCode
+      }).get()
+      let units = 12.5
+      if (res.data.length > 0) units = parseFloat(res.data[0].academic_details.credits)
+      totalUnits += units
+      const courseGPA = determineLevel(singleCourseRes, branch)
+      semesterGPA += courseGPA * units
+  }))
+  const totalGPA = (semesterGPA / totalUnits).toFixed(2)
+  return totalGPA
+}
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { branch, method, course, semester } = event
+  const { branch, method } = event
   if (branch == undefined
-    || method == undefined
-    || course == undefined
-    || semester == undefined) {
+    || method == undefined) {
     return {}
   }
   if (method == 'fetchAssessments') {
     const collectionName = branch + CALCULATOR_SUFFIX
+    const { course, semester } = event
     return await fetchAssessments(course, semester, collectionName)
   }
   if (method == "fetchCalculatedResult") {
@@ -152,7 +145,7 @@ exports.main = async (event, context) => {
     return await setCalculatedResult(event)
   }
   if (method == "getCumulativeGPA") {
-    const {openid, branch} = event
-    return await getCumulativeGPA(openid, branch)
+    const { openid, semester } = event
+    return await getCumulativeGPA(openid, branch, semester)
   }
 }
