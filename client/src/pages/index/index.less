@@ -1,0 +1,109 @@
+@import "../../app.less";
+
+.index-container {
+  margin: 30px;
+
+  .usyd-easygo-title {
+    width: 40%;
+
+    & > image {
+      margin: -20px 0;
+      width: 100%;
+      height: 70px;
+    }
+  }
+
+  .swiper {
+    height: 300px;
+    margin: 30px 0;
+
+    .carousel-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 10px;
+    }
+  }
+
+  .function-entries {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    font-size: 25px;
+
+    .function-icon-view {
+      width: 15%;
+      overflow: hidden;
+      text-align: center;
+
+      .function-icon {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+      }
+    }
+  }
+
+  .today-course {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .following-course-view {
+      width: 100%;
+
+      .current-course {
+        background-color: #e3e9fe;
+        position: relative;
+
+        .alert-icon {
+          width: 80px;
+          height: 80px;
+          position: absolute;
+          top: 50%;
+          left: 10%;
+          margin-top: -40px;
+        }
+      }
+    }
+
+    .course-cell {
+      height: 100px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .course-time {
+        font-size: 30px;
+      }
+
+      .course-info {
+        color: #7a7a7a;
+        font-size: 25px;
+      }
+    }
+
+    .next-course {
+      background-color: #ffffff;
+    }
+  }
+}
+
+.at-card {
+  margin: 30px 0;
+  background-color: @shallowBackGround;
+}
+
+.activity-wrapper {
+  width: 100%;
+  margin: 24px 0;
+
+  &>image {
+    width: 100%;
+    border-radius: 10px;
+  }
+}

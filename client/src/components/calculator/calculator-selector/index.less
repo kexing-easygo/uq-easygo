@@ -1,0 +1,37 @@
+@import "../../../app.less";
+@inputHeight: 60px;
+@radius: 10px;
+@buttonWidth: calc(@inputHeight + 40px);
+
+.selector-container {
+
+  .input-element {
+    display: flex;
+    margin: 60px auto;
+    font-size: 90%;
+    box-shadow: @boxShadow;
+    border-radius: @radius;
+    width: 70vw;
+
+    .calculator-input {
+      background-color: #ffffff;
+      border-top-left-radius: @radius;
+      border-bottom-left-radius: @radius;
+      height: @inputHeight;
+      padding: 0 50px;
+      flex-grow: 1;
+    }
+
+    .icon-btn {
+      width: @buttonWidth;
+      background-color: @highLight;
+      height: @inputHeight;
+      color: #ffffff;
+      border-top-right-radius: @radius;
+      border-bottom-right-radius: @radius;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

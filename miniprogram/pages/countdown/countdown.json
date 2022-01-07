@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
-    "searchbar": "/components/my-searchbar/my-searchbar"
-  },
-  "navigationBarTitleText": "倒计时"
-}

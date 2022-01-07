@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "mp-searchbar": "weui-miniprogram/searchbar/searchbar",
-    "searchbar": "/components/my-searchbar/my-searchbar",
-    "mp-dialog": "weui-miniprogram/dialog/dialog"
-  },
-  "navigationBarTitleText": "自动添加"
-}

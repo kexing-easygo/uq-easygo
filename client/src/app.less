@@ -1,0 +1,50 @@
+@fontSize: 30px;
+@primary: #6190E8;
+@highLight: #89acee;
+@backGround: #e5eaf4;
+@shallowBackGround: #f2f5fa;
+@timeBarWidth: 60px;
+@modalWidth: calc((100vw - @timeBarWidth) / 5);
+@boxShadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.25);
+page {
+  background-color: @backGround;
+
+  .fab {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+  }
+
+  .active {
+    opacity: 1;
+    visibility: visible;
+    transition: all 500ms ease;
+  }
+
+  .inactive {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 500ms ease;
+  }
+
+  .info-text {
+    color: #808080;
+  }
+
+  .title-text {
+    color: #2c405a;
+  }
+
+  .center-text {
+    text-align: center;
+  }
+
+  .empty-page-text {
+    margin-top: 30vh;
+  }
+
+  .at-modal__content {
+    min-height: auto;
+    text-align: center;
+  }
+}

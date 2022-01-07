@@ -1,6 +1,9 @@
 {
-  "miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot": "cloudfunctions/",
+  "miniprogramRoot": "client/dist/",
+  "cloudfunctionRoot": "cloud/functions/",
+  "projectname": "uq-easygo",
+  "description": "miniprogram umel",
+  "appid": "wxc51fd512a103a723",
   "setting": {
     "urlCheck": false,
     "es6": true,
@@ -18,7 +21,7 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": true,
+    "compileHotReLoad": false,
     "lazyloadPlaceholderEnable": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
@@ -29,7 +32,7 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "useIsolateContext": true,
+    "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
@@ -39,57 +42,6 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false
   },
-  "appid": "wxc51fd512a103a723",
-  "projectname": "404",
-  "libVersion": "2.19.4",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-  "condition": {
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "id": -1,
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide",
-          "query": ""
-        },
-        {
-          "id": -1,
-          "name": "pages/profile/profile",
-          "pathName": "pages/profile/profile",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 3,
-          "name": "pages/otherSettings/otherSettings",
-          "pathName": "pages/otherSettings/otherSettings",
-          "query": "",
-          "scene": null
-        },
-        {
-          "name": "pages/timetable/timetable",
-          "pathName": "pages/timetable/timetable",
-          "scene": null
-        }
-      ]
-    }
-  }
+  "compileType": "miniprogram",
+  "condition": {}
 }
