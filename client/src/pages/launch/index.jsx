@@ -33,6 +33,7 @@ export default function Launch() {
           dispatch(fetchCurrentSemester())
         }
         Taro.switchTab({ url: '/pages/index/index' })
+        // Taro.navigateTo( {url: "/pages/bind-email/index"} )
       }
     })()
   }, [])

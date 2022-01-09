@@ -2,6 +2,7 @@ import React, { memo } from 'react'
 import { View, Image } from '@tarojs/components'
 import { AtCard } from 'taro-ui'
 import { activities } from '../../../assets/images/index.json'
+import {ACTIVITY_URL} from '../../../config.json'
 import Taro  from '@tarojs/taro';
 
 function NewActivities(props) {
@@ -13,7 +14,7 @@ function NewActivities(props) {
               src={activities[0]} 
               mode="widthFix" 
               onClick={() => {
-                Taro.navigateTo({url: "/pages/web-view/index"})
+                Taro.navigateTo({url: "/pages/web-view/index?url=" + ACTIVITY_URL})
               }}
               />
           </View>

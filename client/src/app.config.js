@@ -16,7 +16,6 @@ export default {
     'pages/course-management/index',
     'pages/delete-course/index',
     'pages/web-view/index',
-    'pages/carousel-web-view/index',
   ],
   window: {
     backgroundTextStyle: 'light',

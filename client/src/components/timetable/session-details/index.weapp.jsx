@@ -41,8 +41,6 @@ export default function SessionDetails(props) {
   }
 
   const handleDeleteClass = () => {
-    setModalOpened(false);
-    dispatch(toggleDisplayDetail());
     const courseCode = clickedClass.subject_code.split("_")[0]
     const args = {
       classId: clickedClass._id,
@@ -50,6 +48,8 @@ export default function SessionDetails(props) {
       courseCode: courseCode
     }
     dispatch(deleteClass(args));
+    setModalOpened(false);
+    dispatch(toggleDisplayDetail());
   }
 
   const handleConfirmEdit = async () => {

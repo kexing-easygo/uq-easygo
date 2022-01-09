@@ -6,7 +6,7 @@ import ColorPicker from '../../components/timetable/color-picker'
 import BackTop from '../../components/back-top'
 import { searchCourseTime, appendClass } from '../../services/course'
 import { AtSearchBar, AtCheckbox, AtButton, AtNoticebar } from 'taro-ui'
-import { getDuplicateCourse } from '../../utils/courses'
+import { computeAvailableCourses, getDuplicateCourse } from '../../utils/courses'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
 import { CURRENT_SEMESTER, SEMESTERS, SEARCHBAR_DEFAULT_PLACEHOLDER } from '../../utils/constant'
@@ -34,9 +34,15 @@ export default function AddClass() {
     const searchRes = await searchCourseTime(courseCode.toUpperCase(), CURRENT_SEMESTER, classMode);
     console.log('add class page', searchRes)
     setSessions(searchRes);
+    // 已经选过的课自动被勾选
+    const selectedID = currentClasses.map(c => c._id)
+    const sessions = searchRes.filter(course => selectedID.includes(course.value._id))
+    setSelectedSessions(sessions.map(c => c.value))
   }
 
-  useEffect(() => setSelectedSessions([]), [sessions]);
+  // useEffect(() => {
+  //   setSelectedSessions([])
+  // }, [sessions]);
 
   const handleConfirm = () => {
     if (selectedColor === '') {
@@ -57,19 +63,12 @@ export default function AddClass() {
     }
     // 检查课程是否已被添加过
     const duplica = getDuplicateCourse(currentClasses, selectedSessions);
-    if (duplica.length > 0) {
-      Taro.showToast({
-        title: `${duplica.join(',')}已被添加过了~`,
-        icon: "none",
-      })
-      return;
-    }
-    // 将选择的背景色添加到课程JSON中
-    const _classes = selectedSessions.map(session => ({
+    const _classes = selectedSessions.filter(course => !duplica.includes(course?.activity_group_code)).map(session => ({
       _id: session._id,
       background: selectedColor,
       remark: ''
     }))
+    // 将选择的背景色添加到课程JSON中
     const data = {
       courseCode: courseCode,
       classes: _classes,

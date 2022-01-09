@@ -5,8 +5,9 @@ import { AtActivityIndicator, AtCard } from 'taro-ui'
 import { useSelector } from 'react-redux'
 import { Swiper, SwiperItem } from '@tarojs/components'
 import { getTodayCourses } from '../../services/course'
-import { carousel1, carousel2, carousel3, activities, titleImage } from '../../assets/images/index.json'
+import { carousel1, carousel2, carousel3,carousel4,  activities, titleImage } from '../../assets/images/index.json'
 import { countDownIcon, timeTableIcon, calculaterIcon, courseReviewIcon, alert } from '../../assets/images/icon.json'
+import { CAROUSEL1_URL, CAROUSEL4_URL, ACTIVITY_URL } from '../../config.json'
 import './index.less'
 import TodayCourse from '../../components/index/today-course/index'
 import NewActivities from '../../components/index/new-activities/index'
@@ -24,7 +25,7 @@ export default function Index() {
     }
     return {
       title: PROGRAM_NAME,
-      path: '/page/index/index'
+      path: '/pages/index/index'
     }
   })
 
@@ -48,8 +49,13 @@ export default function Index() {
         </SwiperItem>
         <SwiperItem>
         <Image className='carousel-img' src={carousel3} mode="widthFix" 
-            onClick={() => {Taro.navigateTo({url: "/pages/carousel-web-view/index"})}}
+            onClick={() => {Taro.navigateTo({url: "/pages/web-view/index?url=" + CAROUSEL1_URL})}}
            />
+        </SwiperItem>
+        <SwiperItem>
+          <Image className='carousel-img' src={carousel4} mode="widthFix" 
+            onClick={() => {Taro.navigateTo({url: "/pages/web-view/index?url=" + CAROUSEL4_URL})}}
+          />
         </SwiperItem>
       </Swiper>
 
@@ -65,7 +71,7 @@ export default function Index() {
           <View 
           className='title-text'
           // onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}>计算器</View>
-          onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>计算器</View>
+           onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>计算器</View> 
         </View>
 
         <View className='function-icon-view'>
