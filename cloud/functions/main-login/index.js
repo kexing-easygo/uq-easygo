@@ -22,7 +22,7 @@ async function createUser(openid, userInfo, collectionName) {
                 userInfo: userInfo,
                 userEmail: "",
                 userMobile: "",
-                currentSemester: "",
+                currentSemester: "Semester 1, 2022",
                 notification: {
                     wechat: {
                         enabled: false,
@@ -42,7 +42,7 @@ async function createUser(openid, userInfo, collectionName) {
                     }
                 },
                 selectedCourses: {},
-                classMode: "",
+                classMode: "中国境内",
                 cardsInfo: {
                     todayClasses: 1,
                     recentAssignments: 1,

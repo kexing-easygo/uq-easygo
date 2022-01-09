@@ -419,7 +419,7 @@ async function autoAddTimeable(openid, timetableLink, userCollection) {
         const parsed = ical.parseString(ws.bytes);
         autoAddContent.classesInfo = _analyseData(parsed.events);
         autoAddContent.readyOrNot = true;
-        db.collection(userCollection).where({
+        await db.collection(userCollection).where({
             _openid: openid
         }).update({
             data: {

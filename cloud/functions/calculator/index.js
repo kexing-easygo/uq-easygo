@@ -20,7 +20,7 @@ async function fetchAssessments(course, semester, collectionName) {
   }).get()
   if (result.data.length == 0) return [];
   const data = result.data[0];
-  const semestersAvailable = data.academic_details.semester_available
+  const semestersAvailable = data.academic_detail.semester_available
   if (semestersAvailable.includes(semester)) return data.assessments
   return []
 }
@@ -117,7 +117,7 @@ const getCumulativeGPA = async(openid, branch, semester) => {
         _id: courseCode
       }).get()
       let units = 12.5
-      if (res.data.length > 0) units = parseFloat(res.data[0].academic_details.credits)
+      if (res.data.length > 0) units = parseFloat(res.data[0].academic_detail.credits)
       totalUnits += units
       const courseGPA = determineLevel(singleCourseRes, branch)
       semesterGPA += courseGPA * units

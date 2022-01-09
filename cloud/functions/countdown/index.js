@@ -69,20 +69,33 @@ function formatDate(dateObject, type) {
   }
 }
 
+const __fetch = async(openid, collectionName) => {
+  const result = await db.collection(collectionName).where({
+    _openid: openid
+  }).get()
+  const userData = result.data[0]
+  const temp = userData.userAssignments
+  return temp
+}
+
 async function fetchAll(openid, collectionName) {
   // result 是一个用户的文档数据，包含所有字段
   const result = await db.collection(collectionName).where({
     _openid: openid
   }).get()
   const userData = result.data[0]
-  var temp = userData.userAssignments
-  var classMode = userData.classMode
-  var todayDate = moment.tz('Asia/Shanghai')
-  if (classMode == "Internal" || classMode == "internal") {
+  let temp = userData.userAssignments
+  if (temp.length == 0) return {
+    "headerItem": {},
+    "assignments": temp
+  }
+  const classMode = userData.classMode
+  let todayDate = moment.tz('Asia/Shanghai')
+  if (classMode == "中国境内") {
     todayDate = moment.tz('Australia/Brisbane')
   }
   for (var i = 0; i < temp.length; i++) {
-    var assignment = temp[i]
+    let assignment = temp[i]
     if (assignment["default"] == true) {
       // 默认作业，更新时间
       if (assignment["name"] == "CSSE1001 A1 (示例)") {
@@ -121,73 +134,70 @@ async function fetchAll(openid, collectionName) {
 }
 
 async function setNotification(openid, collectionName, notification) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        notification: notification
-      }
-    })
-    .then(res => {
-      console.log(res)
-      return res
-    })
+  // db.collection(collectionName)
+  //   .where({
+  //     _openid: openid
+  //   })
+  //   .update({
+  //     data: {
+  //       notification: notification
+  //     }
+  //   })
+  //   .then(res => {
+  //     console.log(res)
+  //     return res
+  //   })
 }
 
-async function appendAssignments(openid, collectionName, ass) {
-  ass["attributes"] = {
-    email: [0, 0, 0],
-    wechat: [0, 0, 0]
-  }
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        userAssignments: _.push(ass)
-      }
-    })
-    .then(res => {
-      console.log(res)
-      return res
-    })
+/**
+ * 向用户数据库中添加一条新的作业
+ * @param {string} openid openid
+ * @param {string} collectionName 集合名称
+ * @param {object} assignment 被添加的新作业
+ */
+const appendAssignments = async(openid, collectionName, assignment) => {
+  const currentAssignments = await __fetch(openid, collectionName)
+  currentAssignments.push(assignment)
+  await db.collection(collectionName).where({
+    _openid: openid
+  }).update({
+    data: {
+      userAssignments: currentAssignments
+    }
+  })
+  return currentAssignments
 }
 
-async function updateAssignments(openid, collectionName, asses) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        userAssignments: asses
-      }
-    })
-    .then(res => {
-      console.log(res)
-      return res;
-    })
+/**
+ * 更新某个名称对应的作业信息
+ * @param {string} openid openid
+ * @param {string} collectionName 集合名称
+ * @param {object} updatedAss 待更新的作业
+ */
+const updateAssignments = async(openid, collectionName, updatedAss) => {
+  const currentAssignments = await __fetch(openid, collectionName)
+  const index = currentAssignments.findIndex(ass => ass.aid === updatedAss.aid)
+  currentAssignments[index] = updatedAss
+  await db.collection(collectionName).where({
+    _openid: openid
+  }).update({
+    data: {
+      userAssignments: currentAssignments
+    }
+  })
+  return currentAssignments
 }
 
-async function deleteUserAssignments(openid, collectionName, ass) {
-  db.collection(collectionName)
-    .where({
-      _openid: openid
-    })
-    .update({
-      data: {
-        userAssignments: _.pull({
-          assignment: _.eq(ass)
-        })
-      }
-    })
-    .then(res => {
-      console.log(res)
-      return res;
-    })
+async function deleteUserAssignments(openid, collectionName, deletedId) {
+  const currentAssignments = await __fetch(openid, collectionName)
+  const afterDeleted = currentAssignments.filter(ass => ass.aid != deletedId)
+  return await db.collection(collectionName).where({
+    _openid: openid
+  }).update({
+    data: {
+      userAssignments: afterDeleted
+    }
+  })
 }
 /**
  * 获取某个用户数据库内所有用户的数据
@@ -265,7 +275,6 @@ async function push(collectionName) {
     // 默认的示例不提醒
     if (assignment.hasOwnProperty("default")) {
       continue
-<<<<<<< HEAD:cloudfunctions/countdown/index.js
     }
     var date = assignment["date"]
     var time = assignment["time"]
@@ -306,48 +315,6 @@ async function push(collectionName) {
       }
       await __send_email(email, diff, assignment["name"])
     }
-=======
-    }
-    var date = assignment["date"]
-    var time = assignment["time"]
-    var d1 = moment(`${date} ${time}`)
-    var diff = d1.diff(todayDate, 'days')
-    // 0表示没有提醒过，1表示提醒过
-    if (item.notification.wechat.enabled == true) {
-      var values = item.notification.wechat.attributes
-      var assValues = assignment.attributes.wechat
-      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-        // send wechat 
-        assValues[ONE_WEEK_INDEX] = 1
-      }
-      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-        // send wechat 
-        assValues[THREE_DAY_INDEX] = 1
-      }
-      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-        // send wechat
-        assValues[ONE_DAY_INDEX] = 1
-      }
-
-    }
-    if (item.notification.email.enabled == true) {
-      var values = item.notification.email.attributes
-      var assValues = assignment.attributes.email
-      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-        // send email 
-        assValues[ONE_WEEK_INDEX] = 1
-      }
-      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-        // send email 
-        assValues[THREE_DAY_INDEX] = 1
-      }
-      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-        // send email
-        assValues[ONE_DAY_INDEX] = 1
-      }
-      await __send_email(email, diff, assignment["name"])
-    }
->>>>>>> origin/release:cloud/functions/countdown/index.js
   }
   db.collection(collectionName)
     .where({
@@ -365,73 +332,29 @@ async function push(collectionName) {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  var branch = event.branch;
-  var method = event.method;
-  var openid = event.openid;
-  if (branch == undefined) {
-    return {
-      code: -1,
-      msg: "缺少branch"
-    }
-  }
-  if (method == undefined) {
-    return {
-      code: -1,
-      msg: "缺少method"
-    }
-  }
-  if (openid == undefined) {
-    return {
-      code: -1,
-      msg: "缺少openid"
-    }
-  }
-  var collectionName = branch + MAIN_USER_SUFFIX
+  const { branch, method, openid } = event
+  if (branch == undefined || method == undefined || openid == undefined) return {code: -1, msg: "缺少必要参数"}
+  const collectionName = branch + MAIN_USER_SUFFIX
   if (method == "fetchUserAssignments") {
     return await fetchAll(openid, collectionName)
   }
   if (method == "setNotification") {
-    var notification = event.notification
-    if (notification == undefined) {
-      return {
-        code: -1,
-        msg: "缺少notification"
-      }
-    }
+    const {notification} = event
     return await setNotification(openid, collectionName, notification)
   }
   if (method == "appendAssignments") {
-    var ass = event.assignment
-    if (ass == undefined) {
-      return {
-        code: -1,
-        msg: "缺少ass"
-      }
-    }
-    return await appendAssignments(openid, collectionName, ass)
+    const {assignment} = event
+    return await appendAssignments(openid, collectionName, assignment)
   }
   if (method == "push") {
-    return await push("UQ_MainUser")
+    return await push(collectionName)
   }
   if (method == "deleteUserAssignments") {
-    var assName = event.assignment
-    if (assName == undefined) {
-      return {
-        code: -1,
-        msg: "缺少ass"
-      }
-    }
-    return await deleteUserAssignments(openid, collectionName, assName)
+    const {deletedId} = event
+    return await deleteUserAssignments(openid, collectionName, deletedId)
   }
   if (method == "updateAssignments") {
-    var allAss = event.newAssignment
-    if (allAss == undefined) {
-      return {
-        code: -1,
-        msg: "缺少ass"
-      }
-    }
-    return await updateAssignments(openid, collectionName, allAss)
-
+    const {assignment} = event
+    return await updateAssignments(openid, collectionName, assignment)
   }
 }
