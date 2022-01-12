@@ -100,6 +100,7 @@ const getCumulativeGPA = async(openid, branch, semester) => {
   })
   const selectedCourses = selectedCoursesRes.result;
   const semesterCourses = selectedCourses[semester]
+  if (semesterCourses === undefined || semesterCourses === []) return 0
   let semesterGPA = 0
   let totalUnits = 0.0
   await Promise.all(semesterCourses.map(async(courseInfo) => {

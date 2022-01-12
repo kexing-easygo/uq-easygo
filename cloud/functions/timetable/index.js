@@ -413,7 +413,7 @@ async function autoAddTimeable(openid, timetableLink, userCollection) {
     ws.writable = true
     request(timetableLink).pipe(ws);
     // set the event when the stream stop receiving content from the request
-    ws.end = function (buf) {
+    ws.end = async function (buf) {
         if (arguments.length) ws.write(buf);
         ws.writable = false;
         const parsed = ical.parseString(ws.bytes);
@@ -512,9 +512,9 @@ exports.main = async (event, context) => {
     }
     const { currentSemester } = event
     if (method == "fetchCurrentSemester") {
-        return fetchCurrentSemester(openid, userCollection)
+        return await fetchCurrentSemester(openid, userCollection)
     }
     if (method == "updateCurrentSemester") {
-        return updateCurrentSemester(openid, userCollection, currentSemester)
+        return await updateCurrentSemester(openid, userCollection, currentSemester)
     }
 }

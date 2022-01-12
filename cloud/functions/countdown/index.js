@@ -78,6 +78,10 @@ const __fetch = async(openid, collectionName) => {
   return temp
 }
 
+const updateAssessments = () => {
+
+}
+
 async function fetchAll(openid, collectionName) {
   // result 是一个用户的文档数据，包含所有字段
   const result = await db.collection(collectionName).where({
@@ -85,16 +89,13 @@ async function fetchAll(openid, collectionName) {
   }).get()
   const userData = result.data[0]
   let temp = userData.userAssignments
-  if (temp.length == 0) return {
-    "headerItem": {},
-    "assignments": temp
-  }
+  if (temp.length == 0) return []
   const classMode = userData.classMode
   let todayDate = moment.tz('Asia/Shanghai')
   if (classMode == "中国境内") {
     todayDate = moment.tz('Australia/Brisbane')
   }
-  for (var i = 0; i < temp.length; i++) {
+  for (let i = 0; i < temp.length; i++) {
     let assignment = temp[i]
     if (assignment["default"] == true) {
       // 默认作业，更新时间
@@ -104,20 +105,18 @@ async function fetchAll(openid, collectionName) {
         assignment["date"] = formatDate(todayDate.clone().add(29, "d"), "date")
       }
     } else {
+      let date = "999";
+      let diff = 999;
       // 如果用户作业中存在时间不确定的，默认为999
-      if (assignment["date"] == "TBD") {
-        var date = "999";
-        var diff = 999;
-      } else {
+      if (assignment["date"] !== "TBD") {
         // 计算时间差
-        var date = assignment["date"]
-        var time = assignment["time"]
-        var d1 = moment(`${date} ${time}`)
-        var diff = d1.diff(todayDate, 'days')
+        date = assignment["date"]
+        let time = assignment["time"]
+        let d1 = moment(`${date} ${time}`)
+        diff = d1.diff(todayDate, 'days')
       }
       const percentage = calculatePercentage(diff)
       assignment["countdown"] = diff
-      assignment["id"] = i
       assignment["percentage"] = percentage
       assignment["diff"] = diff
     }
@@ -125,12 +124,7 @@ async function fetchAll(openid, collectionName) {
   temp = temp.sort(function (a, b) {
     return a['diff'] - b['diff']
   })
-  // header为第一个，其他不变
-  const fetchRes = {
-    "headerItem": temp[0],
-    "assignments": temp
-  }
-  return fetchRes
+  return temp
 }
 
 async function setNotification(openid, collectionName, notification) {
@@ -156,7 +150,7 @@ async function setNotification(openid, collectionName, notification) {
  * @param {object} assignment 被添加的新作业
  */
 const appendAssignments = async(openid, collectionName, assignment) => {
-  const currentAssignments = await __fetch(openid, collectionName)
+  const currentAssignments = await fetchAll(openid, collectionName)
   currentAssignments.push(assignment)
   await db.collection(collectionName).where({
     _openid: openid
@@ -189,15 +183,17 @@ const updateAssignments = async(openid, collectionName, updatedAss) => {
 }
 
 async function deleteUserAssignments(openid, collectionName, deletedId) {
-  const currentAssignments = await __fetch(openid, collectionName)
+  const currentAssignments = await fetchAll(openid, collectionName)
   const afterDeleted = currentAssignments.filter(ass => ass.aid != deletedId)
-  return await db.collection(collectionName).where({
+  console.log(afterDeleted)
+  await db.collection(collectionName).where({
     _openid: openid
   }).update({
     data: {
       userAssignments: afterDeleted
     }
   })
+  return afterDeleted
 }
 /**
  * 获取某个用户数据库内所有用户的数据
@@ -336,7 +332,16 @@ exports.main = async (event, context) => {
   if (branch == undefined || method == undefined || openid == undefined) return {code: -1, msg: "缺少必要参数"}
   const collectionName = branch + MAIN_USER_SUFFIX
   if (method == "fetchUserAssignments") {
-    return await fetchAll(openid, collectionName)
+    const res = await fetchAll(openid, collectionName)
+    if (res.length === 0) return {
+      "headerItem": {},
+      "assignments": []
+    }
+    const fetchRes = {
+      "headerItem": res[0],
+      "assignments": res
+    }
+    return fetchRes 
   }
   if (method == "setNotification") {
     const {notification} = event
