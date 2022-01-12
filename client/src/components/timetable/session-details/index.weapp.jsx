@@ -96,7 +96,7 @@ export default function SessionDetails(props) {
         <AtList>
           <AtListItem
             title='名称'
-            note={displayDetail && `${clickedClass.subject_code} ${clickedClass.activity_group_code}`}
+            note={displayDetail && `${clickedClass.activity_group_code}`}
           />
           <AtListItem
             title='颜色'

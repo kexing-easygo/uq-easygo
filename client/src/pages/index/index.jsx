@@ -25,7 +25,7 @@ export default function Index() {
     }
     return {
       title: PROGRAM_NAME,
-      path: '/pages/index/index'
+      path: '/pages/launch/index'
     }
   })
 
@@ -65,13 +65,14 @@ export default function Index() {
             className='function-icon'
             src={calculaterIcon}
             mode="widthFix"
-            // onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}
-            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}
+            // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
           />
           <View 
-          className='title-text'
-          // onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}>计算器</View>
-           onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>计算器</View> 
+            className='title-text'
+          onClick={() => Taro.navigateTo({ url: '/pages/calculator/index' })}>计算器
+            {/* // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>计算器 */}
+          </View>
         </View>
 
         <View className='function-icon-view'>

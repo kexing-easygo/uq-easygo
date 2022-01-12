@@ -82,16 +82,11 @@ export default function AddClass() {
   return (
     <View>
       <NavBar title="添加课程" backIcon />
-      {currentSemester === SEMESTERS[0] && <AtNoticebar
+      <AtNoticebar
         close
         icon='volume-plus'>
-        当前搜索出来的均为Summer的课哦～可以在个人中心-基本设置修改所在学期
-      </AtNoticebar>}
-      {currentSemester === SEMESTERS[1] && <AtNoticebar
-        close
-        icon='volume-plus'>
-        当前搜索出来的均为Semester 2, 2021的课哦～可以在个人中心-基本设置修改所在学期
-      </AtNoticebar>}
+        当前搜索出来的均为{currentSemester}的课哦～可以在个人中心-基本设置修改所在学期
+      </AtNoticebar>
       <AtSearchBar
         actionName="搜索"
         showActionButton

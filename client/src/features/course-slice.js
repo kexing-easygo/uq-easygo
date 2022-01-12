@@ -62,6 +62,14 @@ export const courseSlice = createSlice({
     },
     setStartDate: (state, action) => {
       state.startDate = action.payload
+    },
+    setSelectedCourses: (state, action) => {
+      const {sem, code, info} = action.payload
+      const index = state.selectedCourses[sem].findIndex(c => c.courseCode === code)
+      if (index !== -1) {
+        state.selectedCourses[sem][index].results = info
+        console.log("更新完毕")
+      }      
     }
   },
   extraReducers: (builder) => {
@@ -168,6 +176,7 @@ export const courseSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes, setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate } = courseSlice.actions
+export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes } = courseSlice.actions
+export const {setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate, setSelectedCourses} = courseSlice.actions
 
 export default courseSlice.reducer
