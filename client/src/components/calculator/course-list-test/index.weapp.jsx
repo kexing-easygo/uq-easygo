@@ -11,7 +11,6 @@ function CourseListTest(props) {
   const dispatch = useDispatch();
   const {selectedCourses} = useSelector(state => state.course)
   const semester = props.semester
-
   const checkScore = async (semester, courseCode) => {
     const params = {
       course: courseCode,
@@ -23,15 +22,18 @@ function CourseListTest(props) {
   }
   return (
     <View className='course-list-wrapper'>
-      {selectedCourses[semester].map(course => {
-        return (
-          <AtButton 
-            type='secondary'
-            onClick={() => checkScore(semester, course.courseCode)}>
-            {course.courseCode}
-          </AtButton>
-        )
-      })}
+      {
+      selectedCourses[semester] != undefined &&
+        selectedCourses[semester].map(course => {
+          return (
+            <AtButton 
+              type='secondary'
+              size="small"
+              onClick={() => checkScore(semester, course.courseCode)}>
+              {course.courseCode}
+            </AtButton>
+          )
+        })}
     </View>
   )
 }

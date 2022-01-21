@@ -1,8 +1,9 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-const util = require('util')
 const crypto = require('crypto')
-const REVIEW_SUFFIX = "_review"
+const moment = require('moment-timezone');
+const REVIEW_SUFFIX = "_Review"
+const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
 // 初始化 cloud
 cloud.init({
@@ -15,43 +16,32 @@ const _ = db.command
 
 // get the date and time information
 function getDateTime() {
-    let date_ob = new Date();
-
-    // current date
-    let date = ("0" + date_ob.getDate()).slice(-2);
-    // current month
-    let month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
-    // current year
-    let year = date_ob.getFullYear();
-    // current hours
-    let hours = date_ob.getHours();
-    // current minutes
-    let minutes = date_ob.getMinutes();
-    // current seconds
-    let seconds = date_ob.getSeconds();
+    date_obj = moment().tz('Asia/Shanghai').format(DATE_FORMAT)
+    const date = date_obj.split(" ")[0]
+    const time = date_obj.split(" ")[1]
     return {
-        date: util.format("%s-%s-%s", year, month, date),
-        time: util.format("%s:%s:%s", hours, minutes, seconds)
+        date: date,
+        time: time
     }
 }
 /**
  * add a review to the course
  * @param {*} collectionName 
  * @param {*} courseName 
- * @param {*} poster_name 
+ * @param {*} posterName 
  * @param {*} reviewContent 
  */
-async function addReview(collectionName, courseName, poster_name, reviewContent) {
+async function addReview(collectionName, reviewObj) {
     const dateTime = getDateTime()
+    const reviewContent = reviewObj.reviewContent
     var reviewobject = {
         review_id: crypto.createHash('sha256').update(reviewContent + dateTime.date + dateTime.time).copy().digest('hex'),
         post_date: dateTime.date,
         post_time: dateTime.time,
-        poster_name: poster_name,
-        review: reviewContent
+        ...reviewObj,
     }
     return await db.collection(collectionName).where({
-        course_name: courseName
+        courseCode: reviewObj.courseCode
     }).update({
         data: {
             "review": _.push(reviewobject)
@@ -87,13 +77,88 @@ async function addSubReview(collectionName, courseName, reviewId, poster_name, r
 }
 
 /**
+ * delete the review, include the sub review
+ * @param {*} collectionName 
+ * @param {*} courseName 
+ * @param {*} reviewId 
+ */
+async function deleteReview(collectionName, courseName, reviewId) {
+    return await db.collection(collectionName).where({
+        course_name: courseName,
+    }).update({
+        data: {
+            review: _.pull({
+                review_id: _.eq(reviewId)
+            })
+        }
+    })
+}
+
+/**
+ * delete the sub review based on the main review_id and the sub review_id
+ * @param {*} collectionName 
+ * @param {*} courseName 
+ * @param {*} reviewId 
+ * @param {*} subReviewId 
+ */
+async function deleteSubReview(collectionName, courseName, reviewId, subReviewId) {
+    return await db.collection(collectionName).where({
+        course_name: courseName,
+        "review.review_id": reviewId
+    }).update({
+        data: {
+            "review.$.sub_review": _.pull({
+                review_id: _.eq(subReviewId)
+            })
+        }
+    })
+}
+
+/**
+ * update the sub review based on the main review_id and the sub review_id
+ * @param {*} collectionName 
+ * @param {*} courseName 
+ * @param {*} reviewId 
+ * @param {*} subReviewId 
+ * @param {*} reviewContent 
+ */
+async function updateSubReview(collectionName, courseName, reviewId, subReviewId, reviewContent) {
+    return await db.collection(collectionName).where({
+        course_name: courseName,
+        "review.sub_review.review_id": subReviewId,
+    }).update({
+        data: {
+            "review.$.sub_review.$[].review": reviewContent
+        }
+    })
+}
+
+/**
+ * update the main review
+ * @param {*} collectionName 
+ * @param {*} courseName 
+ * @param {*} reviewId 
+ * @param {*} reviewContent 
+ */
+async function updateReview(collectionName, courseName, reviewId, reviewContent) {
+    return await db.collection(collectionName).where({
+        course_name: courseName,
+        "review.review_id": reviewId
+    }).update({
+        data: {
+            "review.$.review": reviewContent
+        }
+    })
+}
+
+/**
  * get all review of a course
  * @param {*} collectionName 
  * @param {*} courseName 
  */
 async function getAllReview(collectionName, courseName) {
     let course = await db.collection(collectionName).where({
-        course_name: courseName,
+        courseCode: courseName,
     }).get()
     if (course.data.length > 0) {
         return course.data[0].review
@@ -104,6 +169,19 @@ async function getAllReview(collectionName, courseName) {
         }
     }
 }
+
+const getCourseDetail = async(collectionName, courseName) => {
+    const res = await db.collection(collectionName).where({
+        _id: courseName,
+    }).get()
+    if (res.data.length === 0) return {}
+    else {
+        return {
+            ...res.data[0].academic_detail,
+            ...res.data[0].enrolment_rule
+        }
+    }
+}   
 
 
 async function topSearch(collectionName, topNumber) {
@@ -117,28 +195,50 @@ exports.main = async (event, context) => {
     if (branch == undefined || method == undefined) {
         return {}
     }
-    const collectionName = "Test_review" //branch + REVIEW_SUFFIX
+    const collectionName = branch + REVIEW_SUFFIX //branch + REVIEW_SUFFIX
 
     if (method == "addReview") {
-        const { courseCode, poster_name, reviewContent } = event
-        return await addReview(collectionName, courseCode.toUpperCase(), poster_name, reviewContent)
+        const { reviewObj } = event
+        return await addReview(collectionName, reviewObj)
     }
 
     if (method == "addSubReview") {
-        const { courseCode, poster_name, reviewContent, reviewId } = event
-        return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, poster_name, reviewContent)
+        const { courseCode, posterName, reviewContent, reviewId } = event
+        return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, posterName, reviewContent)
+    }
+    if (method == "deleteReview") {
+        const { reviewId, courseCode, reviewContent } = event
+        return await deleteReview(collectionName, courseCode.toUpperCase(), reviewId)
     }
 
+    if (method == "deleteSubReview") {
+        const { reviewId, courseCode, subReviewId } = event
+        return await deleteSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId)
+    }
+
+    if (method == "updateReview") {
+        const { reviewId, courseCode, reviewContent } = event
+        return await updateReview(collectionName, courseCode.toUpperCase(), reviewId, reviewContent)
+    }
+
+    if (method == "updateSubReview") {
+        const { reviewId, subReviewId, courseCode, reviewContent } = event
+        return await updateSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId, reviewContent)
+    }
     if (method == "getAllReview") {
         const { courseCode } = event
         return await getAllReview(collectionName, courseCode.toUpperCase())
     }
+    if (method == "getCourseDetail") {
+        const { courseCode } = event
+        return await getCourseDetail(branch + "_Courses", courseCode)
+    }
 
     if (method == "topSearch") {
-        const { topNumber } = event
+        let { topNumber } = event
         if (topNumber == undefined) {
             topNumber = 10
         }
-        return await topSearch("CourseNew", topNumber)
+        return await topSearch(collectionName, topNumber)
     }
 }

@@ -11,6 +11,8 @@
   "dependencies": {
     "wx-server-sdk": "~2.5.3",
     "moment": "latest",
-    "moment-timezone": "latest"
+    "moment-timezone": "latest",
+    "nodemailer": "latest",
+    "crypto": "~1.0.1"
   }
 }

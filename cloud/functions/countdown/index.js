@@ -1,6 +1,8 @@
 // 云函数入口文件
-var moment = require('moment-timezone');
+const moment = require('moment-timezone');
 const cloud = require('wx-server-sdk')
+const crypto = require('crypto')
+const nodemailer = require('nodemailer')
 const MAIN_USER_SUFFIX = "_MainUser"
 
 const ONE_DAY_INDEX = 0
@@ -13,74 +15,9 @@ cloud.init()
 const db = cloud.database();
 const _ = db.command
 
-// var now = new Date().getTime()
+const generateAid = (assignment) => crypto.createHash('sha256').update(assignment.name + assignment.date + assignment.time).copy().digest('hex')
 
-function GetDateStr(AddDayCount) {
-  var dd = new Date();
-  //获取AddDayCount天后的日期
-  dd.setDate(dd.getDate() + AddDayCount);
-  var y = dd.getFullYear();
-  //获取当前月份的日期，不足10补0
-  var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);
-  //获取当前几号，不足10补0
-  var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
-  return y + "-" + m + "-" + d;
-}
 
-function calculatePercentage(diff) {
-  var percentage = Number(diff / 30 * 100).toFixed(1)
-  if (percentage >= 100) {
-    percentage = 0
-  } else if (percentage < 100 && percentage > 0) {
-    percentage = 100 - percentage
-  } else {
-    percentage = 100
-  }
-  return percentage
-}
-// 默认作业的倒计时时间
-var d1 = GetDateStr(3)
-var d2 = GetDateStr(29)
-// 默认作业
-const DEFAULT_ASSIGNMENTS = [
-  {
-    'color': '#7986CB',
-    'name': "CSSE1001 A1 (示例)",
-    "date": d1,
-    "time": "00:00",
-    "default": true
-  },
-  {
-    'color': '#7986CB',
-    'name': "点我查看更多",
-    "date": d2,
-    "time": "00:00",
-    "default": true
-  }
-]
-
-function formatDate(dateObject, type) {
-  // `${todayDate.get('date')}/${todayDate.get('month') + 1}/${todayDate.get('year')}`.split('/').map(n => parseInt(n)).join('/');
-  // return `${dateObject.get('year')}-${dateObject.get('month') + 1}-${dateObject.get('date')}`
-  if (type == "date") {
-    return dateObject.format("YYYY-M-D")
-  } else {
-    return dateObject.format("HH:mm")
-  }
-}
-
-const __fetch = async(openid, collectionName) => {
-  const result = await db.collection(collectionName).where({
-    _openid: openid
-  }).get()
-  const userData = result.data[0]
-  const temp = userData.userAssignments
-  return temp
-}
-
-const updateAssessments = () => {
-
-}
 
 async function fetchAll(openid, collectionName) {
   // result 是一个用户的文档数据，包含所有字段
@@ -90,57 +27,61 @@ async function fetchAll(openid, collectionName) {
   const userData = result.data[0]
   let temp = userData.userAssignments
   if (temp.length == 0) return []
-  const classMode = userData.classMode
-  let todayDate = moment.tz('Asia/Shanghai')
-  if (classMode == "中国境内") {
-    todayDate = moment.tz('Australia/Brisbane')
-  }
-  for (let i = 0; i < temp.length; i++) {
-    let assignment = temp[i]
-    if (assignment["default"] == true) {
-      // 默认作业，更新时间
-      if (assignment["name"] == "CSSE1001 A1 (示例)") {
-        assignment["date"] = formatDate(todayDate.clone().add(4, "d"), "date")
-      } else {
-        assignment["date"] = formatDate(todayDate.clone().add(29, "d"), "date")
-      }
-    } else {
-      let date = "999";
-      let diff = 999;
-      // 如果用户作业中存在时间不确定的，默认为999
-      if (assignment["date"] !== "TBD") {
-        // 计算时间差
-        date = assignment["date"]
-        let time = assignment["time"]
-        let d1 = moment(`${date} ${time}`)
-        diff = d1.diff(todayDate, 'days')
-      }
-      const percentage = calculatePercentage(diff)
-      assignment["countdown"] = diff
-      assignment["percentage"] = percentage
-      assignment["diff"] = diff
-    }
-  }
-  temp = temp.sort(function (a, b) {
-    return a['diff'] - b['diff']
-  })
   return temp
 }
 
-async function setNotification(openid, collectionName, notification) {
-  // db.collection(collectionName)
+/**
+ * 返回用户的提醒设置
+ * @param {string} openid openid
+ * @param {string} collectionName 数据库名称
+ */
+const getNotification = async (openid, collectionName) => {
+  const res = await db.collection(collectionName)
+    .where({
+      _openid: openid
+    }).get()
+  const userData = res.data[0]
+  return userData.notification
+}
+
+/**
+ * 
+ * @param {string} openid openid
+ * @param {string} collectionName 数据库名称
+ * @param {object} notification 前端发送来的被更新过的提醒对象
+ * notification字段示例如下：
+ * {email: {attributes: [0, 0, 1], enabled: true}, wechat: {attributes: [0, 0, 1], enabled: true}}
+ */
+const setNotification = async (openid, collectionName, notification) => {
+  const res = await db.collection(collectionName)
+    .where({
+      _openid: openid
+    })
+    .update({
+      data: {
+        notification: notification
+      }
+    })
+  // const assignments = await fetchAll(openid, collectionName)
+  // const emailAttributes = notification.email.attributes
+  // const wechatAttributes = notification.wechat.attributes
+  // assignments.map((ass) => {
+  //   if (!ass.default) {
+  //     let attributes = ass.attributes
+  //     attributes["email"] = emailAttributes
+  //     attributes["wechat"] = wechatAttributes
+  //   }
+  // })
+  // await db.collection(collectionName)
   //   .where({
   //     _openid: openid
   //   })
   //   .update({
   //     data: {
-  //       notification: notification
+  //       userAssignments: assignments
   //     }
   //   })
-  //   .then(res => {
-  //     console.log(res)
-  //     return res
-  //   })
+  return res
 }
 
 /**
@@ -149,9 +90,17 @@ async function setNotification(openid, collectionName, notification) {
  * @param {string} collectionName 集合名称
  * @param {object} assignment 被添加的新作业
  */
-const appendAssignments = async(openid, collectionName, assignment) => {
+const appendAssignments = async (openid, collectionName, assignment) => {
   const currentAssignments = await fetchAll(openid, collectionName)
-  currentAssignments.push(assignment)
+  const newAssignment = {
+    ...assignment,
+    attributes: {
+      wechat: [0, 0, 0],
+      email: [0, 0, 0]
+    },
+    aid: generateAid(assignment)
+  }
+  currentAssignments.push(newAssignment)
   await db.collection(collectionName).where({
     _openid: openid
   }).update({
@@ -168,8 +117,8 @@ const appendAssignments = async(openid, collectionName, assignment) => {
  * @param {string} collectionName 集合名称
  * @param {object} updatedAss 待更新的作业
  */
-const updateAssignments = async(openid, collectionName, updatedAss) => {
-  const currentAssignments = await __fetch(openid, collectionName)
+const updateAssignments = async (openid, collectionName, updatedAss) => {
+  const currentAssignments = await fetchAll(openid, collectionName)
   const index = currentAssignments.findIndex(ass => ass.aid === updatedAss.aid)
   currentAssignments[index] = updatedAss
   await db.collection(collectionName).where({
@@ -195,141 +144,52 @@ async function deleteUserAssignments(openid, collectionName, deletedId) {
   })
   return afterDeleted
 }
-/**
- * 获取某个用户数据库内所有用户的数据
- */
-async function __fetchAll(collectionName) {
-  const res = await db.collection(collectionName).count()
-  const totalDocuments = res.total
-  const fetchTimes = Math.ceil(totalDocuments / MAX_LIMIT)
-  const tasks = []
-  for (let i = 0; i < fetchTimes; i++) {
-    const promise = db.collection(collectionName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
-    tasks.push(promise)
-  }
-  // 等待所有数据取出后返回所有数据
-  var response = (await Promise.all(tasks)).reduce((acc, cur) => ({
-    data: acc.data.concat(cur.data),
-    errMsg: acc.errMsg,
-  }))
-  var data = response.data
-  return data
-}
+
+
+
 
 /**
- * 中间接口，通过该接口调用推送微信消息的云函数
+ * 批量添加作业信息
+ * @param {string} openid openid
+ * @param {string} collectionName 集合名称
+ * @param {[object, ...]} assignments 自动添加的作业
  */
-async function __push_notification(values, mode) {
-
-}
-
-const sendVerificationCode = async () => {
-  await cloud.callFunction({
-    // 要调用的云函数名称
-    name: 'sendEmail',
-    // 传递给云函数的参数
-    data: {
-      "toAddr": email,
-      "subject": "作业提醒",
-      "content": content
+const autoAppendAssignments = async (openid, collectionName, assignments) => {
+  const currentAssignments = await fetchAll(openid, collectionName)
+  const newAssignments = assignments.map((ass) => {
+    return {
+      ...ass,
+      aid: generateAid(ass),
+      attributes: {
+        email: [0, 0, 0],
+        wechat: [0, 0, 0]
+      }
     }
   })
-}
-
-/**
- * 中间接口，通过该接口调用发邮件的云函数
- */
-async function __send_email(email, diff, assName) {
-  var content = `您的作业: ${assName} 还有${diff}天就due啦！还不抓紧写？\n\n课行校园通团队`
-  await cloud.callFunction({
-    // 要调用的云函数名称
-    name: 'sendEmail',
-    // 传递给云函数的参数
-    data: {
-      "toAddr": email,
-      "subject": "作业提醒",
-      "content": content
-    }
-  })
-
-}
-
-async function push(collectionName) {
-  var data = await __fetchAll(collectionName)
-  // for (var i = 0; i < data.length; i++) {
-  var item = data[0]
-  var openid = item._openid
-  const mode = item.classMode
-  const email = item.userEmail
-  var todayDate = moment.tz('Asia/Shanghai')
-  if (mode == "Internal" || mode == "internal") {
-    todayDate = moment.tz('Australia/Brisbane')
-  }
-  var assignments = item.userAssignments
-  for (var j = 0; j < assignments.length; j++) {
-    var assignment = assignments[j]  // 单条作业
-    // 默认的示例不提醒
-    if (assignment.hasOwnProperty("default")) {
-      continue
-    }
-    var date = assignment["date"]
-    var time = assignment["time"]
-    var d1 = moment(`${date} ${time}`)
-    var diff = d1.diff(todayDate, 'days')
-    // 0表示没有提醒过，1表示提醒过
-    if (item.notification.wechat.enabled == true) {
-      var values = item.notification.wechat.attributes
-      var assValues = assignment.attributes.wechat
-      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-        // send wechat 
-        assValues[ONE_WEEK_INDEX] = 1
-      }
-      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-        // send wechat 
-        assValues[THREE_DAY_INDEX] = 1
-      }
-      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-        // send wechat
-        assValues[ONE_DAY_INDEX] = 1
-      }
-
-    }
-    if (item.notification.email.enabled == true) {
-      var values = item.notification.email.attributes
-      var assValues = assignment.attributes.email
-      if (values[ONE_WEEK_INDEX] == 0 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-        // send email 
-        assValues[ONE_WEEK_INDEX] = 1
-      }
-      if (values[THREE_DAY_INDEX] == 0 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-        // send email 
-        assValues[THREE_DAY_INDEX] = 1
-      }
-      if (values[ONE_DAY_INDEX] == 0 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-        // send email
-        assValues[ONE_DAY_INDEX] = 1
-      }
-      await __send_email(email, diff, assignment["name"])
-    }
-  }
-  db.collection(collectionName)
+  const res = await db.collection(collectionName)
     .where({
       _openid: openid
     })
     .update({
       data: {
-        userAssignments: assignments
+        userAssignments: [...currentAssignments, ...newAssignments]
       }
     })
-  // }
+  return res
 }
-
 
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-  const { branch, method, openid } = event
-  if (branch == undefined || method == undefined || openid == undefined) return {code: -1, msg: "缺少必要参数"}
+  const {
+    branch,
+    method,
+    openid
+  } = event
+  if (branch == undefined || method == undefined || openid == undefined) return {
+    code: -1,
+    msg: "缺少必要参数"
+  }
   const collectionName = branch + MAIN_USER_SUFFIX
   if (method == "fetchUserAssignments") {
     const res = await fetchAll(openid, collectionName)
@@ -341,25 +201,43 @@ exports.main = async (event, context) => {
       "headerItem": res[0],
       "assignments": res
     }
-    return fetchRes 
+    return fetchRes
   }
+  if (method == "getNotification") return await getNotification(openid, collectionName)
   if (method == "setNotification") {
-    const {notification} = event
+    const {
+      notification
+    } = event
     return await setNotification(openid, collectionName, notification)
   }
   if (method == "appendAssignments") {
-    const {assignment} = event
+    const {
+      assignment
+    } = event
     return await appendAssignments(openid, collectionName, assignment)
   }
-  if (method == "push") {
-    return await push(collectionName)
-  }
   if (method == "deleteUserAssignments") {
-    const {deletedId} = event
+    const {
+      deletedId
+    } = event
     return await deleteUserAssignments(openid, collectionName, deletedId)
   }
   if (method == "updateAssignments") {
-    const {assignment} = event
+    const {
+      assignment
+    } = event
     return await updateAssignments(openid, collectionName, assignment)
+  }
+  if (method == "testSendTemplate") {
+    const {
+      param
+    } = event
+    return await sendTemplate(openid, param)
+  }
+  if (method == "autoAppendAssignments") {
+    const {
+      assignments
+    } = event
+    return await autoAppendAssignments(openid, collectionName, assignments)
   }
 }

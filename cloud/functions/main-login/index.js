@@ -10,15 +10,46 @@ cloud.init({
 const db = cloud.database();
 const _ = db.command
 
-async function createUser(openid, userInfo, collectionName) {
+function GetDateStr(AddDayCount) {
+    var dd = new Date();
+    //获取AddDayCount天后的日期
+    dd.setDate(dd.getDate() + AddDayCount);
+    var y = dd.getFullYear();
+    //获取当前月份的日期，不足10补0
+    var m = (dd.getMonth() + 1) < 10 ? "0" + (dd.getMonth() + 1) : (dd.getMonth() + 1);
+    //获取当前几号，不足10补0
+    var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
+    return y + "-" + m + "-" + d;
+  }
+  
+  // 默认作业的倒计时时间
+  var d1 = GetDateStr(3)
+  var d2 = GetDateStr(29)
+  // 默认作业
+  const DEFAULT_ASSIGNMENTS = [
+    {
+      'color': '#7986CB',
+      'name': "CSSE1001 A1 (示例)",
+      "date": d1,
+      "time": "00:00",
+      "default": true
+    },
+    {
+      'color': '#7986CB',
+      'name': "点我查看更多",
+      "date": d2,
+      "time": "00:00",
+      "default": true
+    }
+  ]
 
-    // try {
+async function createUser(openid, userInfo, collectionName) {
     const res = await db.collection(collectionName)
         .add({
             data: {
                 _openid: openid,
                 nickName: userInfo.nickName,
-                userAssignments: [],
+                userAssignments: DEFAULT_ASSIGNMENTS,
                 userInfo: userInfo,
                 userEmail: "",
                 userMobile: "",
@@ -53,6 +84,7 @@ async function createUser(openid, userInfo, collectionName) {
     return res
 
 }
+
 
 async function loginStatus(openid, collectionName) {
     const i = await db.collection(collectionName).where({

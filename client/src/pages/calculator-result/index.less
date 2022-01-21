@@ -1,3 +1,4 @@
+@import "../../app.less";
 page {
   background-color: #ffffff;
 }
@@ -14,14 +15,17 @@ page {
   }
 }
 
-.top-background {
-  display: flex;
-  flex-flow: column;
-  justify-content: center;
+
+.fixed-height {
+  background-color: @highLight;
+  flex-direction: row;
+  height: fit-content;
+  justify-self: center;
 }
 
 .score-board {
-  margin-top: 25rpx;
+  text-align: center;
+  margin-top: 50rpx;
   position: initial !important;
 }
 
@@ -31,8 +35,3 @@ page {
   font-weight: bolder;
 }
 
-.checkboard-btn {
-  align-self: center;
-  width: 400rpx;
-  margin: 40rpx;
-}

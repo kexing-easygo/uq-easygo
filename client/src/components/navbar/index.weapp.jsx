@@ -6,7 +6,8 @@ export default function NavBar(props) {
   const { title, backIcon = false, handleClickBackBtn = () => Taro.navigateBack() } = props;
   const style = {
     paddingTop: Taro.$navBarMarginTop + 'px',
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    width: "100%"
   }
   return (
     <View style={style}>

@@ -16,6 +16,10 @@ export default {
     'pages/course-management/index',
     'pages/delete-course/index',
     'pages/web-view/index',
+    'pages/course-review/index',
+    'pages/review-result/index',
+    'pages/countingdown/index',
+    'pages/autoadd/index',
   ],
   window: {
     backgroundTextStyle: 'light',

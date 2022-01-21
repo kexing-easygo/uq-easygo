@@ -68,7 +68,7 @@ export const getGPALevel = score => {
       if (score < 75) return "H2B"
       if (score < 80) return "H2A"
       return "H1"
-    case "UQ":
+    default:
       if (score < 20) return "1"
       if (score < 45) return "2"
       if (score < 50) return "3"

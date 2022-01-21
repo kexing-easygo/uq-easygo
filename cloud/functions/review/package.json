@@ -11,6 +11,8 @@
     "dependencies": {
         "wx-server-sdk": "~2.5.3",
         "util": "~0.12.4",
-        "crypto": "~1.0.1"
+        "crypto": "~1.0.1",
+        "moment": "latest",
+        "moment-timezone": "latest"
     }
 }

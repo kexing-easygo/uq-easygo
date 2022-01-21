@@ -47,7 +47,7 @@ export default function BindEmail() {
       }
       <AtButton
         type='primary'
-        onClick={() => checkEmail()}
+        onClick={() => dispatch(updateEmail(email))}
         customStyle={{ width: '90vw', margin: '24rpx auto' }}
       >确定</AtButton>
       

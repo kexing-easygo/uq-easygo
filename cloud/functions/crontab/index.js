@@ -1,191 +1,238 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
-const cloudbase = require("@cloudbase/node-sdk");
-const app = cloudbase.init({
-    // env: cloudbase.SYMBOL_CURRENT_ENV
-    env: "uqeasygo1"
-});
-const db = app.database();
+const nodemailer = require('nodemailer')
+const moment = require('moment-timezone');
 
-cloud.init({
-    env: cloud.DYNAMIC_CURRENT_ENV
-})
+cloud.init()
 
-async function template(title, dayDiff, duetime, openid, username) {
-    var tt = String(duetime.getFullYear()) + "." + String(duetime.getMonth() + 1) + "." + String(duetime.getDate()) + " "
-    tt += String(duetime.getHours()) + ":" + String(duetime.getMinutes())
-    var res = await cloud.callFunction({
-        name: "sendTemplate",
-        data: {
-            "作业名称": title,
-            "截至日期": tt,
-            "提醒内容": "要交作业啦！",
-            "发布人员": "UQ校园通团队",
-            "openid": openid,
+const db = cloud.database();
+const _ = db.command
+
+const ONE_DAY_INDEX = 0
+const THREE_DAY_INDEX = 1
+const ONE_WEEK_INDEX = 2
+const MAX_LIMIT = 100
+
+const sendTemplate = async (openid, param) => {
+    const {
+        content,
+        assName,
+        dueDate,
+        publisher
+    } = param
+    try {
+        const res = await cloud.openapi.subscribeMessage.send({
+            touser: openid,
+            lang: 'zh_CN',
+            data: {
+                thing1: {
+                    value: content
+                },
+                thing2: {
+                    value: assName
+                },
+                time3: {
+                    value: dueDate
+                },
+                thing4: {
+                    value: publisher
+                }
+            },
+            templateId: '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U',
+            miniprogramState: 'developer'
+        })
+        return res
+    } catch (err) {
+        return err
+    }
+}
+
+const sendEmail = (param) => {
+    const {
+        subject,
+        toAddr,
+        content
+    } = param
+    const config = {
+        host: 'smtp.163.com',
+        port: 25,
+        auth: {
+            user: 'uqeasygo@163.com',
+            pass: 'KPHYSPDXOUFWENEU'
+        }
+    }
+    const transporter = nodemailer.createTransport(config)
+    const mail = {
+        from: '课行校园通 <uqeasygo@163.com>',
+        subject: subject,
+        to: toAddr,
+        text: content
+    }
+    console.log("Sending email to:", toAddr)
+    transporter.sendMail(mail, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
         }
     })
-    if (res.result.errCode != 0) {
-        console.log("用户%s拒绝接受订阅通知", username)
-    }
 }
 
-async function send(email, name, type) {
-    var content = name + "还有"
-    if (type == "oneDay") {
-        content += "1天"
-    } else if (type == "threeDay") {
-        content += "3天"
-    } else if (type == "oneWeek") {
-        content = content + "1周"
-    }
-    content += "就due啦！要抓紧写哦！！！\n\nUQ校园通团队"
-    var res = await cloud.callFunction({
-        // 要调用的云函数名称
-        name: 'sendEmail',
-        // 传递给云函数的参数
-        data: {
-            "toAddr": email,
-            "subject": "作业提醒",
-            "content": content
-        }
-    })
-}
-
-// date1 是now， date2是dueDate
-function dateDiff(date1, date2, location) {
-    if (location == "AU") {
-        var hours = date1.getHours()
-        date1.setHours(hours + 2) // 澳洲差两个小时
-    }
-    var diff = parseFloat((date2.getTime() - date1.getTime()) / (1000 * 60 * 60 * 24))
-    return diff
-}
-
-function processDateTime(date, time) {
-    var string = date + "T" + time + ":00"
-    return new Date(string)
-}
-
-
-async function getAllData() {
-    const MAX_LIMIT = 100
-    const dataCount = await db.collection("MainUser").count()
-    const total = dataCount.total
-    const fetchTimes = Math.ceil(total / MAX_LIMIT)
+/**
+ * 获取某个用户数据库内所有用户的数据
+ */
+async function __fetchAll(collectionName) {
+    const res = await db.collection(collectionName).count()
+    const totalDocuments = res.total
+    const fetchTimes = Math.ceil(totalDocuments / MAX_LIMIT)
     const tasks = []
     for (let i = 0; i < fetchTimes; i++) {
-        const promise = db.collection("MainUser").skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+        const promise = db.collection(collectionName).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
         tasks.push(promise)
     }
     // 等待所有数据取出后返回所有数据
-    var response = (await Promise.all(tasks)).reduce((acc, cur) => ({
+    const response = (await Promise.all(tasks)).reduce((acc, cur) => ({
         data: acc.data.concat(cur.data),
         errMsg: acc.errMsg,
     }))
-    var data = response.data
+    const data = response.data
+    return data
+}
 
-    // 第一次循环，获取所有用户信息
-    for (let i = 0; i < data.length; i++) {
-        var userAssignments = data[i].userAssignments
-        var email = data[i].userEmail
-        var openid = data[i]._openid
-        // debug
-        // var userName = data[i].userInfo.nickName
-        if (data[i].notification) {
-            const notification = data[i].notification
-            if (notification.location) {
-                var location = notification.location
-            }
-            if (notification.oneDay) {
-                var oneDay = notification.oneDay
-            }
-            if (notification.threeDay) {
-                var threeDay = notification.threeDay
-            }
-            if (notification.oneWeek) {
-                var oneWeek = notification.oneWeek
-            }
-            if (notification.emailNotification) {
-                var emailNotification = notification.emailNotification
-            }
-            if (notification.wechatNotification) {
-                var wechatNotification = notification.wechatNotification
-            }
-        }
-        if (data[i].userInfo) {
-            var username = data[i].userInfo.nickName
-        }
-        // 第二次循环，获取每个用户的所有作业
 
-        // console.log("用户：%s有几项作业，分别为", userName)
-        for (let j = 0; j < userAssignments.length; j++) {
-            var ass = userAssignments[j]
-            var date = ass.date
-            var time = ass.time
-            var dueDate = processDateTime(date, time)
-            var name = ass.name
-            // 忽视due的时间，只计算日期
-            var now = new Date()
-            var dayDiff = dateDiff(now, dueDate, location)
-            // 检查是否相差正数天
-            if (dayDiff >= 0) {
-                if (emailNotification == true && email != '') {
-                    if (dayDiff <= 1 && oneDay == 1) {
-                        if (ass["oneDayEmail"] != 1) {
-                            send(email, name, "oneDay")
-                            ass["oneDayEmail"] = 1
-                        }
-                    }
-                    if (dayDiff <= 3 && threeDay == 1) {
-                        if (ass["threeDayEmail"] != 1) {
-                            send(email, name, "threeDay")
-                            ass["threeDayEmail"] = 1
-                        }
-                    }
-                    if (dayDiff <= 7 && oneWeek == 1) {
-                        if (ass["oneWeekEmail"] != 1) {
-                            send(email, name, "oneWeek")
-                            ass["oneWeekEmail"] = 1
-                        }
-                    }
-                }
-                //用户接收订阅
-                if (wechatNotification == true) {
-                    if (dayDiff <= 1 && oneDay == 1) {
-                        if (ass["oneDayWe"] != 1) {
-                            template(name, dayDiff, dueDate, openid, username)
-                            ass["oneDayWe"] = 1
-                        }
-                    }
-                    if (dayDiff <= 3 && threeDay == 1) {
-                        if (ass["threeDayWe"] != 1) {
-                            template(name, dayDiff, dueDate, openid, username)
-                            ass["threeDayWe"] = 1
-                        }
-                    }
-                    if (dayDiff <= 7 && oneWeek == 1) {
-                        if (ass["oneWeekWe"] != 1) {
-                            template(name, dayDiff, dueDate, openid, username)
-                            ass["oneWeekWe"] = 1
-                        }
-                    }
-                }
-            }
-            // }
+const calcCountdown = (singleCountdown, classMode) => {
+    let todayDate = moment.tz('Australia/Brisbane')
+    if (classMode == "中国境内") {
+        todayDate = moment.tz('Asia/Shanghai')
+    }
+    if (singleCountdown["default"] == true) {
+        // 默认作业，更新时间
+        if (singleCountdown["name"] == "CSSE1001 A1 (示例)") {
+            singleCountdown["date"] = formatDate(todayDate.clone().add(4, "d"), "date")
+        } else {
+            singleCountdown["date"] = formatDate(todayDate.clone().add(29, "d"), "date")
         }
-        // 把用户作业更新上去
-        db
-        .collection("MainUser")
+    } else {
+        let date = "999";
+        let diff = 999;
+        // 如果用户作业中存在时间不确定的，默认为999
+        if (singleCountdown["date"] !== "TBD") {
+            // 计算时间差
+            date = singleCountdown["date"]
+            let time = singleCountdown["time"]
+            let d1 = moment(`${date} ${time}`)
+            diff = d1.diff(todayDate, 'days')
+        }
+        singleCountdown["diff"] = diff
+    }
+}
+
+
+const push = async (collectionName) => {
+    const data = await __fetchAll(collectionName)
+    const item = data[0]
+    const openid = item._openid
+    const classMode = item.classMode
+    const email = item.userEmail
+    const assignments = item.userAssignments
+    await Promise.all(assignments.map(async(assignment, val) => {
+        if (assignment.hasOwnProperty("default")) {
+            
+        }
+        calcCountdown(assignment, classMode)
+        const diff = assignment.diff
+        if (item.notification.wechat.enabled == true) {
+            let values = item.notification.wechat.attributes
+            let assValues = assignment.attributes.wechat
+            let wxParam = {}
+            if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+                // send wechat 
+                wxParam = {
+                    content: `7天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                    assName: assignment.name,
+                    dueDate: assignment.date + " " + assignment.time,
+                    publisher: "课行校园通"
+                }
+                await sendTemplate(openid, wxParam)
+                assValues[ONE_WEEK_INDEX] = 1
+            }
+            if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+                // send wechat 
+                wxParam = {
+                    content: `3天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                    assName: assignment.name,
+                    dueDate: assignment.date + " " + assignment.time,
+                    publisher: "课行校园通"
+                }
+                await sendTemplate(openid, wxParam)
+                assValues[THREE_DAY_INDEX] = 1
+            }
+            if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+                // send wechat
+                wxParam = {
+                    content: `1天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                    assName: assignment.name,
+                    dueDate: assignment.date + " " + assignment.time,
+                    publisher: "课行校园通"
+                }
+                await sendTemplate(openid, wxParam)
+                assValues[ONE_DAY_INDEX] = 1
+            }
+        }
+        if (item.notification.email.enabled == true) {
+            let values = item.notification.email.attributes
+            let assValues = assignment.attributes.email
+            let content = ""
+            let emailParam = {}
+            
+            if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+                // send email 
+                content = `7天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间写！`
+                emailParam = {
+                    subject: "作业提醒",
+                    toAddr: email,
+                    content: content
+                }
+                sendEmail(emailParam)
+                assValues[ONE_WEEK_INDEX] = 1
+            }
+            if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+                // send email 
+                content = `3天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间写！`
+                emailParam = {
+                    subject: "作业提醒",
+                    toAddr: email,
+                    content: content
+                }
+                sendEmail(emailParam)
+                assValues[THREE_DAY_INDEX] = 1
+            }
+            if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+                // send email
+                content = `1天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间写！`
+                emailParam = {
+                    subject: "作业提醒",
+                    toAddr: email,
+                    content: content
+                }
+                sendEmail(emailParam)
+                assValues[ONE_DAY_INDEX] = 1
+            }
+        }
+    }))
+    await db.collection(collectionName)
         .where({
             _openid: openid
         })
         .update({
-            userAssignments: userAssignments
+            data: {
+                userAssignments: assignments
+            }
         })
-        // console.log(res)
-    }
 }
+
+
 // 云函数入口函数
 exports.main = async (event, context) => {
-    getAllData()
+    push("UQ_Test_MainUser")
 }

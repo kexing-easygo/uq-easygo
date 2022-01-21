@@ -54,8 +54,15 @@ export const fetchHotResearches = createAsyncThunk(
 export const fetchReviews = createAsyncThunk(
   'review/fetchReviews',
   async (param) => {
-    // const res = callCloud('review', 'getAllReview', param);
-    // return res.result
-    return FAKE_REVIEWS
+    const res = await callCloud('review', 'getAllReview', param);
+    return res.result
+    // return FAKE_REVIEWS
+  }
+)
+
+export const addReview = createAsyncThunk(
+  "review/addReview",
+  async (param) => {
+    
   }
 )

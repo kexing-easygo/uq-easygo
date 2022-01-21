@@ -37,6 +37,7 @@ export const reviewSlice = createSlice({
       })
       .addCase(fetchReviews.fulfilled, (state, action) => {
         state.reviews = action.payload
+        console.log(state.reviews)
         Taro.navigateTo({ url: '/pages/review-result/index' });
       })
       .addCase(fetchReviews.rejected, () => {

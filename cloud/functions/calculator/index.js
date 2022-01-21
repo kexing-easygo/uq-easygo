@@ -71,11 +71,13 @@ async function setCalculatedResult(event) {
 const determineLevel = (res, branch) => {
   switch (branch) {
       case "UQ":
-          if (res < 50) return 3
-          else if (res < 65) return 4
-          else if (res < 75) return 5
-          else if (res < 75) return 6
-          return 7
+        if (res < 20) return 1
+        if (res < 45) return 2
+        if (res < 50) return 3
+        if (res < 65) return 4
+        if (res < 75) return 5
+        if (res < 85) return 6
+        return 7
       default:
           return res
   }
@@ -100,7 +102,7 @@ const getCumulativeGPA = async(openid, branch, semester) => {
   })
   const selectedCourses = selectedCoursesRes.result;
   const semesterCourses = selectedCourses[semester]
-  if (semesterCourses === undefined || semesterCourses === []) return 0
+  if (semesterCourses === undefined || semesterCourses.length === 0) return 0
   let semesterGPA = 0
   let totalUnits = 0.0
   await Promise.all(semesterCourses.map(async(courseInfo) => {
@@ -118,6 +120,8 @@ const getCumulativeGPA = async(openid, branch, semester) => {
         _id: courseCode
       }).get()
       let units = 12.5
+      if (branch === "UQ") units = 2
+      else if (branch == "USYD") units = 6
       if (res.data.length > 0) units = parseFloat(res.data[0].academic_detail.credits)
       totalUnits += units
       const courseGPA = determineLevel(singleCourseRes, branch)

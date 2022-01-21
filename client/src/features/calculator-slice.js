@@ -5,7 +5,7 @@ import { mergeAssResult } from '../utils/assessments'
 // 初始化状态
 const initialState = {
   assessments: [],
-  clickedAss: '',
+  clickedAss: 0,
   searchedCourse: '',
   showModal: false,
   searchedSemester: '',
@@ -43,6 +43,7 @@ export const calculatorSlice = createSlice({
     calcPercent: (state) => {
       const targetAss = state.assessments[state.clickedAss];
       let percent = parseFloat((targetAss.score / targetAss.totalScore * 100).toFixed(1));
+      percent = percent > 100 ? 100 : percent
       if (Number.isNaN(percent)) percent = 0;
       const newAss = Object.assign({}, targetAss, { 'percent': percent });
       state.assessments[state.clickedAss] = newAss;
@@ -57,20 +58,16 @@ export const calculatorSlice = createSlice({
       .addCase(fetchAssessments.pending, () => {
         Taro.showToast({ title: '搜索中', icon: 'loading' })
       })
-      .addCase(fetchAssessments.rejected, () => {
-        Taro.showToast({ title: '出错了', icon: 'none' })
-      })
+      // .addCase(fetchAssessments.rejected, () => {
+      //   Taro.showToast({ title: '出错了', icon: 'none' })
+      // })
       .addCase(fetchAssessments.fulfilled, (state, action) => {
-        if (action.payload.code === -2) {
+        if (action.payload.length === 0) {
           Taro.showToast({
             title: "本学期未开设该课程哦",
             icon: "none",
           })
-        } else if (action.payload.code === -1) {
-          Taro.showToast({
-            title: "该课程不存在",
-            icon: "none",
-          })
+          return
         } else {
           state.assessments = action.payload;
           Taro.navigateTo({ url: '/pages/calculator-result/index' });
@@ -83,7 +80,8 @@ export const calculatorSlice = createSlice({
         Taro.showToast({ title: '出错了', icon: 'none' })
       })
       .addCase(saveCourseScore.fulfilled, (state, action) => {
-
+        Taro.showToast({ title: '保存成功', icon: 'success' })
+        
       })
       .addCase(getSemesterGPA.pending, (state, action) => {
         Taro.showToast({ title: '计算当前GPA', icon: 'loading', mask: true })

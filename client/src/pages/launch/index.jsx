@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux'
 import { setLoginStatus } from '../../features/user-slice'
 import { fetchSelectedCourses, fetchCurrentSemester } from '../../services/course'
 import { fetchUserInfo, getCardsInfo } from '../../services/profile'
+import {fetchAllCountDown, getNotifications} from '../../services/countdown'
+
 /**
  * 启动页执行
  * 1. 初始化云环境
@@ -30,7 +32,10 @@ export default function Launch() {
           dispatch(fetchUserInfo());
           dispatch(getCardsInfo());
           dispatch(fetchSelectedCourses());
-          dispatch(fetchCurrentSemester())
+          dispatch(fetchCurrentSemester());
+          dispatch(fetchAllCountDown()); //拉取用户countdown条目
+          dispatch(getNotifications());
+
         }
         Taro.switchTab({ url: '/pages/index/index' })
         // Taro.navigateTo( {url: "/pages/bind-email/index"} )

@@ -25,7 +25,7 @@ export default function Review() {
       return;
     }
     const params = {
-      courseName: courseCode,
+      courseCode: courseCode,
     }
     dispatch(setSearchedCourse(courseCode));
     dispatch(fetchReviews(params))

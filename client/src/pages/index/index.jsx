@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Taro, { useShareAppMessage } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
-import { AtActivityIndicator, AtCard } from 'taro-ui'
+import { AtActivityIndicator, AtCard, AtButton } from 'taro-ui'
 import { useSelector } from 'react-redux'
 import { Swiper, SwiperItem } from '@tarojs/components'
 import { getTodayCourses } from '../../services/course'
@@ -81,9 +81,12 @@ export default function Index() {
             src={countDownIcon}
             mode="widthFix"
             onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            // onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}
           />
           <View className='title-text'
-          onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>倒计时</View>
+            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>
+            {/* onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}> */}
+            倒计时</View>
         </View>
 
         <View className='function-icon-view'>
@@ -107,11 +110,9 @@ export default function Index() {
           />
           <View className='title-text'
           onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>课评</View>
-          {/*  onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}>课评</View> */}
+          {/* //  onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}>课评</View> */}
         </View>
-
       </View>
-
       {/* 根据用户自定义显示情况展示对应卡片 */}
       {todayClasses && <TodayCourse />}
       {newActivities && <NewActivities />}
