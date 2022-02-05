@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import {AtActionSheet, AtActionSheetItem, AtButton, AtSwitch} from 'taro-ui'
+import { AtModal, AtModalAction, AtModalContent, AtModalHeader } from "taro-ui";
 import { useDispatch, useSelector } from 'react-redux'
 import './index.less'
 import { setNotifications } from "../../../services/countdown";
@@ -10,7 +11,6 @@ import { setNotifyMenu } from "../../../features/countdown-slice";
 
 
 export default function NotifySheet(props) {
-  const {isOpen, closeNotifyMenu} = props
   const {notifications, askSave} = useSelector(state => state.countdown)
   const { userEmail } = useSelector(state => state.user)
   const dispatch = useDispatch()
@@ -20,6 +20,18 @@ export default function NotifySheet(props) {
   const [threeDayNotify, setThreeDayNotify] = useState(notifications.wechat.attributes[1])
   const [oneWeekNotify, setOneWeekNotify] = useState(notifications.wechat.attributes[2])
   const { notifyMenu } = useSelector(state => state.countdown)
+
+  const [showModal, setShowModal] = useState(false)
+  const modalContent = {
+    title: '尚未绑定邮箱',
+    onConfirm: () => {
+      Taro.navigateTo({ url: '/pages/bind-email/index' })
+      setShowModal(false);
+      dispatch(setNotifyMenu(false))
+    },
+    content: '绑定邮箱才能接受邮箱提醒哦~',
+    confirmText: '去绑定'
+  }
 
   useEffect(() => {
     dispatch(resetAskSave())
@@ -32,10 +44,11 @@ export default function NotifySheet(props) {
   const checkValidSettings = () => {
     // 邮箱提醒但未绑定邮箱
     if (emailNotify && userEmail == '') {
-      Taro.showModal({
-        content: "你还没有绑定邮箱哦",
-        title: "温馨提示"
-      })
+      setShowModal(true)
+      // Taro.showModal({
+      //   content: "你还没有绑定邮箱哦",
+      //   title: "温馨提示"
+      // })
       return false
     }
     if (!emailNotify && !wxNotify) {
@@ -128,7 +141,23 @@ export default function NotifySheet(props) {
           <AtButton size='small' circle={true} onClick={() => handleConfirm()}>保存</AtButton>
         </View>
       </AtActionSheetItem>
-
+      <AtModal isOpened={showModal} onClose={() => setShowModal(false)}>
+        <AtModalHeader>{modalContent.title}</AtModalHeader>
+        <AtModalContent>{modalContent.content}</AtModalContent>
+        <AtModalAction>
+          <AtButton
+            full
+            circle
+            type="primary"
+            size="small"
+            onClick={modalContent.onConfirm}
+            customStyle={{ margin: "24rpx" }}
+          >
+            {modalContent.confirmText}
+          </AtButton>
+        </AtModalAction>
+      </AtModal>
     </AtActionSheet>
+    
   )
 }

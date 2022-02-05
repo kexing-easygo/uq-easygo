@@ -1,4 +1,4 @@
-const cloud = require('wx-server-sdk')
+const cloud = require('wx-server-sdk');
 const MAIN_USER_SUFFIX = "_MainUser"
 
 // 初始化 cloud
@@ -48,6 +48,8 @@ function GetDateStr(AddDayCount) {
   ]
 
 async function createUser(openid, userInfo, collectionName) {
+    const status = await loginStatus(openid, collectionName)
+    if (status) return
     const res = await db.collection(collectionName)
         .add({
             data: {
