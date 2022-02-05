@@ -47,8 +47,11 @@ export default function DetailSheet(props) {
           name='detailsheet'
           title='标题名称'
           type='text'
-          placeholder={showDetailSheet && clickedAss.name}
-          value={showDetailSheet && clickedAss.name}
+          placeholder={clickedAss.name}
+          value={assignmentName}
+          cursor={-1}
+          // placeholder={showDetailSheet && clickedAss.name}
+          // value={showDetailSheet && clickedAss.name}
           onBlur={(value)=>{
             setAssignmentName(value)
           }}
