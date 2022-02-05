@@ -1,14 +1,8 @@
 // 云函数入口文件
-const moment = require('moment-timezone');
 const cloud = require('wx-server-sdk')
 const crypto = require('crypto')
-const nodemailer = require('nodemailer')
 const MAIN_USER_SUFFIX = "_MainUser"
 
-const ONE_DAY_INDEX = 0
-const THREE_DAY_INDEX = 1
-const ONE_WEEK_INDEX = 2
-const MAX_LIMIT = 100
 
 cloud.init()
 
@@ -227,12 +221,6 @@ exports.main = async (event, context) => {
       assignment
     } = event
     return await updateAssignments(openid, collectionName, assignment)
-  }
-  if (method == "testSendTemplate") {
-    const {
-      param
-    } = event
-    return await sendTemplate(openid, param)
   }
   if (method == "autoAppendAssignments") {
     const {

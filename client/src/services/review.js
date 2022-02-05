@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { callCloud } from '../utils/cloud'
-
+import { getLocalOpenId } from "../services/login";
 const FAKE_COURSES = [
   "CSSE1001", "INFS1200", "MATH1061",
   "CSSE2002", "FINM1415", "BISM1201",
@@ -63,6 +63,20 @@ export const fetchReviews = createAsyncThunk(
 export const addReview = createAsyncThunk(
   "review/addReview",
   async (param) => {
-    
+    const res = await callCloud('review', 'addReview', {
+      reviewObj: {
+        posterName: "进击的炮灰", 
+        dimensions: [10, 1, 2, 5],
+        content: "这是啥",
+        isOutstanding: false,
+        courseCode: "INFO1110",
+        studySemester: "Semester 1, 2021",
+        mark: 7,
+        sub_review: [],
+        openid: await getLocalOpenId()
+      }
+    })
+    console.log(res.result)
+    return res.result
   }
 )

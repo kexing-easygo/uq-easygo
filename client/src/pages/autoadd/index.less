@@ -16,11 +16,15 @@ page {
   width: 85%;
   padding-top: 30rpx;
   background-color: #EFF3FB;
-  margin-bottom: 100rpx;
+  margin-bottom: 40rpx;
 }
+
 .auto-add .at-search-bar__placeholder-wrap {
   background-color: #DEDEDE;
+  width: 100%;
+  justify-content: flex-start;
 }
+
 //Starter notice style
 .auto-add .start-notice {
   display: flex;
@@ -42,10 +46,20 @@ page {
   height: 0;
 }
 
+// Result section style
+.auto-add .result-section {
+  height: 980rpx;
+  display: flex;
+  justify-content: center;
+  overflow: scroll;
+  align-self: center;
+  padding: 20rpx;
+}
 
-// checkbox style
+// Checkbox style
 .auto-add .at-checkbox {
   width: 85%;
+  height: fit-content;
   background-color: #EFF3FB;
   display: flex;
   flex-flow: column nowrap;
@@ -54,15 +68,39 @@ page {
   border: none;
 }
 
+.auto-add .at-checkbox__title {
+  font-size: 28rpx;
+} 
+
 .auto-add .at-checkbox__option {
   margin-bottom: 20rpx;
-  height: 150rpx;
+  height: 250rpx;
   width: 95%;
   display: flex;
   align-items: center;
   background-color: #fff;
   border: 2rpx solid #6A90E2;
   border-radius: 15rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.auto-add .at-checkbox__option-wrap {
+  position: relative;
+  width: 95%;
+  height: 100%;
+  display: flex;
+}
+
+.auto-add .at-checkbox__option-cnt {
+  align-items: center;
+}
+
+.auto-add .at-checkbox__desc {
+  font-size: 38rpx;
+  position: absolute;
+  top: 35rpx;
+  right: 20rpx;
 }
 
 // actionsheet style

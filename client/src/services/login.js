@@ -10,7 +10,7 @@ export const login = async () => {
   // 完成后正常使用资源方的已授权的云资源
   const loginRes = await callCloud('login', 'getOpenID');
   const openId = loginRes.result.event.userInfo.openId;
-  // const openId = "oe4Eh5ZAYjil48_ohw4XH-F2AJoo"
+  // const openId = "oe4Eh5bdKz_Ts5Yzu0q0_uTs_4Qc"
   // 将openId储存至缓存中
   await Taro.setStorage({
     key: '_openId',

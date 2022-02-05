@@ -28,18 +28,22 @@ function GetDateStr(AddDayCount) {
   // 默认作业
   const DEFAULT_ASSIGNMENTS = [
     {
-      'color': '#7986CB',
-      'name': "CSSE1001 A1 (示例)",
-      "date": d1,
-      "time": "00:00",
-      "default": true
+        'aid': "default1",
+        'color': '#576B95',
+        'name': "CSSE1001 A1 (示例)",
+        "date": d1,
+        "time": "00:00",
+        "default": true,
+        "type": "Assessment"
     },
     {
-      'color': '#7986CB',
-      'name': "点我查看更多",
-      "date": d2,
-      "time": "00:00",
-      "default": true
+        'aid': "default2",
+        'color': '#576B95',
+        'name': "点我查看更多",
+        "date": d2,
+        "time": "00:00",
+        "default": true,
+        "type": "Exam"
     }
   ]
 

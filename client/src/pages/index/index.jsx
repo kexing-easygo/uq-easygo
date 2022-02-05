@@ -80,8 +80,8 @@ export default function Index() {
             className='function-icon'
             src={countDownIcon}
             mode="widthFix"
-            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
-            // onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}
+            // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}
           />
           <View className='title-text'
             onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>

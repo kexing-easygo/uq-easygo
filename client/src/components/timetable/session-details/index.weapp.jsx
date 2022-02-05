@@ -9,7 +9,6 @@ import { CURRENT_SEMESTER, DEFAULT_REMARK } from '../../../utils/constant'
 import { computeEndTime, convert2CST } from '../../../utils/time'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
-import { current } from '@reduxjs/toolkit'
 
 export default function SessionDetails(props) {
 

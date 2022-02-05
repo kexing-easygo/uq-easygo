@@ -10,7 +10,10 @@ const initialState = {
     wechat: {enabled: false, attributes: [0, 0, 0]},
     email: {enabled: false, attributes: [0, 0, 0]}
   },
-  askSave: false
+  askSave: false,
+  clickedAss: {},
+  showDetailSheet: false,
+  notifyMenu: false
 }
 
 export const countdownSlice = createSlice({
@@ -21,14 +24,23 @@ export const countdownSlice = createSlice({
     setUserCountDown: (state, action) => {
       state.userCountDown = action.payload
     },
-    setItemDetail: (state, action) => {
-      state.itemDetail = action.payload
-    },
     resetAskSave: (state, action) => {
       state.askSave = false
     },
     setAskSave: (state, action) => {
       state.askSave = true
+    },
+    setClickedAss: (state, action) => {
+      state.clickedAss = action.payload
+    },
+    setDetailSheet: (state, action) => {
+      state.showDetailSheet = true
+    },
+    closeDetailSheet: (state, action) => {
+      state.showDetailSheet = false
+    },
+    setNotifyMenu: (state, action) => {
+      state.notifyMenu = action.payload
     }
   },
 
@@ -74,6 +86,7 @@ export const countdownSlice = createSlice({
         Taro.showToast({ title: '保存中', icon: 'loading' })
       })
       .addCase(autoAppendAssignments.fulfilled, (state, action) => {
+        console.log(" ::: ", action.payload)
         state.userCountDown.push(...action.payload)
         Taro.showToast({ title: "保存成功", icon: "success" })
         Taro.navigateBack()
@@ -81,5 +94,5 @@ export const countdownSlice = createSlice({
   }
 })
 
-export const {setUserCountDown, setItemDetail, resetAskSave, setAskSave} = countdownSlice.actions
+export const { setUserCountDown, resetAskSave, setAskSave, setClickedAss, setDetailSheet, closeDetailSheet, setNotifyMenu } = countdownSlice.actions
 export default countdownSlice.reducer

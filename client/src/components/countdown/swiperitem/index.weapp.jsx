@@ -1,16 +1,16 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect, memo} from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtButton, AtSwipeAction, AtProgress } from 'taro-ui'
 import { useDispatch } from 'react-redux'
 import { deleteCountDown } from '../../../services/countdown'
-import {setItemDetail} from '../../../features/countdown-slice'
+import {setDetailSheet, setClickedAss} from '../../../features/countdown-slice'
 import './index.less'
 
-export default function SwiperItem(props) {
+function SwiperItem(props) {
   const dispatch = useDispatch()
-  const {showSheet, aid, name, date, time ,percentage, color, type} = props
-  
+  const { assignmentInfo } = props 
+  const { aid, name, date ,percentage, color } = assignmentInfo
   return (
     <>
       <AtSwipeAction 
@@ -30,10 +30,14 @@ export default function SwiperItem(props) {
         >    
         <View className='container'>
           <View className='item-name'>
-            <Text>{name}</Text>
-            <Text>{date}</Text>
+            <View className='name'>{name}</View>
+            <View className='date'>{date}</View>
+            {/* <Text className='date'>{date}</Text> */}
           </View>
-          <AtButton className='item-button' onClick={()=>{showSheet(true); dispatch(setItemDetail(props))}}>
+          <AtButton className='item-button' onClick={()=>{
+              dispatch(setDetailSheet())
+              dispatch(setClickedAss(assignmentInfo))
+            }}>
               <AtProgress className='item-progress' percent={percentage} strokeWidth={30} color={color} isHidePercent/>
           </AtButton>
         </View>
@@ -53,3 +57,5 @@ export default function SwiperItem(props) {
     </>
   )
 }
+
+export default SwiperItem

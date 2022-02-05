@@ -60,18 +60,10 @@ export const deleteCountDown = createAsyncThunk(
 export const updateCountDown = createAsyncThunk(
   'countdown/updateCountDown',
   async (param) => {
-    const {aid, color, name , date, time} = param
     const _openId = await getLocalOpenId();
     const update = await callCloud('countdown', 'updateAssignments', {
       openid: _openId,
-      assignment: 
-        { 
-          "aid": aid,
-          "color": color,
-          "name": name,
-          "date": date,
-          "time": time
-        }
+      ...param
     });
     return update.result
   }
@@ -93,7 +85,7 @@ export const getNotifications = createAsyncThunk(
 export const setNotifications = createAsyncThunk(
   'countdown/setNotifications',
   async (param) => {
-    const {wechat, email, userEmail} = param
+    const {wechat, email} = param
     if (wechat.enabled) {
       try {
         const res = await Taro.requestSubscribeMessage({
@@ -112,15 +104,6 @@ export const setNotifications = createAsyncThunk(
         return;
       }
     }
-    if (email.enabled && userEmail === '') {
-      Taro.showModal({
-        content: "你还没有绑定邮箱哦",
-        title: "温馨提示"
-      })
-      return
-    }
-    delete param["userEmail"]
-    console.log(param)
     const setRes = await callCloud('countdown', 'setNotification', {
       openid: await getLocalOpenId(),
       notification: param
@@ -128,6 +111,17 @@ export const setNotifications = createAsyncThunk(
     return setRes.result
   }
 )
+
+export const fetchAssessments = async(param) => {
+  const res = await callCloud('calculator', 'fetchAssessments', {
+    ...param
+  })
+  const currentAssessments =  res.result
+  if (currentAssessments.length == 0) {
+    Taro.showToast({ title: "没有找到这门课", icon: "none"})
+  }
+  return currentAssessments
+}
 
 
 export const autoAppendAssignments = createAsyncThunk(

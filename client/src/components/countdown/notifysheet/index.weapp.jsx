@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import './index.less'
 import { setNotifications } from "../../../services/countdown";
 import { resetAskSave, setAskSave } from "../../../features/countdown-slice";
+import { setNotifyMenu } from "../../../features/countdown-slice";
+
 
 export default function NotifySheet(props) {
   const {isOpen, closeNotifyMenu} = props
@@ -14,60 +16,72 @@ export default function NotifySheet(props) {
   const dispatch = useDispatch()
   const [wxNotify, setWXNotify] = useState(notifications.wechat.enabled)
   const [emailNotify, setEmailNotify] = useState(notifications.email.enabled)
-  const [oneDayNotify, setOneDayNotify] = useState(false)
-  const [threeDayNotify, setThreeDayNotify] = useState(false)
-  const [oneWeekNotify, setOneWeekNotify] = useState(false)
-  const [switchDisabled, setSwitchDisabled] = useState(true)
-  useEffect(()=>{
-    if (wxNotify || emailNotify) setSwitchDisabled(false)
-    if (wxNotify == true) {
-      setOneDayNotify(notifications.wechat.attributes[0])
-      setThreeDayNotify(notifications.wechat.attributes[1])
-      setOneWeekNotify(notifications.wechat.attributes[2])
-    } 
-    if (emailNotify == true) {
-      setOneDayNotify(notifications.email.attributes[0])
-      setThreeDayNotify(notifications.email.attributes[1])
-      setOneWeekNotify(notifications.email.attributes[2])
-    }
-    if (!wxNotify && !emailNotify) {
-      setSwitchDisabled(true)
-    }
-  }, [wxNotify, emailNotify])
+  const [oneDayNotify, setOneDayNotify] = useState(notifications.wechat.attributes[0])
+  const [threeDayNotify, setThreeDayNotify] = useState(notifications.wechat.attributes[1])
+  const [oneWeekNotify, setOneWeekNotify] = useState(notifications.wechat.attributes[2])
+  const { notifyMenu } = useSelector(state => state.countdown)
+
   useEffect(() => {
     dispatch(resetAskSave())
   }, [])
 
+  /**
+   * 检查用户的提醒设置是否有效。有效地判断规则：
+   * 如果想设置1天/3天/7天，则至少打开微信/邮箱提醒中的一个
+   */
+  const checkValidSettings = () => {
+    // 邮箱提醒但未绑定邮箱
+    if (emailNotify && userEmail == '') {
+      Taro.showModal({
+        content: "你还没有绑定邮箱哦",
+        title: "温馨提示"
+      })
+      return false
+    }
+    if (!emailNotify && !wxNotify) {
+      if (oneDayNotify || threeDayNotify || oneWeekNotify) {
+        Taro.showModal({
+          content: "请至少设置邮箱或微信提醒的一个",
+          title: "温馨提示"
+        })
+        return false
+      }
+    }
+    return true
+  }
+
   const handleConfirm = () => {
     if (!askSave) {
-      closeNotifyMenu(false)
+      // closeNotifyMenu(false)
+      dispatch(setNotifyMenu(false))
       return;
     }
-    const param = {
-      wechat: {
-        enabled: wxNotify,
-        attributes: [
-          oneDayNotify ? 1 : 0,
-          threeDayNotify ? 1 : 0,
-          oneWeekNotify ? 1 : 0,
-        ]
-      },
-      email: {
-        enabled: emailNotify,
-        attributes: [
-          oneDayNotify ? 1 : 0,
-          threeDayNotify ? 1 : 0,
-          oneWeekNotify ? 1 : 0,
-        ]
-      },
-      userEmail: userEmail
+    if (checkValidSettings()) {
+      const param = {
+        wechat: {
+          enabled: wxNotify,
+          attributes: [
+            oneDayNotify ? 1 : 0,
+            threeDayNotify ? 1 : 0,
+            oneWeekNotify ? 1 : 0,
+          ]
+        },
+        email: {
+          enabled: emailNotify,
+          attributes: [
+            oneDayNotify ? 1 : 0,
+            threeDayNotify ? 1 : 0,
+            oneWeekNotify ? 1 : 0,
+          ]
+        },
+      }
+      dispatch(setNotifications(param))
+      dispatch(setNotifyMenu(false))
     }
-    dispatch(setNotifications(param))
-    closeNotifyMenu(false)
   }
 
   return (
-    <AtActionSheet className='notify-sheet' isOpened={isOpen} onClose={()=>{closeNotifyMenu(false)}}>
+    <AtActionSheet className='notify-sheet' isOpened={notifyMenu} onClose={()=>{dispatch(setNotifyMenu(false))}}>
 
       <AtActionSheetItem className='sheet-header'>
         <View className='blue-block'></View>
@@ -90,27 +104,27 @@ export default function NotifySheet(props) {
         <AtSwitch 
           title='提前一天提醒' 
           checked={oneDayNotify} 
-          disabled={switchDisabled}
           onChange={(value)=>{setOneDayNotify(value); dispatch(setAskSave())}}/>
       </AtActionSheetItem>
       <AtActionSheetItem className='sheet-item'>
         <AtSwitch 
           title='提前三天提醒' 
           checked={threeDayNotify} 
-          disabled={switchDisabled}
           onChange={(value)=>{setThreeDayNotify(value); dispatch(setAskSave())}}/>
       </AtActionSheetItem>
       <AtActionSheetItem className='sheet-item'>
         <AtSwitch 
           title='提前一周提醒' 
           checked={oneWeekNotify} 
-          disabled={switchDisabled}
           onChange={(value)=>{setOneWeekNotify(value); dispatch(setAskSave())}}/>
       </AtActionSheetItem>
 
       <AtActionSheetItem>
         <View className='buttons'>
-          <AtButton size='small' circle={true} onClick={()=>{closeNotifyMenu(false)}}>取消</AtButton>
+          <AtButton size='small' circle={true} onClick={() => {
+              dispatch(resetAskSave())
+              dispatch(setNotifyMenu(false))
+            }}>取消</AtButton>
           <AtButton size='small' circle={true} onClick={() => handleConfirm()}>保存</AtButton>
         </View>
       </AtActionSheetItem>

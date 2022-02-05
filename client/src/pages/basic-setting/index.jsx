@@ -8,9 +8,9 @@ import { updateClassMode } from '../../services/profile'
 import { CLASS_MODE_OPTIONS, SUMMER_START_DATE, SUMMER_WEEKS, SEMESTER_START_DATE, SEMESTER_WEEKS } from '../../utils/constant'
 import './index.less'
 import SemesterSelector from '../../components/semesters-selector'
-import { setCurrentSemester } from '../../features/course-slice'
+import { setNotifyMenu } from '../../features/countdown-slice'
 import { updateCurrentSemester, fetchCurrentSemester } from "../../services/course";
-
+import NotifySheet from "../../components/countdown/notifysheet/index";
 
 export default function BasicSetting() {
 
@@ -34,9 +34,10 @@ export default function BasicSetting() {
       <AtList>
         <AtListItem
           title='倒计时提醒'
-          // arrow='right'
-          extraText='敬请期待'
+          arrow='right'
+          // extraText='敬请期待'
           disabled={!loginStatus}
+          onClick={() => dispatch(setNotifyMenu(true))}
         />
 
         <AtListItem
@@ -85,6 +86,8 @@ export default function BasicSetting() {
           dispatch(updateCurrentSemester(s))
         }}
       />
+      {/* 提醒设置actionSheet component */}
+      <NotifySheet />
     </View>
   )
 }

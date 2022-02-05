@@ -4,7 +4,7 @@ import { View, Picker} from '@tarojs/components'
 import { AtActionSheet, AtActionSheetItem, AtButton, AtForm, AtInput, AtListItem } from 'taro-ui'
 import { useDispatch } from 'react-redux'
 import { appendNewCountDown } from '../../../services/countdown'
-import ColorPicker from '../colorpicker/index'
+import ColorPicker from '../../timetable/color-picker'
 import './index.less'
 import { calcCountdown } from "../../../utils/countdown";
 
@@ -101,7 +101,7 @@ export default function ManualAdd(props) {
 
         <AtActionSheetItem className='sheet-item'>
           <View>设置颜色</View>
-          <ColorPicker handleSelection={setAssignmentColor} />
+          <ColorPicker handleSelection={setAssignmentColor} selectedColor={assignmentColor}/>
         </AtActionSheetItem>
 
         <AtActionSheetItem className='sheet-item'>

@@ -50,7 +50,7 @@ export const calcCountdown = (singleCountdown, classmode) => {
     }
   } else {
     let date = "999";
-    let diff = 999;
+    let diff = Infinity;
     // 如果用户作业中存在时间不确定的，默认为999
     if (singleCountdown["date"] !== "TBD") {
       // 计算时间差
@@ -85,7 +85,8 @@ export const sortCountDown = (countdown, classmode) => {
         name: assignment.name,
         date: assignment.date,
         time: assignment.time,
-        color: assignment.color
+        color: assignment.color,
+        type: assignment.type
       }
       temp.push(item)
     })
@@ -105,7 +106,7 @@ export const sortCountDown = (countdown, classmode) => {
 }
 
 /**
- * 按月份划分用户的countdown assignments
+ * 按月份划分用户的countdown assignments。如果date为TBD，单独划分一列
  * @param {assignments} 用户全部的countdown
  * @return {monthCountDown} 一个以月份为key的Object, value为每个月份下的countdown
  */
@@ -113,11 +114,14 @@ export const splitByMonth = (assignments) => {
   const monthCountDown = {}
   if (assignments == null) return [];
   for (let i = 0; i < assignments.length; i++) {
-    let month = assignments[i].date.split('-');
-    if (monthCountDown[month[1]] == null) {
-      monthCountDown[month[1]] = []
-      monthCountDown[month[1]].push(assignments[i])
+    monthCountDown[TBD] = []
+    if (assignments[i].date == "TBD") {
+      monthCountDown['TBD'].push(assignments[i])
     } else {
+      let month = assignments[i].date.split('-');
+      if (monthCountDown[month[1]] == null) {
+        monthCountDown[month[1]] = []
+      }
       monthCountDown[month[1]].push(assignments[i])
     }
   }
@@ -140,29 +144,26 @@ export const countNumOfAssignments = (countdown) => {
 export const splitCountDown = (countdown) => {
   const completeCountDown = {}
   const incompleteCountDown = {}
-
   if (countdown == null) return [];
-
   for (let i = 0; i < countdown.length; i++) {
-    if (countdown[i].diff < 0) {
+    if (countdown[i].diff <= 0) {
       let month = countdown[i].date.split('-');
-      if (completeCountDown[month[1]] == null) {
-        completeCountDown[month[1]] = []
-        completeCountDown[month[1]].push(countdown[i])
-      } else {
-        completeCountDown[month[1]].push(countdown[i])
+      let key = month[1]
+      if (completeCountDown[key] == null) {
+        completeCountDown[key] = []
       }
-    } else {
-      let month = countdown[i].date.split('-');
-      if (incompleteCountDown[month[1]] == null) {
-        incompleteCountDown[month[1]] = []
-        incompleteCountDown[month[1]].push(countdown[i])
-      } else {
-        incompleteCountDown[month[1]].push(countdown[i])
+      completeCountDown[key].push(countdown[i])
+    } else if (countdown[i].diff > 0) {
+      let month = countdown[i].date.split('-')
+      let key = month == "TBD" ? "待定" : month[1]
+      if (incompleteCountDown[key] == null) {
+        incompleteCountDown[key] = []
       }
+      incompleteCountDown[key].push(countdown[i])
     }
   }
-  // // console.log(completeCountDown)
-  // console.log(incompleteCountDown)
-  return [completeCountDown, incompleteCountDown]
+  return {
+    completeCountDown: completeCountDown,
+    incompleteCountDown: incompleteCountDown,
+  }
 }

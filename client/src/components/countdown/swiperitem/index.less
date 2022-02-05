@@ -42,7 +42,16 @@
   width: 80%;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-name .name {
+  height: 50rpx;
+  width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-progress {

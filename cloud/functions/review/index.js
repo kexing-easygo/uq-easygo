@@ -24,29 +24,35 @@ function getDateTime() {
         time: time
     }
 }
+
+const omitSubReview = (singleReview) => {
+    singleReview["numOfComments"] = singleReview.sub_review.length
+    delete singleReview["sub_review"]
+}
+
 /**
  * add a review to the course
- * @param {*} collectionName 
- * @param {*} courseName 
- * @param {*} posterName 
- * @param {*} reviewContent 
+ * @param {Object} reviewObj
  */
 async function addReview(collectionName, reviewObj) {
     const dateTime = getDateTime()
-    const reviewContent = reviewObj.reviewContent
-    var reviewobject = {
+    const reviewContent = reviewObj.content
+    const reviewobject = {
         review_id: crypto.createHash('sha256').update(reviewContent + dateTime.date + dateTime.time).copy().digest('hex'),
-        post_date: dateTime.date,
-        post_time: dateTime.time,
+        postDate: dateTime.date,
+        postTime: dateTime.time,
+        searchTimes: 0,
         ...reviewObj,
     }
-    return await db.collection(collectionName).where({
+    await db.collection(collectionName).where({
         courseCode: reviewObj.courseCode
     }).update({
         data: {
             "review": _.push(reviewobject)
         }
     })
+    omitSubReview(reviewobject)
+    return reviewobject
 }
 
 /**
@@ -54,26 +60,26 @@ async function addReview(collectionName, reviewObj) {
  * @param {*} collectionName 
  * @param {*} courseName 
  * @param {*} reviewId 
- * @param {*} poster_name 
- * @param {*} reviewContent 
+ * @param {Object} subReviewObj
  */
-async function addSubReview(collectionName, courseName, reviewId, poster_name, reviewContent) {
+async function addSubReview(collectionName, courseName, reviewId, subReviewObj) {
     const dateTime = getDateTime()
-    var reviewobject = {
-        review_id: crypto.createHash('sha256').update(reviewContent + dateTime.date + dateTime.time).copy().digest('hex'),
-        post_date: dateTime.date,
-        post_time: dateTime.time,
-        poster_name: poster_name,
-        review: reviewContent
+    const { content }= subReviewObj
+    const reviewobject = {
+        review_id: crypto.createHash('sha256').update(content + dateTime.date + dateTime.time).copy().digest('hex'),
+        postDate: dateTime.date,
+        postTime: dateTime.time,
+        ...subReviewObj
     }
-    return await db.collection(collectionName).where({
-        course_name: courseName,
+    await db.collection(collectionName).where({
+        courseCode: courseName,
         'review.review_id': reviewId
     }).update({
         data: {
             "review.$.sub_review": _.push(reviewobject)
         }
     })
+    return reviewobject
 }
 
 /**
@@ -84,7 +90,7 @@ async function addSubReview(collectionName, courseName, reviewId, poster_name, r
  */
 async function deleteReview(collectionName, courseName, reviewId) {
     return await db.collection(collectionName).where({
-        course_name: courseName,
+        courseCode: courseName,
     }).update({
         data: {
             review: _.pull({
@@ -103,7 +109,7 @@ async function deleteReview(collectionName, courseName, reviewId) {
  */
 async function deleteSubReview(collectionName, courseName, reviewId, subReviewId) {
     return await db.collection(collectionName).where({
-        course_name: courseName,
+        courseCode: courseName,
         "review.review_id": reviewId
     }).update({
         data: {
@@ -118,19 +124,32 @@ async function deleteSubReview(collectionName, courseName, reviewId, subReviewId
  * update the sub review based on the main review_id and the sub review_id
  * @param {*} collectionName 
  * @param {*} courseName 
- * @param {*} reviewId 
  * @param {*} subReviewId 
- * @param {*} reviewContent 
+ * @param {*} subReviewObj
  */
-async function updateSubReview(collectionName, courseName, reviewId, subReviewId, reviewContent) {
-    return await db.collection(collectionName).where({
-        course_name: courseName,
-        "review.sub_review.review_id": subReviewId,
+async function updateSubReview(collectionName, courseName, reviewId, subReviewId, subReviewObj) {
+    const  {posterName, content} = subReviewObj
+    const dateTime = getDateTime()
+    const res = await db.collection(collectionName).where({
+        courseCode: courseName
+    }).get()
+    const reviews = res.data[0].review
+    const reviewIndex = reviews.findIndex(c => c.review_id == reviewId)
+    const subReviews = reviews[reviewIndex].sub_review
+    const subReviewIndex = subReviews.findIndex(c1 => c1.review_id == subReviewId)
+    const updatedSubreview = subReviews[subReviewIndex]
+    updatedSubreview.posterName = posterName
+    updatedSubreview.content = content
+    updatedSubreview.postDate = dateTime.date
+    updatedSubreview.postTime = dateTime.time
+    await db.collection(collectionName).where({
+        courseCode: courseName
     }).update({
         data: {
-            "review.$.sub_review.$[].review": reviewContent
+            review: reviews
         }
     })
+    return updatedSubreview
 }
 
 /**
@@ -140,36 +159,119 @@ async function updateSubReview(collectionName, courseName, reviewId, subReviewId
  * @param {*} reviewId 
  * @param {*} reviewContent 
  */
-async function updateReview(collectionName, courseName, reviewId, reviewContent) {
-    return await db.collection(collectionName).where({
-        course_name: courseName,
+async function updateReview(collectionName, courseName, reviewId, updateObj) {
+    const { content, studySemester, mark, posterName } = updateObj
+    const dateTime = getDateTime()
+    await db.collection(collectionName).where({
+        courseCode: courseName,
         "review.review_id": reviewId
     }).update({
         data: {
-            "review.$.review": reviewContent
+            "review.$.content": content,
+            "review.$.studySemester": studySemester,
+            "review.$.mark": mark,
+            "review.$.posterName": posterName,
+            "review.$.postDate": dateTime.date,
+            "review.$.postTime": dateTime.time
+        }
+    })
+    const res = await db.collection(collectionName).where({
+        courseCode: courseName,
+    }).get()
+    const reviews = res.data[0].review
+    const index = reviews.findIndex(c => c.review_id == reviewId)
+    const singleReview = reviews[index]
+    omitSubReview(singleReview)
+    return singleReview
+}
+
+const updateLikes = async(collectionName, courseName, reviewId, openid) => {
+    return await db.collection(collectionName).where({
+        courseCode: courseName,
+        "review.review_id": reviewId
+    }).update({
+        data: {
+            "review.$.likes": _.push(openid)
         }
     })
 }
 
+
+const updateReviewDimension = async(collectionName, courseName, dimensionIndex, openid) => {
+    const res =  await db.collection(collectionName).where({
+        courseCode: courseName,
+    }).get()
+    const dimensions = res.data[0].dimensions
+    dimensions[dimensionIndex].push(openid)
+    return await db.collection(collectionName).where({
+        courseCode: courseName,
+    }).update({
+        data: {
+            dimensions: dimensions
+        }
+    })
+}
+
+
 /**
- * get all review of a course
- * @param {*} collectionName 
- * @param {*} courseName 
+ * 返回某门课所有评价以及其他维度参数。返回的每条评价里，不携带sub_review字段，以numOfComments替代
+ * 代表有多少条追评。
+ * @param {string} collectionName 集合名称
+ * @param {string} courseName 课程名称
  */
 async function getAllReview(collectionName, courseName) {
     let course = await db.collection(collectionName).where({
         courseCode: courseName,
     }).get()
-    if (course.data.length > 0) {
-        return course.data[0].review
-    } else {
-        return {
-            "errMsg": "No reviews",
-            "review": false
-        }
+    let res = course.data
+    if (res.length == 0) return {
+        reviews: [], 
+        dimensions: [0, 0, 0, 0]
     }
+    let reviews = res[0].review
+    const newReviews = reviews.map((singleReview) => {
+        omitSubReview(singleReview)
+        return singleReview
+    })
+    newReviews.sort((r1, r2) => {
+        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return 1
+        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return -1
+        return 0
+    })
+    return {
+        reviews: newReviews, 
+        dimensions: res[0].dimensions
+    }
+}   
+
+
+/**
+ * 返回某条主评的所有追评
+ * @param {string} collectionName 集合名称
+ * @param {string} courseName 课程名称
+ * @param {string} reviewId 主评id
+ */
+const getAllSubReview = async(collectionName, courseName, reviewId) => {
+    const res = await await db.collection(collectionName).where({
+        courseCode: courseName,
+    }).get()
+    const reviews = res.data[0].review
+    const index = reviews.findIndex(c => c.review_id == reviewId)
+    const subReviews = reviews[index].sub_review
+    subReviews.sort((r1, r2) => {
+        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return 1
+        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return -1
+        return 0
+    })
+    return subReviews
 }
 
+
+/**
+ * 返回某门课的基本课程信息
+ * @param {string} collectionName 集合名称
+ * @param {string} courseName 课程名称
+ */
 const getCourseDetail = async(collectionName, courseName) => {
     const res = await db.collection(collectionName).where({
         _id: courseName,
@@ -203,11 +305,11 @@ exports.main = async (event, context) => {
     }
 
     if (method == "addSubReview") {
-        const { courseCode, posterName, reviewContent, reviewId } = event
-        return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, posterName, reviewContent)
+        const { courseCode, reviewId, subReviewObj } = event
+        return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewObj)
     }
     if (method == "deleteReview") {
-        const { reviewId, courseCode, reviewContent } = event
+        const { reviewId, courseCode } = event
         return await deleteReview(collectionName, courseCode.toUpperCase(), reviewId)
     }
 
@@ -217,22 +319,39 @@ exports.main = async (event, context) => {
     }
 
     if (method == "updateReview") {
-        const { reviewId, courseCode, reviewContent } = event
-        return await updateReview(collectionName, courseCode.toUpperCase(), reviewId, reviewContent)
+        const { reviewId, courseCode, updatedObj } = event
+        return await updateReview(collectionName, courseCode.toUpperCase(), reviewId, updatedObj)
+    }
+
+    if (method == "updateReviewDimensions") {
+        const { courseCode, dimensionIndex, openid } = event
+        return await updateReviewDimension(collectionName, courseCode.toUpperCase(), dimensionIndex, openid)
+    }
+
+    if (method == "updateLikes") {
+        const { courseCode, reviewId, likes } = event
+        return await updateLikes(collectionName, courseCode.toUpperCase(), reviewId, likes)
     }
 
     if (method == "updateSubReview") {
-        const { reviewId, subReviewId, courseCode, reviewContent } = event
-        return await updateSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId, reviewContent)
+        const { reviewId, subReviewId, courseCode, subReviewObj } = event
+        return await updateSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId, subReviewObj)
     }
     if (method == "getAllReview") {
         const { courseCode } = event
         return await getAllReview(collectionName, courseCode.toUpperCase())
     }
+
+    if (method == "getAllSubReview") {
+        const { courseCode, reviewId } = event
+        return await getAllSubReview(collectionName, courseCode, reviewId)
+    }
+
     if (method == "getCourseDetail") {
         const { courseCode } = event
         return await getCourseDetail(branch + "_Courses", courseCode)
     }
+
 
     if (method == "topSearch") {
         let { topNumber } = event
@@ -240,5 +359,10 @@ exports.main = async (event, context) => {
             topNumber = 10
         }
         return await topSearch(collectionName, topNumber)
+    }
+
+    if (method == "updateReviewDimension") {
+        const {courseCode, dimensionIndex, openid} = event
+        return await updateReviewDimension(collectionName, courseCode, dimensionIndex, openid)
     }
 }
