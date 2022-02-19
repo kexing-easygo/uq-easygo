@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Picker} from '@tarojs/components'
-import { AtActionSheet, AtActionSheetItem, AtButton, AtForm, AtInput, AtListItem } from 'taro-ui'
+import { AtFloatLayout, AtActionSheetItem, AtButton, AtForm, AtInput, AtListItem } from 'taro-ui'
 import { useDispatch } from 'react-redux'
 import { appendNewCountDown } from '../../../services/countdown'
 import ColorPicker from '../../timetable/color-picker'
@@ -62,13 +62,15 @@ export default function ManualAdd(props) {
   
   return (
     <AtForm>
-      <AtActionSheet className='manualadd-sheet' isOpened={isOpen} onClose={handleClose}>
+   
+      <AtFloatLayout className='manualadd-sheet' title='手动添加'
+      isOpened={isOpen} onClose={handleClose}>
 
-        <AtActionSheetItem className='sheet-header'>
+        {/*<AtActionSheetItem className='sheet-header'>
           <View className='title'>手动添加</View>
-        </AtActionSheetItem>
+          </AtActionSheetItem>*/}
 
-        <AtActionSheetItem className='sheet-item'>
+        <AtActionSheetItem className='sheet-item title'>
           <AtInput 
             name='manualadd'
             title='标题名称'
@@ -101,7 +103,7 @@ export default function ManualAdd(props) {
         </AtActionSheetItem>
 
         <AtActionSheetItem className='sheet-item'>
-          <View>设置颜色</View>
+          <View className='color-select'>设置颜色</View>
           <ColorPicker handleSelection={setAssignmentColor} selectedColor={assignmentColor}/>
         </AtActionSheetItem>
 
@@ -118,7 +120,7 @@ export default function ManualAdd(props) {
             </AtButton>
           </View>
         </AtActionSheetItem>
-      </AtActionSheet>
+      </AtFloatLayout>
     </AtForm>
   )
 }
