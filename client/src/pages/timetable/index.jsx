@@ -46,6 +46,7 @@ export default function TimeTable() {
     let today = new Date();
     let currentMonth = today.getMonth() + 1;
     let currentWeek = getCurrentWeek(startDate);
+    console.log("当前周", currentWeek)
     let _dates = getDates(today);
     let selectedDay = today.getDay() === 0 ? 6 : today.getDay() - 1;
     setCurrentWeek(currentWeek);

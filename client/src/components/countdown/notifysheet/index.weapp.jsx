@@ -98,7 +98,7 @@ export default function NotifySheet(props) {
 
       <AtActionSheetItem className='sheet-header'>
         <View className='blue-block'></View>
-        <Text>提醒方式</Text>
+        <Text className='title'>提醒方式</Text>
       </AtActionSheetItem>
 
       <AtActionSheetItem className='sheet-item'>
@@ -110,7 +110,7 @@ export default function NotifySheet(props) {
 
       <AtActionSheetItem className='sheet-header'>
         <View className='blue-block'></View>
-        <Text>提醒时间</Text>
+        <Text className='title'>提醒时间</Text>
       </AtActionSheetItem>
 
       <AtActionSheetItem className='sheet-item'>
@@ -134,11 +134,16 @@ export default function NotifySheet(props) {
 
       <AtActionSheetItem>
         <View className='buttons'>
-          <AtButton size='small' circle={true} onClick={() => {
+          <AtButton size='small' circle={true} type='secondary'
+          customStyle={{border: '1px solid #6190E8'}}
+          onClick={() => {
               dispatch(resetAskSave())
               dispatch(setNotifyMenu(false))
             }}>取消</AtButton>
-          <AtButton size='small' circle={true} onClick={() => handleConfirm()}>保存</AtButton>
+          <AtButton size='small' circle={true} type='primary'
+          onClick={() => handleConfirm()}> 
+            确认
+          </AtButton>
         </View>
       </AtActionSheetItem>
       <AtModal isOpened={showModal} onClose={() => setShowModal(false)}>

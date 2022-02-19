@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Picker} from '@tarojs/components'
+import { View, Picker } from '@tarojs/components'
 import { AtActionSheet, AtActionSheetItem, AtButton, AtInput, AtListItem } from 'taro-ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCountDown } from '../../../services/countdown'
@@ -49,6 +49,7 @@ export default function DetailSheet(props) {
           type='text'
           placeholder={clickedAss.name}
           value={assignmentName}
+          border={false}
           cursor={-1}
           // placeholder={showDetailSheet && clickedAss.name}
           // value={showDetailSheet && clickedAss.name}
@@ -61,13 +62,13 @@ export default function DetailSheet(props) {
       <AtActionSheetItem className='sheet-item'>
         <View>Due Date</View>
         <View style="display:flex;width:50%;">
-          <Picker mode='date' onChange={(e)=>{
+          <Picker mode='date'  onChange={(e)=>{
               setAssignmentDate(e.detail.value)
             }}>
-            <AtListItem extraText={showDetailSheet && clickedAss.date} />
+            <AtListItem className='sheet-item-picker' extraText={showDetailSheet && clickedAss.date} />
           </Picker>
           <Picker mode='time' onChange={(e)=> {setAssignmentTime(e.detail.value)}}>
-            <AtListItem extraText={showDetailSheet && clickedAss.time} />
+            <AtListItem className='sheet-item-picker' extraText={showDetailSheet && clickedAss.time} />
           </Picker>
         </View>
       </AtActionSheetItem>
@@ -75,7 +76,7 @@ export default function DetailSheet(props) {
       <AtActionSheetItem className='sheet-item'>
         <View>Assessment类别</View>
         <Picker mode='selector' range={types} onChange={(e)=>{setAssignmentType(types[e.detail.value])}}>
-          <AtListItem extraText={showDetailSheet && clickedAss.type} />
+          <AtListItem className='sheet-item-picker' extraText={showDetailSheet && clickedAss.type} />
         </Picker>
       </AtActionSheetItem>
 
@@ -87,13 +88,17 @@ export default function DetailSheet(props) {
           handleSelection={setAssignmentColor} 
           />
         }
-        
       </AtActionSheetItem>
 
       <AtActionSheetItem className='sheet-item'>
         <View className='buttons'>
-          <AtButton size='small' circle={true} onClick={update}>确认</AtButton>
-          <AtButton size='small' circle={true} onClick={() => dispatch(closeDetailSheet())}>取消</AtButton>
+          <AtButton size='small' circle={true} type='secondary'
+          onClick={() => dispatch(closeDetailSheet())}>
+            取消
+          </AtButton>
+          <AtButton size='small' circle={true} onClick={update} type='primary' >
+            确认
+          </AtButton>
         </View>
       </AtActionSheetItem>
     </AtActionSheet>

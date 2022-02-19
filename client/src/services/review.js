@@ -1,82 +1,149 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { callCloud } from '../utils/cloud'
-import { getLocalOpenId } from "../services/login";
-const FAKE_COURSES = [
-  "CSSE1001", "INFS1200", "MATH1061",
-  "CSSE2002", "FINM1415", "BISM1201",
-  "ACCT2102", "ACCT3104", "CSSE2310", "DECO2800"
-]
+import { getLocalOpenId } from "./login";
 
-const FAKE_HOT_COURSES = FAKE_COURSES.map((value) => {
-  return {courseCode: value}
-})
-
-const FAKE_REVIEWS = [
-  {
-    postDate: "2021-10-20", 
-    posterName: "进击的炮灰", 
-    postTime: "14:02", 
-    reviewID: "1",
-    dimensions: [10, 1, 2, 5],
-    content: "这是啥",
-    isOutstanding: "false"
-  }, 
-  {
-    postDate: "2021-10-21", 
-    posterName: "Null", 
-    postTime: "15:22", 
-    reviewID: "2",
-    dimensions: [10, 1, 2, 5],
-    content: "这又是啥",
-    isOutstanding: "false"
-  }, 
-  {
-    postDate: "2021-10-22", 
-    posterName: "kaylee", 
-    postTime: "16:10", 
-    reviewID: "3",
-    dimensions: [10, 1, 2, 5],
-    content: "这特么是啥",
-    isOutstanding: "false"
-  }, 
-]
-
-
+// 获取热搜课程
 export const fetchHotResearches = createAsyncThunk(
   'review/fetchHotResearches',
   async (param) => {
-    console.log("获取热搜课程中")
-    // const res = await callCloud()
-    return FAKE_HOT_COURSES
+    const res = await callCloud('review', 'topSearch', param)
+    return res.result === null? []: res.result
   }
 )
 
+// 获取课程信息
+export const fetchCourseInfo = createAsyncThunk(
+  'review/fetchCourseInfo',
+  async (param) => {
+    const res = await callCloud('review', 'getCourseDetail', param);
+    return res.result
+  }
+)
+
+// 获取课评
 export const fetchReviews = createAsyncThunk(
   'review/fetchReviews',
   async (param) => {
     const res = await callCloud('review', 'getAllReview', param);
-    return res.result
-    // return FAKE_REVIEWS
+    const open_id = await getLocalOpenId();
+    if (res.result == null) {
+      return res.result 
+    }
+    // 0-所有评论 1-小图标评论总数 2-已评论的小图标 3-赞过的课评 review id
+    let result = [[], [], 4, []];
+    result[0] = res.result.reviews
+    for (let i=0; i<4; i++) {
+      result[1].push(res.result.dimensions[i].length)
+      for (let q=0; q<res.result.dimensions[i].length; q++) {
+        if (res.result.dimensions[i][q] == open_id) {
+          result[2] = i;
+        }
+      }
+    }
+    for (let i=0; i<res.result.reviews.length; i++) {
+      if (res.result.reviews[i].likes.indexOf(open_id) != -1) {
+        result[3].push(res.result.reviews[i].review_id)
+      }
+    }
+    return result
   }
 )
 
+// 删除课评
+export const deleteReview = createAsyncThunk(
+  'review/deleteReview',
+  async (param) => {
+    const res = await callCloud('review', 'deleteReview', param);
+    return param.reviewId
+  }
+)
+
+// 添加课评
 export const addReview = createAsyncThunk(
   "review/addReview",
   async (param) => {
-    const res = await callCloud('review', 'addReview', {
-      reviewObj: {
-        posterName: "进击的炮灰", 
-        dimensions: [10, 1, 2, 5],
-        content: "这是啥",
-        isOutstanding: false,
-        courseCode: "INFO1110",
-        studySemester: "Semester 1, 2021",
-        mark: 7,
-        sub_review: [],
-        openid: await getLocalOpenId()
-      }
-    })
-    console.log(res.result)
+    const newParam = {
+      openid: await getLocalOpenId(),
+      ...param
+    }
+    const res = await callCloud('review', 'addReview', { reviewObj: newParam });
     return res.result
+  }
+)
+
+// 修改课评
+export const updateReview = createAsyncThunk(
+  'review/updateReview',
+  async (param) => {
+    const res = await callCloud('review', 'updateReview', param);
+    const result = [param.reviewId, res.result]
+    return result
+  }
+)
+
+// 添加小图标评论
+export const addReviewDimensions = createAsyncThunk(
+  'review/addReviewDimensions',
+  async (param) => {
+    const newParam = {
+      openid: await getLocalOpenId(),
+      ...param
+    }
+    const res = await callCloud('review', 'updateReviewDimensions', newParam);
+    return newParam.dimensionIndex
+  }
+)
+
+// 点赞
+export const updateLikes = createAsyncThunk(
+  'review/updateLikes',
+  async (param) => {
+    const newParam = {
+      likes: await getLocalOpenId(),
+      ...param
+    }
+    const res = await callCloud('review', 'updateLikes', newParam);
+    const result = {
+      openid: newParam.likes,
+      reviewID: param.reviewId
+    }
+    return result
+  }
+)
+
+// 获取追评
+export const fetchSubReviews = createAsyncThunk(
+  'review/fetchSubReviews',
+  async (param) => {
+    const res = await callCloud('review', 'getAllSubReview', param);
+    return res.result
+  }
+)
+
+// 添加追评
+export const addSubReview = createAsyncThunk(
+  'review/addSubReview',
+  async (param) => {
+    const res = await callCloud('review', 'addSubReview', param);
+    return res.result
+  }
+)
+
+// 删除追评
+export const deleteSubReview = createAsyncThunk(
+  'review/deleteSubReview',
+  async (param) => {
+    const res = await callCloud('review', 'deleteSubReview', param);
+    return param.subReviewId
+  }
+)
+
+// 修改追评
+export const updateSubReview = createAsyncThunk(
+  'review/updateSubReview',
+  async (param) => {
+    const res = await callCloud('review', 'updateSubReview', param);
+    const result = [param.subReviewId, res.result]
+    return result
   }
 )

@@ -3,10 +3,10 @@
   "PROGRAM_NAME": "UQ校园通",
   "RESOURCE_ENV": "uqeasygo1",
   "BRANCH_NAME": "UQ",
-  "SUMMER_WEEKS": 8,
+  "SUMMER_WEEKS": 7,
   "SUMMER_START_DATE_STRING": "Mon Jan 3 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
   "SEMESTER_WEEKS": 14,
-  "SEMESTER_START_DATE_STRING": "Mon Feb 28 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
+  "SEMESTER_START_DATE_STRING": "Mon Feb 21 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
   "SEMESTERS": [
     "Summer Semester",
     "Semester 1, 2022"

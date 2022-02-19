@@ -59,9 +59,8 @@ const getMondayDate = date => {
 
 export const getDatesByWeek = (currentWeek, startDate) => {
   // 根据周数计算该周周一的日期
-  const START_DATE = startDate
   const diff = MILLI_SECONDS_OF_WEEK * currentWeek;
-  const targetDate = diff + START_DATE.valueOf();
+  const targetDate = diff + startDate.valueOf();
   const monday = new Date(targetDate);
   const dates = getDates(monday);
   return dates;
@@ -89,8 +88,8 @@ export const getDates = (date = new Date()) => {
  */
 export const getCurrentWeek = (startDate) => {
   const targetDate = new Date();
-  const diff = targetDate.valueOf() - START_DATE.valueOf();
-  
+  const diff = targetDate.valueOf() - startDate.valueOf();
+
   return diff <= 0 ? 1 : Math.ceil(diff / MILLI_SECONDS_OF_WEEK)
 }
 

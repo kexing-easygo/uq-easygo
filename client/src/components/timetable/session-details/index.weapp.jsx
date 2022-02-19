@@ -9,6 +9,7 @@ import { CURRENT_SEMESTER, DEFAULT_REMARK } from '../../../utils/constant'
 import { computeEndTime, convert2CST } from '../../../utils/time'
 import { useSelector, useDispatch } from 'react-redux'
 import './index.less'
+import { getClassCode } from "../../../utils/courses";
 
 export default function SessionDetails(props) {
 
@@ -84,7 +85,6 @@ export default function SessionDetails(props) {
     setEndTime(_endTime);
     setCurrentBackground(clickedClass.background);
   }, [clickedClass]);
-
   return (
     <View>
       <AtFloatLayout
@@ -95,7 +95,7 @@ export default function SessionDetails(props) {
         <AtList>
           <AtListItem
             title='名称'
-            note={displayDetail && `${clickedClass.activity_group_code}`}
+            note={displayDetail && `${getClassCode(clickedClass._id)}`}
           />
           <AtListItem
             title='颜色'

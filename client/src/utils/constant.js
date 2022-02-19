@@ -35,7 +35,7 @@ export const BREAK = SEMESTER_BREAK; // 第八周为break
 export const MILLI_SECONDS_OF_WEEK = 1000 * 60 * 60 * 24 * 7;
 export const SUMMER_START_DATE = new Date(SUMMER_START_DATE_STRING)
 export const SEMESTER_START_DATE = new Date(SEMESTER_START_DATE_STRING);
-export const START_DATE = SUMMER_START_DATE;  // 默认开始日期为summer开始日期
+export const START_DATE = SEMESTER_START_DATE;  // 默认开始日期为summer开始日期
 export const COLORS = ['#FA5151', '#FFC300', '#07C160', '#1485EE', '#576B95']; // 可选择的课程模块背景
 export const DEFAULT_REMARK = "我是一个没有感情的备注框…可以随时修改我" // 默认的备注信息
 

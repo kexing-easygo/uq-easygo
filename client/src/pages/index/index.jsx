@@ -84,8 +84,8 @@ export default function Index() {
             onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}
           />
           <View className='title-text'
-            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>
-            {/* onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}> */}
+            onClick={() => Taro.navigateTo({ url: "/pages/countingdown/index" })}
+            >
             倒计时</View>
         </View>
 
@@ -105,12 +105,12 @@ export default function Index() {
             className='function-icon'
             src={courseReviewIcon}
             mode="widthFix"
-            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
-            // onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
+            // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
           />
           <View className='title-text'
-          onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}>课评</View>
-          {/* //  onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}>课评</View> */}
+            onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
+            >课评</View>
         </View>
       </View>
       {/* 根据用户自定义显示情况展示对应卡片 */}

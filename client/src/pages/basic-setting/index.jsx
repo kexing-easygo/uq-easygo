@@ -34,10 +34,10 @@ export default function BasicSetting() {
       <AtList>
         <AtListItem
           title='倒计时提醒'
-          arrow='right'
-          // extraText='敬请期待'
           disabled={!loginStatus}
+          arrow='right'
           onClick={() => dispatch(setNotifyMenu(true))}
+          // extraText='敬请期待'
         />
 
         <AtListItem

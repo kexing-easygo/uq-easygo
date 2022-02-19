@@ -77,7 +77,7 @@ export default function AutoAdd() {
 
       <View className='at-article start-notice' style={notice? '':'display:none;'}>
         <View className='at-article__section'>
-          <View className='at-article__h3'>温馨提示</View>
+          <View className='at-article__h3 h1'>温馨提示</View>
         </View>
         <AtDivider lineColor='#6A90E2'/>
         <View className='at-article__section'>
@@ -103,14 +103,23 @@ export default function AutoAdd() {
             <Text style='color: #999; font-size: 26rpx; margin-left:20rpx;'>标注需自主添加时间</Text>
           </View>
           <View className='action-colorpicker'>
-            <View>设置颜色</View>
+            <View>
+              <Text style='font-size: 30rpx;'>
+                设置颜色
+              </Text>
+            </View>
             <ColorPicker 
               handleSelection={setAssignmentColor} 
               selectedColor={assignmentColor}/>
           </View>
           <View className='action-buttons'>
-            <AtButton size='small' circle={true}>取消</AtButton>
-            <AtButton size='small' circle={true} onClick={handleConfirm}>确定</AtButton>
+            <AtButton size='small' circle={true} type='secondary'
+              customStyle={{border: '1px solid #6190E8'}}>
+              取消
+            </AtButton>
+            <AtButton size='small' circle={true} type='primary' onClick={handleConfirm}>
+              确认
+            </AtButton>
           </View>
         </AtActionSheetItem>
       </View>

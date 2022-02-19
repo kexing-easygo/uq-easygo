@@ -21,6 +21,7 @@ export default function AssessmentList(props) {
             note={ass.assessment_type}
             // extraText={ass.weight}
             arrow='right'
+            className='assessments-list'
             onClick={() => {
               dispatch(setClickedAss(i));
               dispatch(toggleModal(true));

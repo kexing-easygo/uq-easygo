@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect } from 'react'
-import { View } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleModal, addScore, addTotalScore, calcPercent, getResults } from '../../../features/calculator-slice'
@@ -86,43 +86,33 @@ function ScoreModal(props) {
             <AtListItem title='时长' extraText={click.length} />
             <AtListItem title='分数' note={<ScoreInput />} />
           </AtList>
-          <View className='score-option at-row'>
+          <View className='score-option at-row' >
             <AtButton
-              type='secondary'
-              onClick={() => {
-                dispatch(addScore());
-                dispatch(addTotalScore());
-              }}
+              type='secondary' circle={true}  
+              onClick={() => {dispatch(addScore());dispatch(addTotalScore());}}
               customStyle={{
                 color: '#FA5151',
                 border: '1px solid #FA5151',
                 // backgroundColor: 'transparent'#78A4FA
+              }} >
+              <Text className='text'>清除</Text>
+            </AtButton>
+            <AtButton
+              type='primary' circle={true}
+              onClick={handleCalculate} >
+              <Text className='text'>计算</Text>
+            </AtButton>
 
+            <AtButton 
+              circle={true} type='secondary'
+              customStyle={{
+                // color: '#7F7F7F',
+                border: '1px solid #6190E8',
+                backgroundColor: 'transparent'
               }}
-            >
-              清除
-              </AtButton>
-              <AtButton
-                type='primary'
-                onClick={handleCalculate}
-                >
-              计算
-              </AtButton>
-            
-              <AtButton
-                customStyle={{
-                  color: '#7F7F7F',
-                  border: '1px solid #78A4FA',
-                  backgroundColor: 'transparent'
-                }}
-              onClick={() => {
-                handleCalculate("confirm")
-                      
-              }}
-            >
-              确定
-              </AtButton>
-              
+              onClick={() => {handleCalculate("confirm")}}>
+              <Text className='text'>确认</Text>
+            </AtButton> 
           </View>
         </>
     </AtFloatLayout>

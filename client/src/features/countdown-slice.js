@@ -4,7 +4,7 @@ import { fetchAllCountDown, appendNewCountDown, deleteCountDown, updateCountDown
 import { getNotifications, setNotifications, autoAppendAssignments } from '../services/countdown'
 
 const initialState = {
-  userCountDown: '', //用户的全部countdown条目
+  userCountDown: {}, //用户的全部countdown条目
   itemDetail: '',
   notifications: {
     wechat: {enabled: false, attributes: [0, 0, 0]},

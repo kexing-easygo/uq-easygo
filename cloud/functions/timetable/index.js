@@ -8,26 +8,26 @@ const CURRENT_YEAR = 2021
 const COURSE_CODE_REGEX = /\w{4}\d{4,}/
 const ical = require("cal-parser");
 const request = require("request");
-cloud.init()
+const Stream = require("stream");
 
+cloud.init()
+const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|([A-Za-z]{3,})(\d?)\|(\d{1,})/
+
+const WEEKDAY_MAPPER = {
+    1: "Mon",
+    2: "Tue",
+    3: "Wed",
+    4: "Thu",
+    5: "Fri",
+    6: "Sat",
+    7: "Sun"
+}
 
 const db = cloud.database();
 const _ = db.command
 const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
-/**
- * set the stream to store the content from autoAddTimeLink
- */
-const Stream = require("stream");
-const ws = new Stream();
-var autoAddContent = {
-    readyOrNot: false,
-    classesInfo: [] // store the analysed timetable information, may change later
-}
-ws.bytes = "";
-ws.write = function (buf) {
-    ws.bytes += buf;
-};
+
 
 
 /**
@@ -59,48 +59,110 @@ function _getClassTime(timeItem) {
     );
 }
 
+const computeDuration = (start, end) => {
+    return end.diff(start, "minutes")
+}
+
+
+const getDetailedClassId = (desc) => {
+    const items = desc.split(", ")
+    let classTitle = `${items[0]}|${items[1]}`
+    const trialing = items[2]
+    const trialingNumber = trialing.split(" ")[0]
+    return {
+        "_id": `${classTitle}|${trialingNumber}`,
+        "subject_code": items[0],
+        "activity_group_code": items[1]
+    }
+}
+
+
+const getClassTimeTest = (timeItem, timezone) => {
+    return moment.tz(timeItem, timezone).utc()
+}
+
+const getCourseCode = (classTitle) => {
+    let res = classTitle.match(CLASS_ID_REGEX);
+    return res[1]
+}
+
+
 /**
  * analyse the calendar information which read from the stream, return an array of the class time 
  * @param {*} calender 
  */
 function _analyseData(calender) {
-    var coursesTime = [];
-    var courses = [];
+    const coursesTime = [];
+    const classes = [];
     calender.forEach((element) => {
-        var description = element.description.value.split(", ");
-        var classTitle = description[0] + "|" + description[1];
-        if (courses.includes(classTitle)) {
-            coursesTime.forEach((classItem) => {
-                if (classItem.className == classTitle) {
-                    classItem.activitiesDays.push(
-                        _getClassDate(element.dtstart.value)
-                    );
-                }
-            })
+        // var description = element.description.value.split(", ");
+        // var classTitle = description[0] + "|" + description[1];
+        // if (courses.includes(classTitle)) {
+        //     coursesTime.forEach((classItem) => {
+        //         if (classItem.className == classTitle) {
+        //             classItem.activitiesDays.push(
+        //                 _getClassDate(element.dtstart.value)
+        //             );
+        //         }
+        //     })
             
+        // } else {
+        //     courses.push(classTitle);
+        //     var classTimeItem = {
+        //         className: classTitle,
+        //         classDetail: element.summary.value,
+        //         location: element.location.value,
+        //         activitiesDays: [_getClassDate(element.dtstart.value)],
+        //         startTime: _getClassTime(element.dtstart.value),
+        //         startToEnd:
+        //             _getClassTime(element.dtstart.value) +
+        //             "-" +
+        //             _getClassTime(element.dtend.value),
+        //         time:
+        //             parseInt(
+        //                 new Date(element.dtend.value) - new Date(element.dtstart.value)
+        //             ) /
+        //             1000 /
+        //             3600,
+        //     };
+        //     coursesTime.push(classTimeItem);
+        // }
+        const {_id, subject_code, activity_group_code } = getDetailedClassId(element.description.value)
+        const {dtstart, dtend} = element
+        const startTimeRaw = getClassTimeTest(dtstart.value, dtstart.params.tzid)
+        const endTimeRaw = getClassTimeTest(dtend.value, dtend.params.tzid)
+        const duration = computeDuration(startTimeRaw, endTimeRaw)
+        const startTime = startTimeRaw.format("HH:mm")
+        const activityDay = startTimeRaw.format("DD/MM/YYYY")
+        const weekdayNumber = WEEKDAY_MAPPER[startTimeRaw.isoWeekday()]
+        if (classes.includes(_id)) {
+            coursesTime[coursesTime.length - 1].activitiesDays.push(activityDay);
         } else {
-            courses.push(classTitle);
-            var classTimeItem = {
-                className: classTitle,
-                classDetail: element.summary.value,
+            classes.push(_id);
+            const classTimeItem = {
+                _id: _id,
                 location: element.location.value,
-                activitiesDays: [_getClassDate(element.dtstart.value)],
-                startTime: _getClassTime(element.dtstart.value),
-                startToEnd:
-                    _getClassTime(element.dtstart.value) +
-                    "-" +
-                    _getClassTime(element.dtend.value),
-                time:
-                    parseInt(
-                        new Date(element.dtend.value) - new Date(element.dtstart.value)
-                    ) /
-                    1000 /
-                    3600,
+                activitiesDays: [activityDay],
+                start_time: startTime,
+                duration: duration,
+                day_of_week: weekdayNumber,
+                activity_group_code: activity_group_code,
+                subject_code: subject_code,
             };
             coursesTime.push(classTimeItem);
         }
     });
-    return coursesTime
+    const newRes = {}
+    for (let i = 0; i < classes.length; i++) {
+        const item = classes[i]
+        const classCode = getCourseCode(item)
+        if (newRes[classCode] === undefined) {
+            newRes[classCode] = []
+        }
+        newRes[classCode].push(item)
+    }
+    return newRes
+    // return coursesTime
 }
 
 
@@ -403,33 +465,50 @@ async function deleteWholeSemester(openid, semester, userCollection) {
         .update({ data: { selectedCourses: selectedCourses } });
 }
 
+const ws = new Stream();
+
+const autoAddContent = {
+    readyOrNot: false,
+    classesInfo: {} // store the analysed timetable information, may change later
+}
+ws.bytes = "";
+ws.write = function (buf) {
+    ws.bytes += buf;
+};
+ws.writable = true
+
 /**
  * send the request based on the calendar url, and store the analysed information to db
  * @param {*} openid 
  * @param {*} timetableLink 
  * @param {*} userCollection 
  */
-async function autoAddTimeable(openid, timetableLink, userCollection) {
-    ws.writable = true
+async function autoAddTimeable(openid, timetableLink, branch, semester) {
+    /**
+     * set the stream to store the content from autoAddTimeLink
+     */
     request(timetableLink).pipe(ws);
-    // set the event when the stream stop receiving content from the request
     ws.end = async function (buf) {
         if (arguments.length) ws.write(buf);
         ws.writable = false;
         const parsed = ical.parseString(ws.bytes);
-        autoAddContent.classesInfo = _analyseData(parsed.events);
-        autoAddContent.readyOrNot = true;
-        await db.collection(userCollection).where({
-            _openid: openid
-        }).update({
-            data: {
-                classTime: autoAddContent.classesInfo
-            }
-        })
+        const res = _analyseData(parsed.events);
+        console.log(res)
+        // await Promise.all(Object.keys(res).forEach(async(key) => {
+        //     const classes = res[key]
+        //     // semester, courseCode, classes, openid, branch
+        //     const events = {
+        //         semester: semester,
+        //         courseCode: key,
+        //         classes: classes,
+        //         openid: openid,
+        //         branch: branch
+        //     }
+        //     await appendUserClasses(events)
+        // }))
+        // autoAddContent.readyOrNot = true;
         ws.bytes = ""
     };
-    // return isuseless now, may improve in the future
-    return autoAddContent.classesInfo
 }
 
 async function fetchCurrentSemester(openid, collectionName) {
@@ -455,8 +534,9 @@ async function updateCurrentSemester(openid, collectionName, currentSemester) {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    var branch = event.branch
-    var method = event.method
+    // var branch = event.branch
+    // var method = event.method
+    const { branch, method } = events
     if (branch == undefined || method == undefined) {
         return {
             data: "缺少必须的元素"
@@ -507,8 +587,8 @@ exports.main = async (event, context) => {
     }
 
     if (method == "autoAddTimeable") {
-        const { openid, timetableLink } = event;
-        return await autoAddTimeable(openid, timetableLink, userCollection)
+        const { openid, timetableLink, semester } = event;
+        return await autoAddTimeable(openid, timetableLink, branch, semester)
     }
     const { currentSemester } = event
     if (method == "fetchCurrentSemester") {

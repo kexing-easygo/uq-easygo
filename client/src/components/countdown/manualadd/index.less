@@ -2,6 +2,9 @@
 
   .sheet-header {
     padding: 24rpx !important;
+    .title {
+      font-size: 32rpx;
+    }
   }
 
   .sheet-item {
@@ -28,21 +31,18 @@
     .options-view {
       padding: 20px;
     }
-  }
+    .sheet-item-picker::after {
+      border: none;
+    }
 
-  .buttons {
-    width: 100%;
-    padding: 24rpx 25rpx;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
-    align-items: center;
-    // margin-bottom: 80rpx;
-
-    .at-button--small {
-      color: #6A90E2;
-      border-color: #6A90E2;
-      border: 1px solid #6A90E2 !important;
+    .buttons {
+      width: 100%;
+      padding: 24rpx 25rpx;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: center;
+      align-items: center;
+      // margin-bottom: 80rpx;
     }
   }
 }

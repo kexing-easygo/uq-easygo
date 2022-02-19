@@ -225,8 +225,8 @@ async function getAllReview(collectionName, courseName) {
     }).get()
     let res = course.data
     if (res.length == 0) return {
-        reviews: [], 
-        dimensions: [0, 0, 0, 0]
+        reviews: undefined, 
+        dimensions: undefined
     }
     let reviews = res[0].review
     const newReviews = reviews.map((singleReview) => {

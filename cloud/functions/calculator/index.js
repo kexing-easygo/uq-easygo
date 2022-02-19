@@ -20,14 +20,15 @@ async function fetchAssessments(course, semester, collectionName) {
   }).get()
   if (result.data.length == 0) return [];
   const data = result.data[0];
-  // const semestersAvailable = data.academic_detail.semester_available
-  // if (semestersAvailable.includes(semester)) return data.assessments
-  const assessments = data.assessments
-  const newAssessments = assessments.map((ass) => {
-    ass.description = course + " - " + ass.description
-    return ass
-  })
-  return newAssessments
+  const semestersAvailable = data.academic_detail.semester_available
+  if (semestersAvailable.includes(semester)) return data.assessments
+  // const assessments = data.assessments
+  // const newAssessments = assessments.map((ass) => {
+  //   ass.description = course + " - " + ass.description
+  //   return ass
+  // })
+  // return newAssessments
+  return []
 }
 
 async function fetchCalculatedResult(event) {

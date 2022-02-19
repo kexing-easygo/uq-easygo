@@ -4,10 +4,66 @@
 @buttonWidth: calc(@inputHeight + 40px);
 
 .selector-container {
+  .top-background {
+    height: 30vh;
+    width: 100%;
+    background-color: #b5caf1;
+    margin-top: 0px;
+    position: absolute;
+  }
+  .search {
+    height: 8vh;
+    width: 80%;
+    background-color: #b5caf1;
+    border-radius: 50px;
+    margin-top: 38px;
+    margin-left: 74px;
+  }
+  
+  .search::after {
+    border: none;
+  }
 
+  .courseSuggestion {
+    height: auto;
+    width: 73%;
+    background-color: white;
+    position: absolute;
+    margin-top: 180px;
+    margin-left: 97px;
+    border-radius: 30px;
+    border: 7px solid @highLight;
+    margin-bottom: 60px;
+      .title-icon {
+        font-size: 60px;
+        color: @highLight;
+        margin-left: 60px;
+        margin-top: 8px;
+        position: absolute;
+        padding-bottom: 10px;
+      }
+      .title {
+        margin-left: 90px;
+        position: absolute;
+        margin-top: 30px;
+        padding-bottom: 10px;
+      }
+      .course-top {
+        width:100%;
+        margin-top: 100px;
+        margin-left: 0px;
+        border-radius: 60px;
+        .course-list {
+          padding-left: 100px;
+          padding-right: 90px;
+          border-top: 1px solid rgb(214, 214, 214);
+        }
+      }
+    }
+    
   .input-element {
     display: flex;
-    margin: 60px auto;
+    margin: 1000px auto;
     font-size: 90%;
     box-shadow: @boxShadow;
     border-radius: @radius;

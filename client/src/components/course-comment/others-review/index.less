@@ -1,0 +1,42 @@
+@import "../../../app.less";
+@radius: 8px;
+
+.review-card {
+  background-color: rgb(255, 255, 255);
+  border: 5px solid @highLight;
+  width: 90%;
+  word-wrap:break-word;
+  margin-top: 50px;
+  padding-top: 45px;
+  padding-bottom: 43px;
+  .review-background {
+    width: 108.1%;
+    height: auto;
+    margin-top: -103px;
+    margin-left: -24px;
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
+    border-bottom: 5px solid @highLight;
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    .review-author { 
+      font-size: 35px;
+      margin-left: 24px;
+    }
+  }
+  
+  .review-content {
+    margin-top: 10px;
+    font-size: 30px;
+  }
+}
+
+.review-heart {
+  margin-left: 39px;
+  margin-top: -73px;
+  position: absolute;
+  width: 90%;
+}
+
+

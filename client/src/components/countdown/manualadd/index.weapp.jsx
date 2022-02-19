@@ -65,7 +65,7 @@ export default function ManualAdd(props) {
       <AtActionSheet className='manualadd-sheet' isOpened={isOpen} onClose={handleClose}>
 
         <AtActionSheetItem className='sheet-header'>
-          手动添加
+          <View className='title'>手动添加</View>
         </AtActionSheetItem>
 
         <AtActionSheetItem className='sheet-item'>
@@ -76,6 +76,7 @@ export default function ManualAdd(props) {
             placeholder={'输入Assessment标题'}
             placeholderStyle='text-align:right;'
             value={assignmentName}
+            border={false}
             onBlur={(value)=>{setAssignmentName(value)}}
           />
         </AtActionSheetItem>
@@ -84,10 +85,10 @@ export default function ManualAdd(props) {
           <View>Due Date</View>
           <View style="display:flex;width:50%;">
             <Picker mode='date' onChange={(e)=>setAssignmentDate(e.detail.value)}>
-              <AtListItem extraText={assignmentDate? assignmentDate:'选择日期'} />
+              <AtListItem className='sheet-item-picker' extraText={assignmentDate? assignmentDate:'选择日期'} />
             </Picker>
             <Picker mode='time' onChange={(e)=>setAssignmentTime(e.detail.value)}>
-              <AtListItem extraText={assignmentTime? assignmentTime:'选择时间'} />
+              <AtListItem className='sheet-item-picker' extraText={assignmentTime? assignmentTime:'选择时间'} />
             </Picker>
           </View>
         </AtActionSheetItem>
@@ -95,7 +96,7 @@ export default function ManualAdd(props) {
         <AtActionSheetItem className='sheet-item'>
           <View>Assessment类别</View>
           <Picker mode='selector' range={types} onChange={(e)=>{setAssignmentType(types[e.detail.value])}}>
-            <AtListItem extraText={assignmentType? assignmentType:'选择类型'} />
+            <AtListItem className='sheet-item-picker' extraText={assignmentType? assignmentType:'选择类型'} />
           </Picker>
         </AtActionSheetItem>
 
@@ -106,8 +107,15 @@ export default function ManualAdd(props) {
 
         <AtActionSheetItem className='sheet-item'>
           <View className='buttons'>
-            <AtButton size='small' circle={true} onClick={handleAppend}>确认</AtButton>
-            <AtButton size='small' circle={true} onClick={handleClose}>取消</AtButton>
+            <AtButton size='small' circle={true} type='secondary' 
+            customStyle={{border: '1px solid #6190E8'}}
+            onClick={handleClose}>
+              取消
+            </AtButton>
+            <AtButton size='small' circle={true} type='primary' 
+            onClick={handleAppend}>
+              确认
+            </AtButton>
           </View>
         </AtActionSheetItem>
       </AtActionSheet>

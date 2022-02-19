@@ -1,0 +1,59 @@
+@import "../../../app.less";
+@radius: 10px;
+
+.course-card {
+  background-color: rgb(255, 255, 255);
+  border: 5px solid @highLight;
+  box-shadow: @boxShadow;
+  width: 90%;
+  margin-top: 35px;
+  margin-left: 35px;
+  border-radius: 20px;
+  font-size: @fontSize;
+
+  .title-background {
+    background-color: @highLight;
+    width: 100.3%;
+    margin-left: -1px;
+    display: flex;
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
+  }
+
+  .title-course { 
+    font-size: 35px;
+    margin-left: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .contents {
+    width: 58%;
+    margin-left: 270px;
+    margin-top: -40px;
+    .content {
+      font-size: 30px;
+      margin-top: -50px;
+    }
+  }
+
+  .title {
+    font-size: 32px;
+    margin-left: 40px;
+    margin-top: -50px;
+    margin-right: 50px;
+  }
+
+  .lines {
+   margin-top: 20px;
+   margin-bottom: 20px;
+  }
+
+  .note {
+    font-size: 25px;
+    color: rgb(128, 128, 128);
+    margin-left: 210px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+}

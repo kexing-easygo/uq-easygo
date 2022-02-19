@@ -120,7 +120,11 @@ export const fetchAssessments = async(param) => {
   if (currentAssessments.length == 0) {
     Taro.showToast({ title: "没有找到这门课", icon: "none"})
   }
-  return currentAssessments
+  const newAssessments = currentAssessments.map((ass) => {
+    ass["description"] = param["course"] + " - " + ass["description"]
+    return ass
+  })
+  return newAssessments
 }
 
 
