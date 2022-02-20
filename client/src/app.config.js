@@ -20,6 +20,7 @@ export default {
     'pages/review-result/index',
     'pages/countingdown/index',
     'pages/autoadd/index',
+    'pages/double-review/index',
   ],
   window: {
     backgroundTextStyle: 'light',
