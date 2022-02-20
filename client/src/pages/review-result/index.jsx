@@ -54,7 +54,8 @@ export default function ReviewResultPage() {
       </View>
 
       <View className='reviews'>
-        <AtAccordion open={outstandingReview} title='优秀评价' className='review-title'
+        <AtAccordion open={outstandingReview} isAnimation={false} 
+        title='优秀评价' className='review-title'
         onClick={() => {outstandingReviewState(outstandingReview?false:true)}}>
           <AtList hasBorder={false} className='list-review'>
             {reviews.map((singleReview) => {
@@ -75,7 +76,8 @@ export default function ReviewResultPage() {
           {withoutReview()}
         </AtAccordion>
       
-        <AtAccordion open={otherReview} title='其他评价' className='review-title'
+        <AtAccordion open={otherReview} isAnimation={false} 
+        title='其他评价' className='review-title'
         onClick={() => {otherReviewState(otherReview?false:true)}}>
           <AtList hasBorder={false} className='list-review'>
             {reviews.map((singleReview) => {

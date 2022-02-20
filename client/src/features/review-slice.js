@@ -19,6 +19,7 @@ const initialState = {
   subReviews:[], // 追评
   editSubReview: false, // 追评修改模式
   clickedSubReview: {}, // 点击的追评
+  turnPage: [], // 判断 是否全都获取到 课程信息, 课评 
 }
 
 export const reviewSlice = createSlice({
@@ -48,6 +49,10 @@ export const reviewSlice = createSlice({
     // 设置点击的追评
     setClickedSubReview: (state, action) => {
       state.clickedSubReview = action.payload;
+    },
+    // 清空 页面跳转条件 -- 获取课程信息, 课评 
+    setTurnPage: (state, action) => {
+      state.turnPage = [];
     }
   },
   extraReducers: (builder) => {
@@ -68,6 +73,7 @@ export const reviewSlice = createSlice({
           Taro.showToast({ title: '暂时没有这门课哦', icon: 'none' })
         } else {
           state.courseInfo = action.payload;
+          state.turnPage.push(true);
       }})
       .addCase(fetchCourseInfo.rejected, () => {
         Taro.showToast({ title: '获取课程信息时出错了', icon: 'none' })
@@ -85,7 +91,7 @@ export const reviewSlice = createSlice({
           state.dimensions = action.payload[1];
           state.reviewedIcon = action.payload[2];
           state.likesReviews = action.payload[3];
-          Taro.navigateTo({ url: '/pages/review-result/index' });
+          state.turnPage.push(true);
         } else {
           Taro.showToast({ title: '暂时没有这门课哦', icon: 'none' })
         }
@@ -234,4 +240,5 @@ export const reviewSlice = createSlice({
 
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions
 export const { setEditModal, changeEditModal, setClickedSubReview } = reviewSlice.actions
+export const { setTurnPage } = reviewSlice.actions
 export default reviewSlice.reducer

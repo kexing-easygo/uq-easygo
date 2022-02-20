@@ -4,7 +4,7 @@ import { View, Text } from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchedCourse } from "../../features/review-slice";
+import { setSearchedCourse, setTurnPage } from "../../features/review-slice";
 import { AtList, AtListItem, AtSearchBar, AtModalAction} from "taro-ui"
 import { AtModalContent, AtModalHeader, AtModal, AtButton} from "taro-ui"
 import { debounce } from "../../utils/opt";
@@ -15,7 +15,7 @@ import { getUserProfile } from '../../services/login'
 export default function Review() {
   const dispatch = useDispatch();
   const [courseCode, setCourseCode] = useState(''); // 搜索框输入的课程代码
-  const { hotCourses } = useSelector(state => state.review);
+  const { hotCourses, turnPage } = useSelector(state => state.review);
   const { selectedCourses } = useSelector(state => state.course);
   const { loginStatus } = useSelector(state => state.user);
   let courses = []; // 猜你想搜 列表 = 选课 + 热搜课
@@ -92,6 +92,13 @@ export default function Review() {
     dispatch(fetchHotResearches());
   }, [])
   
+  // 跳转页面  课程信息, 课评 全都获取到 才可以
+  useEffect(() => {
+    if (turnPage.length == 2) {
+      Taro.navigateTo({ url: '/pages/review-result/index' });
+      dispatch(setTurnPage());
+    };
+  })
 
   return (
     <View className='selector-container'>
