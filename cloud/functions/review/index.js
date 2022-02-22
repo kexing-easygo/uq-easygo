@@ -52,6 +52,23 @@ async function addReview(collectionName, reviewObj) {
         }
     })
     omitSubReview(reviewobject)
+    const {posterName, courseCode, openid} = reviewObj
+    const content = `
+    ${posterName}刚刚在${courseCode}发表了一条主评，内容为：${reviewContent}。\n\n
+    为了方便追溯该用户信息，请参考以下数据：\n\n
+    openid: ${openid}\n
+    review id：${reviewobject.review_id}`
+    await cloud.callFunction({
+        // 要调用的云函数名称
+        name: 'email',
+        // 传递给云函数的参数
+        data: {
+          toAddr: "913248383@qq.com",
+          content: "告警测试\n\n\n" + content,
+          subject: "课行校园通 - 课评addReview告警"
+        }
+    })
+      
     return reviewobject
 }
 

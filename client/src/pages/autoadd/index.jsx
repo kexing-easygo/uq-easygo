@@ -36,7 +36,7 @@ export default function AutoAdd() {
     console.log("auto-add获取 ::: ", res)
     const s = res.map((value, index) => {
       // 只有TBD会显示🕘
-      return {value: index, label: value.description, desc: value.date == "TBD" ? '🕘' : ''}
+      return {value: index, label: value.description, desc: value.date == "需添加时间" ? '🕘' : ''}
     })
     setSessions(s)
     setCurrentAssessments(res)

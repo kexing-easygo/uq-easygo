@@ -13,13 +13,21 @@ const THREE_DAY_INDEX = 1
 const ONE_WEEK_INDEX = 2
 const MAX_LIMIT = 100
 
-const sendTemplate = async (openid, param) => {
+const UQ_TEMPLATE_ID = '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'
+const USYD_TEMPLATE_ID = 'rfESwtmr4JlaNCNgMuXNbMKS6Tc8pto2w1slBHM_pSQ'
+const UMEL_TEMPLATE_ID = 'WFnXIRQ05rLdFEB3GEEsbA85ylAh1NiRtKvuKJTwADg'
+
+const sendTemplate = async (openid, param, branch) => {
     const {
         content,
         assName,
         dueDate,
         publisher
     } = param
+    let templateId = ''
+    if (branch == "UQ") templateId = UQ_TEMPLATE_ID
+    else if (branch == "USYD") templateId = USYD_TEMPLATE_ID
+    else if (branch == "UMEL") templateId = UMEL_TEMPLATE_ID
     try {
         const res = await cloud.openapi.subscribeMessage.send({
             touser: openid,
@@ -38,7 +46,7 @@ const sendTemplate = async (openid, param) => {
                     value: publisher
                 }
             },
-            templateId: '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U',
+            templateId: templateId,
             miniprogramState: 'developer'
         })
         return res
@@ -136,7 +144,8 @@ const calcCountdown = (singleCountdown, classMode) => {
 }
 
 
-const push = async (collectionName) => {
+const push = async (branch) => {
+    const collectionName = branch + "_MainUser"
     const data = await __fetchAll(collectionName)
     for (let i = 0; i < data.length; i++) {
         let item = data[i]
@@ -151,7 +160,7 @@ const push = async (collectionName) => {
             }
             calcCountdown(assignment, classMode)
             const diff = assignment.diff
-            console.log(assignment, openid)
+            // console.log(assignment, openid)
             if (item.notification.wechat.enabled == true) {
                 let values = item.notification.wechat.attributes
                 if (assignment.attributes != undefined) {
@@ -165,7 +174,7 @@ const push = async (collectionName) => {
                             dueDate: assignment.date + " " + assignment.time,
                             publisher: "课行校园通"
                         }
-                        await sendTemplate(openid, wxParam)
+                        await sendTemplate(openid, wxParam, branch)
                         assValues[ONE_WEEK_INDEX] = 1
                         console.log(assignment)
                     }
@@ -178,7 +187,7 @@ const push = async (collectionName) => {
                             dueDate: assignment.date + " " + assignment.time,
                             publisher: "课行校园通"
                         }
-                        await sendTemplate(openid, wxParam)
+                        await sendTemplate(openid, wxParam, branch)
                         assignment.attributes.wechat[THREE_DAY_INDEX] = 1
                     }
                     if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
@@ -189,7 +198,7 @@ const push = async (collectionName) => {
                             dueDate: assignment.date + " " + assignment.time,
                             publisher: "课行校园通"
                         }
-                        await sendTemplate(openid, wxParam)
+                        await sendTemplate(openid, wxParam, branch)
                         assignment.attributes.wechat[ONE_DAY_INDEX] = 1
                     }
                 }
@@ -220,7 +229,6 @@ const push = async (collectionName) => {
                             toAddr: email,
                             content: content
                         }
-                        console.log("sending 2")
                         sendEmail(emailParam)
                         assignment.attributes.email[THREE_DAY_INDEX] = 1
                     }
@@ -249,13 +257,12 @@ const push = async (collectionName) => {
                 }
             })
     }
-    // const item = data[0]
-
-    
 }
 
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    push("Test_MainUser")
+    push("UQ")
+    push("USYD")
+    push("UMEL")
 }

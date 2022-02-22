@@ -64,9 +64,9 @@ export const reviewSlice = createSlice({
       .addCase(fetchHotResearches.fulfilled, (state, action) => {
         state.hotCourses = action.payload
       })
-      .addCase(fetchHotResearches.rejected, () => {
-        Taro.showToast({ title: '获取热搜课程时出错了', icon: 'none' })
-      })
+      // .addCase(fetchHotResearches.rejected, () => {
+      //   Taro.showToast({ title: '获取热搜课程时出错了', icon: 'none' })
+      // })
       // 获取课程信息
       .addCase(fetchCourseInfo.fulfilled, (state, action) => {
         if (action.payload.unit_code == undefined) {

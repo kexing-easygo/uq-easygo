@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import { View, Image } from '@tarojs/components'
 import { AtCard } from 'taro-ui'
 import { activities } from '../../../assets/images/index.json'
-import {ACTIVITY_URL} from '../../../config.json'
+import {ACTIVITY1_URL, ACTIVITY2_URL, ACTIVITY3_URL} from '../../../config.json'
 import Taro  from '@tarojs/taro';
 
 function NewActivities(props) {
@@ -14,7 +14,11 @@ function NewActivities(props) {
               src={activities[0]} 
               mode="widthFix" 
               onClick={() => {
-                Taro.navigateTo({url: "/pages/web-view/index?url=" + ACTIVITY_URL})
+                if (ACTIVITY1_URL == "") {
+                  Taro.previewImage({urls: [activities[0]]})
+                } else {
+                  Taro.navigateTo({url: "/pages/web-view/index?url=" + ACTIVITY1_URL})
+                }
               }}
               />
           </View>
@@ -22,14 +26,26 @@ function NewActivities(props) {
             <Image 
               src={activities[1]} 
               mode="widthFix" 
-              onClick={() => {Taro.previewImage({urls: [activities[1]]})}}
+              onClick={() => {
+                if (ACTIVITY2_URL == "") {
+                  Taro.previewImage({urls: [activities[1]]})
+                } else {
+                  Taro.navigateTo({url: "/pages/web-view/index?url=" + ACTIVITY2_URL})
+                }
+              }}
               />
           </View>
           <View className='activity-wrapper'>
             <Image 
               src={activities[2]} 
               mode="widthFix" 
-              onClick={() => {Taro.previewImage({urls: [activities[2]]})}}
+              onClick={() => {
+                if (ACTIVITY3_URL == "") {
+                  Taro.previewImage({urls: [activities[2]]})
+                } else {
+                  Taro.navigateTo({url: "/pages/web-view/index?url=" + ACTIVITY3_URL})
+                }
+              }}
               />
           </View>
       </View>

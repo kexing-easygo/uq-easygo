@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from 'react'
 import Taro from '@tarojs/taro'
 import { View, Picker } from '@tarojs/components'
-import { AtActionSheet, AtActionSheetItem, AtButton, AtInput, AtListItem } from 'taro-ui'
+import { AtFloatLayout, AtActionSheetItem, AtButton, AtInput, AtListItem } from 'taro-ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCountDown } from '../../../services/countdown'
 import { closeDetailSheet } from "../../../features/countdown-slice";
@@ -40,7 +40,7 @@ export default function DetailSheet(props) {
     dispatch(closeDetailSheet())
   }
   return (
-    <AtActionSheet className='detail-sheet' isOpened={showDetailSheet} onClose={() => dispatch(closeDetailSheet())}>
+    <AtFloatLayout className='detail-sheet' title='倒计时信息' isOpened={showDetailSheet} onClose={() => dispatch(closeDetailSheet())}>
 
       <AtActionSheetItem className='sheet-item'>
         <AtInput 
@@ -76,7 +76,7 @@ export default function DetailSheet(props) {
       <AtActionSheetItem className='sheet-item'>
         <View>Assessment类别</View>
         <Picker mode='selector' range={types} onChange={(e)=>{setAssignmentType(types[e.detail.value])}}>
-          <AtListItem className='sheet-item-picker' extraText={showDetailSheet && clickedAss.type} />
+          <AtListItem className='sheet-item-picker' extraText={showDetailSheet && assignmentType} />
         </Picker>
       </AtActionSheetItem>
 
@@ -101,6 +101,6 @@ export default function DetailSheet(props) {
           </AtButton>
         </View>
       </AtActionSheetItem>
-    </AtActionSheet>
+    </AtFloatLayout>
   )
 }

@@ -1,12 +1,12 @@
 {
-    "titleImage": "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/titleImg.png?sign=498d34990be5dc9bfabe5622882f627c&t=1638091873",
-    "carousel1": "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/%E8%BD%AE%E6%92%AD%E5%9B%BE1.png?sign=0a6764b8909b924d5be76f6a5004e440&t=1641177320",
-    "carousel2": "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/%E8%BD%AE%E6%92%AD%E5%9B%BE2.png?sign=020e2f2601f3ef5bb4db9f14176148a5&t=1641177922",
-    "carousel3": "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/%E8%BD%AE%E6%92%AD%E5%9B%BE3.png?sign=724595b160f531089de8fec14c1ad343&t=1641177372",
-    "carousel4": "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/UQ%E6%9B%B4%E6%96%B0%E5%85%AC%E5%91%8A.png?sign=b462c0bcbb486b1d70903fbb4b666f06&t=1641642412",
+    "titleImage": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/titleImg.png",
+    "carousel1": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图1.png",
+    "carousel2": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图2.png",
+    "carousel3": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图3.JPG",
+    "carousel4": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/UQ更新公告.png",
     "activities": [
-        "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/%E6%9C%80%E6%96%B0%E6%B4%BB%E5%8A%A81.png?sign=f0086686202716d18fd787559d0764da&t=1641177387",
+        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动1.JPG",
         "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/WechatIMG34143.png?sign=af16888b6799924670392a3dd081883c&t=1641875171",
-        "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/WechatIMG34168.jpeg?sign=b29e23e172e4f55ab445d4893b1d386f&t=1641875216"
+        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动2.JPG"
     ]
 }

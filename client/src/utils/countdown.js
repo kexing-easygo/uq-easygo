@@ -52,7 +52,7 @@ export const calcCountdown = (singleCountdown, classmode) => {
     let date = "999";
     let diff = Infinity;
     // 如果用户作业中存在时间不确定的，默认为999
-    if (singleCountdown["date"] !== "TBD") {
+    if (singleCountdown["date"] !== "需添加时间") {
       // 计算时间差
       date = singleCountdown["date"]
       let time = singleCountdown["time"]
@@ -115,7 +115,7 @@ export const splitByMonth = (assignments) => {
   if (assignments == null) return [];
   for (let i = 0; i < assignments.length; i++) {
     monthCountDown[TBD] = []
-    if (assignments[i].date == "TBD") {
+    if (assignments[i].date == "需添加时间") {
       monthCountDown['TBD'].push(assignments[i])
     } else {
       let month = assignments[i].date.split('-');
@@ -155,7 +155,7 @@ export const splitCountDown = (countdown) => {
       completeCountDown[key].push(countdown[i])
     } else if (countdown[i].diff > 0) {
       let month = countdown[i].date.split('-')
-      let key = month == "TBD" ? "待定" : month[1]
+      let key = month == "需添加时间" ? "待定" : month[1]
       if (incompleteCountDown[key] == null) {
         incompleteCountDown[key] = []
       }
