@@ -6,14 +6,15 @@ import { starIcon } from '../../../assets/images/review-icons.json'
 import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSubReview, updateSubReview } from "../../../services/review"
-import { changeEditModal } from "../../../features/review-slice"
+import { changeEditModal, setReplySubReview } from "../../../features/review-slice"
 import { getLocalOpenId } from "../../../services/login"
 
 /*
 添加 or 修改追评
 */
 export default function AddSubReview() {
-  const { clickedReview, searchedCourse, editSubReview, clickedSubReview } = useSelector(state => state.review);
+  const { clickedReview, searchedCourse } = useSelector(state => state.review);
+  const { editSubReview, clickedSubReview, replySubReview } = useSelector(state => state.review);
   const { nickName, avatarUrl } = useSelector(state => state.user);
   const [authorName, setAuthorName] = useState(nickName); // 发布者名字
   const [reviewContent, setReviewContent] = useState(''); // 追评内容
@@ -111,6 +112,10 @@ export default function AddSubReview() {
       setEditReview(true);
       showContentState(true);
       dispatch(changeEditModal(false));
+    } else if (replySubReview) {
+      setReviewContent( '@' + clickedSubReview.posterName + ': ');
+      showContentState(true);
+      dispatch(setReplySubReview(false));
     }
   }
 

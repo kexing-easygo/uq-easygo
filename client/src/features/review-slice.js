@@ -19,6 +19,7 @@ const initialState = {
   subReviews:[], // 追评
   editSubReview: false, // 追评修改模式
   clickedSubReview: {}, // 点击的追评
+  replySubReview: false, // 回复追评
   turnPage: [], // 判断 是否全都获取到 课程信息, 课评 
 }
 
@@ -53,6 +54,10 @@ export const reviewSlice = createSlice({
     // 清空 页面跳转条件 -- 获取课程信息, 课评 
     setTurnPage: (state, action) => {
       state.turnPage = [];
+    },
+    // 回复追评
+    setReplySubReview: (state, action) => {
+      state.replySubReview = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -240,5 +245,5 @@ export const reviewSlice = createSlice({
 
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions
 export const { setEditModal, changeEditModal, setClickedSubReview } = reviewSlice.actions
-export const { setTurnPage } = reviewSlice.actions
+export const { setTurnPage, setReplySubReview } = reviewSlice.actions
 export default reviewSlice.reducer

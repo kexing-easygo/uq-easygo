@@ -4,7 +4,7 @@ import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { AtIcon, AtModal, AtModalAction, AtModalHeader, AtModalContent } from "taro-ui"
 import { getLocalOpenId } from "../../../services/login"
-import { changeEditModal } from "../../../features/review-slice"
+import { changeEditModal, setReplySubReview } from "../../../features/review-slice"
 import { deleteSubReview } from "../../../services/review";
 
 /*
@@ -89,6 +89,13 @@ export default function DoubleReviewCard(props) {
     courseCode: searchedCourse,
   }
 
+  // 回复追评
+  const handleClick = () => {
+    if (openid != selfOpenId) {
+      dispatch(setReplySubReview(true));
+    }
+  }
+
   // 获取 open id
   useEffect(
     async() => {
@@ -107,7 +114,7 @@ export default function DoubleReviewCard(props) {
       </View>
 
       {cardPosition()}
-      <View className='content-part' 
+      <View className='content-part' onClick={() => handleClick()}
         style={{marginTop:cardMarginTop,background:backgroundColor,borderColor:borderColor,paddingBottom:paddingBottom}}>
         <Text className='content'>{content}</Text>
         <View><Text className='note'>评论于 {postDate} {postTime}</Text></View>
