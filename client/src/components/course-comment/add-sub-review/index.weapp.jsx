@@ -25,6 +25,9 @@ export default function AddSubReview() {
   const [emptyName, setEmptyName] = useState(false); // 名字空白 警示开关
   const [selfOpenId, setSelfOpenId]= useState('');  // open ID
   const [editReview, setEditReview] = useState(false); // 修改模式开关
+  const [placeholder, setPlaceholder] = useState('请写下你的评论'); // 追评内容占位符
+  const [replyReview, setReplyReview] = useState(false); // 回复追评开关
+  const [repliedAuthor, setRepliedAuthor]= useState('');  // 记录修改追评时 ’@XXX‘
   const dispatch = useDispatch();
 
   // 检查所填内容
@@ -41,19 +44,32 @@ export default function AddSubReview() {
     } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
       setToastState(true);
-    } else if (editReview && clickedSubReview.posterName == handleString(authorName)
+    } else if (editReview 
+      && clickedSubReview.posterName == handleString(authorName)
       && clickedSubReview.content == handleString(reviewContent)) { // 如果修改时 没修改内容
-      setReminderText('请修改你的评论');
-      setToastState(true);
+          setReminderText('请修改你的评论');
+          setToastState(true);
+    } else if (replyReview && editReview) { // 修改回复追评时 没修改内容
+      let begin = clickedSubReview.content.indexOf(':');
+      if (clickedSubReview.content.substring(begin+2, clickedSubReview.content.length) == handleString(reviewContent)) {
+        setReminderText('请修改你的评论');
+        setToastState(true);
+      } else {
+        showContentState(false);
+        changeModalState(true);
+      } 
     } else {
       showContentState(false);
       changeModalState(true);
     }
+    console.log(reviewContent);
+    console.log(clickedSubReview.content);
   }
 
-  // 清空所填内容
+  // 清空所填内容 
   const clearContent = () => {
     setAuthorName(nickName);
+    setPlaceholder('请写下你的评论');
     setReviewContent('');
     setEmptyName(false);
   }
@@ -82,7 +98,7 @@ export default function AddSubReview() {
         reviewId: clickedReview.review_id,
         subReviewObj: {
           posterName: handleString(authorName), 
-          content: handleString(reviewContent),
+          content: replyReview? handleString(repliedAuthor + reviewContent):handleString(reviewContent),
         }
       }
       dispatch(updateSubReview(param));
@@ -92,7 +108,7 @@ export default function AddSubReview() {
         reviewId: clickedReview.review_id,
         subReviewObj: {
           posterName: handleString(authorName), 
-          content: handleString(reviewContent),
+          content: replyReview? handleString('@' + clickedSubReview.posterName + ': ' + reviewContent):handleString(reviewContent),
           openid: selfOpenId,
           avatarUrl: avatarUrl,
         }
@@ -100,6 +116,7 @@ export default function AddSubReview() {
       dispatch(addSubReview(param));
     }
     setEditReview(false);
+    setReplyReview(false);
     showContentState(false);
     clearContent();
   }
@@ -108,12 +125,20 @@ export default function AddSubReview() {
   const fillContent = () => {
     if (editSubReview) {
       setAuthorName(clickedSubReview.posterName);
-      setReviewContent(clickedSubReview.content);
+      if (clickedSubReview.content[0] == '@') {
+        let begin = clickedSubReview.content.indexOf(':');
+        setRepliedAuthor(clickedSubReview.content.substring(0, begin+2));
+        setReviewContent(clickedSubReview.content.substring(begin+2, clickedSubReview.content.length));
+        setReplyReview(true);
+      } else {
+        setReviewContent(clickedSubReview.content);
+      }
       setEditReview(true);
       showContentState(true);
       dispatch(changeEditModal(false));
     } else if (replySubReview) {
-      setReviewContent( '@' + clickedSubReview.posterName + ': ');
+      setPlaceholder('@' + clickedSubReview.posterName + ': ');
+      setReplyReview(true);
       showContentState(true);
       dispatch(setReplySubReview(false));
     }
@@ -146,7 +171,7 @@ export default function AddSubReview() {
           onChange={(value) => {setAuthorName(value)}} />
         <Image src={starIcon} className='first-star-icon' />
         <View className='text-area' >
-          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} value={reviewContent} 
+          <AtTextarea maxLength={150} placeholder={placeholder} height={300} value={reviewContent} 
           showConfirmBar={true} onChange={(value) => {setReviewContent(value)}}  />
         </View>
         <AtButton type='primary'  size='small'  className='button1' 

@@ -89,9 +89,11 @@ export default function DoubleReviewCard(props) {
     courseCode: searchedCourse,
   }
 
-  // 回复追评
+  // 点击追评卡片 if自己的->进入修改 if别人的->回复追评
   const handleClick = () => {
-    if (openid != selfOpenId) {
+    if (openid == selfOpenId) {
+      dispatch(changeEditModal(true));
+    } else {
       dispatch(setReplySubReview(true));
     }
   }
