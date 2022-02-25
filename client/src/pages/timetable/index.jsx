@@ -46,8 +46,7 @@ export default function TimeTable() {
     let today = new Date();
     let currentMonth = today.getMonth() + 1;
     let currentWeek = getCurrentWeek(startDate);
-    console.log("当前周", currentWeek)
-    let _dates = getDates(today);
+    let _dates = getDates(startDate);
     let selectedDay = today.getDay() === 0 ? 6 : today.getDay() - 1;
     setCurrentWeek(currentWeek);
     setCurrentMonth(currentMonth);
@@ -97,7 +96,7 @@ export default function TimeTable() {
   // 切换week时计算对应日期，或添加/删除课程时，展示当周有效课程
   useEffect(() => {
     // 计算该周的日期
-    const _dates = getDatesByWeek(currentWeek, startDate);
+    const _dates = getDatesByWeek(currentWeek);
     setDates(formatDates(_dates, 'mm-dd'));
     setCurrentMonth(_dates[0].getMonth() + 1);
     if (!handleLoginStatus()) return;

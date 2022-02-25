@@ -147,3 +147,12 @@ export const getClassCode = (classId) => {
   let res = classId.match(CLASS_ID_REGEX);
   return `${res[1]} ${res[4]}${res[5]} ${res[6]}`
 }
+
+/**
+ * 根据classId，获取course code
+ * @param {string} classId 单节课的classId
+ */
+export const getCourseCode = (classId) => {
+  let res = classId.match(CLASS_ID_REGEX);
+  return `${res[1]}`
+}

@@ -33,7 +33,6 @@ export default function Launch() {
           dispatch(fetchSelectedCourses());
           dispatch(fetchCurrentSemester());
           dispatch(fetchAllCountDown()); //拉取用户countdown条目
-          dispatch(getNotifications());
         }
         Taro.switchTab({ url: '/pages/index/index' })
         // Taro.navigateTo( {url: "/pages/bind-email/index"} )

@@ -75,7 +75,7 @@ export const searchCourseTime = async (courseCode, semester, classMode) => {
     // 处理数据格式
     courseTime = Object.keys(searchRes.result).map(classId => {
       let classInfo = searchRes.result[classId];
-      let _activityGroupCode = `${classInfo.activity_group_code}${classInfo.activity_code}`;
+      let _activityGroupCode = `${classInfo.activity_group_code}_${classInfo.activity_code}`;
       let _activitiesDays = classInfo.activitiesDays;
       let _location = classInfo.location;
       let _dayOfWeek = classInfo.day_of_week;

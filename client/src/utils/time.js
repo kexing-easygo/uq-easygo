@@ -1,5 +1,7 @@
 import { AU_TIME_ZONE, MILLI_SECONDS_OF_WEEK, START_DATE } from "./constant";
-
+import { UTC_START_TIME } from "../config.json";
+import moment from 'moment';
+import 'moment-timezone';
 /**
  * 根据开始时间和课程时长计算结束时间，返回结束的时间字符串
  * @param {string} startTime 开始时间
@@ -57,14 +59,16 @@ const getMondayDate = date => {
   return dd;
 }
 
-export const getDatesByWeek = (currentWeek, startDate) => {
+export const getDatesByWeek = (currentWeek) => {
   // 根据周数计算该周周一的日期
-  const diff = MILLI_SECONDS_OF_WEEK * currentWeek;
+  const diff = MILLI_SECONDS_OF_WEEK * (currentWeek - 1);
+  const startDate = moment.utc(UTC_START_TIME)
   const targetDate = diff + startDate.valueOf();
-  const monday = new Date(targetDate);
+  const monday = moment.utc(targetDate)
   const dates = getDates(monday);
   return dates;
 }
+
 
 /**
  * 获取本周从周一到周日的日期

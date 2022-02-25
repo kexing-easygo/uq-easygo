@@ -58,8 +58,8 @@ export default function AutoAdd() {
       calcCountdown(param, classMode)
       return param
     })
-    console.log("用户选择的作业信息 ::: ", selectedAssessments)
     dispatch(autoAppendAssignments({assignments: selectedAssessments}))
+    Taro.navigateBack()
   }
 
   return (

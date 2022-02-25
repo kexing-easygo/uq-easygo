@@ -23,7 +23,7 @@ import {
 } from "../../utils/countdown";
 import DetailSheet from "../../components/countdown/detailsheet/index";
 import "./index.less";
-// import { fetchAllCountDown, getNotifications } from "../../services/countdown";
+import { fetchAllCountDown, getNotifications } from "../../services/countdown";
 import { getUserProfile } from "../../services/login";
 
 export default function CountingDown() {
@@ -86,12 +86,12 @@ export default function CountingDown() {
     }
   });
 
-  // useEffect(() => {
-  //   if (handleLoginStatus()) {
-  //     dispatch(fetchAllCountDown())
-  //     dispatch(getNotifications())
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (handleLoginStatus()) {
+      dispatch(fetchAllCountDown())
+      dispatch(getNotifications())
+    }
+  }, [])
 
   return (
     <>

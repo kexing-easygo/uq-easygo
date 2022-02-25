@@ -79,17 +79,16 @@ export const countdownSlice = createSlice({
         console.log('获取提醒设置成功')
         state.notifications = action.payload
       })
-      .addCase(setNotifications.fulfilled, () => {
+      .addCase(setNotifications.fulfilled, (state, action) => {
         Taro.showToast({ title: "保存成功", icon: "success" })
+        state.notifications = action.payload
       })
       .addCase(autoAppendAssignments.pending, () => {
         Taro.showToast({ title: '保存中', icon: 'loading' })
       })
       .addCase(autoAppendAssignments.fulfilled, (state, action) => {
-        // console.log(" ::: ", action.payload)
         state.userCountDown.push(...action.payload)
         Taro.showToast({ title: "保存成功", icon: "success" })
-        Taro.navigateBack()
       })
   }
 })

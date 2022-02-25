@@ -176,7 +176,7 @@ async function __fetchClassById(collectionName, classId) {
     var res = await fetchCourseInfo(collectionName, courseId);
     return {
         "_id": classId,
-        "subject_code": classId.split("-")[0],
+        "subject_code": classId,
         "activity_group_code": `${res[classId].activity_group_code}${res[classId].activity_code}`,
         "location": res[classId].location,
         "day_of_week": res[classId].day_of_week,
@@ -536,7 +536,7 @@ async function updateCurrentSemester(openid, collectionName, currentSemester) {
 exports.main = async (event, context) => {
     // var branch = event.branch
     // var method = event.method
-    const { branch, method } = events
+    const { branch, method } = event
     if (branch == undefined || method == undefined) {
         return {
             data: "缺少必须的元素"

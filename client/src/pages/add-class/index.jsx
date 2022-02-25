@@ -92,7 +92,7 @@ export default function AddClass() {
         showActionButton
         placeholder={SEARCHBAR_DEFAULT_PLACEHOLDER}
         value={courseCode}
-        onChange={(value) => setCourseCode(value)}
+        onChange={(value) => setCourseCode(value.toUpperCase())}
         onActionClick={handleSearchCourse}
         onConfirm={handleSearchCourse}
       />

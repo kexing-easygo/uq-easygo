@@ -108,7 +108,7 @@ export const setNotifications = createAsyncThunk(
       openid: await getLocalOpenId(),
       notification: param
     })
-    return setRes.result
+    return param
   }
 )
 

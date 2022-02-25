@@ -17,6 +17,11 @@ const UQ_TEMPLATE_ID = '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'
 const USYD_TEMPLATE_ID = 'rfESwtmr4JlaNCNgMuXNbMKS6Tc8pto2w1slBHM_pSQ'
 const UMEL_TEMPLATE_ID = 'WFnXIRQ05rLdFEB3GEEsbA85ylAh1NiRtKvuKJTwADg'
 
+const UQ_ADMIN_OPENID = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
+const UMEL_ADMIN_OPENID = "o-B6w5eKnRniFdjywNhRy7XksQpw"
+const USYD_ADMIN_OPENID = ""
+
+
 const sendTemplate = async (openid, param, branch) => {
     const {
         content,
@@ -28,31 +33,32 @@ const sendTemplate = async (openid, param, branch) => {
     if (branch == "UQ") templateId = UQ_TEMPLATE_ID
     else if (branch == "USYD") templateId = USYD_TEMPLATE_ID
     else if (branch == "UMEL") templateId = UMEL_TEMPLATE_ID
-    try {
-        const res = await cloud.openapi.subscribeMessage.send({
-            touser: openid,
-            lang: 'zh_CN',
-            data: {
-                thing1: {
-                    value: content
-                },
-                thing2: {
-                    value: assName
-                },
-                time3: {
-                    value: dueDate
-                },
-                thing4: {
-                    value: publisher
-                }
+    // try {
+    const res = await cloud.openapi.subscribeMessage.send({
+        touser: openid,
+        lang: 'zh_CN',
+        data: {
+            thing1: {
+                value: content
             },
-            templateId: templateId,
-            miniprogramState: 'developer'
-        })
-        return res
-    } catch (err) {
-        return err
-    }
+            thing2: {
+                value: assName
+            },
+            time3: {
+                value: dueDate
+            },
+            thing4: {
+                value: publisher
+            }
+        },
+        templateId: templateId,
+        miniprogramState: 'developer'
+    })
+    console.log(res)
+    return res
+    // } catch (err) {
+        // return err
+    // }
 }
 
 const sendEmail = (param) => {
@@ -150,101 +156,100 @@ const push = async (branch) => {
     for (let i = 0; i < data.length; i++) {
         let item = data[i]
         const openid = item._openid
-        // if (openid != "oe4Eh5T-KoCMkEFWFa4X5fthaUG8") continue
+        if (openid != UMEL_ADMIN_OPENID) continue
         const classMode = item.classMode
         const email = item.userEmail
         const assignments = item.userAssignments
+        console.log(openid)
         await Promise.all(assignments.map(async (assignment, val) => {
-            if (assignment.hasOwnProperty("default")) {
-
-            }
-            calcCountdown(assignment, classMode)
-            const diff = assignment.diff
-            // console.log(assignment, openid)
-            if (item.notification.wechat.enabled == true) {
-                let values = item.notification.wechat.attributes
-                if (assignment.attributes != undefined) {
-                    let assValues = assignment.attributes.wechat
-                    let wxParam = {}
-                    if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-                        // send wechat 
-                        wxParam = {
-                            content: `7天提醒:作业${assignment.name}即将在${diff}天内截止`,
-                            assName: assignment.name,
-                            dueDate: assignment.date + " " + assignment.time,
-                            publisher: "课行校园通"
+            if (assignment.date != "需添加时间") {
+                calcCountdown(assignment, classMode)
+                if (assignment.hasOwnProperty("default")) {
+                    return
+                }
+                const diff = assignment.diff
+                if (item.notification.wechat.enabled == true) {
+                    let values = item.notification.wechat.attributes
+                    if (assignment.attributes != undefined) {
+                        let assValues = assignment.attributes.wechat
+                        let wxParam = {}
+                        if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+                            // send wechat 
+                            wxParam = {
+                                content: `7天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                                assName: assignment.name,
+                                dueDate: assignment.date + " " + assignment.time,
+                                publisher: "课行校园通"
+                            }
+                            await sendTemplate(openid, wxParam, branch)
+                            assValues[ONE_WEEK_INDEX] = 1
                         }
-                        await sendTemplate(openid, wxParam, branch)
-                        assValues[ONE_WEEK_INDEX] = 1
-                        console.log(assignment)
-                    }
-                    if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-                        // send wechat 
-                        console.log("sending 1")
-                        wxParam = {
-                            content: `3天提醒:作业${assignment.name}即将在${diff}天内截止`,
-                            assName: assignment.name,
-                            dueDate: assignment.date + " " + assignment.time,
-                            publisher: "课行校园通"
+                        if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+                            // send wechat 
+                            wxParam = {
+                                content: `3天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                                assName: assignment.name,
+                                dueDate: assignment.date + " " + assignment.time,
+                                publisher: "课行校园通"
+                            }
+                            await sendTemplate(openid, wxParam, branch)
+                            // assignment.attributes.wechat[THREE_DAY_INDEX] = 1
                         }
-                        await sendTemplate(openid, wxParam, branch)
-                        assignment.attributes.wechat[THREE_DAY_INDEX] = 1
-                    }
-                    if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-                        // send wechat
-                        wxParam = {
-                            content: `1天提醒:作业${assignment.name}即将在${diff}天内截止`,
-                            assName: assignment.name,
-                            dueDate: assignment.date + " " + assignment.time,
-                            publisher: "课行校园通"
+                        if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+                            // send wechat
+                            wxParam = {
+                                content: `1天提醒:作业${assignment.name}即将在${diff}天内截止`,
+                                assName: assignment.name,
+                                dueDate: assignment.date + " " + assignment.time,
+                                publisher: "课行校园通"
+                            }
+                            await sendTemplate(openid, wxParam, branch)
+                            assignment.attributes.wechat[ONE_DAY_INDEX] = 1
                         }
-                        await sendTemplate(openid, wxParam, branch)
-                        assignment.attributes.wechat[ONE_DAY_INDEX] = 1
                     }
                 }
-            }
-            if (item.notification.email.enabled == true) {
-                let values = item.notification.email.attributes
-                if (assignment.attributes != undefined) {
-                    let assValues = assignment.attributes.email
-                    let content = ""
-                    let emailParam = {}
+                if (item.notification.email.enabled == true) {
+                    let values = item.notification.email.attributes
+                    if (assignment.attributes != undefined) {
+                        let assValues = assignment.attributes.email
+                        let content = ""
+                        let emailParam = {}
 
-                    if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
-                        // send email 
-                        content = `7天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
-                        emailParam = {
-                            subject: "7天作业提醒",
-                            toAddr: email,
-                            content: content
+                        if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
+                            // send email 
+                            content = `7天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
+                            emailParam = {
+                                subject: "7天作业提醒",
+                                toAddr: email,
+                                content: content
+                            }
+                            sendEmail(emailParam)
+                            assignment.attributes.email[ONE_WEEK_INDEX] = 1
                         }
-                        sendEmail(emailParam)
-                        assignment.attributes.email[ONE_WEEK_INDEX] = 1
-                    }
-                    if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
-                        // send email 
-                        content = `3天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
-                        emailParam = {
-                            subject: "3天作业提醒",
-                            toAddr: email,
-                            content: content
+                        if (values[THREE_DAY_INDEX] == 1 && diff <= 3 && assValues[THREE_DAY_INDEX] == 0) {
+                            // send email 
+                            content = `3天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
+                            emailParam = {
+                                subject: "3天作业提醒",
+                                toAddr: email,
+                                content: content
+                            }
+                            sendEmail(emailParam)
+                            // assignment.attributes.email[THREE_DAY_INDEX] = 1
                         }
-                        sendEmail(emailParam)
-                        assignment.attributes.email[THREE_DAY_INDEX] = 1
-                    }
-                    if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
-                        // send email
-                        content = `1天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
-                        emailParam = {
-                            subject: "1天作业提醒",
-                            toAddr: email,
-                            content: content
+                        if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
+                            // send email
+                            content = `1天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
+                            emailParam = {
+                                subject: "1天作业提醒",
+                                toAddr: email,
+                                content: content
+                            }
+                            sendEmail(emailParam)
+                            assignment.attributes.email[ONE_DAY_INDEX] = 1
                         }
-                        sendEmail(emailParam)
-                        assignment.attributes.email[ONE_DAY_INDEX] = 1
                     }
                 }
-
             }
         }))
         await db.collection(collectionName)
@@ -262,7 +267,7 @@ const push = async (branch) => {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    push("UQ")
-    push("USYD")
+    // push("UQ")
+    // push("USYD")
     push("UMEL")
 }

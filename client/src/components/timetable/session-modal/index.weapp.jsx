@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { DAY_OF_WEEK } from '../../../utils/constant'
 import { getClickedCourse } from '../../../features/course-slice'
 import { useDispatch, useSelector } from 'react-redux'
+import { getCourseCode } from "../../../utils/courses";
 
 import './index.less'
 /**
@@ -59,14 +60,14 @@ export default memo(function SessionModal(props) {
     >
       <View className="center-view at-col" style={computeModalStyle()}>
         <View className="text-hidden">
-          {sessionInfo.subject_code}
+          {getCourseCode(sessionInfo.subject_code)} 
         </View>
         <View className="text-hidden">
           {sessionInfo.activity_group_code}
         </View>
-        <View className="text-hidden">
+        {/* <View className="text-hidden">
           {sessionInfo.location}
-        </View>
+        </View> */}
       </View>
     </View>
   );
