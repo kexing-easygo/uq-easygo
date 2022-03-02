@@ -207,7 +207,8 @@ async function fetchCourseInfo(collectionName, courseId) {
     var res = await db.collection(collectionName).where({
         name: courseCode // 根据courseCode搜索
     }).get();
-    return res.data[0][courseId] || [];
+    if (res.data.length == 0) return []
+    return res.data[0][courseId];
 }
 
 

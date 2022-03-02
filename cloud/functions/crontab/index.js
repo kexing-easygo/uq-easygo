@@ -3,7 +3,9 @@ const cloud = require('wx-server-sdk')
 const nodemailer = require('nodemailer')
 const moment = require('moment-timezone');
 
-cloud.init()
+cloud.init({
+    env: cloud.DYNAMIC_CURRENT_ENV
+  })
 
 const db = cloud.database();
 const _ = db.command
@@ -21,6 +23,10 @@ const UQ_ADMIN_OPENID = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
 const UMEL_ADMIN_OPENID = "o-B6w5eKnRniFdjywNhRy7XksQpw"
 const USYD_ADMIN_OPENID = ""
 
+const USYD_APP_ID = "wx363ec811fefffb9b"
+const UQ_APP_ID = "wxc51fd512a103a723"
+const UMEL_APP_ID = "wxb3dbe1326db6d6d2"
+
 
 const sendTemplate = async (openid, param, branch) => {
     const {
@@ -30,36 +36,47 @@ const sendTemplate = async (openid, param, branch) => {
         publisher
     } = param
     let templateId = ''
-    if (branch == "UQ") templateId = UQ_TEMPLATE_ID
-    else if (branch == "USYD") templateId = USYD_TEMPLATE_ID
-    else if (branch == "UMEL") templateId = UMEL_TEMPLATE_ID
-    // try {
-    const res = await cloud.openapi.subscribeMessage.send({
-        touser: openid,
-        lang: 'zh_CN',
-        data: {
-            thing1: {
-                value: content
-            },
-            thing2: {
-                value: assName
-            },
-            time3: {
-                value: dueDate
-            },
-            thing4: {
-                value: publisher
-            }
-        },
-        templateId: templateId,
-        miniprogramState: 'developer'
-    })
-    console.log(res)
-    return res
-    // } catch (err) {
-        // return err
-    // }
-}
+    let appid = ''
+    if (branch == "UQ") {
+      templateId = UQ_TEMPLATE_ID
+      appid = UQ_APP_ID
+    } else if (branch == "UMEL") {
+      templateId = UMEL_TEMPLATE_ID
+      appid = UMEL_APP_ID
+    } else if (branch == "USYD") {
+      templateId = USYD_TEMPLATE_ID
+      appid = USYD_APP_ID
+    }
+    try {
+        const res = await cloud.openapi({
+            appid: appid
+          }).subscribeMessage.send({
+              touser: openid,
+              lang: 'zh_CN',
+              data: {
+                  thing1: {
+                      value: content
+                  },
+                  thing2: {
+                      value: assName
+                  },
+                  time3: {
+                      value: dueDate
+                  },
+                  thing4: {
+                      value: publisher
+                  }
+              },
+              templateId: templateId,
+              miniprogramState: 'developer'
+          })
+          console.log(res)
+          return res
+    } catch (err) {
+        console.error(err)
+    }
+    
+  }
 
 const sendEmail = (param) => {
     const {
@@ -156,11 +173,11 @@ const push = async (branch) => {
     for (let i = 0; i < data.length; i++) {
         let item = data[i]
         const openid = item._openid
-        if (openid != UMEL_ADMIN_OPENID) continue
         const classMode = item.classMode
         const email = item.userEmail
         const assignments = item.userAssignments
-        console.log(openid)
+        // const isVip = item.Vip || false
+        // const preDefineText = item.preDefineText || ''
         await Promise.all(assignments.map(async (assignment, val) => {
             if (assignment.date != "需添加时间") {
                 calcCountdown(assignment, classMode)
@@ -193,7 +210,7 @@ const push = async (branch) => {
                                 publisher: "课行校园通"
                             }
                             await sendTemplate(openid, wxParam, branch)
-                            // assignment.attributes.wechat[THREE_DAY_INDEX] = 1
+                            assignment.attributes.wechat[THREE_DAY_INDEX] = 1
                         }
                         if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
                             // send wechat
@@ -214,7 +231,6 @@ const push = async (branch) => {
                         let assValues = assignment.attributes.email
                         let content = ""
                         let emailParam = {}
-
                         if (values[ONE_WEEK_INDEX] == 1 && diff <= 7 && assValues[ONE_WEEK_INDEX] == 0) {
                             // send email 
                             content = `7天提醒：您的作业：${assignment.name}还有不到${diff}天就要due了，抓紧时间哦！`
@@ -235,7 +251,7 @@ const push = async (branch) => {
                                 content: content
                             }
                             sendEmail(emailParam)
-                            // assignment.attributes.email[THREE_DAY_INDEX] = 1
+                            assignment.attributes.email[THREE_DAY_INDEX] = 1
                         }
                         if (values[ONE_DAY_INDEX] == 1 && diff <= 1 && assValues[ONE_DAY_INDEX] == 0) {
                             // send email
@@ -267,7 +283,7 @@ const push = async (branch) => {
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    // push("UQ")
-    // push("USYD")
+    push("UQ")
+    push("USYD")
     push("UMEL")
 }

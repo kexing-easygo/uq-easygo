@@ -11,6 +11,10 @@ const UQ_ADMIN_OPENID = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
 const UMEL_ADMIN_OPENID = "o-B6w5eKnRniFdjywNhRy7XksQpw"
 const USYD_ADMIN_OPENID = ""
 
+const USYD_APP_ID = "wxc51fd512a103a723"
+const UQ_APP_ID = "wxc51fd512a103a723"
+const UMEL_APP_ID = "wxb3dbe1326db6d6d2"
+
 const sendTemplate = async (openid, param, branch) => {
   const {
       content,
@@ -18,8 +22,21 @@ const sendTemplate = async (openid, param, branch) => {
       dueDate,
       publisher
   } = param
-  let templateId = UMEL_TEMPLATE_ID
-  const res = await cloud.openapi.subscribeMessage.send({
+  let templateId = ''
+  let appid = ''
+  if (branch == "UQ") {
+    templateId = UQ_TEMPLATE_ID
+    appid = UQ_APP_ID
+  } else if (branch == "UMEL") {
+    templateId = UMEL_TEMPLATE_ID
+    appid = UMEL_APP_ID
+  } else if (branch == "USYD") {
+    templateId = USYD_TEMPLATE_ID
+    appid = USYD_APP_ID
+  }
+  const res = await cloud.openapi({
+    appid: appid
+  }).subscribeMessage.send({
       touser: openid,
       lang: 'zh_CN',
       data: {
@@ -41,19 +58,11 @@ const sendTemplate = async (openid, param, branch) => {
   })
   console.log(res)
   return res
-  // } catch (err) {
-      // return err
-  // }
 }
 
 // 云函数入口函数
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
-  console.log(wxContext)
-  // 跨账号调用时，由此拿到来源方小程序/公众号 AppID
-  console.log(wxContext.FROM_APPID)
-  // 跨账号调用时，由此拿到来源方小程序/公众号的用户 OpenID
-  console.log(wxContext.FROM_OPENID)
   // return context
   const assignment = {
     name: "测试1",

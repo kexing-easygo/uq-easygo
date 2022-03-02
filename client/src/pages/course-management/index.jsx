@@ -98,6 +98,7 @@ export default function CourseManagement() {
               key={course.courseCode}
               title={course.courseCode}
               open={opens[semester] && opens[semester][i]}
+              isAnimation={false}
               onClick={(value) => {
                 setManagedSemester(semester)
                 toggleAccordion(semester, value, i)

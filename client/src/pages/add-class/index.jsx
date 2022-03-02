@@ -66,7 +66,9 @@ export default function AddClass() {
     const _classes = selectedSessions.filter(course => !duplica.includes(course?.activity_group_code)).map(session => ({
       _id: session._id,
       background: selectedColor,
-      remark: ''
+      remark: '',
+      activitiesDays: session.activitiesDays,
+      start_time: session.start_time
     }))
     // 将选择的背景色添加到课程JSON中
     const data = {

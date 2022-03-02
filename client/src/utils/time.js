@@ -10,10 +10,11 @@ import 'moment-timezone';
 export const computeEndTime = (startTime, duration) => {
   if (!startTime || !duration) return '';
   let start = startTime.split(":").map(e => parseInt(e));
-  let hours = Math.ceil(parseInt(duration) / 60) + start[0],
-    min = parseInt(duration) % 60 + start[1];
-  min = min < 10 ? `0${min}` : min;
-  return `${hours}:${min}`;
+  let today = moment()
+  today.set("hour", start[0])
+  today.set("minutes", start[1])
+  const endTime = today.add(90, "minutes").format("HH:mm")
+  return endTime
 }
 
 /**
