@@ -1,26 +1,69 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/navbar'
+import Taro from '@tarojs/taro'
 import { AtButton, AtForm, AtInput, AtSearchBar } from 'taro-ui'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateEmail } from '../../services/profile'
+import { updateEmail,sendCodeEmail } from '../../services/profile'
 import './index.less'
-
+import isEmail from "validator/lib/isEmail"
 export default function BindEmail() {
-
   const dispatch = useDispatch();
   const { userEmail } = useSelector(state => state.user);
   const [email, setEmail] = useState('')
   const [showForm, setShowForm] = useState(false)
+  const [timeLimit, setTimeLimit] = useState()
   const [code, setCode] = useState('')
-
+  const [checkCode,setCheckCode] = useState('')
+ 
   const pattern = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+  //邮箱校验
   const checkEmail = () => {
-    // if (pattern.test(email)) Taro.showToast("不正确的邮箱格式")
-    // 获取验证码
-    setShowForm(true)
+    let show = !(isEmail(email) && timeLimit==0)
+    return show
   }
+
+  //发送验证码
+  useEffect(()=>{
+    const content = {
+      email:email,
+      code:code,
+    }
+    dispatch(sendCodeEmail(content))
+  },[code])
+
+  // 生成发送code
+  const sendCode = () => {
+    const random = require("string-random")
+    setShowForm(()=>{
+      return true
+    })
+    setCode(()=>{
+      return random(6,{letters:false})
+    })
+    setTimeLimit(60)
+  }
+
+  //一分钟计时器
+  useEffect(() => {
+   setTimeLimit(0)
+  },[])
+
+  useEffect(() => {
+    timeLimit > 0 && setTimeout(() => setTimeLimit(timeLimit - 1), 1000)
+  }, [timeLimit])
+
+  //检查验证码错误与否
   const verify = () => {
-    console.log(code)
+    if(code===checkCode){
+      dispatch(updateEmail(email))
+      
+    }else{
+      Taro.showToast({
+        title: '验证错误呢',
+        icon: 'error',
+        duration: 2000
+      })
+    }
   }
 
   return (
@@ -34,23 +77,43 @@ export default function BindEmail() {
           placeholder={userEmail || '请输入邮箱'}
           value={email}
           onChange={setEmail}
-        />
-      </AtForm>
+        > <AtButton 
+            onClick={sendCode} 
+            type="primary" 
+            size="small" 
+            className="sendEmail"
+            customStyle={{color:"#fff",marginRight:"20px"}}
+            disabled={checkEmail()}
+          >
+            {timeLimit==0 ? '发送验证码':timeLimit+" s"}
+          </AtButton>
+        </AtInput>
+      {/* 邮箱符合标准显示 */}
       {
         showForm && 
-          <AtSearchBar
+          <AtInput
+          title='验证码'
           showActionButton
-          value={code}
-          onChange={setCode}
-          onActionClick={verify}
-        />
+          onChange={setCheckCode}
+          value={checkCode}
+        >
+          <AtButton 
+           onClick={verify} 
+            type="primary" 
+            size="small" 
+            customStyle={{color:"#fff",marginRight:"20px"}}
+          >
+            提交
+          </AtButton>
+        </AtInput>
       }
-      <AtButton
+      </AtForm>
+      {/* <AtButton
         type='primary'
         onClick={() => dispatch(updateEmail(email))}
         customStyle={{ width: '90vw', margin: '24rpx auto' }}
-      >确定</AtButton>
-      
+        disabled={showSubmit}
+      >确定</AtButton> */}
     </>
   )
 }
