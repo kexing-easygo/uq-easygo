@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchCurrentClasses, appendClass, deleteClass, updateClass, fetchSelectedCourses, deleteCourses, deleteSemester } from '../services/course'
-import { fetchCurrentSemester, updateCurrentSemester } from '../services/course'
+import { fetchCurrentSemester, updateCurrentSemester, autoImportTimetable } from '../services/course'
 import { computeAvailableCourses, computeClashCourses } from '../utils/courses'
 import { SEMESTERS, CURRENT_SEMESTER, SUMMER_START_DATE, SUMMER_WEEKS, SEMESTER_START_DATE, SEMESTER_WEEKS, WEEK, WEEKS_NO, START_DATE } from '../utils/constant'
 
@@ -17,7 +17,9 @@ const initialState = {
   managementClickedClass: {},
   currentSemester: CURRENT_SEMESTER,
   weeksNo: WEEKS_NO,
-  startDate: START_DATE
+  startDate: START_DATE,
+  // 课表一键导入窗口
+  showAutoImport: false
 }
 
 // 创建action
@@ -68,8 +70,10 @@ export const courseSlice = createSlice({
       const index = state.selectedCourses[sem].findIndex(c => c.courseCode === code)
       if (index !== -1) {
         state.selectedCourses[sem][index].results = info
-        console.log("更新完毕")
       }      
+    },
+    setShowAutoImport: (state, action) => {
+      state.showAutoImport = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -89,7 +93,7 @@ export const courseSlice = createSlice({
       })
       .addCase(appendClass.rejected, (state, action) => {
         console.log(action.error.message);
-        Taro.showToast({ title: '添加出错' })
+        Taro.showToast({ title: '添加出错', icon: "error" })
       })
       .addCase(appendClass.fulfilled, (state, action) => {
         state.currentClasses.push(...action.payload)
@@ -100,13 +104,13 @@ export const courseSlice = createSlice({
         Taro.showToast({ icon: 'loading', title: '修改中' })
       })
       .addCase(updateClass.rejected, (state, action) => {
-        Taro.showToast({ title: '修改失败' })
+        Taro.showToast({ title: '修改失败', icon: "error" })
       })
       .addCase(updateClass.fulfilled, (state, action) => {
         const target = state.currentClasses.find(cl => cl._id === action.payload._id);
         target.background = action.payload.background;
         target.remark = action.payload.remark;
-        Taro.showToast({ title: '修改成功', icon: "none" })
+        Taro.showToast({ title: '修改成功', icon: "success" })
       })
       // 删除class
       .addCase(deleteClass.pending, () => {
@@ -117,7 +121,7 @@ export const courseSlice = createSlice({
         Taro.showToast({ title: '删除成功', icon: "none" })
       })
       .addCase(deleteClass.rejected, (state, action) => {
-        Taro.showToast({ title: '删除失败', icon: "none" })
+        Taro.showToast({ title: '删除失败', icon: "error" })
       })
       .addCase(deleteCourses.pending, () => {
         Taro.showToast({ icon: 'loading', title: '删除中...' })
@@ -135,6 +139,7 @@ export const courseSlice = createSlice({
       })
       .addCase(deleteSemester.rejected, (state, action) => {
         console.log(action.error.message);
+        Taro.showToast({ title: '更新失败', icon: "error" })
       })
       .addCase(deleteSemester.pending, (state, action) => {
         Taro.showToast({ icon: 'loading', title: '删除中...' })
@@ -153,7 +158,7 @@ export const courseSlice = createSlice({
         }
       })
       .addCase(fetchCurrentSemester.rejected, (state, action) => {
-        Taro.showToast({ title: '获取当前学期失败，默认为summer', icon: "none" })
+        Taro.showToast({ title: '获取失败', icon: "error" })
         state.currentSemester = SEMESTERS[0]
       })
       .addCase(updateCurrentSemester.pending, (state, action) => {
@@ -170,13 +175,23 @@ export const courseSlice = createSlice({
         }
       })
       .addCase(updateCurrentSemester.rejected, (state, action) => {
-        Taro.showToast({ title: '更新失败', icon: "none" })
+        Taro.showToast({ title: '更新失败', icon: "error" })
+      })
+      .addCase(autoImportTimetable.pending, () => {
+        Taro.showToast({ title: '正在导入', icon: "loading" })
+      })
+      .addCase(autoImportTimetable.fulfilled, (state, action) => {
+        Object.assign(state.selectedCourses, action.payload)
+        Taro.showToast({ title: '导入后请刷新', icon: "success" })
+      })
+      .addCase(autoImportTimetable.rejected, () => {
+        Taro.showToast({ title: '导入失败', icon: "error" })
       })
   },
 })
 
 // Action creators are generated for each case reducer function
 export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes } = courseSlice.actions
-export const {setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate, setSelectedCourses} = courseSlice.actions
+export const {setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate, setSelectedCourses, setShowAutoImport} = courseSlice.actions
 
 export default courseSlice.reducer

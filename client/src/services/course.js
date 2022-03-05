@@ -209,7 +209,7 @@ export const fetchCurrentSemester = createAsyncThunk(
       return res.result;
     } catch (err) {
       console.log('获取当前学期失败', err);
-      return "Summer Semester"
+      return "Semester 1, 2022"
     }
 
   }
@@ -227,7 +227,19 @@ export const updateCurrentSemester = createAsyncThunk(
       return sem
     } catch (err) {
       console.log(err)
-      return "Summer Semester"
+      return "Semester 1, 2022"
     }
   }
+)
+
+export const autoImportTimetable = createAsyncThunk(
+  'courses/autoImportTimetable',
+  async (param) => {
+    const _openId = await getLocalOpenId();
+    const res = await callCloud('test-timetable', 'autoAddTimetable', {
+      openid: _openId,
+      timetableLink: param.timetableLink
+    })
+    return res
+  } 
 )

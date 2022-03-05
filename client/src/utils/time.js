@@ -13,7 +13,8 @@ export const computeEndTime = (startTime, duration) => {
   let today = moment()
   today.set("hour", start[0])
   today.set("minutes", start[1])
-  const endTime = today.add(90, "minutes").format("HH:mm")
+  today.set("seconds", 0)
+  const endTime = today.add(parseInt(duration), "minutes").format("HH:mm")
   return endTime
 }
 

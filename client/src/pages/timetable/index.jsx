@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import Taro, { usePullDownRefresh } from '@tarojs/taro'
 import { View, Text, Button } from '@tarojs/components'
-import { AtButton, AtFab, AtModalAction, AtModalContent, AtModalHeader, AtNoticebar } from 'taro-ui'
+import { AtButton, AtFab, AtModalAction, AtModalContent, AtModalHeader, AtNoticebar, AtIcon } from 'taro-ui'
 import NavBar from '../../components/navbar'
 import TimeBar from '../../components/timetable/time-bar'
+import AutoImport from "../../components/timetable/auto-import";
 import AllWeeks from '../../components/timetable/all-weeks'
 import WeekDays from '../../components/timetable/week-days'
 import CourseTable from '../../components/timetable/course-table'
 import SessionDetails from '../../components/timetable/session-details'
 import { getDates, formatDates, getCurrentWeek, getDatesByWeek } from '../../utils/time'
 import { useSelector, useDispatch } from 'react-redux'
-import { getAvailableCourse } from '../../features/course-slice'
+import { getAvailableCourse, setShowAutoImport } from '../../features/course-slice'
 import { getUserProfile } from '../../services/login'
 import { AtModal } from "taro-ui"
 import './index.less'
@@ -135,6 +136,10 @@ export default function TimeTable() {
         <CourseTable />
       </View>
 
+      <AtFab className="auto-import-fab" size="small" onClick={() => dispatch(setShowAutoImport(true))}>
+        <AtIcon prefixClass="icon" value="ilink-upload" size="35" color="white"></AtIcon>
+      </AtFab>
+
       <AtFab className="fab" size="small" onClick={handleClickFab}>
         <Text className="at-fab__icon at-icon at-icon-add"></Text>
       </AtFab>
@@ -160,6 +165,8 @@ export default function TimeTable() {
           </AtButton>
         </AtModalAction>
       </AtModal>
+      <AutoImport />
+      
     </View>
   )
 }
