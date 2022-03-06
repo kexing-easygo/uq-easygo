@@ -104,12 +104,12 @@ export default function Review() {
     <View className='selector-container'>
       <NavBar title="课评" backIcon />
       <View className='top-background'>
-      <AtSearchBar className='search' 
-        placeholder='输入课程代码'
-        actionName='搜索'
-        value={courseCode}
-        onChange={(value) => {setCourseCode(value.toUpperCase())}}
-        onActionClick={debounce(handleSearchCourse, 1000)} />
+        <AtSearchBar className='search' 
+          placeholder='输入课程代码'
+          actionName='搜索'
+          value={courseCode}
+          onChange={(value) => {setCourseCode(value.toUpperCase())}}
+          onActionClick={debounce(handleSearchCourse, 1000)} />
       </View>
       {/*
       <View className='course-selector input-element'>
@@ -120,8 +120,10 @@ export default function Review() {
       </View>
       */}
       <View className='courseSuggestion'>
-        <Text className='title-icon'>I</Text>
-        <Text className='title'>猜你想搜</Text>
+        <view className = 'guess-background'>
+          <View className='blue-block'></View>
+          <Text className='title'>猜你想搜</Text>
+        </view>
         <AtList className='course-top' hasBorder={false} >
           {courseList(), courses.map((value) => {
             return(
