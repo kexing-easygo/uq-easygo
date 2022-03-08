@@ -43,6 +43,9 @@ export const DEFAULT_REMARK = "我是一个没有感情的备注框…可以随�
 export const ICON_COLOR = '#89acee';
 export const ICON_SIZE = 24;
 
+// 课表-一键导入的url链接正则表达式
+export const TIMETABLE_SUBSCRIBE_LINK_REGEX = /^https:\/\/(timetable\.sydney\.edu\.au|timetable\.my\.uq\.edu\.au|mytimetable\.students\.unimelb\.edu\.au)\/(even|odd)\/rest\/calendar\/ical\/([a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12})$/
+
 // 由config导出的环境变量
 export {
   APPID,                          // app id

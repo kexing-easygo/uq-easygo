@@ -19,7 +19,8 @@ const initialState = {
   weeksNo: WEEKS_NO,
   startDate: START_DATE,
   // 课表一键导入窗口
-  showAutoImport: false
+  showAutoImport: false,
+  showClassNotifyWindow: false
 }
 
 // 创建action
@@ -74,7 +75,12 @@ export const courseSlice = createSlice({
     },
     setShowAutoImport: (state, action) => {
       state.showAutoImport = action.payload
+    },
+    setClassNotifyWindow: (state, action) => {
+      console.log(action.payload)
+      state.showClassNotifyWindow = action.payload
     }
+
   },
   extraReducers: (builder) => {
     // Add reducers for additional action types here, and handle loading state as needed
@@ -193,5 +199,5 @@ export const courseSlice = createSlice({
 // Action creators are generated for each case reducer function
 export const { getAvailableCourse, getClickedCourse, toggleDisplayDetail, updateClashes } = courseSlice.actions
 export const {setManagementClickedClass, setCurrentSemester, setWeeksNo, setStartDate, setSelectedCourses, setShowAutoImport} = courseSlice.actions
-
+export const { setClassNotifyWindow } = courseSlice.actions
 export default courseSlice.reducer

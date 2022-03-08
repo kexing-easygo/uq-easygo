@@ -9,19 +9,26 @@ import { CLASS_MODE_OPTIONS, SUMMER_START_DATE, SUMMER_WEEKS, SEMESTER_START_DAT
 import './index.less'
 import SemesterSelector from '../../components/semesters-selector'
 import { setNotifyMenu } from '../../features/countdown-slice'
+import { setClassNotifyWindow } from '../../features/course-slice'
 import { updateCurrentSemester, fetchCurrentSemester } from "../../services/course";
+import { getClassNotify } from "../../services/profile";
 import NotifySheet from "../../components/countdown/notifysheet/index";
+import ClassNotify from "../../components/timetable/class-notify";
 
 export default function BasicSetting() {
 
   const dispatch = useDispatch();
-  const { loginStatus, classMode } = useSelector(state => state.user);
+  const { loginStatus, classMode, classNotify } = useSelector(state => state.user);
   const { currentSemester } = useSelector(state => state.course)
   const [toggleOptions, setToggleOptions] = useState(false);
   const [toggleActionSheet, setToggleActionSheet] = useState(false);
+
   useEffect(() => {
     dispatch(fetchCurrentSemester())
   }, [currentSemester])
+  useEffect(() => {
+    dispatch(getClassNotify())
+  }, [classNotify])
   const classModeOptions = CLASS_MODE_OPTIONS.map(cm => {
     return {
       label: cm,
@@ -42,8 +49,10 @@ export default function BasicSetting() {
 
         <AtListItem
           title='上课提醒'
-          extraText='敬请期待'
-          disabled={!loginStatus}
+          // extraText='敬请期待'
+          // disabled={!loginStatus}
+          arrow='right'
+          onClick={() => dispatch(setClassNotifyWindow(true))}
         />
       </AtList>
 
@@ -88,6 +97,7 @@ export default function BasicSetting() {
       />
       {/* 提醒设置actionSheet component */}
       <NotifySheet />
+      <ClassNotify />
     </View>
   )
 }

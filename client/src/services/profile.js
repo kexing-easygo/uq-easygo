@@ -84,3 +84,28 @@ export const updateMobile = createAsyncThunk(
   }
 )
 
+export const getClassNotify = createAsyncThunk(
+  'user/getClassNotify',
+  async () => {
+    try {
+      const res = await callCloud('main-login', 'getClassNotify', {
+        openid: await getLocalOpenId()
+      })
+      return res.result
+    } catch (err) {
+      return err
+    }
+    
+  }
+)
+
+export const updateClassNotify = createAsyncThunk(
+  'user/updateClassNotify',
+  async (value) => {
+    await callCloud('main-login', 'updateClassNotify', {
+      classNotifyValue: value,
+      openid: await getLocalOpenId()
+    })
+    return value
+  }
+)
