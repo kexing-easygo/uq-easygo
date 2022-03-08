@@ -1,6 +1,6 @@
 import { BRANCH_NAME, DAY_OF_WEEK } from './constant';
 import { computeEndTime, formatDates, removeZero } from './time'
-const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|([A-Za-z]{3,})(\d?)\|(\d{1,})/
+const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|.*\|.*/
 /**
  * 根据接口返回的有效日期，判断当周是否有课
  * @param {array} courses - 所有的课程

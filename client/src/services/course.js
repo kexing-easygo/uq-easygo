@@ -102,7 +102,7 @@ export const searchCourseTime = async (courseCode, semester, classMode) => {
   } catch (err) {
     console.log(err);
     Taro.showToast({
-      title: "没有找到这门课哦，请重新搜素或者联系我们~",
+      title: "没有找到这门课哦，请重新搜索或者联系我们~",
       icon: "none",
     })
   }
@@ -236,7 +236,7 @@ export const autoImportTimetable = createAsyncThunk(
   'courses/autoImportTimetable',
   async (param) => {
     const _openId = await getLocalOpenId();
-    const res = await callCloud('test-timetable', 'autoAddTimetable', {
+    const res = await callCloud('timetable', 'autoAddTimetable', {
       openid: _openId,
       timetableLink: param.timetableLink
     })

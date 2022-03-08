@@ -3829,9 +3829,9 @@
   "version" "1.0.0"
 
 "caniuse-lite@^1.0.30000844", "caniuse-lite@^1.0.30000864", "caniuse-lite@^1.0.30001020", "caniuse-lite@^1.0.30001109", "caniuse-lite@^1.0.30001312":
-  "integrity" "sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ=="
-  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz"
-  "version" "1.0.30001312"
+  "integrity" "sha512-rI1UN0koZUiKINjysQDuRi2VeSCce3bYJNmDcj3PIKREiAmjakugBul1QSkg/fPrlULYl6oWfGg3PbgOSY9X4Q=="
+  "resolved" "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001313.tgz"
+  "version" "1.0.30001313"
 
 "capture-stack-trace@^1.0.0":
   "integrity" "sha512-mYQLZnx5Qt1JgB1WEiMCf2647plpGeQ2NMR/5L0HNZzGQo4fuSPnK+wjfPnKZV0aiJDgzmWqqkV/g7JD+DW0qw=="

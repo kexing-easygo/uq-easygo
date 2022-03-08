@@ -22,10 +22,7 @@ export const initCloud = async () => {
  * @param {string} branch 
  */
 export const callCloud = async (name, method, args = {}) => {
-  let testName = name
-  if (name == "timetable") {
-    testName = "test-timetable"
-  }
+
   const _data = {
     method: method,
     branch: BRANCH_NAME
@@ -33,7 +30,7 @@ export const callCloud = async (name, method, args = {}) => {
   switch (BRANCH_NAME) {
     case "UQ":
       return await Taro.cloud.callFunction({
-        name: testName,
+        name: name,
         data: {
           ..._data,
           ...args
@@ -41,7 +38,7 @@ export const callCloud = async (name, method, args = {}) => {
       })
     default:
       return await Taro.$masterCloud.callFunction({
-        name: testName,
+        name: name,
         data: {
           ..._data,
           ...args

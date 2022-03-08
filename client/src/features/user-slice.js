@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
 import { getUserProfile } from '../services/login'
-import { fetchUserInfo, updateClassMode, getCardsInfo, manageCards, updateEmail, updateMobile } from '../services/profile'
+import { fetchUserInfo, updateClassMode, getCardsInfo, manageCards, updateEmail, updateMobile,getClassNotify,  updateClassNotify } from '../services/profile'
 
 // 初始化状态
 const initialState = {
@@ -15,7 +15,8 @@ const initialState = {
     newActivities: 1,
     todayClasses: 1,
     recentAssignments: 1
-  }       // 自定义卡片显示 
+  },       // 自定义卡片显示 
+  classNotify: false
 }
 
 // 创建action
@@ -86,6 +87,27 @@ export const userSlice = createSlice({
       .addCase(updateMobile.fulfilled, (state, action) => {
         state.userMobile = action.payload;
         Taro.navigateBack();
+      })
+      .addCase(updateClassNotify.fulfilled, (state, action) => {
+        state.classNotify = action.payload
+        Taro.showToast({
+          title: "更新成功",
+          icon: "success"
+        })
+      })
+      .addCase(updateClassNotify.pending, () => {
+        Taro.showToast({
+          title: '加载中',
+          icon: "none"
+        })
+        
+      })
+      .addCase(updateClassNotify.rejected, (state, action) => {
+        Taro.showToast({ title: '网络错误，请稍后再试' })
+      })
+      .addCase(getClassNotify.fulfilled, (state, action) => {
+        console.log("获取上课提醒成功")
+        state.classNotify = action.payload
       })
 })
 
