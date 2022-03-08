@@ -12,7 +12,7 @@ const RANDOM_COLORS = ['#FA5151', '#FFC300', '#07C160', '#1485EE', '#576B95']
 
 
 cloud.init()
-const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|([A-Za-z]{3,})(\d?)\|(\d{1,})/
+const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|.*\|.*/
 
 const WEEKDAY_MAPPER = {
   1: "Mon",

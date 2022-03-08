@@ -20,14 +20,13 @@ function GetDateStr(AddDayCount) {
     //获取当前几号，不足10补0
     var d = dd.getDate() < 10 ? "0" + dd.getDate() : dd.getDate();
     return y + "-" + m + "-" + d;
-  }
-  
-  // 默认作业的倒计时时间
-  var d1 = GetDateStr(3)
-  var d2 = GetDateStr(29)
-  // 默认作业
-  const DEFAULT_ASSIGNMENTS = [
-    {
+}
+
+// 默认作业的倒计时时间
+var d1 = GetDateStr(3)
+var d2 = GetDateStr(29)
+// 默认作业
+const DEFAULT_ASSIGNMENTS = [{
         'aid': "default1",
         'color': '#576B95',
         'name': "CSSE1001 A1 (示例)",
@@ -45,7 +44,7 @@ function GetDateStr(AddDayCount) {
         "default": true,
         "type": "Exam"
     }
-  ]
+]
 
 async function createUser(openid, userInfo, collectionName) {
     const status = await loginStatus(openid, collectionName)
@@ -84,7 +83,8 @@ async function createUser(openid, userInfo, collectionName) {
                     todayClasses: 1,
                     recentAssignments: 1,
                     newActivities: 1
-                }
+                },
+                classNotify: false
             }
         })
     return res
@@ -129,7 +129,9 @@ async function updateClassMode(openid, collectionName, mode) {
 
 async function manageCards(openid, collectionName, cardsInfo) {
     const res = await db.collection(collectionName)
-        .where({ _openid: openid })
+        .where({
+            _openid: openid
+        })
         .update({
             data: {
                 cardsInfo: cardsInfo
@@ -140,14 +142,18 @@ async function manageCards(openid, collectionName, cardsInfo) {
 
 async function getCardsInfo(openid, collectionName) {
     const res = await db.collection(collectionName)
-        .where({ _openid: openid })
+        .where({
+            _openid: openid
+        })
         .get()
     return res.data[0].cardsInfo
 }
 
 async function updateEmail(openid, collectionName, email) {
     const res = await db.collection(collectionName)
-        .where({ _openid: openid })
+        .where({
+            _openid: openid
+        })
         .update({
             data: {
                 userEmail: email
@@ -158,7 +164,9 @@ async function updateEmail(openid, collectionName, email) {
 
 async function updateMobile(openid, collectionName, mobile) {
     const res = await db.collection(collectionName)
-        .where({ _openid: openid })
+        .where({
+            _openid: openid
+        })
         .update({
             data: {
                 userMobile: mobile
@@ -223,52 +231,107 @@ async function updateMobile(openid, collectionName, mobile) {
         })
     return res
 }
+
+const getClassNotify = async (openid, collectionName) => {
+    const result = await db.collection(collectionName)
+        .where({
+            _openid: openid
+        })
+        .get()
+    const res = result.data[0]
+    return res.classNotify
+}
+
 /**
- * 这个示例将经自动鉴权过的小程序用户 openid 返回给小程序端
  * 
- * event 参数包含小程序端调用传入的 data
- * 
+ * @param {string} openid 用户的openid
+ * @param {string} collectionName 集合名称
+ * @param {Boolean} value true或者false，用户设置是否上课提醒
  */
+const updateClassNotify = async (openid, collectionName, value) => {
+    return await db.collection(collectionName)
+        .where({
+            _openid: openid
+        }).update({
+            data: {
+                classNotify: value
+            }
+        })
+}
 
 exports.main = async (event, context) => {
-  const {branch, method} = event
-  if (branch == undefined || method == undefined) {
-    return {}
-  }
-  // branch: USYD / UMEL
-  if (event.method == "getOpenID") {
+    const {
+        branch,
+        method
+    } = event
+    if (branch == undefined || method == undefined) {
+        return {}
+    }
+    // let openid = ''
     const wxContext = cloud.getWXContext()
-    return wxContext.FROM_OPENID;
-  }
-  const collectionName = branch + MAIN_USER_SUFFIX
-  const {openid} = event
-  if (method == "createUser") {
-    const {userInfo} = event
-    return await createUser(openid, userInfo, collectionName);
-  }
-  if (method == "loginStatus") {
-    return await loginStatus(openid, collectionName);
-  }
-  if (method == "getUserInfo") {
-    return await getUserInfo(openid, collectionName)
-  }
-  if (method == "updateClassMode") {
-    const { classMode } = event
-    return await updateClassMode(openid, collectionName, classMode)
-  }
-  if (method == "getCardsInfo") {
-    return await getCardsInfo(openid, collectionName)
-  }
-  if (method == "manageCards") {
-    const { cardsInfo } = event
-    return await manageCards(openid, collectionName, cardsInfo)
-  }
-  if (method == "updateEmail") {
-    const {email} = event
-    return await updateEmail(openid, collectionName, email)
-  }
-  if (method == "updateMobile") {
-    const {mobile} = event
-    return await updateMobile(openid, collectionName, mobile)
-  }
+    // branch: USYD / UMEL
+    // switch (branch) {
+    //     case "UQ":
+    //         openid = wxContext.OPENID;
+    //         break;
+    //     default:
+    //         openid = wxContext.FROM_OPENID;
+    //         break
+    // }
+    if (event.method == "getOpenID") {
+        return wxContext.FROM_OPENID
+    }
+    const collectionName = branch + MAIN_USER_SUFFIX
+    const {
+        openid
+    } = event
+    if (method == "createUser") {
+        const {
+            userInfo
+        } = event
+        return await createUser(openid, userInfo, collectionName);
+    }
+    if (method == "loginStatus") {
+        return await loginStatus(openid, collectionName);
+    }
+    if (method == "getUserInfo") {
+        return await getUserInfo(openid, collectionName)
+    }
+    if (method == "updateClassMode") {
+        const {
+            classMode
+        } = event
+        return await updateClassMode(openid, collectionName, classMode)
+    }
+    if (method == "getCardsInfo") {
+        return await getCardsInfo(openid, collectionName)
+    }
+    if (method == "manageCards") {
+        const {
+            cardsInfo
+        } = event
+        return await manageCards(openid, collectionName, cardsInfo)
+    }
+    if (method == "updateEmail") {
+        const {
+            email
+        } = event
+        return await updateEmail(openid, collectionName, email)
+    }
+    if (method == "updateMobile") {
+        const {
+            mobile
+        } = event
+        return await updateMobile(openid, collectionName, mobile)
+    }
+    let testOpenId = wxContext.OPENID
+    if (method == "updateClassNotify") {
+        const {
+            classNotifyValue
+        } = event
+        return await updateClassNotify(testOpenId, collectionName, classNotifyValue)
+    }
+    if (method == "getClassNotify") {
+        return await getClassNotify(testOpenId, collectionName)
+    }
 }
