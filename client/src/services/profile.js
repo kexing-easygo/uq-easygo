@@ -60,6 +60,21 @@ export const manageCards = createAsyncThunk(
   }
 )
 
+export const sendCodeEmail = createAsyncThunk(
+  'user/sendCodeEmail',
+  async(param) =>{
+    const { email, code } = param
+    console.log("email will send: "+email+code)
+    if(email!=""){
+      await callCloud('email','',{
+        subject: "验证马",
+        toAddr: email,
+        content: `您本次的验证码为：${code}`
+      })
+    }
+  }
+)
+
 export const updateEmail = createAsyncThunk(
   'user/updateEmail',
   async (email) => {

@@ -76,6 +76,11 @@ export const userSlice = createSlice({
       .addCase(updateEmail.fulfilled, (state, action) => {
         state.userEmail = action.payload;
         Taro.navigateBack();
+        Taro.showToast({
+          title: '邮箱绑定成功',
+          icon: 'success',
+          duration: 2000
+        })
       })
       // 更新手机号
       .addCase(updateMobile.pending, (state, action) => {
