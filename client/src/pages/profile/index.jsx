@@ -66,6 +66,12 @@ export default function Profile() {
           iconInfo={getIcon('bookmark')}
           onClick={() => Taro.navigateTo({ url: '/pages/card-management/index' })}
         />
+        <AtListItem
+          title='客评审核'
+          arrow='right'
+          iconInfo={getIcon('filter')}
+          onClick={() => Taro.navigateTo({ url: '/pages/check-reviews/index' })}
+        />
       </AtList>
       <AtList hasBorder={false}>
         <AtListItem
