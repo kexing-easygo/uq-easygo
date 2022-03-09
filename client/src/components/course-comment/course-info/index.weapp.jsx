@@ -67,8 +67,9 @@ export default function CourseInfo() {
           </Text>
         </View>
       </View>
-      <Divider width='100%' />
-      <View className='note'><Text>更多详情请参考官方ECP</Text></View>
+      <View className='note-background'>
+        <View className='note'><Text>更多详情请参考官方ECP</Text></View>
+      </View>
     </View>
   )
 }
