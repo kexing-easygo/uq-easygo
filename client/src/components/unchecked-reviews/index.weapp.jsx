@@ -4,24 +4,22 @@ import { View } from '@tarojs/components'
 import { AtCard, AtButton } from "taro-ui"
 import './index.less'
 import {markReviewAsPassed,markReviewAsFailed} from '../../services/checkReviews'
-
+import { useDispatch } from 'react-redux'
 export default function UncheckedList(props) {
   const {review_id,courseCode,postDate,postTime,content} = props.review
-
-  const handleNotPass = async() =>{
-     const result =await markReviewAsFailed({
+  const dispatch = useDispatch()
+  const handleNotPass = () =>{
+    dispatch(markReviewAsFailed({
       courseCode:courseCode,
       review_id:review_id
-    })
-    console.log(result)
+    }))
   }
 
-  const handlePass = async() =>{
-    const result =await markReviewAsPassed({
+  const handlePass = () =>{
+    dispatch(markReviewAsPassed({
       courseCode:courseCode,
       review_id:review_id
-    })
-    console.log(result)
+    }))
   }
 
   return (

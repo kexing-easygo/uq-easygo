@@ -37,6 +37,7 @@ export const userSlice = createSlice({
         state.nickName = action.payload.nickName;
         state.userEmail = action.payload.userEmail;
         state.userMobile = action.payload.userMobile;
+        // 新增state
       })
       .addCase(getUserProfile.fulfilled, (state, action) => {
         if (!action.payload) return;

@@ -37,7 +37,7 @@ export default function Launch() {
           dispatch(getClassNotify())
         }
         Taro.switchTab({ url: '/pages/index/index' })
-        // Taro.navigateTo( {url: "/pages/bind-email/index"} )
+        // Taro.navigateTo( {url: "/pages/check-reviews/index"} )
       }
     })()
   }, [])

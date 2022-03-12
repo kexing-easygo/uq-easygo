@@ -4,13 +4,16 @@ import NavBar from '../../components/navbar'
 import './index.less'
 import UncheckedList from '../../components/unchecked-reviews'
 import { fetchUncheckedReviews} from "../../services/checkReviews";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function CheckReviews() {  
-  const [uncheckedReviews,setUncheckedReviews]=useState([])
-  
-  useEffect(async()=>{
-    const reviews = await fetchUncheckedReviews()
-    setUncheckedReviews(reviews)
+  const dispatch = useDispatch()
+  const { uncheckedReviews } = useSelector(state => state.review)
+  // const [reviews, setReviews] = useState([])
+  useEffect(()=>{
+    dispatch(fetchUncheckedReviews())
+    // setReviews(uncheckedReviews)
   },[])
 
   return (
@@ -19,12 +22,14 @@ export default function CheckReviews() {
       <View className='info-text center-text'>
         你还有{uncheckedReviews.length}个未处理的审核
       </View>
+
       <View className="uncheckedReviews">
         {uncheckedReviews.map((data)=>{
           return <UncheckedList review={data}/>
         })}
-        {console.log(uncheckedReviews)}
       </View>
+      
+      
       
       <View className='info-text center-text'>
         客评

@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchHotResearches,  fetchCourseInfo, addReviewDimensions } from '../services/review'
 import { fetchReviews, deleteReview, addReview, updateReview } from '../services/review'
 import { fetchSubReviews, addSubReview ,updateSubReview, deleteSubReview } from '../services/review'
+import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed } from "../services/checkReviews";
 import { updateLikes } from '../services/review'
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   subReviews:[], // 追评
   editSubReview: false, // 追评修改模式
   clickedSubReview: {}, // 点击的追评
-  turnPage: [], // 判断 是否全都获取到 课程信息, 课评 
+  turnPage: [], // 判断 是否全都获取到 课程信息, 课评,
+  uncheckedReviews: [] 
 }
 
 export const reviewSlice = createSlice({
@@ -235,6 +237,28 @@ export const reviewSlice = createSlice({
       })
       .addCase(updateSubReview.rejected, () => {
         Taro.showToast({ title: '修改追评时出错了', icon: 'none' })
+      })
+      .addCase(fetchUncheckedReviews.pending, () => {
+        Taro.showToast({ title: '拉取中', icon: 'loading' })
+      }) 
+      .addCase(fetchUncheckedReviews.fulfilled, (state, action) => {
+        state.uncheckedReviews = action.payload
+        console.log("payload :::", action.payload)
+        Taro.showToast({ title: '拉取成功', icon: 'success' })
+      })
+      .addCase(markReviewAsPassed.fulfilled, (state, action) => {
+        const courseCode = action.payload[0]
+        const review_id = action.payload[1]
+        const index = state.uncheckedReviews.findIndex(c => c.courseCode == courseCode && c.review_id == review_id)
+        state.uncheckedReviews.splice(index, 1)
+        Taro.showToast({ title: '通过成功', icon: 'success' })
+      })
+      .addCase(markReviewAsFailed.fulfilled, (state, action) => {
+        const courseCode = action.payload[0]
+        const review_id = action.payload[1]
+        const index = state.uncheckedReviews.findIndex(c => c.courseCode == courseCode && c.review_id == review_id)
+        state.uncheckedReviews.splice(index, 1)
+        Taro.showToast({ title: '不通过成功', icon: 'success' })
       })
 }})
 
