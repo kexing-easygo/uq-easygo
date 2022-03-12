@@ -5,6 +5,7 @@ import './app.less'
 import { getLoginStatus } from './services/login'
 import store from './store'
 import { Provider } from 'react-redux'
+import './icon.css'
 
 
 export default function App(props) {

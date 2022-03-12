@@ -69,7 +69,7 @@ export default function ReviewResultPage() {
                 )} else {
                   return ( 
                     <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                      <OthersReview review={singleReview}  color='#d7e6ff' />   
+                      <OthersReview review={singleReview}  color='#B9C9FE' />   
                     </View>
               )}}})}
           </AtList>

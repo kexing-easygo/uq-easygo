@@ -4,7 +4,7 @@ import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
 import { noLuckyIcon, noPassIcon, noHardIcon, noSevenIcon } from '../../../assets/images/review-icons.json'
 import { luckyIcon, passIcon, hardIcon, sevenIcon } from '../../../assets/images/review-icons.json'
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast} from "taro-ui"
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast, AtIcon} from "taro-ui"
 import { setClickedIconReview } from "../../../features/review-slice";
 import { addReviewDimensions } from "../../../services/review";
 
@@ -81,20 +81,23 @@ export default function IconReview() {
   return (
     <View className='icons-review' style={{marginLeft:marginLeft}}>
       <View onclick={() => {reminder('passIcon')}} className='pass-view'>
-        <Image src={passState} className='icons pass-icon' />
-        <Text className='text'>好过{countText('passIcon')}
-        </Text>
+        <AtIcon prefixClass='icon' value='good-fill-copy' size='26' color='#BDBCBC'
+        className='icons pass-icon' ></AtIcon>
+        <Text className='text'>好过{countText('passIcon')}</Text>
       </View>
       <View onclick={() => {reminder('hardIcon')}} className='hard-view'>
-        <Image src={hardState} className='icons hard-icon'/>
+        <AtIcon prefixClass='icon' value='bad-fill-copy' size='26' color='#BDBCBC'
+          className='icons hard-icon' ></AtIcon>
         <Text className='text'>好难{countText('hardIcon')}</Text>
       </View>
       <View onclick={() => {reminder('sevenIcon')}} className='seven-view'>
-        <Image src={sevenState} className='icons seven-icon' />
-        <Text className='text'>好7{countText('sevenIcon')}</Text>
+        <AtIcon prefixClass='icon' value='seven-key-copy' size='20' color='#BDBCBC'
+            className='icons seven-icon' ></AtIcon>
+        <Text className='text'>好拿7{countText('sevenIcon')}</Text>
       </View>
       <View onclick={() => {reminder('luckyIcon')}} className='lucky-view'>
-        <Image src={luckyState} className='icons lucky-icon' />
+        <AtIcon prefixClass='icon' value='lucky-copy' size='18' color='#BDBCBC'
+          className='icons lucky-icon' ></AtIcon>
         <Text className='text'>看运气{countText('luckyIcon')}</Text>
       </View>
     
