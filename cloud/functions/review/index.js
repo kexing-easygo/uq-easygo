@@ -308,6 +308,38 @@ async function topSearch(collectionName, topNumber) {
     return courses.data
 }
 
+const getAllUncheckedReview = async(collectionName) => {
+    const res = await db.collection(collectionName).where({
+        'review.checked':false
+    }).get()
+    let reviews = []
+    let unchecked_reviews=[]
+    res.data.map((course)=>{
+        course.review.map((review,index)=>{
+            if(review.checked===false){
+                reviews.push(course.review[index])
+            }
+        })
+    })
+    return reviews
+}
+
+const markReviewAsPassed = async(collectionName,courseCode,review_id) =>{
+    const res = await db.collection(collectionName).where({
+        'review.review_id':review_id
+    }).update({
+        data:{
+            'review.0.checked': true
+        }
+    })
+    return true
+}
+
+const markReviewAsFailed = async(collectionName,courseCode,review_id) =>{
+    await deleteReview(collectionName,courseCode,review_id)
+    return " 删除成功"+courseCode+review_id
+}
+
 // 云函数入口函数
 exports.main = async (event, context) => {
     const { branch, method } = event
@@ -381,5 +413,17 @@ exports.main = async (event, context) => {
     if (method == "updateReviewDimension") {
         const {courseCode, dimensionIndex, openid} = event
         return await updateReviewDimension(collectionName, courseCode, dimensionIndex, openid)
+    }
+
+    if (method == "getAllUncheckedReview") return await getAllUncheckedReview(collectionName)
+
+    if (method == "markReviewAsPassed") {
+        const {courseCode, review_id} = event
+        return await markReviewAsPassed(collectionName,courseCode,review_id)
+    }
+
+    if (method == "markReviewAsFailed") {
+        const {courseCode, review_id} = event
+        return await markReviewAsFailed(collectionName,courseCode,review_id)
     }
 }

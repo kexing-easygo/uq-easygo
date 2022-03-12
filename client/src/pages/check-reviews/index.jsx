@@ -1,43 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View } from '@tarojs/components'
-import { AtList } from "taro-ui"
 import NavBar from '../../components/navbar'
 import './index.less'
 import UncheckedList from '../../components/unchecked-reviews'
-export default function CheckReviews() {
+import { fetchUncheckedReviews} from "../../services/checkReviews";
 
-  const getReviews = () =>{
-    return [{
-      reviewID:'01',
-      courseCode:"csse1001",
-      date:"2022.2.3",
-      time:"11:00",
-      content:"这也是内容区 可以随意定义功能",
-    },
-    {
-      courseCode:"csse2002",
-      date:"2022.2.4",
-      time:"12:00",
-      content:"这也是内容区 可以随意定义功能2",
-    }]
-  }
+export default function CheckReviews() {  
+  const [uncheckedReviews,setUncheckedReviews]=useState([])
+  
+  useEffect(async()=>{
+    const reviews = await fetchUncheckedReviews()
+    setUncheckedReviews(reviews)
+  },[])
 
   return (
     <View className=''>
       <NavBar title="客评审查" backIcon />
+      <View className='info-text center-text'>
+        你还有{uncheckedReviews.length}个未处理的审核
+      </View>
       <View className="uncheckedReviews">
-        {getReviews().map((data)=>{
+        {uncheckedReviews.map((data)=>{
           return <UncheckedList review={data}/>
         })}
-        {getReviews().map((data)=>{
-          return <UncheckedList review={data}/>
-        })}
-        {getReviews().map((data)=>{
-          return <UncheckedList review={data}/>
-        })}
-        {getReviews().map((data)=>{
-          return <UncheckedList review={data}/>
-        })}
+        {console.log(uncheckedReviews)}
       </View>
       
       <View className='info-text center-text'>
