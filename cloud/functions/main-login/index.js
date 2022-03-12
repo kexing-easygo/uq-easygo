@@ -84,7 +84,8 @@ async function createUser(openid, userInfo, collectionName) {
                     recentAssignments: 1,
                     newActivities: 1
                 },
-                classNotify: false
+                classNotify: false,
+                admin: false
             }
         })
     return res
@@ -109,7 +110,8 @@ async function getUserInfo(openid, collectionName) {
         ...res.userInfo,
         userEmail: res.userEmail,
         userMobile: res.userMobile,
-        classMode: res.classMode
+        classMode: res.classMode,
+        admin: res.admin
     }
 }
 
