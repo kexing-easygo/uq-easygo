@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { View, Text} from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import './index.less'
-import { getLocalOpenId } from "../../services/login"
 import { useDispatch, useSelector } from 'react-redux'
 import { AtList, AtNoticebar, AtAccordion  } from "taro-ui"
 import CourseInfo from '../../components/course-comment/course-info'
 import IconReview from '../../components/course-comment/icon-review'
 import AddReview from '../../components/course-comment/add-review'
-import OthersReview from '../../components/course-comment/others-review'
-import OwnReview from '../../components/course-comment/own-review'
+import ReviewCard from '../../components/course-comment/review-card'
 import { setClickedReview } from "../../features/review-slice";
 
 
@@ -17,7 +15,6 @@ export default function ReviewResultPage() {
   const { reviews, searchedCourse } = useSelector(state => state.review);
   const [outstandingReview, outstandingReviewState] = useState(false); // 优秀评价展示or not
   const [otherReview, otherReviewState] = useState(false); // 其他评级展示or not
-  const [selfOpenId, setSelfOpenId]= useState(''); // open id  
   const stopScroll = { height: '100vh', overflow: 'hidden' };
   const continueScroll = { height: '100vh', overflow: 'scroll' };
   const [pageScroll, pageScrollState] = useState(continueScroll); // 防止滑动穿透
@@ -31,15 +28,6 @@ export default function ReviewResultPage() {
     }
     number = 0;
   }
-
-  // 获取 open ID
-  useEffect(
-    async() => {
-      const openid = await getLocalOpenId();
-      setSelfOpenId(openid);
-    }, []
-  )
-
 
   return (
     <View style={pageScroll}>
@@ -61,17 +49,11 @@ export default function ReviewResultPage() {
             {reviews.map((singleReview) => {
               if (singleReview.isOutstanding) {
                 number ++;
-                if (singleReview.openid == selfOpenId) {
-                  return ( 
-                    <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                      <OwnReview review={singleReview} color='#d0d3ff' />
-                    </View>
-                )} else {
-                  return ( 
-                    <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                      <OthersReview review={singleReview}  color='#B9C9FE' />   
-                    </View>
-              )}}})}
+                return ( 
+                  <View onClick={() => dispatch(setClickedReview(singleReview))}>
+                    <ReviewCard review={singleReview} outstanding={true} />   
+                  </View>
+                )}})}
           </AtList>
           {withoutReview()}
         </AtAccordion>
@@ -83,17 +65,11 @@ export default function ReviewResultPage() {
             {reviews.map((singleReview) => {
               if (!singleReview.isOutstanding) {
                 number = 1;
-                if (singleReview.openid == selfOpenId) {
-                  return ( 
-                    <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                      <OwnReview review={singleReview} color='rgb(255, 255, 255)' />
-                    </View>
-                )} else {
-                  return ( 
-                    <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                      <OthersReview review={singleReview} color='rgb(255, 255, 255)' />   
-                    </View>
-            )}}})}
+                return ( 
+                  <View onClick={() => dispatch(setClickedReview(singleReview))}>
+                    <ReviewCard review={singleReview} outstanding={false} />
+                  </View>
+            )}})}
           </AtList>
           {withoutReview()}
         </AtAccordion>

@@ -11,7 +11,7 @@ import Divider from '../divider'
 import { deleteReview, fetchSubReviews } from "../../../services/review";
 
 /*
-自己写的课评卡片
+自己的课评卡片 操作
 */
 export default function OwnReview(props) {
   const { review, color } = props;

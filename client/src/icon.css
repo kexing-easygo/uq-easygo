@@ -1,9 +1,9 @@
 /* src/icon/icon.css */
 @font-face {
   font-family: "iconfont"; /* Project id 3217929 */
-  src: url('//at.alicdn.com/t/font_3217929_ejogu1zxqf4.woff2?t=1646663092063') format('woff2'),
-       url('//at.alicdn.com/t/font_3217929_ejogu1zxqf4.woff?t=1646663092063') format('woff'),
-       url('//at.alicdn.com/t/font_3217929_ejogu1zxqf4.ttf?t=1646663092063') format('truetype');
+  src: url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.woff2?t=1647315495783') format('woff2'),
+       url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.woff?t=1647315495783') format('woff'),
+       url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.ttf?t=1647315495783') format('truetype');
 }
 
 .icon {
@@ -12,6 +12,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-medal-copy:before {
+  content: "\e94c";
 }
 
 .icon-bad-fill-copy:before {
