@@ -41,7 +41,8 @@ async function addReview(collectionName, reviewObj) {
         review_id: crypto.createHash('sha256').update(reviewContent + dateTime.date + dateTime.time).copy().digest('hex'),
         postDate: dateTime.date,
         postTime: dateTime.time,
-        searchTimes: 0,
+        // searchTimes: 0,
+        checked: "pending",
         ...reviewObj,
     }
     await db.collection(collectionName).where({
@@ -310,16 +311,21 @@ async function topSearch(collectionName, topNumber) {
 
 const getAllUncheckedReview = async(collectionName) => {
     const res = await db.collection(collectionName).where({
-        'review.checked':false
+        'review.checked':"pending"
     }).get()
     let reviews = []
     let unchecked_reviews=[]
     res.data.map((course)=>{
         course.review.map((review,index)=>{
-            if(review.checked===false){
+            if(review.checked==="pending"){
                 reviews.push(course.review[index])
             }
         })
+    })
+    reviews.sort((r1, r2) => {
+        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return -1
+        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return 1
+        return 0
     })
     return reviews
 }
@@ -329,16 +335,56 @@ const markReviewAsPassed = async(collectionName,courseCode,review_id) =>{
         'review.review_id':review_id
     }).update({
         data:{
-            'review.0.checked': true
+            'review.$.checked': "pass"
         }
     })
-    return true
+    return res
 }
 
 const markReviewAsFailed = async(collectionName,courseCode,review_id) =>{
-    await deleteReview(collectionName,courseCode,review_id)
-    return " 删除成功"+courseCode+review_id
+    // await deleteReview(collectionName,courseCode,review_id)
+    // return " 删除成功"+courseCode+review_id
+    const res = await db.collection(collectionName).where({
+        'review.review_id':review_id
+    }).update({
+        data:{
+            'review.$.checked': "failed"
+        }
+    })
+    return res
 }
+
+const getAllPassReview = async(collectionName) => {
+    const res = await db.collection(collectionName).where({
+        'review.checked':"pass"
+    }).get()
+    let reviews = []
+    res.data.map((course)=>{
+        course.review.map((review,index)=>{
+            if(review.checked==="pass"){
+                reviews.push(course.review[index])
+            }
+        })
+    })
+    reviews.sort((r1, r2) => {
+        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return -1
+        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return 1
+        return 0
+    })
+    return reviews
+}
+
+const markReviewOutstanding = async(collectionName,courseCode,review_id) =>{
+    const res = await db.collection(collectionName).where({
+        'review.review_id':review_id
+    }).update({
+        data:{
+            'review.$.isOutstanding': true
+        }
+    })
+    return res
+}
+
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -426,4 +472,12 @@ exports.main = async (event, context) => {
         const {courseCode, review_id} = event
         return await markReviewAsFailed(collectionName,courseCode,review_id)
     }
+
+    if (method == "getAllPassReview") return await getAllPassReview(collectionName)
+
+    if (method == "markReviewOutstanding") {
+        const {courseCode, review_id} = event
+        return await markReviewOutstanding(collectionName,courseCode,review_id)
+    }
+
 }

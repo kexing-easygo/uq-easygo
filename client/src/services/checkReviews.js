@@ -27,10 +27,11 @@ export const markReviewAsPassed = createAsyncThunk(
       courseCode,
       review_id
     } = param
-    await callCloud('review', 'markReviewAsPassed', {
+    const res = await callCloud('review', 'markReviewAsPassed', {
       courseCode: courseCode,
       review_id: review_id,
     })
+    console.log(res)
     return [courseCode, review_id]
   }
 )

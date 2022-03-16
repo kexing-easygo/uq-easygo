@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, Image, Button } from '@tarojs/components'
 import './index.less'
 import { AtCard, AtModal, AtModalHeader, AtModalContent } from "taro-ui"
@@ -18,7 +18,15 @@ export default function OwnReview(props) {
   const dispatch = useDispatch();
   const [showCancelModal, changeCancelModalState] = useState(false); // modal 开关
   const { searchedCourse } = useSelector(state => state.review);
-  
+  const [bgColor,setBgColor] = useState("gray") 
+  useEffect(()=>{
+    if(review.checked=="pass"){
+      setBgColor(color)
+    }else if(review.checked=="failed"){
+      setBgColor("red")
+    }
+  },[color])
+
    // 处理超长名字
   const handleName = (name) => {
     let bytes = 0;
@@ -54,7 +62,8 @@ export default function OwnReview(props) {
     <View>
       <Image src={clipIcon} className='clipIcon' />
       <AtCard note={'编辑于' + review.postDate + ' ' + review.postTime} title='' className='own-review-card' >
-        <View className='own-review-background' style={{backgroundColor:color}}
+        {/* <View className='own-review-background' style={{backgroundColor:color}} */}
+        <View className='own-review-background' style={{backgroundColor:bgColor}}
            onClick={() => {handleClick()}} >
           <Text className='own-review-author'>
             {handleName(review.posterName)} - {review.studySemester}

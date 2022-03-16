@@ -43,7 +43,8 @@ export default function OthersReview(props) {
 
   return (
     <View>
-      <AtCard note={'编辑于' + review.postDate + ' ' + review.postTime} title='' className='review-card' >
+      {/* 如果审核结果为pass 才显示 */}
+      {review.checked=="pass"&&<><AtCard note={'编辑于' + review.postDate + ' ' + review.postTime} title='' className='review-card' >
         <View className='review-background' style={{backgroundColor:color}}
         onClick={() => {handleClick()}} >
           <Text className='review-author'>
@@ -56,7 +57,8 @@ export default function OthersReview(props) {
       <View className='review-heart'>
         <OthersReviewAction reviewsCount={review.numOfComments} likesCount={review.likes.length} 
         review={review} />
-      </View>
+      </View></>}
+      
     </View>
   )
 }
