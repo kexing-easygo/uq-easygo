@@ -11,7 +11,7 @@ import { getIcon } from '../../utils/profile'
 export default function Profile() {
 
   const dispatch = useDispatch();
-  const { avatarUrl, loginStatus, nickName } = useSelector(state => state.user);
+  const { avatarUrl, loginStatus, nickName, admin } = useSelector(state => state.user);
 
   return (
     <View className="container">
@@ -66,12 +66,13 @@ export default function Profile() {
           iconInfo={getIcon('bookmark')}
           onClick={() => Taro.navigateTo({ url: '/pages/card-management/index' })}
         />
-        <AtListItem
+        {admin && <AtListItem
           title='客评审核'
           arrow='right'
           iconInfo={getIcon('filter')}
           onClick={() => Taro.navigateTo({ url: '/pages/check-reviews/index' })}
-        />
+        />}
+        
       </AtList>
       <AtList hasBorder={false}>
         <AtListItem
