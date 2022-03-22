@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, Button } from '@tarojs/components'
 import './index.less'
 import { AtIcon } from "taro-ui"
-import Divider from '../divider'
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast} from "taro-ui"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateLikes } from "../../../services/review";
@@ -10,7 +9,7 @@ import { setClickedReview } from "../../../features/review-slice"
 import { fetchSubReviews } from "../../../services/review"
 
 /*
-课评卡片上的 评论 和 点赞
+别人的课评卡片 操作(评论，点赞)
 */
 export default function OthersReviewAction(props) {
   // clicking 用于阻止 double-review页面  点击课评卡片or评论时 页面跳转
@@ -59,16 +58,17 @@ export default function OthersReviewAction(props) {
 
   return (
     <View className='icon-view'>
-      <Divider width='100%' className='divider'/>
       <View className='review-icon' 
         onClick={() => {clicking==false? '':handleClick()}}>
-        <AtIcon value='message' size='20' color='rgb(133, 130, 130)' className='icon'></AtIcon>
+        <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
+          className='icon' ></AtIcon>
         <Text className='text'>评论({reviewsCount})</Text>
       </View>
 
       <View className='heart-icon' onClick={() => {checkState()}}>
-        <AtIcon value={state?'heart-2':'heart'} size='20' 
-        color={state?'rgb(248, 90, 90)':'rgb(133, 130, 130)'} className='icon'></AtIcon>
+        <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
+          size={state? '19':'25'}color={state? '#FFB017':'#BDBCBC'}
+          className='icon' ></AtIcon>
         <Text className='text'>点赞({likesCount})</Text>
       </View>
 

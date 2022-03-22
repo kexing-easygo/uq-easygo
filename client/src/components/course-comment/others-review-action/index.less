@@ -1,43 +1,50 @@
+@radius: 8px;
+
 .icon-view {
+  height: 54px;
+  width: 606px;
+  margin-left: -11.5px;
+  margin-top: 18px;
+  position: relative;
   .heart-icon {
-    height: 3vh;
-    width: 48.5%;
+    width: 303px;
+    height: 45px;
     float: right;
-    margin-top: -70px;
-    padding-top: 15px;
-    padding-bottom: 0px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    margin-top: -54px;
+    border-bottom-right-radius: @radius;
     background-color: #F1F4FF;
     .text {
       font-size: 30px;
-      margin-left: 6px;
+      float: right;
+      margin-top: -35px;
+      margin-right: 75px;
     }
     .icon {
       margin-top: -6px;
+      float: right;
+      margin-right: 180px;
     }  
   }
 
   .review-icon {
-    width: 48.5%;
-    height: 3.3vh;
-    padding-top: 10px;
-    margin-left: -5px;
+    width: 303px;
+    padding-top: 6px;
+    padding-bottom: 4px;
+    margin-top: 13px;
+    border-bottom-left-radius: @radius;
     background-color: #F0F0F0;
     .text {
       font-size: 30px;
-      margin-left: 6.5px;
+      margin-left: 10px;
+      position: absolute;
+      top: 8px;
     }
     .icon {
       margin-top: -6px;
+      margin-left: 75px;
     }  
-  }
-
-  .icon {
-    margin-left: 78px;
-  }
-
-  .divider  {
-    margin-top: 15px;
-    margin-left: -12px;
   }
 
   .modal-first-line {
