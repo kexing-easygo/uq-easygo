@@ -152,7 +152,8 @@ export default function AddReview() {
         tabList={[{ title: '' }, { title: '' }, { title: '' }, { image: addReviewIcon }]}
         onClick={ () => showContentState(true)} />*/}
       
-      <AtFloatLayout isOpened={showContent} onClose={() => {showContentState(false);clearContent()}} >
+      <AtFloatLayout isOpened={showContent} title='添加评论'
+        onClose={() => {showContentState(false);clearContent()}} >
         {/*<Text className='title-icon'>I</Text><Text className='title'>基本信息</Text>*/}
         <AtInput name='name' title='姓名' type='text' placeholder='' value={authorName} 
           border={false} error={emptyName} className='input-first-part single-input' 
@@ -167,12 +168,14 @@ export default function AddReview() {
           <Text className='select-semester'>{semester}</Text>
         </View>
         <Image src={starIcon} className='second-star-icon' />
-        <AtInput name='mark' title='最终成绩' type='number' className='single-input' border={false}
+        <AtInput name='mark' title='最终成绩' type='number' className='single-input mark' 
+          border={false} 
           placeholder='成绩不会以任何方式泄漏' value={mark}
           onChange={(value) => {setMark(value)}} />
         {/*<Text className='title-icon'>I</Text><Text className='title'>课程评价</Text>*/}
         <View className='text-area' >
-          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} value={reviewContent} 
+          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} 
+          value={reviewContent} 
           showConfirmBar={true} onChange={(value) => {setReviewContent(value)}}  />
         </View>
         <AtButton type='primary' size='small'
@@ -180,7 +183,7 @@ export default function AddReview() {
           确认</AtButton>
         <AtButton type='secondary' size='small' className='button2' circle={true} 
           onClick={() => {clearContent();showContentState(false)}}>
-          取消</AtButton>
+          删除</AtButton>
       </AtFloatLayout>
     
       <AtActionSheet isOpened={showSemester} cancelText='取消' title='请选择学期' 

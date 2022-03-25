@@ -4,12 +4,11 @@ import './index.less'
 import { AtCard, AtIcon, AtModal, AtModalHeader, AtModalContent } from "taro-ui"
 import { AtModalAction } from "taro-ui"
 import OthersReviewAction from '../others-review-action'
-import OwnReviewAction from '../own-review-action'
 import { setClickedReview } from "../../../features/review-slice"
-import { fetchSubReviews } from "../../../services/review"
+import { fetchSubReviews, deleteReview } from "../../../services/review"
 import { useDispatch, useSelector } from 'react-redux'
 import { getLocalOpenId } from "../../../services/login"
-import { deleteReview } from "../../../services/review";
+import OwnReviewAction from '../own-review-action'
 
 /*
 课评卡片
@@ -79,14 +78,14 @@ export default function OthersReview(props) {
   const operationShow = () => {
     if (openid == selfOpenId) {
       return (
-        <View className='review-heart'>
-        <OthersReviewAction reviewsCount={numOfComments} likesCount={likes.length} 
+        <View className='own-review'>
+        <OwnReviewAction reviewsCount={numOfComments} likesCount={likes.length} 
         review={review} />
         </View>
       )
     } else {
       return (
-        <View className='review-heart'>
+        <View className='others-review'>
         <OthersReviewAction reviewsCount={numOfComments} likesCount={likes.length} 
         review={review} />
         </View>
