@@ -5,7 +5,7 @@ import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchedCourse, setTurnPage } from "../../features/review-slice";
-import { AtList, AtListItem, AtSearchBar, AtModalAction} from "taro-ui"
+import { AtList, AtListItem, AtSearchBar, AtModalAction, AtIcon} from "taro-ui"
 import { AtModalContent, AtModalHeader, AtModal, AtButton} from "taro-ui"
 import { debounce } from "../../utils/opt";
 import { fetchReviews, fetchHotResearches, fetchCourseInfo } from "../../services/review";
@@ -133,7 +133,7 @@ export default function Review() {
           )})}
         </AtList>
       </View>
-
+      
       <AtModal isOpened={showModal} onClose={() => setShowModal(false)}>
         <AtModalHeader>{modalContent.title}</AtModalHeader>
         <AtModalContent>{modalContent.content}</AtModalContent>

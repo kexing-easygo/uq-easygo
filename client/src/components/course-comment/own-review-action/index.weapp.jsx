@@ -50,6 +50,15 @@ export default function OwnReviewAction(props) {
     dispatch(fetchSubReviews(param));
   }
 
+   // 随着点赞 or not  调节点赞icon+text的位置
+   const changePosition = () => {
+    if (state) {
+      return {iconMarginTop:'-1px', textMarginTop:'-21px'};
+    } else {
+      return {iconMarginTop:'-2px', textMarginTop:'-24px'};
+    }
+  }
+
   // 更新小图标状态
   useEffect(() => {
     setState(likesReviews.indexOf(review.review_id) == -1? false: true)
@@ -58,30 +67,35 @@ export default function OwnReviewAction(props) {
   return (
     <View className='own-icon-view'>
       <View className='review-icon' 
-        onClick={() => {clicking==false? '':handleClick()}}>
+        onClick={() => {handleClick()}}>
         <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
           className='icon' ></AtIcon>
         <Text className='text'>评论({reviewsCount})</Text>
       </View>
 
       <View className='edit-icon' onClick={() => {dispatch(setEditModal(true))}}>
-        <AtIcon prefixClass='icon' value='write-copy' size='22' color='#586EA9'
+        <AtIcon prefixClass='icon' value='write-copy' size='23' color='#586EA9'
           className='icon' ></AtIcon>
         <Text className='text'>修改</Text>
       </View>
 
       <View className='heart-icon' onClick={() => {checkState()}}>
-        <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
-          size={state? '19':'25'}color={state? '#FFB017':'#BDBCBC'}
-          className='icon' ></AtIcon>
-        <Text className='text'>点赞({likesCount})</Text>
+        <View style={{marginRight:'71px',
+          marginTop:changePosition().iconMarginTop}}>
+          <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
+            size={state? '19':'23'}color={state? '#FFB017':'#BDBCBC'}
+            className='icon' ></AtIcon>
+        </View>
+        <Text className='text' style={{marginTop:changePosition().textMarginTop,
+          marginRight:'17px'}}>
+          点赞({likesCount})
+        </Text>
       </View>
 
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>
         <AtModalHeader>温馨提示</AtModalHeader>
         <AtModalContent>
-          <Text className='modal-first-line'>评价不能修改</Text>
-          <Text className='modal-second-line'>请问确定要给予这个评价吗?</Text>
+          <Text>请问确定要点赞此评论吗?</Text>
         </AtModalContent>
         <AtModalAction> 
           <Button onClick={() => changeModalState(false)}>取消</Button> 
@@ -89,7 +103,7 @@ export default function OwnReviewAction(props) {
         </AtModalAction>
       </AtModal>
 
-      <AtToast isOpened={showToast} text='你已经评论过啦' duration='800' hasMask={true}
+      <AtToast isOpened={showToast} text='评价不能修改哦～' duration='800' hasMask={true}
         onClick={() => changeToastState(false)}
         onClose={() => changeToastState(false)}>
       </AtToast>

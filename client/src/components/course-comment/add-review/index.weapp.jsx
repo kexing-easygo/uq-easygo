@@ -41,12 +41,11 @@ export default function AddReview() {
       setReminderText('不可以这样写名字哦'); // 名字同时有‘楼’ 和 ‘主’ 两个字
       setEmptyName(true);
       setToastState(true);
-    } // else if (semester.length == 0) {
-      // setReminderText('请选择学期');
-      // setEmptySemester(true);
-      // setToastState(true);
-    // }
-     else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
+    } else if (authorName.replace(/ /g,'') == '我') {
+      setReminderText('不可以这样写名字哦'); // 名字只有‘我‘ 
+      setEmptyName(true);
+      setToastState(true);
+    } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
      ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
       setToastState(true);
@@ -182,7 +181,7 @@ export default function AddReview() {
         className='button1' circle={true} onClick={() => checkContent()}>
           确认</AtButton>
         <AtButton type='secondary' size='small' className='button2' circle={true} 
-          onClick={() => {clearContent();showContentState(false)}}>
+          onClick={() => {clearContent()}}>
           删除</AtButton>
       </AtFloatLayout>
     
@@ -208,7 +207,7 @@ export default function AddReview() {
       <AtModal isOpened={showModal} onClose={() => {changeModalState(false);showContentState(true)}}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            请问确定要给予这个评价吗?
+            请问确定要添加此评论吗?
           </AtModalContent>
           <AtModalAction> 
             <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消</Button> 

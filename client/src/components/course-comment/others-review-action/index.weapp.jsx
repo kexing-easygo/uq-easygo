@@ -13,7 +13,7 @@ import { fetchSubReviews } from "../../../services/review"
 */
 export default function OthersReviewAction(props) {
   // clicking 用于阻止 double-review页面  点击课评卡片or评论时 页面跳转
-  const{ clicking, reviewsCount, likesCount, review } = props; 
+  const{ type, reviewsCount, likesCount, review } = props; 
   const { likesReviews, searchedCourse } = useSelector(state => state.review);
   const[showModal, changeModalState] = useState(false); // modal 开关
   const[showToast, changeToastState] = useState(false); // toast 开关
@@ -51,6 +51,17 @@ export default function OthersReviewAction(props) {
     dispatch(fetchSubReviews(param));
   }
 
+  // 随着点赞 or not  调节点赞icon+text的位置
+  const changePosition = () => {
+    if (state) {
+      return {iconMarginTop:'-1px', iconMarginRight:'98px',
+      textMarginTop:'-21px', textMarginRight:'44px'};
+    } else {
+      return {iconMarginTop:'-2px', iconMarginRight:'98px',
+      textMarginTop:'-24px', textMarginRight:'43px'};
+    }
+  }
+
   // 更新小图标状态
   useEffect(() => {
     setState(likesReviews.indexOf(review.review_id) == -1? false: true)
@@ -59,24 +70,28 @@ export default function OthersReviewAction(props) {
   return (
     <View className='icon-view'>
       <View className='review-icon' 
-        onClick={() => {clicking==false? '':handleClick()}}>
+        onClick={() => {type=='double-review-page' ? '':handleClick()}}>
         <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
           className='icon' ></AtIcon>
         <Text className='text'>评论({reviewsCount})</Text>
       </View>
 
       <View className='heart-icon' onClick={() => {checkState()}}>
-        <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
-          size={state? '19':'25'}color={state? '#FFB017':'#BDBCBC'}
-          className='icon' ></AtIcon>
-        <Text className='text'>点赞({likesCount})</Text>
+        <View style={{marginRight:changePosition().iconMarginRight,
+          marginTop:changePosition().iconMarginTop}}>
+          <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
+            size={state? '19':'23'} color={state? '#FFB017':'#BDBCBC'}
+            className='icon' ></AtIcon>
+        </View>
+        <Text className='text' style={{marginTop:changePosition().textMarginTop,marginRight:changePosition().textMarginRight}}>
+          点赞({likesCount})
+        </Text>
       </View>
 
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>
         <AtModalHeader>温馨提示</AtModalHeader>
         <AtModalContent>
-          <Text className='modal-first-line'>评价不能修改</Text>
-          <Text className='modal-second-line'>请问确定要给予这个评价吗?</Text>
+          <Text>请问确定要点赞此评论吗?</Text>
         </AtModalContent>
         <AtModalAction> 
           <Button onClick={() => changeModalState(false)}>取消</Button> 
@@ -84,7 +99,7 @@ export default function OthersReviewAction(props) {
         </AtModalAction>
       </AtModal>
 
-      <AtToast isOpened={showToast} text='你已经评论过啦' duration='800' hasMask={true}
+      <AtToast isOpened={showToast} text='评价不能修改哦～' duration='800' hasMask={true}
         onClick={() => changeToastState(false)}
         onClose={() => changeToastState(false)}>
       </AtToast>

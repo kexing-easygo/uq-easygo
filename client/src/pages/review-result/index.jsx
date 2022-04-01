@@ -51,7 +51,7 @@ export default function ReviewResultPage() {
                 number ++;
                 return ( 
                   <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                    <ReviewCard review={singleReview} outstanding={true} />   
+                    <ReviewCard review={singleReview} type='review-page' />   
                   </View>
                 )}})}
           </AtList>
@@ -67,7 +67,7 @@ export default function ReviewResultPage() {
                 number = 1;
                 return ( 
                   <View onClick={() => dispatch(setClickedReview(singleReview))}>
-                    <ReviewCard review={singleReview} outstanding={false} />
+                    <ReviewCard review={singleReview} type='review-page' />
                   </View>
             )}})}
           </AtList>

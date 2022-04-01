@@ -6,7 +6,6 @@ import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast, AtIcon}
 import { setClickedIconReview } from "../../../features/review-slice";
 import { addReviewDimensions } from "../../../services/review";
 
-
 /*
 好过,好难等 4个小图标评论
 */
@@ -105,8 +104,7 @@ export default function IconReview() {
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            <Text className='modal-first-line'>评价不能修改</Text>
-            <Text className='modal-second-line'>请问确定要给予这个评价吗?</Text>
+            <Text>请问确定要点赞此评论吗?</Text>
           </AtModalContent>
           <AtModalAction> 
             <Button onClick={() => changeModalState(false)}>取消</Button> 

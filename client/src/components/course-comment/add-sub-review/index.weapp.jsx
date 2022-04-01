@@ -41,6 +41,10 @@ export default function AddSubReview() {
       setReminderText('不可以这样写名字哦');
       setEmptyName(true);
       setToastState(true);
+    } else if (authorName.replace(/ /g,'') == '我') { // 名字只有‘我‘ 
+      setReminderText('不可以这样写名字哦'); 
+      setEmptyName(true);
+      setToastState(true);
     } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
       setToastState(true);
@@ -157,7 +161,6 @@ export default function AddSubReview() {
 
   return (
     <View>
-      
       <AtFab size='small' onClick={ () => showContentState(true)}>
         <Text className='at-fab__icon at-icon at-icon-add'></Text>
       </AtFab>
@@ -165,7 +168,8 @@ export default function AddSubReview() {
         tabList={[{ title: '' }, { title: '' }, { title: '' }, { image: addReviewIcon }]}
   onClick={ () => showContentState(true)} />*/}
 
-      <AtFloatLayout isOpened={showContent} onClose={() => {showContentState(false);clearContent()}} >
+      <AtFloatLayout isOpened={showContent} title='追加评论'
+        onClose={() => {showContentState(false);clearContent()}} >
         <AtInput name='name' title='姓名' type='text' placeholder='' value={authorName} 
           border={false} error={emptyName} className='input-first-part single-input' 
           onChange={(value) => {setAuthorName(value)}} />
@@ -178,8 +182,8 @@ export default function AddSubReview() {
         circle={true} onClick={() => checkContent()}>
           确认</AtButton>
         <AtButton type='secondary'  size='small'  className='button2' circle={true} 
-          onClick={() => {clearContent();showContentState(false)}}>
-          取消</AtButton>
+          onClick={() => {clearContent()}}>
+          删除</AtButton>
       </AtFloatLayout>
 
       <AtToast isOpened={showToast} text={reminderText} duration='800' hasMask={true}
@@ -190,7 +194,7 @@ export default function AddSubReview() {
       <AtModal isOpened={showModal} onClose={() => {changeModalState(false);showContentState(true)}}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            请问确定要给予这个评价吗?
+            请问确定要添加此评论吗?
           </AtModalContent>
           <AtModalAction> 
             <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消</Button> 
