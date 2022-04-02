@@ -90,7 +90,7 @@ export const getUniqueCourse = courses => Array.from(new Set(courses.map(course 
  * @param {mode} mode 上课模式
  */
 const transformClassMode = (mode) => {
-  switch (BRANCH_NAME) {
+  switch (_NAME) {
     case "UMEL":
       return "U_1"
     case "USYD":
@@ -107,7 +107,7 @@ const transformClassMode = (mode) => {
  * @param {sem} sem 学期编号
  */
 const transformSemester = (sem) => {
-  switch (BRANCH_NAME) {
+  switch (_NAME) {
     case "UMEL":
       return sem == "Summer Semester" ? "SUM" : "SM1"
     case "USYD":

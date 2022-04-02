@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Image } from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
-import { AtList, AtNoticebar, AtIcon } from "taro-ui"
+import { AtList, AtNoticebar } from "taro-ui"
 import AddSubReview from '../../components/course-comment/add-sub-review'
 import SubReviewCard from '../../components/course-comment/double-review-card'
 import ReviewCard from '../../components/course-comment/review-card'
 import { setClickedSubReview } from "../../features/review-slice";
-
+import { chainImage } from '../../assets/images/review-icons.json'
 
 export default function DoubleReviewPage() {
   const { subReviews,  searchedCourse, clickedReview } = useSelector(state => state.review);
@@ -35,6 +35,8 @@ export default function DoubleReviewPage() {
         <AddSubReview onClick={() => {pageScrollState(stopScroll)}} />
       </View>
     
+      <Image src={chainImage} className='chain chainA' />
+      <Image src={chainImage} className='chain chainB' />
       <View className='double-reviews'>
         <AtList hasBorder={false} className='sub-list-review'>
           {subReviews.map((singleReview) => {

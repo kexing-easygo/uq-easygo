@@ -1,12 +1,4 @@
 {
-  "noPassIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%A5%BD%E8%BF%87.png?sign=258b870d8f3659b52b3535c42ed1c7d2&t=1645437697",
-  "passIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%B7%B2%E5%A5%BD7.png?sign=c39380581fdfc1c7901152562d2142e9&t=1645437889",
-  "noHardIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%A5%BD%E9%9A%BE.png?sign=176f927cc8b76ba33183c175aa4c3ca0&t=1645437730",
-  "hardIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%B7%B2%E5%A5%BD%E9%9A%BE.png?sign=f1e1905be18e7dbceaed90917e8ad6bf&t=1645437904",
-  "noSevenIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%A5%BD7.png?sign=f47aff57531522ec864d21ef08a69f6d&t=1645437714",
-  "sevenIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%B7%B2%E5%A5%BD7.png?sign=d8038f9441221d18f10272a533f2beb3&t=1645437915",
-  "noLuckyIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E7%9C%8B%E8%BF%90%E6%B0%94.png?sign=5c6e75d45bab08f7d5c7879d3924f8d1&t=1645437820",
-  "luckyIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E5%B7%B2%E7%9C%8B%E8%BF%90%E6%B0%94.png?sign=160624d8d6d8ef00a3ff8a015f758ff1&t=1645437937",
-  "starIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E6%98%9F%E5%8F%B7.png?sign=fd016831526d3a609aad49d97d5fbefc&t=1641791722",
-  "clipIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E6%9B%B2%E5%88%AB%E9%92%88.png?sign=29be39036c29f14666e50dc9760abd12&t=1642068434"
+  "chainImage":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/chain.png?sign=4db38e7aa1e989b7233c6d09f916dfea&t=1648880448",
+  "starIcon":"https://7571-uqeasygo1-1302668990.tcb.qcloud.la/image/%E6%98%9F%E5%8F%B7.png?sign=fd016831526d3a609aad49d97d5fbefc&t=1641791722"
 }

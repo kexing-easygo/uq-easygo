@@ -44,7 +44,7 @@ export const reviewSlice = createSlice({
       state.editModal = action.payload;
     }, 
     // 设置追评修改模式
-    changeEditModal: (state, action) => {
+    setSubReviewEdit: (state, action) => {
       state.editSubReview = action.payload;
     },
     // 设置点击的追评
@@ -244,6 +244,6 @@ export const reviewSlice = createSlice({
 }})
 
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions
-export const { setEditModal, changeEditModal, setClickedSubReview } = reviewSlice.actions
+export const { setEditModal, setSubReviewEdit, setClickedSubReview } = reviewSlice.actions
 export const { setTurnPage, setReplySubReview } = reviewSlice.actions
 export default reviewSlice.reducer

@@ -4,7 +4,7 @@ import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { AtIcon, AtModal, AtModalAction, AtModalHeader, AtModalContent } from "taro-ui"
 import { getLocalOpenId } from "../../../services/login"
-import { changeEditModal, setReplySubReview } from "../../../features/review-slice"
+import { setSubReviewEdit, setReplySubReview } from "../../../features/review-slice"
 import { deleteSubReview } from "../../../services/review";
 
 /*
@@ -39,8 +39,8 @@ export default function DoubleReviewCard(props) {
         contentBytes ++;
     }}
     // check 楼主
-    if (clickedReview.openid == openid) {
-      return '楼 主';
+    if (clickedReview.openid == openid && openid != selfOpenId) {
+     return '楼 主';
     } 
     // 名字长度
     for (let i=0; i<name.length; i++) {
@@ -105,7 +105,7 @@ export default function DoubleReviewCard(props) {
   // 点击追评卡片 if自己的->进入修改 if别人的->回复追评
   const handleClick = () => {
     if (openid == selfOpenId) {
-      dispatch(changeEditModal(true));
+      dispatch(setSubReviewEdit(true));
     } else {
       dispatch(setReplySubReview(true));
     }
@@ -138,7 +138,7 @@ export default function DoubleReviewCard(props) {
       </View>
 
       <View style={{display:showAction}} className='own-action'>
-        <View className='edit-icon' onClick={() => {dispatch(changeEditModal(true))}}>
+        <View className='edit-icon' onClick={() => {dispatch(setSubReviewEdit(true))}}>
             <AtIcon prefixClass='icon' value='write-copy' size='20'
             color='#586EA9' className='icon'></AtIcon>
           <Text className='text'>修改</Text>

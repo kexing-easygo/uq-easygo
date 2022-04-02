@@ -6,7 +6,7 @@ import { starIcon } from '../../../assets/images/review-icons.json'
 import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
 import { addSubReview, updateSubReview } from "../../../services/review"
-import { changeEditModal, setReplySubReview } from "../../../features/review-slice"
+import { setSubReviewEdit, setReplySubReview } from "../../../features/review-slice"
 import { getLocalOpenId } from "../../../services/login"
 
 /*
@@ -28,6 +28,8 @@ export default function AddSubReview() {
   const [placeholder, setPlaceholder] = useState('请写下你的评论'); // 追评内容占位符
   const [replyReview, setReplyReview] = useState(false); // 回复追评开关
   const [repliedAuthor, setRepliedAuthor]= useState('');  // 记录修改追评时 ’@XXX‘
+  const [floatTitle, setFloatTitle] = useState(false); // float layout 标题（修改 or 添加）
+  const [modalTitle, setModalTitle]= useState(false);// modal 内容（修改 or 添加）
   const dispatch = useDispatch();
 
   // 检查所填内容
@@ -66,8 +68,6 @@ export default function AddSubReview() {
       showContentState(false);
       changeModalState(true);
     }
-    console.log(reviewContent);
-    console.log(clickedSubReview.content);
   }
 
   // 清空所填内容 
@@ -76,6 +76,7 @@ export default function AddSubReview() {
     setPlaceholder('请写下你的评论');
     setReviewContent('');
     setEmptyName(false);
+    setEditReview(false);
   }
 
   // 处理名字、评论 左右的空白字符 
@@ -119,9 +120,8 @@ export default function AddSubReview() {
       }
       dispatch(addSubReview(param));
     }
-    setEditReview(false);
-    setReplyReview(false);
     showContentState(false);
+    setReplyReview(false);
     clearContent();
   }
 
@@ -139,7 +139,9 @@ export default function AddSubReview() {
       }
       setEditReview(true);
       showContentState(true);
-      dispatch(changeEditModal(false));
+      dispatch(setSubReviewEdit(false));
+      setFloatTitle(true);
+      setModalTitle(true);
     } else if (replySubReview) {
       setPlaceholder('@' + clickedSubReview.posterName + ': ');
       setReplyReview(true);
@@ -148,7 +150,7 @@ export default function AddSubReview() {
     }
   }
 
-  useEffect(() =>{fillContent()})
+  useEffect(() =>{fillContent();})
 
   // 获取 open ID
   useEffect(
@@ -161,15 +163,12 @@ export default function AddSubReview() {
 
   return (
     <View>
-      <AtFab size='small' onClick={ () => showContentState(true)}>
+      <AtFab size='small' onClick={() => {showContentState(true);setModalTitle(false);setFloatTitle(false);}}>
         <Text className='at-fab__icon at-icon at-icon-add'></Text>
       </AtFab>
-      {/*<AtTabBar fixed backgroundColor='#e5eaf4' iconSize='35'
-        tabList={[{ title: '' }, { title: '' }, { title: '' }, { image: addReviewIcon }]}
-  onClick={ () => showContentState(true)} />*/}
 
-      <AtFloatLayout isOpened={showContent} title='追加评论'
-        onClose={() => {showContentState(false);clearContent()}} >
+      <AtFloatLayout isOpened={showContent} title={floatTitle? '修改评论':'追加评论'}
+        onClose={() => {showContentState(false);clearContent();setModalTitle(false);}} >
         <AtInput name='name' title='姓名' type='text' placeholder='' value={authorName} 
           border={false} error={emptyName} className='input-first-part single-input' 
           onChange={(value) => {setAuthorName(value)}} />
@@ -182,23 +181,23 @@ export default function AddSubReview() {
         circle={true} onClick={() => checkContent()}>
           确认</AtButton>
         <AtButton type='secondary'  size='small'  className='button2' circle={true} 
-          onClick={() => {clearContent()}}>
+          onClick={() => {clearContent();}}>
           删除</AtButton>
       </AtFloatLayout>
 
       <AtToast isOpened={showToast} text={reminderText} duration='800' hasMask={true}
-        onClick={() => setToastState(false)}
-        onClose={() => setToastState(false)}>
+        onClick={() => {setToastState(false);}}
+        onClose={() => {setToastState(false);}}>
       </AtToast>
-
+      
       <AtModal isOpened={showModal} onClose={() => {changeModalState(false);showContentState(true)}}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            请问确定要添加此评论吗?
+          {modalTitle? '请问确定要修改此评论吗?':'请问确定要添加此评论吗?'}
           </AtModalContent>
           <AtModalAction> 
             <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消</Button> 
-            <Button onClick={() => {changeModalState(false);submitData()}}>确定</Button> 
+            <Button onClick={() => {changeModalState(false);submitData();setFloatTitle(false);}}>确定</Button> 
           </AtModalAction>
       </AtModal>
     </View>
