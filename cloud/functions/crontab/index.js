@@ -67,8 +67,7 @@ const sendTemplate = async (openid, param, branch) => {
                       value: publisher
                   }
               },
-              templateId: templateId,
-              miniprogramState: 'developer'
+              templateId: templateId
           })
           console.log(res)
           return res

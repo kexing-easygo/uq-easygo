@@ -8,6 +8,8 @@ import { setLoginStatus } from '../../features/user-slice'
 import { fetchSelectedCourses, fetchCurrentSemester } from '../../services/course'
 import { fetchUserInfo, getCardsInfo, getClassNotify } from '../../services/profile'
 import { fetchAllCountDown, getNotifications } from "../../services/countdown";
+import { fetchImages } from "../../services/cloud-resource";
+import { setLink1, setLink2, setLink3, setLoading } from "../../features/resource-slice";
 /**
  * 启动页执行
  * 1. 初始化云环境
@@ -26,6 +28,33 @@ export default function Launch() {
         // 获取openId和登录状态
         let loginStatus = await getLoginStatus();
         console.log('launch', loginStatus);
+        // Taro.getBackgroundFetchData({
+        //   fetchType: 'pre',
+        //   success(res) {
+        //     const data = JSON.parse(res.fetchedData)
+        //     data.map((singleFile, index) => {
+        //       Taro.getImageInfo({
+        //         src: singleFile.tempFileURL,
+        //         success: (res) => {
+        //           switch (index) {
+        //             case 0:
+        //               dispatch(setLink1(res.path))
+        //               break;
+        //             case 1:
+        //               dispatch(setLink2(res.path))
+        //               break;
+        //             case 2:
+        //               dispatch(setLink3(res.path))
+        //               break;
+        //             default:
+        //               break;
+        //           }
+        //         }
+        //       })
+        //     })
+        //     dispatch(setLoading())
+        //   }
+        // })
         dispatch(setLoginStatus(loginStatus));
         if (loginStatus) {
           dispatch(fetchUserInfo());
@@ -34,10 +63,9 @@ export default function Launch() {
           dispatch(fetchCurrentSemester());
           dispatch(fetchAllCountDown()); //拉取用户countdown条目
           dispatch(getNotifications())
-          dispatch(getClassNotify())
         }
         Taro.switchTab({ url: '/pages/index/index' })
-        // Taro.navigateTo( {url: "/pages/check-reviews/index"} )
+
       }
     })()
   }, [])

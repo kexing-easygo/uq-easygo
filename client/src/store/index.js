@@ -5,6 +5,7 @@ import calculatorReducer from '../features/calculator-slice'
 import reviewReducer from '../features/review-slice'
 import eventReducer from '../features/event-slice'
 import countdownReducer from "../features/countdown-slice";
+import resourceSlice from "../features/resource-slice";
 
 export default configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export default configureStore({
     calculator: calculatorReducer,
     review: reviewReducer,
     mainEvent: eventReducer,
-    countdown: countdownReducer
+    countdown: countdownReducer,
+    resource: resourceSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

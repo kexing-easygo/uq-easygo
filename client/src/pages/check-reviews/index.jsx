@@ -18,7 +18,7 @@ export default function CheckReviews() {
 
   return (
     <View className=''>
-      <NavBar title="客评审查" backIcon />
+      <NavBar title="课评审查" backIcon />
       <View className='info-text center-text'>
         你还有{uncheckedReviews.length}个未处理的审核
       </View>
@@ -32,7 +32,7 @@ export default function CheckReviews() {
       
       
       <View className='info-text center-text'>
-        客评
+        课评
       </View>
     </View>
   )

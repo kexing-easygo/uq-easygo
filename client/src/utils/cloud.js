@@ -25,7 +25,7 @@ export const callCloud = async (name, method, args = {}) => {
 
   const _data = {
     method: method,
-    branch: "Test"
+    branch: BRANCH_NAME
   }
   switch (BRANCH_NAME) {
     case "UQ":

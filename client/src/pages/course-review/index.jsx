@@ -63,7 +63,7 @@ export default function Review() {
   }}
 
   // 处理点击的热搜课程
-  const handleClickCourse = async (value) => {
+  const handleClickCourse = (value) => {
     if (handleLoginStatus())
     getData(value);
   }
@@ -74,7 +74,7 @@ export default function Review() {
       courseCode: course,
     }
     dispatch(setSearchedCourse(course));
-    dispatch(fetchCourseInfo(param));
+    // dispatch(fetchCourseInfo(param));
     dispatch(fetchReviews(param));
     setCourseCode('');
   }
@@ -127,7 +127,7 @@ export default function Review() {
             return(
               <AtListItem className='course-list' 
               title={value} hasBorder={false} arrow='right'
-              onClick={() => {debounce(handleClickCourse(value), 1000)}} />
+              onClick={() => {handleClickCourse(value)}} />
           )})}
         </AtList>
       </View>

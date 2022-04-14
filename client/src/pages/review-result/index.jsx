@@ -24,6 +24,7 @@ export default function ReviewResultPage() {
   const dispatch = useDispatch();
   let number = 0; // 用于判断 有无 优秀评价 or 其他评价
 
+
   // 如果没有优秀评价 or 其他评价 显示“快来评论吧～”
   const withoutReview = () => {
     if (number == 0) {

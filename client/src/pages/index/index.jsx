@@ -19,6 +19,9 @@ export default function Index() {
     todayClasses,
     recentAssignments
   } = useSelector(state => state.user.cardsInfo);
+  // const {
+  //   carousel1, carousel2, carousel3
+  // } = useSelector(state => state.resource)
   useShareAppMessage(res => {
     if (res.from === 'button') {
       // 来自页面内转发按钮
@@ -49,7 +52,12 @@ export default function Index() {
             Taro.previewImage({urls: [carousel1]})
           }
         }}>
-          <Image className='carousel-img' src={carousel1} mode="widthFix" />
+          <Image 
+          className='carousel-img' 
+          src={carousel1} 
+          mode="widthFix"
+          
+          />
         </SwiperItem>
         <SwiperItem onClick={() => {
           if (CAROUSEL2_URL != "") {
@@ -126,8 +134,8 @@ export default function Index() {
             className='function-icon'
             src={courseReviewIcon}
             mode="widthFix"
-            // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
-            onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
+            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            // onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
           />
           <View className='title-text'
             // onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}

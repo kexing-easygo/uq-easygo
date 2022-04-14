@@ -5,6 +5,14 @@ const moment = require('moment-timezone');
 const REVIEW_SUFFIX = "_Review"
 const DATE_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 
+const UQ_REVIEW_CHECKED_TEMPLATE_ID = 'YfOxsAF8UcHcqsda2vC41fJbuj-gNNJJ8ZNrFwUfCcA'
+const UMEL_REVIEW_CHECKED_TEMPLATE_ID = 'LzgQwFe9FfFnjj6F8hfx3XADnd2OWX3Yse_J3hztRLo'
+const USYD_REVIEW_CHECKED_TEMPLATE_ID = '269Nkdi5Mkdad-84cUu4C8m4HelbAyRbomMSDvwKfTA'
+const USYD_APP_ID = "wx363ec811fefffb9b"
+const UQ_APP_ID = "wxc51fd512a103a723"
+const UMEL_APP_ID = "wxb3dbe1326db6d6d2"
+
+
 // 初始化 cloud
 cloud.init({
     // API 调用都保持和云函数当前所在环境一致
@@ -53,7 +61,11 @@ async function addReview(collectionName, reviewObj) {
         }
     })
     omitSubReview(reviewobject)
-    const {posterName, courseCode, openid} = reviewObj
+    const {
+        posterName,
+        courseCode,
+        openid
+    } = reviewObj
     const content = `
     ${posterName}刚刚在${courseCode}发表了一条主评，内容为：${reviewContent}。\n\n
     为了方便追溯该用户信息，请参考以下数据：\n\n
@@ -64,12 +76,12 @@ async function addReview(collectionName, reviewObj) {
         name: 'email',
         // 传递给云函数的参数
         data: {
-          toAddr: "913248383@qq.com",
-          content: "告警测试\n\n\n" + content,
-          subject: "课行校园通 - 课评addReview告警"
+            toAddr: "913248383@qq.com",
+            content: "告警测试\n\n\n" + content,
+            subject: "课行校园通 - 课评addReview告警"
         }
     })
-      
+
     return reviewobject
 }
 
@@ -82,7 +94,9 @@ async function addReview(collectionName, reviewObj) {
  */
 async function addSubReview(collectionName, courseName, reviewId, subReviewObj) {
     const dateTime = getDateTime()
-    const { content }= subReviewObj
+    const {
+        content
+    } = subReviewObj
     const reviewobject = {
         review_id: crypto.createHash('sha256').update(content + dateTime.date + dateTime.time).copy().digest('hex'),
         postDate: dateTime.date,
@@ -146,7 +160,10 @@ async function deleteSubReview(collectionName, courseName, reviewId, subReviewId
  * @param {*} subReviewObj
  */
 async function updateSubReview(collectionName, courseName, reviewId, subReviewId, subReviewObj) {
-    const  {posterName, content} = subReviewObj
+    const {
+        posterName,
+        content
+    } = subReviewObj
     const dateTime = getDateTime()
     const res = await db.collection(collectionName).where({
         courseCode: courseName
@@ -178,7 +195,12 @@ async function updateSubReview(collectionName, courseName, reviewId, subReviewId
  * @param {*} reviewContent 
  */
 async function updateReview(collectionName, courseName, reviewId, updateObj) {
-    const { content, studySemester, mark, posterName } = updateObj
+    const {
+        content,
+        studySemester,
+        mark,
+        posterName
+    } = updateObj
     const dateTime = getDateTime()
     await db.collection(collectionName).where({
         courseCode: courseName,
@@ -190,7 +212,8 @@ async function updateReview(collectionName, courseName, reviewId, updateObj) {
             "review.$.mark": mark,
             "review.$.posterName": posterName,
             "review.$.postDate": dateTime.date,
-            "review.$.postTime": dateTime.time
+            "review.$.postTime": dateTime.time,
+            "review.$.checked": "pending"
         }
     })
     const res = await db.collection(collectionName).where({
@@ -203,7 +226,7 @@ async function updateReview(collectionName, courseName, reviewId, updateObj) {
     return singleReview
 }
 
-const updateLikes = async(collectionName, courseName, reviewId, openid) => {
+const updateLikes = async (collectionName, courseName, reviewId, openid) => {
     return await db.collection(collectionName).where({
         courseCode: courseName,
         "review.review_id": reviewId
@@ -215,8 +238,8 @@ const updateLikes = async(collectionName, courseName, reviewId, openid) => {
 }
 
 
-const updateReviewDimension = async(collectionName, courseName, dimensionIndex, openid) => {
-    const res =  await db.collection(collectionName).where({
+const updateReviewDimension = async (collectionName, courseName, dimensionIndex, openid) => {
+    const res = await db.collection(collectionName).where({
         courseCode: courseName,
     }).get()
     const dimensions = res.data[0].dimensions
@@ -243,7 +266,7 @@ async function getAllReview(collectionName, courseName) {
     }).get()
     let res = course.data
     if (res.length == 0) return {
-        reviews: undefined, 
+        reviews: undefined,
         dimensions: undefined
     }
     let reviews = res[0].review
@@ -257,10 +280,10 @@ async function getAllReview(collectionName, courseName) {
         return 0
     })
     return {
-        reviews: newReviews, 
+        reviews: newReviews,
         dimensions: res[0].dimensions
     }
-}   
+}
 
 
 /**
@@ -269,7 +292,7 @@ async function getAllReview(collectionName, courseName) {
  * @param {string} courseName 课程名称
  * @param {string} reviewId 主评id
  */
-const getAllSubReview = async(collectionName, courseName, reviewId) => {
+const getAllSubReview = async (collectionName, courseName, reviewId) => {
     const res = await await db.collection(collectionName).where({
         courseCode: courseName,
     }).get()
@@ -290,7 +313,7 @@ const getAllSubReview = async(collectionName, courseName, reviewId) => {
  * @param {string} collectionName 集合名称
  * @param {string} courseName 课程名称
  */
-const getCourseDetail = async(collectionName, courseName) => {
+const getCourseDetail = async (collectionName, courseName) => {
     const res = await db.collection(collectionName).where({
         _id: courseName,
     }).get()
@@ -301,7 +324,7 @@ const getCourseDetail = async(collectionName, courseName) => {
             ...res.data[0].enrolment_rule
         }
     }
-}   
+}
 
 
 async function topSearch(collectionName, topNumber) {
@@ -309,15 +332,14 @@ async function topSearch(collectionName, topNumber) {
     return courses.data
 }
 
-const getAllUncheckedReview = async(collectionName) => {
+const getAllUncheckedReview = async (collectionName) => {
     const res = await db.collection(collectionName).where({
-        'review.checked':"pending"
+        'review.checked': "pending"
     }).get()
     let reviews = []
-    let unchecked_reviews=[]
-    res.data.map((course)=>{
-        course.review.map((review,index)=>{
-            if(review.checked==="pending"){
+    res.data.map((course) => {
+        course.review.map((review, index) => {
+            if (review.checked === "pending") {
                 reviews.push(course.review[index])
             }
         })
@@ -330,55 +352,120 @@ const getAllUncheckedReview = async(collectionName) => {
     return reviews
 }
 
-const markReviewAsPassed = async(collectionName,courseCode,review_id) =>{
+const markReviewAsPassed = async (branch, review_id, openid) => {
+    const collectionName = branch + REVIEW_SUFFIX
     const res = await db.collection(collectionName).where({
-        'review.review_id':review_id
+        'review.review_id': review_id
     }).update({
-        data:{
+        data: {
             'review.$.checked': "pass"
         }
     })
+    await sendMarkResult(branch, openid, "已通过")
     return res
 }
 
-const markReviewAsFailed = async(collectionName,courseCode,review_id) =>{
-    // await deleteReview(collectionName,courseCode,review_id)
-    // return " 删除成功"+courseCode+review_id
+const markReviewAsFailed = async (branch, review_id, openid) => {
+    const collectionName = branch + REVIEW_SUFFIX
     const res = await db.collection(collectionName).where({
-        'review.review_id':review_id
+        'review.review_id': review_id
     }).update({
-        data:{
+        data: {
             'review.$.checked': "failed"
         }
     })
+    try {
+        await sendMarkResult(branch, openid, "未通过")   
+    } catch (error) {
+
+    }
     return res
 }
 
-const getAllPassReview = async(collectionName) => {
-    const res = await db.collection(collectionName).where({
-        'review.checked':"pass"
-    }).get()
-    let reviews = []
-    res.data.map((course)=>{
-        course.review.map((review,index)=>{
-            if(review.checked==="pass"){
-                reviews.push(course.review[index])
-            }
+const sendMarkResult = async (branch, openid, result) => {
+    let templateId = ''
+    let appid = ''
+    if (branch == "UQ") {
+        templateId = UQ_REVIEW_CHECKED_TEMPLATE_ID
+        appid = UQ_APP_ID
+    } else if (branch == "UMEL") {
+        templateId = UMEL_REVIEW_CHECKED_TEMPLATE_ID
+        appid = UMEL_APP_ID
+    } else if (branch == "USYD") {
+        templateId = USYD_REVIEW_CHECKED_TEMPLATE_ID
+        appid = USYD_APP_ID
+    }
+    const n = getDateTime()
+    try {
+        const res = await cloud.openapi({
+            appid: appid
+        }).subscribeMessage.send({
+            touser: openid,
+            lang: 'zh_CN',
+            data: {
+                phrase2: {
+                    value: result
+                },
+                thing1: {
+                    value: "主评审核结果"
+                },
+                thing3: {
+                    value: "暂无备注"
+                },
+                time4: {
+                    value: `${n["date"]} ${n["time"]}`
+                }
+            },
+            templateId: templateId
         })
-    })
-    reviews.sort((r1, r2) => {
-        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return -1
-        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return 1
-        return 0
-    })
-    return reviews
+        return res
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
-const markReviewOutstanding = async(collectionName,courseCode,review_id) =>{
-    const res = await db.collection(collectionName).where({
-        'review.review_id':review_id
+const getAllPassReview = async (branch, courseName) => {
+    const collectionName = branch + REVIEW_SUFFIX
+    let course = await db.collection(collectionName).where({
+        courseCode: courseName,
+    }).get()
+    let res = course.data
+    if (res.length == 0) return {
+        reviews: undefined,
+        dimensions: undefined
+    }
+    let reviews = res[0].review
+    // let reviews = res[0].review.filter(r => r.checked == "pass")
+    let newReviews = []
+    newReviews = reviews.map((singleReview) => {
+        omitSubReview(singleReview)
+        return singleReview
+    })
+    newReviews.sort((r1, r2) => {
+        if (r1.postDate + r1.postTime < r2.postDate + r2.postTime) return 1
+        if (r1.postDate + r1.postTime > r2.postDate + r2.postTime) return -1
+        return 0
+    })
+    // 更新搜索次数
+    await db.collection(collectionName).where({
+        courseCode: courseName
     }).update({
-        data:{
+        data: {
+            searchTimes: _.inc(1)
+        }
+    })
+    return {
+        reviews: newReviews,
+        dimensions: res[0].dimensions
+    }
+}
+
+const markReviewOutstanding = async (collectionName, courseCode, review_id) => {
+    const res = await db.collection(collectionName).where({
+        'review.review_id': review_id
+    }).update({
+        data: {
             'review.$.isOutstanding': true
         }
     })
@@ -388,68 +475,110 @@ const markReviewOutstanding = async(collectionName,courseCode,review_id) =>{
 
 // 云函数入口函数
 exports.main = async (event, context) => {
-    const { branch, method } = event
+    const {
+        branch,
+        method
+    } = event
     if (branch == undefined || method == undefined) {
         return {}
     }
     const collectionName = branch + REVIEW_SUFFIX //branch + REVIEW_SUFFIX
 
     if (method == "addReview") {
-        const { reviewObj } = event
+        const {
+            reviewObj
+        } = event
         return await addReview(collectionName, reviewObj)
     }
 
     if (method == "addSubReview") {
-        const { courseCode, reviewId, subReviewObj } = event
+        const {
+            courseCode,
+            reviewId,
+            subReviewObj
+        } = event
         return await addSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewObj)
     }
     if (method == "deleteReview") {
-        const { reviewId, courseCode } = event
+        const {
+            reviewId,
+            courseCode
+        } = event
         return await deleteReview(collectionName, courseCode.toUpperCase(), reviewId)
     }
 
     if (method == "deleteSubReview") {
-        const { reviewId, courseCode, subReviewId } = event
+        const {
+            reviewId,
+            courseCode,
+            subReviewId
+        } = event
         return await deleteSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId)
     }
 
     if (method == "updateReview") {
-        const { reviewId, courseCode, updatedObj } = event
+        const {
+            reviewId,
+            courseCode,
+            updatedObj
+        } = event
         return await updateReview(collectionName, courseCode.toUpperCase(), reviewId, updatedObj)
     }
 
     if (method == "updateReviewDimensions") {
-        const { courseCode, dimensionIndex, openid } = event
+        const {
+            courseCode,
+            dimensionIndex,
+            openid
+        } = event
         return await updateReviewDimension(collectionName, courseCode.toUpperCase(), dimensionIndex, openid)
     }
 
     if (method == "updateLikes") {
-        const { courseCode, reviewId, likes } = event
+        const {
+            courseCode,
+            reviewId,
+            likes
+        } = event
         return await updateLikes(collectionName, courseCode.toUpperCase(), reviewId, likes)
     }
 
     if (method == "updateSubReview") {
-        const { reviewId, subReviewId, courseCode, subReviewObj } = event
+        const {
+            reviewId,
+            subReviewId,
+            courseCode,
+            subReviewObj
+        } = event
         return await updateSubReview(collectionName, courseCode.toUpperCase(), reviewId, subReviewId, subReviewObj)
     }
     if (method == "getAllReview") {
-        const { courseCode } = event
+        const {
+            courseCode
+        } = event
         return await getAllReview(collectionName, courseCode.toUpperCase())
     }
 
     if (method == "getAllSubReview") {
-        const { courseCode, reviewId } = event
+        const {
+            courseCode,
+            reviewId
+        } = event
         return await getAllSubReview(collectionName, courseCode, reviewId)
     }
 
     if (method == "getCourseDetail") {
-        const { courseCode } = event
+        const {
+            courseCode
+        } = event
         return await getCourseDetail(branch + "_Courses", courseCode)
     }
 
 
     if (method == "topSearch") {
-        let { topNumber } = event
+        let {
+            topNumber
+        } = event
         if (topNumber == undefined) {
             topNumber = 10
         }
@@ -457,27 +586,45 @@ exports.main = async (event, context) => {
     }
 
     if (method == "updateReviewDimension") {
-        const {courseCode, dimensionIndex, openid} = event
+        const {
+            courseCode,
+            dimensionIndex,
+            openid
+        } = event
         return await updateReviewDimension(collectionName, courseCode, dimensionIndex, openid)
     }
 
     if (method == "getAllUncheckedReview") return await getAllUncheckedReview(collectionName)
 
     if (method == "markReviewAsPassed") {
-        const {courseCode, review_id} = event
-        return await markReviewAsPassed(collectionName,courseCode,review_id)
+        const {
+            review_id,
+            openid
+        } = event
+        return await markReviewAsPassed(branch, review_id, openid)
     }
 
     if (method == "markReviewAsFailed") {
-        const {courseCode, review_id} = event
-        return await markReviewAsFailed(collectionName,courseCode,review_id)
+        const {
+            review_id,
+            openid
+        } = event
+        return await markReviewAsFailed(branch, review_id, openid)
     }
 
-    if (method == "getAllPassReview") return await getAllPassReview(collectionName)
+    if (method == "getAllPassReview") {
+        const {
+            courseCode
+        } = event
+        return await getAllPassReview(branch, courseCode)
+    }
 
     if (method == "markReviewOutstanding") {
-        const {courseCode, review_id} = event
-        return await markReviewOutstanding(collectionName,courseCode,review_id)
+        const {
+            courseCode,
+            review_id
+        } = event
+        return await markReviewOutstanding(collectionName, courseCode, review_id)
     }
 
 }

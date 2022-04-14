@@ -11,7 +11,7 @@ const UQ_ADMIN_OPENID = "oe4Eh5T-KoCMkEFWFa4X5fthaUG8"
 const UMEL_ADMIN_OPENID = "o-B6w5eKnRniFdjywNhRy7XksQpw"
 const USYD_ADMIN_OPENID = ""
 
-const USYD_APP_ID = "wxc51fd512a103a723"
+const USYD_APP_ID = "wx363ec811fefffb9b"
 const UQ_APP_ID = "wxc51fd512a103a723"
 const UMEL_APP_ID = "wxb3dbe1326db6d6d2"
 

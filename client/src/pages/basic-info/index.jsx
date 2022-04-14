@@ -20,12 +20,6 @@ export default function BasicInfo() {
         />
       </AtList>
       <AtList>
-        <AtListItem
-          title='手机号'
-          arrow='right'
-          extraText={userMobile || '未绑定'}
-          onClick={() => Taro.navigateTo({ url: '/pages/bind-mobile/index' })}
-        />
 
         <AtListItem
           title='邮箱'

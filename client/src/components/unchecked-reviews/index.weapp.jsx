@@ -6,19 +6,21 @@ import './index.less'
 import {markReviewAsPassed,markReviewAsFailed} from '../../services/checkReviews'
 import { useDispatch } from 'react-redux'
 export default function UncheckedList(props) {
-  const {review_id,courseCode,postDate,postTime,content} = props.review
+  const {review_id,courseCode,postDate,postTime,content,openid} = props.review
   const dispatch = useDispatch()
   const handleNotPass = () =>{
     dispatch(markReviewAsFailed({
       courseCode:courseCode,
-      review_id:review_id
+      review_id:review_id,
+      openid: openid
     }))
   }
 
   const handlePass = () =>{
     dispatch(markReviewAsPassed({
       courseCode:courseCode,
-      review_id:review_id
+      review_id:review_id,
+      openid: openid
     }))
   }
 

@@ -67,7 +67,7 @@ export default function Profile() {
           onClick={() => Taro.navigateTo({ url: '/pages/card-management/index' })}
         />
         {admin && <AtListItem
-          title='客评审核'
+          title='课评审核'
           arrow='right'
           iconInfo={getIcon('filter')}
           onClick={() => Taro.navigateTo({ url: '/pages/check-reviews/index' })}

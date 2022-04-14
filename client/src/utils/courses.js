@@ -1,6 +1,6 @@
 import { BRANCH_NAME, DAY_OF_WEEK } from './constant';
 import { computeEndTime, formatDates, removeZero } from './time'
-const CLASS_ID_REGEX = /([A-Za-z]{4,}[0-9]{4,})((_|\-).*)\|.*\|.*/
+const CLASS_ID_REGEX = /([A-Za-z]{4,5}[0-9]{4,5})(.*)\|(.*)\|(.*)/
 /**
  * 根据接口返回的有效日期，判断当周是否有课
  * @param {array} courses - 所有的课程
@@ -144,8 +144,11 @@ export const getCourseId = (courseCode, semester, classMode) => {
  * @param {string} classId 单节课的classId
  */
 export const getClassCode = (classId) => {
+  console.log(classId)
   let res = classId.match(CLASS_ID_REGEX);
-  return `${res[1]} ${res[4]}${res[5]} ${res[6]}`
+  // return `${res[1]} ${res[4]}${res[5]} ${res[6]}`
+  console.log(res)
+  return `${res[1]} ${res[3]} ${res[4]}`;
 }
 
 /**

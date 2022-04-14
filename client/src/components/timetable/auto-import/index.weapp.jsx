@@ -8,6 +8,7 @@ import { setShowAutoImport } from "../../../features/course-slice";
 import { CURRENT_SEMESTER } from "../../../utils/constant";
 import { autoImportTimetable, fetchSelectedCourses } from "../../../services/course";
 import { TIMETABLE_SUBSCRIBE_LINK_REGEX } from "../../../utils/constant";
+import { TIMETABLE_TEACHING_ARTICLE_LINK } from "../../../config.json";
 
 import {
   AtModal,
@@ -188,7 +189,7 @@ export default function AutoImport(props) {
                   content: "您的导入链接看起来有点问题呀～是否查看教程？",
                   success: (res) => {
                     if (res.confirm) {
-                      // 跳转公众号
+                      Taro.navigateTo({url: "/pages/web-view/index?url=" + TIMETABLE_TEACHING_ARTICLE_LINK})
                     }
                   },
                   confirmText: "查看教程",

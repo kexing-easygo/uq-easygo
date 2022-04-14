@@ -8,6 +8,8 @@ cloud.init({
 
 const db = cloud.database();
 const currentSemester = "Semester 1, 2022"
+const UMEL_APP_ID = "wxb3dbe1326db6d6d2"
+const UMEL_TEMPLATE_ID = 'WFnXIRQ05rLdFEB3GEEsbA85ylAh1NiRtKvuKJTwADg'
 
 const getTodayDate = (branch) => {
   switch (branch) {
@@ -59,6 +61,39 @@ const notify = async(data) => {
   }))
 }
 
+const testNotify = async(openid, param) => {
+  const {
+    content,
+    assName,
+    dueDate,
+    publisher
+} = param
+  const res = await cloud.openapi({
+    appid: UMEL_APP_ID
+  }).subscribeMessage.send({
+      touser: openid,
+      lang: 'zh_CN',
+      data: {
+          thing1: {
+              value: content
+          },
+          thing2: {
+              value: assName
+          },
+          time3: {
+              value: dueDate
+          },
+          thing4: {
+              value: publisher
+          }
+      },
+      templateId: UMEL_TEMPLATE_ID,
+      miniprogramState: 'developer'
+  })
+  // console.log(res)
+  return res
+}
+
 
 
 // 云函数入口函数
@@ -75,4 +110,11 @@ exports.main = async (event, context) => {
   })
   const res = item["result"]
   await notify(res)
+  // const param = {
+  //   content: "测试长期订阅",
+  //   assName: "测试1",
+  //   dueDate: "2022-06-29 12:00",
+  //   publisher: "课行校园通"
+  // }
+  // return await testNotify("o-B6w5eKnRniFdjywNhRy7XksQpw", param)
 }

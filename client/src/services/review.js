@@ -12,40 +12,45 @@ export const fetchHotResearches = createAsyncThunk(
 )
 
 // 获取课程信息
-export const fetchCourseInfo = createAsyncThunk(
-  'review/fetchCourseInfo',
-  async (param) => {
-    const res = await callCloud('review', 'getCourseDetail', param);
-    return res.result
-  }
-)
+// export const fetchCourseInfo = createAsyncThunk(
+//   'review/fetchCourseInfo',
+//   async (param) => {
+//     const res = await callCloud('review', 'getCourseDetail', param);
+//     return res.result
+//   }
+// )
 
 // 获取课评
 export const fetchReviews = createAsyncThunk(
   'review/fetchReviews',
   async (param) => {
-    const res = await callCloud('review', 'getAllReview', param);
-    const open_id = await getLocalOpenId();
-    if (res.result == null) {
-      return res.result 
-    }
-    // 0-所有评论 1-小图标评论总数 2-已评论的小图标 3-赞过的课评 review id
-    let result = [[], [], 4, []];
-    result[0] = res.result.reviews
-    for (let i=0; i<4; i++) {
-      result[1].push(res.result.dimensions[i].length)
-      for (let q=0; q<res.result.dimensions[i].length; q++) {
-        if (res.result.dimensions[i][q] == open_id) {
-          result[2] = i;
+    try {
+      const res = await callCloud('review', 'getAllPassReview', param);
+      const res2 = await callCloud('review', 'getCourseDetail', param);
+      const courseDetails = res2.result
+      const open_id = await getLocalOpenId();
+      // 0-所有评论 1-小图标评论总数 2-已评论的小图标 3-赞过的课评 review id
+      let result = [[], [], 4, [], courseDetails];
+      result[0] = res.result.reviews
+      for (let i=0; i<4; i++) {
+        result[1].push(res.result.dimensions[i].length)
+        for (let q=0; q<res.result.dimensions[i].length; q++) {
+          if (res.result.dimensions[i][q] == open_id) {
+            result[2] = i;
+          }
         }
       }
-    }
-    for (let i=0; i<res.result.reviews.length; i++) {
-      if (res.result.reviews[i].likes.indexOf(open_id) != -1) {
-        result[3].push(res.result.reviews[i].review_id)
+      for (let i=0; i<res.result.reviews.length; i++) {
+        if (res.result.reviews[i].likes.indexOf(open_id) != -1) {
+          result[3].push(res.result.reviews[i].review_id)
+        }
       }
+      return result
+
+    } catch (error) {
+      console.error(error)
     }
-    return result
+    
   }
 )
 

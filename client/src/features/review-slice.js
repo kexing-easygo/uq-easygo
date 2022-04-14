@@ -5,6 +5,7 @@ import { fetchReviews, deleteReview, addReview, updateReview } from '../services
 import { fetchSubReviews, addSubReview ,updateSubReview, deleteSubReview } from '../services/review'
 import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed } from "../services/checkReviews";
 import { updateLikes } from '../services/review'
+import { REVIEW_CHECKED_TEMPLATE_ID } from "../config.json";
 
 const initialState = {
   hotCourses: [], // 热搜课程编号
@@ -61,61 +62,49 @@ export const reviewSlice = createSlice({
     builder
       // 获取热搜课程
       .addCase(fetchHotResearches.pending, () => {
-        Taro.showToast({ title: '搜索中', icon: 'loading', mask: true})
+        Taro.showToast({ title: '加载热搜课程中', icon: 'loading', mask: true})
       })
       .addCase(fetchHotResearches.fulfilled, (state, action) => {
         state.hotCourses = action.payload
-      })
-      // .addCase(fetchHotResearches.rejected, () => {
-      //   Taro.showToast({ title: '获取热搜课程时出错了', icon: 'none' })
-      // })
-      // 获取课程信息
-      .addCase(fetchCourseInfo.fulfilled, (state, action) => {
-        if (action.payload.unit_code == undefined) {
-          Taro.showToast({ title: '暂时没有这门课哦', icon: 'none' })
-        } else {
-          state.courseInfo = action.payload;
-          state.turnPage.push(true);
-      }})
-      .addCase(fetchCourseInfo.rejected, () => {
-        Taro.showToast({ title: '获取课程信息时出错了', icon: 'none' })
-      })
-      .addCase(fetchCourseInfo.pending, () => {
-        Taro.showToast({ title: '搜索中', icon: 'loading' })
       })
       // 获取课评
       .addCase(fetchReviews.pending, () => {
         Taro.showToast({ title: '搜索中', icon: 'loading' })
       })
       .addCase(fetchReviews.fulfilled, (state, action) => {
-        if (action.payload != null) {
-          state.reviews = action.payload[0];
-          state.dimensions = action.payload[1];
-          state.reviewedIcon = action.payload[2];
-          state.likesReviews = action.payload[3];
-          state.turnPage.push(true);
-        } else {
-          Taro.showToast({ title: '暂时没有这门课哦', icon: 'none' })
-        }
+        state.reviews = action.payload[0];
+        state.dimensions = action.payload[1];
+        state.reviewedIcon = action.payload[2];
+        state.likesReviews = action.payload[3];
+        state.courseInfo = action.payload[4];
+        Taro.navigateTo({
+          url: "/pages/review-result/index"
+        })
       })
-      .addCase(fetchReviews.rejected, () => {
+      .addCase(fetchReviews.rejected, (state, action) => {
         Taro.showToast({ title: '暂时没有这门课哦', icon: 'none' })
       })
       // 添加课评
-      .addCase(addReview.pending, () => {
-        // Taro.showToast({ title: '更新中', icon: 'loading' })
-      })
       .addCase(addReview.fulfilled, (state, action) => {
         state.reviews.unshift(action.payload)
-        Taro.showToast({ title: '添加成功', icon: 'none' })
+        Taro.showModal({
+          title: "发表通知",
+          content: "您的评论已经发表，正在交由后台审核。",
+          complete: () => {
+            Taro.requestSubscribeMessage({
+              tmplIds: [REVIEW_CHECKED_TEMPLATE_ID],
+              success: (res) => {
+                
+              }
+            })
+          }
+        })
+        
       })
       .addCase(addReview.rejected, () => {
         Taro.showToast({ title: '添加课评时出错了', icon: 'none' })
       })
       // 删除课评
-      .addCase(deleteReview.pending, () => {
-        // Taro.showToast({ title: '删除中', icon: 'loading' })
-      })
       .addCase(deleteReview.fulfilled, (state, action) => {
         for (let i=0; i<state.reviews.length; i++) {
           if (state.reviews[i].review_id == action.payload) {
@@ -132,14 +121,11 @@ export const reviewSlice = createSlice({
           if (state.reviews[i].review_id == action.payload[0]) {
             state.reviews.splice(i, 1);
         }}
+        Taro.showToast({ title: '修改成功', icon: 'success' });
         state.reviews.unshift(action.payload[1]);
-        Taro.showToast({ title: '修改成功', icon: 'none' })
       })
       .addCase(updateReview.rejected, () => {
         Taro.showToast({ title: '修改课评时出错了', icon: 'none' })
-      })
-      .addCase(updateReview.pending, () => {
-        // Taro.showToast({ title: '搜索中', icon: 'loading' })
       })
       // 添加小图标评论
       .addCase(addReviewDimensions.fulfilled, (state, action) => {
@@ -149,9 +135,7 @@ export const reviewSlice = createSlice({
       .addCase(addReviewDimensions.rejected, () => {
         Taro.showToast({ title: '添加评论时出错了', icon: 'none' })
       })
-      .addCase(addReviewDimensions.pending, () => {
-        // Taro.showToast({ title: '评论中', icon: 'loading' })
-      })
+
       // 点赞 
       .addCase(updateLikes.fulfilled, (state, action) => {
         // 更新课评界面 小图标样式

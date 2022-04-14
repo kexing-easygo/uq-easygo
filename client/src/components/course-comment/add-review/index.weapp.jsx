@@ -96,7 +96,8 @@ export default function AddReview() {
           posterName: handleString(authorName), 
           studySemester: semester,
           content: handleString(reviewContent),
-          mark: mark
+          mark: mark,
+          checked:"pending"
         }
       }
       dispatch(updateReview(param));
@@ -111,7 +112,8 @@ export default function AddReview() {
         dimensions:[0, 0],
         likes: [],
         avatarUrl: avatarUrl,
-        sub_review: []
+        sub_review: [],
+        checked:"pending"
       }
       dispatch(addReview(param));
     }
