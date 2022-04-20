@@ -29,15 +29,19 @@ export default function ReviewResultPage() {
     number = 0;
   }
 
+  console.log('page scroll' + pageScroll.overflow);
+
   return (
-    <View style={pageScroll}>
+    <View>
       <NavBar title={searchedCourse} backIcon />
       <AtNoticebar><Text className='notice-bar'>当前评论时间显示为北京时间</Text></AtNoticebar>
+
       <CourseInfo />
       <IconReview />
 
       <View className='fab-background'></View>
       <View className='add-icon'>
+        
       <AddReview onClick={() => {pageScrollState(stopScroll)}} />
       </View>
 

@@ -77,15 +77,10 @@ export default function OthersReviewAction(props) {
       </View>
 
       <View className='heart-icon' onClick={() => {checkState()}}>
-        <View style={{marginRight:changePosition().iconMarginRight,
-          marginTop:changePosition().iconMarginTop}}>
-          <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
-            size={state? '19':'23'} color={state? '#FFB017':'#BDBCBC'}
-            className='icon' ></AtIcon>
-        </View>
-        <Text className='text' style={{marginTop:changePosition().textMarginTop,marginRight:changePosition().textMarginRight}}>
-          点赞({likesCount})
-        </Text>
+        <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
+          size={state? '19':'23'} color={state? '#FFB017':'#BDBCBC'}
+          className='icon'></AtIcon>
+        <Text className='text'>点赞({likesCount})</Text>
       </View>
 
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>

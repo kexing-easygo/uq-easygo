@@ -1,67 +1,64 @@
 @import "../../../app.less";
 @radius: 10px;
 
-.course-card {
-  background-color: rgb(255, 255, 255);
-  border: 6px solid #DDE7FB;
-  width: 634px;
-  margin-top: 24px;
-  margin-left: 56px;
-  border-radius: 10px;
-  font-size: @fontSize;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
-  .title-background {
+.course-card-wraper {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 25rpx;
+
+  .course-title {
+    width: 662rpx;
     background-color: #586EA9;
-    width: 662px;
-    margin-left: -14.45px;
     box-sizing: border-box;
-    border: 3.4px solid #063A88;
-    display: flex;
-    margin-top: -5px;
+    border: 3rpx solid #063A88;
     border-radius: @radius;
+    padding: 15rpx 30rpx;
+    color: #fff;
+    font-size: 32rpx;
+    margin-bottom: -10rpx;
+    z-index: 2;
   }
 
-  .title-course { 
-    font-size: 32px;
-    margin-left: 22.45px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    color:#FFFFFF;
-  }
-
-  .contents {
-    width: 58%;
-    margin-left: 270px;
-    margin-right: 20px;
-    margin-top: -40px;
-    .content {
-      font-size: 30px;
-      margin-top: -50px;
-    }
-  }
-
-  .title {
-    font-size: 30px;
-    margin-left: 40px;
-    margin-top: -50px;
-    margin-right: 50px;
-  }
-
-  .lines {
-   margin-top: 12px;
-   margin-bottom: 12px;
-  }
-
-  .note {
-    font-size: 24px;
-    color: #787A7E;;
-    margin-left: 188px;
-    padding-top: 10px;
-  }
+  .course-card {
+    background-color: rgb(255, 255, 255);
+    border: 6rpx solid #DDE7FB;
+    width: 634rpx;
+    border-radius: 10rpx;
+    font-size: @fontSize;
+    box-shadow: 0px 4rpx 12rpx rgba(0, 0, 0, 0.25);
   
-  .note-background{
-    background-color: #DDE7FB;
-    height: 46px;
-    width: 100%;
+    .lines {
+      padding: 12rpx 35rpx;
+      border-top: 3rpx solid #F0F0F0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  
+    .lines .line-title {
+      width: 55%;
+      font-size: 30rpx;
+    }
+  
+    .lines .line-content {
+      width: 45%;
+      font-size: 30rpx;
+    }
+  
+    .note {
+      height: 46rpx;
+      width: 100%;
+      background-color: #DDE7FB;
+      font-size: 24px;
+      color: #787A7E;
+      text-align: center;
+      line-height: 50rpx;
+      padding: 5rpx 0;
+    }
   }
 }
