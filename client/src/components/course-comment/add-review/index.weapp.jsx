@@ -26,7 +26,8 @@ export default function AddReview() {
   const [showToast, setToastState] = useState(false); // toast开关
   const [showModal, changeModalState] = useState(false); // modal开关
   const [emptyName, setEmptyName] = useState(false); // 作者名字空白 or not
-  // const [emptySemester, setEmptySemester] = useState(false); // 学习学期空白 or not
+  const [floatTitle, setFloatTitle] = useState(false); // float layout 标题（修改 or 添加）
+  const [modalTitle, setModalTitle]= useState(false);// modal 内容（修改 or 添加）
   const dispatch = useDispatch();
 
   // 检查所填内容
@@ -41,12 +42,11 @@ export default function AddReview() {
       setReminderText('不可以这样写名字哦'); // 名字同时有‘楼’ 和 ‘主’ 两个字
       setEmptyName(true);
       setToastState(true);
-    } // else if (semester.length == 0) {
-      // setReminderText('请选择学期');
-      // setEmptySemester(true);
-      // setToastState(true);
-    // }
-     else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
+    } else if (authorName.replace(/ /g,'') == '我') {
+      setReminderText('不可以这样写名字哦'); // 名字只有‘我‘ 
+      setEmptyName(true);
+      setToastState(true);
+    } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
      ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
       setToastState(true);
@@ -67,8 +67,8 @@ export default function AddReview() {
     setSemester('Semester 2，2021');
     setMark('');
     setReviewContent('');
-    // setEmptySemester(false);
     setEmptyName(false);
+    setEditReview(false);
   }
 
   // 处理名字、评论 左右的空白字符 
@@ -96,8 +96,7 @@ export default function AddReview() {
           posterName: handleString(authorName), 
           studySemester: semester,
           content: handleString(reviewContent),
-          mark: mark,
-          checked:"pending"
+          mark: mark
         }
       }
       dispatch(updateReview(param));
@@ -112,12 +111,10 @@ export default function AddReview() {
         dimensions:[0, 0],
         likes: [],
         avatarUrl: avatarUrl,
-        sub_review: [],
-        checked:"pending"
+        sub_review: []
       }
       dispatch(addReview(param));
     }
-    setEditReview(false);
     showContentState(false);
     clearContent();
   }
@@ -138,6 +135,8 @@ export default function AddReview() {
       setEditReview(true);
       showContentState(true);
       dispatch(setEditModal(false));
+      setFloatTitle(true);
+      setModalTitle(true);
     }
   }
 
@@ -146,48 +145,40 @@ export default function AddReview() {
 
   return (
     <View>
-        <AtFab size='small' onClick={ () => showContentState(true)}>
-          <Text className='at-fab__icon at-icon at-icon-add'></Text>
-        </AtFab>
-
-      {/*<AtTabBar fixed backgroundColor='#e5eaf4' iconSize='35'
-        tabList={[{ title: '' }, { title: '' }, { title: '' }, { image: addReviewIcon }]}
-        onClick={ () => showContentState(true)} />*/}
+      <AtFab size='small' onClick={ () => {showContentState(true);setModalTitle(false);setFloatTitle(false);}}>
+        <Text className='at-fab__icon at-icon at-icon-add'></Text>
+      </AtFab>
       
-      <AtFloatLayout isOpened={showContent} onClose={() => {showContentState(false);clearContent()}} >
-        {/*<Text className='title-icon'>I</Text><Text className='title'>基本信息</Text>*/}
+      <AtFloatLayout isOpened={showContent}  title={floatTitle? '修改评论':'追加评论'}
+        onClose={() => {showContentState(false);clearContent();setModalTitle(false);}} >
         <AtInput name='name' title='姓名' type='text' placeholder='' value={authorName} 
           border={false} error={emptyName} className='input-first-part single-input' 
           onChange={(value) => {setAuthorName(value)}} />
         <Image src={starIcon} className='first-star-icon' />
-        {/*<AtInput name='semester' title='学习学期' type='text' placeholder='Semester 2，2021' value={semester} 
-          border={false} error={emptySemester} className='single-input' 
-          onChange={(value) => {setSemester(value)}}  
-          onFocus={() => {showContentState(false);showSemesterState(true)}} />*/}
-        <View className='semester' onClick={() => {showContentState(false);showSemesterState(true)}}>
+        <View className='semester' 
+          onClick={() => {showContentState(false);showSemesterState(true)}}>
           <Text>学习学期</Text>
           <Text className='select-semester'>{semester}</Text>
         </View>
         <Image src={starIcon} className='second-star-icon' />
-        <AtInput name='mark' title='最终成绩' type='number' className='single-input' border={false}
-          placeholder='成绩不会以任何方式泄漏' value={mark}
+        <AtInput name='mark' title='最终成绩' type='number' className='single-input mark' 
+          border={false} placeholder='成绩不会以任何方式泄漏' value={mark}
           onChange={(value) => {setMark(value)}} />
-        {/*<Text className='title-icon'>I</Text><Text className='title'>课程评价</Text>*/}
         <View className='text-area' >
-          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} value={reviewContent} 
-          showConfirmBar={true} onChange={(value) => {setReviewContent(value)}}  />
+          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} 
+          value={reviewContent} showConfirmBar={true} 
+          onChange={(value) => {setReviewContent(value)}} />
         </View>
         <AtButton type='primary' size='small'
-        className='button1' circle={true} onClick={() => checkContent()}>
+          className='button1' circle={true} onClick={() => {checkContent();}}>
           确认</AtButton>
         <AtButton type='secondary' size='small' className='button2' circle={true} 
-          onClick={() => {clearContent();showContentState(false)}}>
-          取消</AtButton>
+          onClick={() => {clearContent()}} >
+          删除</AtButton>
       </AtFloatLayout>
     
       <AtActionSheet isOpened={showSemester} cancelText='取消' title='请选择学期' 
-        onCancel={() => {closeActionSheet()}}
-        onClose={() => {closeActionSheet()}} >
+        onCancel={() => {closeActionSheet()}} onClose={() => {closeActionSheet()}} >
         <AtActionSheetItem onClick={() => {setSemester('Semester 1，2021');closeActionSheet()}}> 
           Semester 1，2021 
         </AtActionSheetItem>
@@ -200,18 +191,19 @@ export default function AddReview() {
       </AtActionSheet>
 
       <AtToast isOpened={showToast} text={reminderText} duration='800' hasMask={true}
-        onClick={() => setToastState(false)}
-        onClose={() => setToastState(false)}>
+        onClick={() => {setToastState(false);}} 
+        onClose={() => {setToastState(false);}} >
       </AtToast>
 
       <AtModal isOpened={showModal} onClose={() => {changeModalState(false);showContentState(true)}}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            请问确定要给予这个评价吗?
+            {modalTitle? '请问确定要修改此评论吗?':'请问确定要添加此评论吗?'}
           </AtModalContent>
           <AtModalAction> 
-            <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消</Button> 
-            <Button onClick={() => {changeModalState(false);submitData()}}>确定</Button> 
+            <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消
+            </Button> 
+            <Button onClick={() => {changeModalState(false);submitData();setFloatTitle(false);}}>确定</Button> 
           </AtModalAction>
       </AtModal>
     </View>

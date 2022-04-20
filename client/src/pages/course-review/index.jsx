@@ -5,7 +5,7 @@ import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSearchedCourse, setTurnPage } from "../../features/review-slice";
-import { AtList, AtListItem, AtSearchBar, AtModalAction} from "taro-ui"
+import { AtList, AtListItem, AtSearchBar, AtModalAction, AtIcon} from "taro-ui"
 import { AtModalContent, AtModalHeader, AtModal, AtButton} from "taro-ui"
 import { debounce } from "../../utils/opt";
 import { fetchReviews, fetchHotResearches, fetchCourseInfo } from "../../services/review";
@@ -93,23 +93,23 @@ export default function Review() {
   }, [])
   
   // 跳转页面  课程信息, 课评 全都获取到 才可以
-  useEffect(() => {
-    if (turnPage.length == 2) {
-      Taro.navigateTo({ url: '/pages/review-result/index' });
-      dispatch(setTurnPage());
-    };
-  })
+  // useEffect(() => {
+  //   if (turnPage.length == 2) {
+  //     Taro.navigateTo({ url: '/pages/review-result/index' });
+  //     dispatch(setTurnPage());
+  //   };
+  // })
 
   return (
     <View className='selector-container'>
       <NavBar title="课评" backIcon />
       <View className='top-background'>
-      <AtSearchBar className='search' 
-        placeholder='输入课程代码'
-        actionName='搜索'
-        value={courseCode}
-        onChange={(value) => {setCourseCode(value.toUpperCase())}}
-        onActionClick={debounce(handleSearchCourse, 1000)} />
+        <AtSearchBar className='search' 
+          placeholder='输入课程代码'
+          actionName='搜索'
+          value={courseCode}
+          onChange={(value) => {setCourseCode(value.toUpperCase())}}
+          onActionClick={debounce(handleSearchCourse, 1000)} />
       </View>
       {/*
       <View className='course-selector input-element'>
@@ -120,18 +120,20 @@ export default function Review() {
       </View>
       */}
       <View className='courseSuggestion'>
-        <Text className='title-icon'>I</Text>
-        <Text className='title'>猜你想搜</Text>
+        <view className = 'guess-background'>
+          <View className='blue-block'></View>
+          <Text className='title'>猜你想搜</Text>
+        </view>
         <AtList className='course-top' hasBorder={false} >
           {courseList(), courses.map((value) => {
             return(
               <AtListItem className='course-list' 
               title={value} hasBorder={false} arrow='right'
-              onClick={() => {handleClickCourse(value)}} />
+              onClick={() => {debounce(handleClickCourse(value), 1000)}} />
           )})}
         </AtList>
       </View>
-
+      
       <AtModal isOpened={showModal} onClose={() => setShowModal(false)}>
         <AtModalHeader>{modalContent.title}</AtModalHeader>
         <AtModalContent>{modalContent.content}</AtModalContent>

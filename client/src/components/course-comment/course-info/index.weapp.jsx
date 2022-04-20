@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text } from '@tarojs/components'
 import './index.less'
 import { useSelector } from 'react-redux'
-import Divider from '../divider'
 
 /*
 课程信息
@@ -41,34 +40,26 @@ export default function CourseInfo() {
 
 
   return (
-    <View className='course-card'>
-      <View className='title-background'>
+    <View className='course-card-wraper'>
+      <View className='course-title'>
         <Text className='title-course'>{handleInfo(unit_name)}</Text>
       </View>
-      <View className='lines'>
-        <Text className='title'>Credits</Text>  
-        <View className='contents'>
-          <Text className='content'>{handleInfo(credits)}</Text>
+      <View className='course-card'>
+        <View className='lines'>
+          <View className='line-title'>Credits</View>  
+          <View className='line-content'>{handleInfo(credits)}</View>
         </View>
-      </View>
-      <Divider width='100%' />
-      <View className='lines'>
-        <Text className='title'>Mode</Text>  
-        <View className='contents'>
-          <Text className='content'>{handleInfo(attandence_mode)}</Text>
+        <View className='lines'>
+          <View className='line-title'>Mode</View>  
+          <View className='line-content'>{handleInfo(attandence_mode)}</View>
         </View>
-      </View>
-      <Divider width='100%' />
-      <View className='lines'>
-        <Text className='title'>Semester(s)</Text>  
-        <View className='contents'>
-          <Text className='content'>
-            {handleInfo(semester_available)=='Not available'? 'Not available':changeSemester()}
-          </Text>
+        <View className='lines'>
+          <View className='line-title'>Semester(s)</View>  
+          <View className='line-content'>{handleInfo(semester_available)=='Not available'? 'Not available':changeSemester()}
+          </View>
         </View>
+        <View className='note'>更多详情请参考官方ECP</View>
       </View>
-      <Divider width='100%' />
-      <View className='note'><Text>更多详情请参考官方ECP</Text></View>
     </View>
   )
 }

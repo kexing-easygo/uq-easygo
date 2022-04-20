@@ -1,0 +1,84 @@
+@radius: 8px;
+
+.review-card {
+  background-color: rgb(255, 255, 255);
+  border: 4rpx solid #586EA9;
+  box-sizing: border-box;
+  width: 614rpx;
+  word-wrap:break-word;
+  padding-top: 45rpx;
+  padding-bottom: 30rpx;
+  .review-background {
+    width: 606px;
+    height: auto;
+    margin-top: -103px;
+    margin-left: -24px;
+    border-top-left-radius: @radius;
+    border-top-right-radius: @radius;
+    border-bottom: 2px solid #6A90E2;
+    position: relative;
+    padding: 16.5px 0;
+    background-color:#B9C9FE;
+    .review-author { 
+      font-size: 32px;
+      margin-left: 60px;
+    }
+  }
+  
+  .review-content {
+    padding: 20rpx 30rpx 0 30rpx;
+    font-size: 30px;
+  }
+
+  .at-card__content-note{
+    font-size: 26px;
+    padding-left: 20px;
+  }
+}
+
+.cards{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rpx;
+  
+  .others-review {
+    width: 614rpx;
+  }
+
+  .own-review {
+    width: 614rpx;
+  }
+  
+  .outstanding-icon{
+    position: absolute;
+    left:28px;
+    top:-9px;
+    z-index:1;
+  }
+
+  .delete-icon{
+    position: absolute;
+    right:45px;
+    top:40px;
+    z-index: 1;
+  }
+
+  .author-view {
+    margin-left: 535px;
+    position: relative;
+    .author-photo {
+      width: 90px;
+      height: 90px;
+      position: absolute;
+      margin-top: -8px;
+      z-index: 150;
+      border-radius: 80px;
+    }
+  }
+  .shadow {
+    box-shadow:0px 4px 12px rgba(0, 0, 0, 0.25);
+  }
+}

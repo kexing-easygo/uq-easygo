@@ -4,7 +4,7 @@ import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
 import { AtIcon, AtModal, AtModalAction, AtModalHeader, AtModalContent } from "taro-ui"
 import { getLocalOpenId } from "../../../services/login"
-import { changeEditModal } from "../../../features/review-slice"
+import { setSubReviewEdit, setReplySubReview } from "../../../features/review-slice"
 import { deleteSubReview } from "../../../services/review";
 
 /*
@@ -16,10 +16,12 @@ export default function DoubleReviewCard(props) {
   const { clickedReview, searchedCourse } = useSelector(state => state.review);
   let cardMarginTop = ''; // 追评卡片 相对于头像 的位置
   let backgroundColor = ''; // 追评卡片背景颜色
-  let borderColor = ''; // 追评卡片边框颜色
+  let border = ''; // 追评卡片边框
   let contentBytes = 0; // 追评内容长度
   let paddingBottom = '';
   let showAction = ''; // 修改 删除 显示 or not
+  let photoMarginLeft = ''; // 头像位置
+  let cardMarginLeft = ''; // 追评卡片位置
   const [selfOpenId, setSelfOpenId]= useState('');  // open id
   const [showCancelModal, changeCancelModalState] = useState(false); // 删除追评的modal 开关
   const dispatch = useDispatch();
@@ -37,8 +39,8 @@ export default function DoubleReviewCard(props) {
         contentBytes ++;
     }}
     // check 楼主
-    if (clickedReview.openid == openid) {
-      return '楼 主';
+    if (clickedReview.openid == openid && openid != selfOpenId) {
+     return '楼 主';
     } 
     // 名字长度
     for (let i=0; i<name.length; i++) {
@@ -69,16 +71,27 @@ export default function DoubleReviewCard(props) {
   
   // check发表人 用相应的style (eg.展示‘修改’,‘删除’等)
   const checkAuthor = () => {
-    if (openid == selfOpenId) {
-      backgroundColor = '#f8f7ff';
-      borderColor = '#7b81f3';
+    if (openid == selfOpenId) { // 自己发表的
+      backgroundColor = '#D2DBFA';
+      border = '4px solid #FFFFFF';
       showAction = 'inherit';
-      paddingBottom = '25px';
-    } else {
-      backgroundColor = 'rgb(255, 255, 255)';
-      borderColor = '#89acee';
+      paddingBottom = '30px';
+      photoMarginLeft = '280px';
+      cardMarginLeft = '0px';
+    } else if (openid != selfOpenId && openid == clickedReview.openid) { // 别人（楼主）发表的
+      backgroundColor = '#FFFFFF';
+      border = '4px solid #B9C9FE';
       showAction = 'none';
       paddingBottom = '5px';
+      photoMarginLeft = '1px';
+      cardMarginLeft = '65px';
+    } else {// 别人（非楼主）发表的
+      backgroundColor = '#FFFFFF';
+      border = '4px solid #D2DBFA';
+      showAction = 'none';
+      paddingBottom = '5px';
+      photoMarginLeft = '1px';
+      cardMarginLeft = '65px';
     }
   }
 
@@ -87,6 +100,15 @@ export default function DoubleReviewCard(props) {
     reviewId: clickedReview.review_id,
     subReviewId: review_id,
     courseCode: searchedCourse,
+  }
+
+  // 点击追评卡片 if自己的->进入修改 if别人的->回复追评
+  const handleClick = () => {
+    if (openid == selfOpenId) {
+      dispatch(setSubReviewEdit(true));
+    } else {
+      dispatch(setReplySubReview(true));
+    }
   }
 
   // 获取 open id
@@ -99,41 +121,46 @@ export default function DoubleReviewCard(props) {
 
 
   return (
-    <View className='sub-card'>
+    <View className='sub-card' style={openid == selfOpenId? {marginBottom:'15px'}:''}>
       {checkAuthor()}
-      <View className='photo-part'>
+      <View className='photo-part' style={{marginLeft:photoMarginLeft}}>
         <Image src={avatarUrl} className='photos'></Image>
-        <View><Text>{handleName(posterName)}</Text></View>
+        <View style={openid == selfOpenId? {marginLeft:'-5px'}:''}>
+          <Text>{handleName(posterName)}</Text>
+        </View>
       </View>
 
       {cardPosition()}
-      <View className='content-part' 
-        style={{marginTop:cardMarginTop,background:backgroundColor,borderColor:borderColor,paddingBottom:paddingBottom}}>
+      <View className='content-part' onClick={() => handleClick()}
+        style={{marginTop:cardMarginTop,background:backgroundColor,border:border,paddingBottom:paddingBottom, marginLeft:cardMarginLeft}}>
         <Text className='content'>{content}</Text>
         <View><Text className='note'>评论于 {postDate} {postTime}</Text></View>
       </View>
 
       <View style={{display:showAction}} className='own-action'>
-        <View className='edit-icon' onClick={() => {dispatch(changeEditModal(true))}}>
-          <AtIcon value='edit' size='20' color='rgb(133, 130, 130)' className='icon'></AtIcon>
+        <View className='edit-icon' onClick={() => {dispatch(setSubReviewEdit(true))}}>
+            <AtIcon prefixClass='icon' value='write-copy' size='20'
+            color='#586EA9' className='icon'></AtIcon>
           <Text className='text'>修改</Text>
         </View>
         <View className='delete-icon' onClick={() => {changeCancelModalState(true)}}>
-          <AtIcon value='trash' size='20' color='rgb(133, 130, 130)' className='icon'></AtIcon>
+          <AtIcon prefixClass='icon' value='delete-copy' size='18'
+            color='#586EA9'  className='icons'></AtIcon>
           <Text className='text'>删除</Text>
         </View> 
-
-        <AtModal isOpened={showCancelModal} onClose={() => changeCancelModalState(false)}>
-          <AtModalHeader>温馨提示</AtModalHeader>
-          <AtModalContent>请问确定要删除这个评价吗?</AtModalContent>
-          <AtModalAction> 
-            <Button onClick={() => changeCancelModalState(false)}>取消</Button> 
-            <Button onClick={() => {dispatch(deleteSubReview(deleteData));changeCancelModalState(false)}}>
-              确定
-            </Button> 
-          </AtModalAction>
-        </AtModal>
       </View>
+
+      <AtModal isOpened={showCancelModal} onClose={() => changeCancelModalState(false)}>
+        <AtModalHeader>温馨提示</AtModalHeader>
+        <AtModalContent>请问确定要删除此评论吗?</AtModalContent>
+        <AtModalAction> 
+          <Button onClick={() => changeCancelModalState(false)}>取消</Button> 
+          <Button onClick={() => {dispatch(deleteSubReview(deleteData));
+            changeCancelModalState(false)}}>
+            确定
+          </Button> 
+         </AtModalAction>
+      </AtModal>
     </View>
   )
 }

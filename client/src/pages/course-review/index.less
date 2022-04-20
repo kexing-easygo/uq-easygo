@@ -3,61 +3,82 @@
 @radius: 10px;
 @buttonWidth: calc(@inputHeight + 40px);
 
+page {
+  background-color: #FAFBFE;
+}
 .selector-container {
   .top-background {
-    height: 30vh;
+    height: 256rpx;
     width: 100%;
-    background-color: #b5caf1;
+    background-color: #B9C9FE;
     margin-top: 0px;
     position: absolute;
   }
   .search {
-    height: 8vh;
-    width: 80%;
-    background-color: #b5caf1;
+    background-color: #B9C9FE;
     border-radius: 50px;
-    margin-top: 38px;
-    margin-left: 74px;
+    margin-top: 52px;
+    margin-left: 60px;
+    width: 630rpx;
+    height: 80rpx;
   }
   
   .search::after {
     border: none;
   }
 
+  .at-search-bar__input-cnt {
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25);
+  }
+
   .courseSuggestion {
-    height: auto;
-    width: 73%;
+    height: 940rpx;
+    width: 574rpx;
     background-color: white;
     position: absolute;
-    margin-top: 180px;
-    margin-left: 97px;
+    margin-top: 184rpx;
+    margin-left: 90rpx;
     border-radius: 30px;
-    border: 7px solid @highLight;
+    border: 3.7px solid #EFF3FB;
     margin-bottom: 60px;
-      .title-icon {
-        font-size: 60px;
-        color: @highLight;
-        margin-left: 60px;
-        margin-top: 8px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 14px rgba(0, 0, 0, 0.25);
+      .blue-block {
+        background-color: #FFFFFF;
+        width: 2.7PX;
+        height: 17PX;
         position: absolute;
-        padding-bottom: 10px;
+        top: 33px;
+        left: 30px;
       }
       .title {
-        margin-left: 90px;
+        left: 56px;
         position: absolute;
-        margin-top: 30px;
-        padding-bottom: 10px;
+        top: 25px;
+        color: #FFFFFF;
+        font-size: 38px;
       }
       .course-top {
         width:100%;
-        margin-top: 100px;
+        margin-top: 0px;
         margin-left: 0px;
         border-radius: 60px;
         .course-list {
-          padding-left: 100px;
-          padding-right: 90px;
-          border-top: 1px solid rgb(214, 214, 214);
+          padding-left: 54px;
+          padding-right: 54px;
+          height: 84px;
+          font-size: 34px;
+          border-top: 2px solid #F0F0F0;
         }
+      }
+      .guess-background {
+        height: 100rpx;
+        width: 574rpx;
+        margin-top: -4rpx;
+        margin-left: -5rpx;
+        background-color: #586EA9;
+        border-top-left-radius: 25rpx;
+        border-top-right-radius: 25rpx;
       }
     }
     
@@ -90,4 +111,12 @@
       justify-content: center;
     }
   }
+}
+
+.at-list__item .item-extra__icon-arrow {
+    color: #BFBFC3;
+}
+
+.at-list__item-container {
+  margin-top: -9px;
 }

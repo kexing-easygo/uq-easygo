@@ -1,36 +1,83 @@
 /* src/icon/icon.css */
 @font-face {
-    font-family: "iconfont"; /* Project id 3217929 */
-    src: url('//at.alicdn.com/t/font_3217929_swzfg4j94hm.woff2?t=1646283734244') format('woff2'),
-         url('//at.alicdn.com/t/font_3217929_swzfg4j94hm.woff?t=1646283734244') format('woff'),
-         url('//at.alicdn.com/t/font_3217929_swzfg4j94hm.ttf?t=1646283734244') format('truetype');
-  }
-  
-  .icon {
-    font-family: "iconfont" !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .icon-ilink-upload:before {
-    content: "\e615";
-  }
-  
-  .icon-informationoutline:before {
-    content: "\e8f0";
-  }
-  
-  .icon-add_link:before {
-    content: "\e652";
-  }
-  
-  .icon-reload:before {
-    content: "\e63f";
-  }
-  
-  .icon-remove-link:before {
-    content: "\e64d";
-  }
-  
+  font-family: "iconfont"; /* Project id 3217929 */
+  src: url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.woff2?t=1647315495783') format('woff2'),
+       url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.woff?t=1647315495783') format('woff'),
+       url('//at.alicdn.com/t/font_3217929_hca8jiu4ose.ttf?t=1647315495783') format('truetype');
+}
+
+.icon {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-medal-copy:before {
+  content: "\e94c";
+}
+
+.icon-bad-fill-copy:before {
+  content: "\e946";
+}
+
+.icon-good-fill-copy:before {
+  content: "\e947";
+}
+
+.icon-good-copy:before {
+  content: "\e948";
+}
+
+.icon-comment_vs-copy:before {
+  content: "\e949";
+}
+
+.icon-lucky-copy:before {
+  content: "\e94a";
+}
+
+.icon-seven-key-copy:before {
+  content: "\e94b";
+}
+
+.icon-write-copy:before {
+  content: "\e8f4";
+}
+
+.icon-delete-copy:before {
+  content: "\e8f5";
+}
+
+.icon-blockChain-copy-copy:before {
+  content: "\e8f3";
+}
+
+.icon-blockChain:before {
+  content: "\e603";
+}
+
+.icon-blockChain-copy:before {
+  content: "\e8f2";
+}
+
+.icon-ilink-upload:before {
+  content: "\e615";
+}
+
+.icon-informationoutline:before {
+  content: "\e8f0";
+}
+
+.icon-add_link:before {
+  content: "\e652";
+}
+
+.icon-reload:before {
+  content: "\e63f";
+}
+
+.icon-remove-link:before {
+  content: "\e64d";
+}

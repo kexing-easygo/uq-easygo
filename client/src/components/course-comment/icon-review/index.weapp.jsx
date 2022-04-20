@@ -1,23 +1,22 @@
 import React, { useState } from 'react'
-import { View, Text, Image, Button } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
 import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
-import { noLuckyIcon, noPassIcon, noHardIcon, noSevenIcon } from '../../../assets/images/review-icons.json'
-import { luckyIcon, passIcon, hardIcon, sevenIcon } from '../../../assets/images/review-icons.json'
-import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast} from "taro-ui"
+import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast, AtIcon} from "taro-ui"
 import { setClickedIconReview } from "../../../features/review-slice";
 import { addReviewDimensions } from "../../../services/review";
-
 
 /*
 好过,好难等 4个小图标评论
 */
 export default function IconReview() {
   const { reviewedIcon, clickedIconReview, dimensions, searchedCourse } = useSelector(state => state.review);
-  const[passState, changePassState] = useState(reviewedIcon == 0? passIcon:noPassIcon); // 好过图标
-  const[hardState, changeHardState] = useState(reviewedIcon == 1? hardIcon:noHardIcon); // 好难图标
-  const[sevenState, changeSevenState] = useState(reviewedIcon == 2? sevenIcon:noSevenIcon); // 好7图标
-  const[luckyState, changeLuckyState] = useState(reviewedIcon == 3? luckyIcon:noLuckyIcon); // 运气图标
+  const[passState, changePassState] = useState(reviewedIcon == 0? 
+    ['good-copy','#FFB017','20','50px','10rpx','icons pass-icon2']:
+    ['good-fill-copy','#BDBCBC','26','100rpx','-12rpx','icons pass-icon']); // 好过图标
+  const[hardState, changeHardState] = useState(reviewedIcon == 1? '#2230AF':'#BDBCBC'); // 好难图标
+  const[sevenState, changeSevenState] = useState(reviewedIcon == 2? '#FF4D00':'#BDBCBC'); // 好7图标
+  const[luckyState, changeLuckyState] = useState(reviewedIcon == 3? '#2AAA15':'#BDBCBC'); // 运气图标
   const[showModal, changeModalState] = useState(false); // modal 开关
   const[showToast, changeToastState] = useState(false); // toast 开关
   const[showCount, showCountState] = useState(reviewedIcon == 4? false:true); // 展示总数
@@ -29,16 +28,16 @@ export default function IconReview() {
     let dimensionIndex = -1;
     changeModalState(false);
     if ( clickedIconReview=='passIcon' ) {
-        changePassState(passIcon);
+        changePassState(['good-copy','#FFB017','20','50px','10rpx','icons pass-icon2']);
         dimensionIndex = 0;
     } else if ( clickedIconReview=='hardIcon' ) {
-        changeHardState(hardIcon);
+        changeHardState('#2230AF');
         dimensionIndex = 1;
     } else if ( clickedIconReview=='sevenIcon' ) {
-        changeSevenState(sevenIcon);
+        changeSevenState('#FF4D00');
         dimensionIndex = 2;
     } else if ( clickedIconReview=='luckyIcon' ) {
-        changeLuckyState(luckyIcon);
+        changeLuckyState('#2AAA15');
         dimensionIndex = 3;
     }
     const param = {
@@ -80,29 +79,32 @@ export default function IconReview() {
 
   return (
     <View className='icons-review' style={{marginLeft:marginLeft}}>
-      <View onclick={() => {reminder('passIcon')}} className='pass-view'>
-        <Image src={passState} className='icons pass-icon' />
-        <Text className='text'>好过{countText('passIcon')}
-        </Text>
+      <View onclick={() => {reminder('passIcon')}} className='pass-view'
+      style={{marginLeft:passState[4]}} >
+        <AtIcon prefixClass='icon' value={passState[0]} size={passState[2]} 
+        color={passState[1]} className={passState[5]}></AtIcon>
+        <Text className='text' style={{marginLeft:passState[3]}}>好过{countText('passIcon')}</Text>
       </View>
       <View onclick={() => {reminder('hardIcon')}} className='hard-view'>
-        <Image src={hardState} className='icons hard-icon'/>
+        <AtIcon prefixClass='icon' value='bad-fill-copy' size='26' color={hardState}
+          className='icons hard-icon' ></AtIcon>
         <Text className='text'>好难{countText('hardIcon')}</Text>
       </View>
       <View onclick={() => {reminder('sevenIcon')}} className='seven-view'>
-        <Image src={sevenState} className='icons seven-icon' />
-        <Text className='text'>好7{countText('sevenIcon')}</Text>
+        <AtIcon prefixClass='icon' value='seven-key-copy' size='20' color={sevenState}
+            className='icons seven-icon' ></AtIcon>
+        <Text className='text'>好拿7{countText('sevenIcon')}</Text>
       </View>
       <View onclick={() => {reminder('luckyIcon')}} className='lucky-view'>
-        <Image src={luckyState} className='icons lucky-icon' />
+        <AtIcon prefixClass='icon' value='lucky-copy' size='18' color={luckyState}
+          className='icons lucky-icon' ></AtIcon>
         <Text className='text'>看运气{countText('luckyIcon')}</Text>
       </View>
     
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
-            <Text className='modal-first-line'>评价不能修改</Text>
-            <Text className='modal-second-line'>请问确定要给予这个评价吗?</Text>
+            <Text>请问确定要点赞此评论吗?</Text>
           </AtModalContent>
           <AtModalAction> 
             <Button onClick={() => changeModalState(false)}>取消</Button> 

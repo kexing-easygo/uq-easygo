@@ -134,11 +134,11 @@ export default function Index() {
             className='function-icon'
             src={courseReviewIcon}
             mode="widthFix"
-            onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
-            // onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
+            // onClick={() => Taro.showToast({ title: '敬请期待', icon: 'none' })}
+            onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
           />
           <View className='title-text'
-            // onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
+            onClick={() => Taro.navigateTo({ url: '/pages/course-review/index' })}
             >课评</View>
         </View>
       </View>

@@ -5,21 +5,29 @@ import { AtIcon } from "taro-ui"
 import { AtModal, AtModalHeader, AtModalContent, AtModalAction, AtToast} from "taro-ui"
 import { useDispatch, useSelector } from 'react-redux'
 import { updateLikes } from "../../../services/review";
-import { setClickedReview } from "../../../features/review-slice"
+import { setClickedReview, setEditModal } from "../../../features/review-slice"
 import { fetchSubReviews } from "../../../services/review"
 
 /*
-别人的课评卡片 操作(评论，点赞)
+自己的课评卡片 操作(评论，修改，点赞)
 */
-export default function OthersReviewAction(props) {
-  // clicking 用于阻止 double-review页面  点击课评卡片or评论时 页面跳转
-  const{ type, reviewsCount, likesCount, review } = props; 
+export default function OwnReviewAction(props) {
+  const{ reviewsCount, likesCount, review } = props; 
   const { likesReviews, searchedCourse } = useSelector(state => state.review);
   const[showModal, changeModalState] = useState(false); // modal 开关
   const[showToast, changeToastState] = useState(false); // toast 开关
   // 是否点过赞
   const [state, setState] = useState(likesReviews.indexOf(review.review_id) == -1? false: true); 
   const dispatch = useDispatch();
+  const [bgColor, setBgColor] = useState("#ffffff");
+
+  useEffect(() => {
+    if (review.checked == "failed") {
+      setBgColor("red");
+    } else if (review.checked == "pending") {
+      setBgColor("gray")
+    }
+  }, []);
 
   // 改变图标样式 上传数据
   const changeState = () => {
@@ -51,14 +59,12 @@ export default function OthersReviewAction(props) {
     dispatch(fetchSubReviews(param));
   }
 
-  // 随着点赞 or not  调节点赞icon+text的位置
-  const changePosition = () => {
+   // 随着点赞 or not  调节点赞icon+text的位置
+   const changePosition = () => {
     if (state) {
-      return {iconMarginTop:'-1px', iconMarginRight:'98px',
-      textMarginTop:'-21px', textMarginRight:'44px'};
+      return {iconMarginTop:'-1px', textMarginTop:'-21px'};
     } else {
-      return {iconMarginTop:'-2px', iconMarginRight:'98px',
-      textMarginTop:'-24px', textMarginRight:'43px'};
+      return {iconMarginTop:'-2px', textMarginTop:'-24px'};
     }
   }
 
@@ -68,19 +74,27 @@ export default function OthersReviewAction(props) {
   })
 
   return (
-    <View className='icon-view'>
+    <View className='own-icon-view' style={{ backgroundColor: bgColor }}>
       <View className='review-icon' 
-        onClick={() => {type=='double-review-page' ? '':handleClick()}}>
+        onClick={() => {handleClick()}}>
         <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
           className='icon' ></AtIcon>
         <Text className='text'>评论({reviewsCount})</Text>
       </View>
 
+      <View className='edit-icon' onClick={() => {dispatch(setEditModal(true))}}>
+        <AtIcon prefixClass='icon' value='write-copy' size='23' color='#586EA9'
+          className='icon' ></AtIcon>
+        <Text className='text'>修改</Text>
+      </View>
+
       <View className='heart-icon' onClick={() => {checkState()}}>
         <AtIcon prefixClass='icon' value={state? 'good-copy':'good-fill-copy'} 
-          size={state? '19':'23'} color={state? '#FFB017':'#BDBCBC'}
-          className='icon'></AtIcon>
-        <Text className='text'>点赞({likesCount})</Text>
+          size={state? '19':'23'}color={state? '#FFB017':'#BDBCBC'}
+          className='icon' ></AtIcon>
+        <Text className='text'>
+          点赞({likesCount})
+        </Text>
       </View>
 
       <AtModal isOpened={showModal} onClose={() => changeModalState(false)}>
