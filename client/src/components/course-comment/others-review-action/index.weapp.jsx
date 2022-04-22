@@ -13,7 +13,7 @@ import { fetchSubReviews } from "../../../services/review"
 */
 export default function OthersReviewAction(props) {
   // clicking 用于阻止 double-review页面  点击课评卡片or评论时 页面跳转
-  const{ type, reviewsCount, likesCount, review } = props; 
+  const{ clicking, reviewsCount, likesCount, review } = props; 
   const { likesReviews, searchedCourse } = useSelector(state => state.review);
   const[showModal, changeModalState] = useState(false); // modal 开关
   const[showToast, changeToastState] = useState(false); // toast 开关
@@ -70,7 +70,7 @@ export default function OthersReviewAction(props) {
   return (
     <View className='icon-view'>
       <View className='review-icon' 
-        onClick={() => {type=='double-review-page' ? '':handleClick()}}>
+        onClick={() => {clicking? handleClick():''}}>
         <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
           className='icon' ></AtIcon>
         <Text className='text'>评论({reviewsCount})</Text>

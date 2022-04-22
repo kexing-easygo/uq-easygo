@@ -74,7 +74,7 @@ export default function OwnReviewAction(props) {
   })
 
   return (
-    <View className='own-icon-view' style={{ backgroundColor: bgColor }}>
+    <View className='own-icon-view'>
       <View className='review-icon' 
         onClick={() => {handleClick()}}>
         <AtIcon prefixClass='icon' value='comment_vs-copy' size='19' color='#586EA9'
