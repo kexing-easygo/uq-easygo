@@ -2,11 +2,11 @@
     "titleImage": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/image/titleImg.png",
     "carousel1": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图1.png",
     "carousel2": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图2.png",
-    "carousel3": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图3.JPG",
-    "carousel4": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动2.JPG",
+    "carousel3": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图3.png",
+    "carousel4": "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图4.png",
     "activities": [
-        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动1.JPG",
-        "https://7571-uqeasygo1-1302668990.tcb.qcloud.la/UQ/WechatIMG34143.png?sign=af16888b6799924670392a3dd081883c&t=1641875171",
-        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动2.JPG"
+        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动1.png",
+        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动2.png",
+        "cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动3.png"
     ]
 }

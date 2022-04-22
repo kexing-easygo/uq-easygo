@@ -8,28 +8,28 @@ import './index.less'
 import { useSelector, useDispatch } from 'react-redux'
 import { addReview, updateReview } from "../../../services/review"
 import { setEditModal } from "../../../features/review-slice"
-
+import { showContentState, setFloatTitle, setModalTitle } from "../../../features/review-slice";
 /*
 添加 or 修改课评
 */
 export default function AddReview() {
   const { clickedReview, editModal, searchedCourse } = useSelector(state => state.review);
+  const { showContent, floatTitle, modalTitle } = useSelector(state => state.review);
   const { nickName, avatarUrl } = useSelector(state => state.user);
   const [authorName, setAuthorName] = useState(nickName); // 作者名字
   const [semester, setSemester] = useState('Semester 2，2021'); // 学习学期
   const [mark, setMark] = useState(''); // 分数
   const [reviewContent, setReviewContent] = useState(''); // 评论内容
   const [editReview, setEditReview] = useState(false); // 修改模式开关
-  const [showContent, showContentState] = useState(false); // float layout 开关
+  // const [showContent, showContentState] = useState(false); // float layout 开关
   const [showSemester, showSemesterState] = useState(false); // 学期选项action sheet开关
   const [reminderText, setReminderText] = useState(''); // toast的文字
   const [showToast, setToastState] = useState(false); // toast开关
   const [showModal, changeModalState] = useState(false); // modal开关
   const [emptyName, setEmptyName] = useState(false); // 作者名字空白 or not
-  const [floatTitle, setFloatTitle] = useState(false); // float layout 标题（修改 or 添加）
-  const [modalTitle, setModalTitle]= useState(false);// modal 内容（修改 or 添加）
+  // const [floatTitle, setFloatTitle] = useState(false); // float layout 标题（修改 or 添加）
+  // const [modalTitle, setModalTitle]= useState(false);// modal 内容（修改 or 添加）
   const dispatch = useDispatch();
-
   // 检查所填内容
   const checkContent = () => {
     // setEmptySemester(false);
@@ -56,7 +56,7 @@ export default function AddReview() {
       setReminderText('请修改你的评论');
       setToastState(true);
     } else {
-      showContentState(false);
+      dispatch(showContentState(false));
       changeModalState(true);
     }
   }
@@ -115,14 +115,14 @@ export default function AddReview() {
       }
       dispatch(addReview(param));
     }
-    showContentState(false);
+    dispatch(showContentState(false));
     clearContent();
   }
 
   // 关闭学期选项 打开float layout 
   const closeActionSheet = () => {
     showSemesterState(false);
-    showContentState(true);
+    dispatch(showContentState(true));
   }
 
   // 填入之前编辑的内容 (修改时)
@@ -133,10 +133,10 @@ export default function AddReview() {
       setMark(clickedReview.mark);
       setReviewContent(clickedReview.content);
       setEditReview(true);
-      showContentState(true);
+      dispatch(showContentState(true));
+      dispatch(setFloatTitle(true));
+      dispatch(setModalTitle(true));
       dispatch(setEditModal(false));
-      setFloatTitle(true);
-      setModalTitle(true);
     }
   }
 
@@ -145,18 +145,19 @@ export default function AddReview() {
 
   return (
     <View>
-      <AtFab size='small' onClick={ () => {showContentState(true);setModalTitle(false);setFloatTitle(false);}}>
-        <Text className='at-fab__icon at-icon at-icon-add'></Text>
-      </AtFab>
-      
-      <AtFloatLayout isOpened={showContent}  title={floatTitle? '修改评论':'追加评论'}
-        onClose={() => {showContentState(false);clearContent();setModalTitle(false);}} >
+      {showContent && <>
+        <AtFloatLayout isOpened={showContent}  title={floatTitle? '修改评论':'追加评论'}
+        onClose={() => {
+          dispatch(showContentState(false));
+          clearContent();
+          dispatch(setModalTitle(false));
+        }} >
         <AtInput name='name' title='姓名' type='text' placeholder='' value={authorName} 
           border={false} error={emptyName} className='input-first-part single-input' 
           onChange={(value) => {setAuthorName(value)}} />
         <Image src={starIcon} className='first-star-icon' />
         <View className='semester' 
-          onClick={() => {showContentState(false);showSemesterState(true)}}>
+          onClick={() => {dispatch(showContentState(false));showSemesterState(true)}}>
           <Text>学习学期</Text>
           <Text className='select-semester'>{semester}</Text>
         </View>
@@ -176,6 +177,9 @@ export default function AddReview() {
           onClick={() => {clearContent()}} >
           删除</AtButton>
       </AtFloatLayout>
+      
+      </>}
+      
     
       <AtActionSheet isOpened={showSemester} cancelText='取消' title='请选择学期' 
         onCancel={() => {closeActionSheet()}} onClose={() => {closeActionSheet()}} >
@@ -195,15 +199,15 @@ export default function AddReview() {
         onClose={() => {setToastState(false);}} >
       </AtToast>
 
-      <AtModal isOpened={showModal} onClose={() => {changeModalState(false);showContentState(true)}}>
+      <AtModal isOpened={showModal} onClose={() => {changeModalState(false);dispatch(showContentState(true))}}>
           <AtModalHeader>温馨提示</AtModalHeader>
           <AtModalContent>
             {modalTitle? '请问确定要修改此评论吗?':'请问确定要添加此评论吗?'}
           </AtModalContent>
           <AtModalAction> 
-            <Button onClick={() => {changeModalState(false);showContentState(true)}}>取消
+            <Button onClick={() => {changeModalState(false);dispatch(showContentState(true))}}>取消
             </Button> 
-            <Button onClick={() => {changeModalState(false);submitData();setFloatTitle(false);}}>确定</Button> 
+            <Button onClick={() => {changeModalState(false);submitData();dispatch(setFloatTitle(false));}}>确定</Button> 
           </AtModalAction>
       </AtModal>
     </View>

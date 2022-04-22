@@ -5,7 +5,6 @@ export default {
     'pages/profile/index',
     'pages/basic-setting/index',
     'pages/basic-info/index',
-    'pages/bind-mobile/index',
     'pages/bind-email/index',
     'pages/timetable/index',
     'pages/add-class/index',

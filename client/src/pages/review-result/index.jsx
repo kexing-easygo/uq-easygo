@@ -3,13 +3,13 @@ import { View, Text} from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
-import { AtList, AtNoticebar, AtAccordion  } from "taro-ui"
+import { AtList, AtNoticebar, AtAccordion, AtFab  } from "taro-ui"
 import CourseInfo from '../../components/course-comment/course-info'
 import IconReview from '../../components/course-comment/icon-review'
 import AddReview from '../../components/course-comment/add-review'
 import ReviewCard from '../../components/course-comment/review-card'
 import { setClickedReview } from "../../features/review-slice";
-
+import { showContentState, setFloatTitle, setModalTitle } from "../../features/review-slice";
 
 export default function ReviewResultPage() {
   const { reviews, searchedCourse } = useSelector(state => state.review);
@@ -42,7 +42,15 @@ export default function ReviewResultPage() {
       <View className='fab-background'></View>
       <View className='add-icon'>
         
-      <AddReview onClick={() => {pageScrollState(stopScroll)}} />
+      <AtFab size='small' onClick={() => {
+        dispatch(showContentState(true));
+        dispatch(setModalTitle(false));
+        dispatch(setFloatTitle(false));
+        pageScrollState(stopScroll)
+      }}>
+        <Text className='at-fab__icon at-icon at-icon-add'></Text>
+      </AtFab>  
+      <AddReview />
       </View>
 
       <View className='reviews'>

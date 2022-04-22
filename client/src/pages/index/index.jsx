@@ -12,7 +12,7 @@ import './index.less'
 import TodayCourse from '../../components/index/today-course/index'
 import NewActivities from '../../components/index/new-activities/index'
 import { PROGRAM_NAME } from '../../config.json'
-import { notifyAdmin } from "../../plugins/alert";
+
 export default function Index() {
   const { 
     newActivities,
@@ -20,7 +20,7 @@ export default function Index() {
     recentAssignments
   } = useSelector(state => state.user.cardsInfo);
   // const {
-  //   carousel1, carousel2, carousel3
+  //   carousel1, carousel2, carousel3, carousel4,
   // } = useSelector(state => state.resource)
   useShareAppMessage(res => {
     if (res.from === 'button') {

@@ -93,7 +93,7 @@ export default function IconReview() {
       <View onclick={() => {reminder('sevenIcon')}} className='seven-view'>
         <AtIcon prefixClass='icon' value='seven-key-copy' size='20' color={sevenState}
             className='icons seven-icon' ></AtIcon>
-        <Text className='text'>好拿7{countText('sevenIcon')}</Text>
+        <Text className='text'>高分{countText('sevenIcon')}</Text>
       </View>
       <View onclick={() => {reminder('luckyIcon')}} className='lucky-view'>
         <AtIcon prefixClass='icon' value='lucky-copy' size='18' color={luckyState}

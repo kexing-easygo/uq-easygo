@@ -22,7 +22,10 @@ const initialState = {
   editSubReview: false, // 追评修改模式
   clickedSubReview: {}, // 点击的追评
   turnPage: [], // 判断 是否全都获取到 课程信息, 课评,
-  uncheckedReviews: [] 
+  uncheckedReviews: [] ,
+  showContent: false,
+  floatTitle: false,
+  modalTitle: false
 }
 
 export const reviewSlice = createSlice({
@@ -61,6 +64,15 @@ export const reviewSlice = createSlice({
     // 回复追评
     setReplySubReview: (state, action) => {
       state.replySubReview = action.payload;
+    },
+    showContentState: (state, action) => {
+      state.showContent = action.payload
+    },
+    setFloatTitle: (state, action) => {
+      state.floatTitle = action.payload
+    },
+    setModalTitle: (state, action) => {
+      state.modalTitle = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -254,4 +266,5 @@ export const reviewSlice = createSlice({
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions
 export const { setEditModal, setSubReviewEdit, setClickedSubReview } = reviewSlice.actions
 export const { setTurnPage, setReplySubReview } = reviewSlice.actions
+export const { showContentState, setFloatTitle, setModalTitle } = reviewSlice.actions
 export default reviewSlice.reducer

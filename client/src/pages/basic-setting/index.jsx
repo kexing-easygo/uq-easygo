@@ -49,10 +49,10 @@ export default function BasicSetting() {
 
         <AtListItem
           title='上课提醒'
-          // extraText='敬请期待'
-          // disabled={!loginStatus}
+          extraText='敬请期待'
+          disabled={!loginStatus}
           arrow='right'
-          onClick={() => dispatch(setClassNotifyWindow(true))}
+          // onClick={() => dispatch(setClassNotifyWindow(true))}
         />
       </AtList>
 

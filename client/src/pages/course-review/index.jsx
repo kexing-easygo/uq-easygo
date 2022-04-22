@@ -15,7 +15,7 @@ import { getUserProfile } from '../../services/login'
 export default function Review() {
   const dispatch = useDispatch();
   const [courseCode, setCourseCode] = useState(''); // 搜索框输入的课程代码
-  const { hotCourses, turnPage } = useSelector(state => state.review);
+  const { hotCourses } = useSelector(state => state.review);
   const { selectedCourses } = useSelector(state => state.course);
   const { loginStatus } = useSelector(state => state.user);
   let courses = []; // 猜你想搜 列表 = 选课 + 热搜课
@@ -88,18 +88,6 @@ export default function Review() {
     return true;
   }
 
-  useEffect(() => {
-    dispatch(fetchHotResearches());
-  }, [])
-  
-  // 跳转页面  课程信息, 课评 全都获取到 才可以
-  // useEffect(() => {
-  //   if (turnPage.length == 2) {
-  //     Taro.navigateTo({ url: '/pages/review-result/index' });
-  //     dispatch(setTurnPage());
-  //   };
-  // })
-
   return (
     <View className='selector-container'>
       <NavBar title="课评" backIcon />
@@ -111,19 +99,11 @@ export default function Review() {
           onChange={(value) => {setCourseCode(value.toUpperCase())}}
           onActionClick={debounce(handleSearchCourse, 1000)} />
       </View>
-      {/*
-      <View className='course-selector input-element'>
-        <Input className='review-input' type='text' value={courseCode} placeholder={'课程代码'}
-          onInput={event => setCourseCode(event.target.value.toUpperCase())}
-          onBlur={e => dispatch(setSearchedCourse(courseCode))} />
-        <View className='icon-btn' onClick={debounce(handleSearchCourse, 1000)}> GO </View>
-      </View>
-      */}
       <View className='courseSuggestion'>
-        <view className = 'guess-background'>
+        <View className = 'guess-background'>
           <View className='blue-block'></View>
           <Text className='title'>猜你想搜</Text>
-        </view>
+        </View>
         <AtList className='course-top' hasBorder={false} >
           {courseList(), courses.map((value) => {
             return(
