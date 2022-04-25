@@ -1,9 +1,8 @@
-import React, { useEffect, Component } from 'react'
+import React, { useEffect } from 'react'
 import Taro from '@tarojs/taro'
 import 'taro-ui/dist/style/index.scss'
 import './app.less'
 import './icon.css'
-import { getLoginStatus } from './services/login'
 import store from './store'
 import { Provider } from 'react-redux'
 

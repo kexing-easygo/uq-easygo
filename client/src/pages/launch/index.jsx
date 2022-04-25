@@ -31,7 +31,7 @@ export default function Launch() {
         let loginStatus = await getLoginStatus();
         console.log('launch', loginStatus);
         dispatch(fetchHotResearches())
-        // dispatch(fetchImages())
+        dispatch(fetchImages())
         dispatch(setLoginStatus(loginStatus));
         if (loginStatus) {
           dispatch(fetchUserInfo());

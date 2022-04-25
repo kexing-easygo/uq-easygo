@@ -45,4 +45,5 @@ export default {
     }]
   },
   cloud: true,
+  "lazyCodeLoading": "requiredComponents"
 }

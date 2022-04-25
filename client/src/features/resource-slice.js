@@ -9,6 +9,13 @@ const initialState = {
   activity1: '',
   activity2: '',
   activity3: '',
+  carousel1_url: '',
+  carousel2_url: '',
+  carousel3_url: '',
+  carousel4_url: '',
+  activity1_url: '',
+  activity2_url: '',
+  activity3_url: '',
   loaded: false
 }
 
@@ -34,14 +41,25 @@ export const resourceSlice = createSlice({
     builder
     .addCase(fetchImages.fulfilled, (state, action) => {
       console.log("图片拉取成功")
-      console.log(action.payload)
-      state.carousel1 = action.payload[0]
-      state.carousel2 = action.payload[1]
-      state.carousel3 = action.payload[2]
-      state.carousel4 = action.payload[3]
-      state.activity1 = action.payload[4]
-      state.activity2 = action.payload[5]
-      state.activity3 = action.payload[6]
+      // console.log(action.payload)
+      const { files, articles } = action.payload
+      // 轮播图 + 最新活动
+      state.carousel1 = files[0]
+      state.carousel2 = files[1]
+      state.carousel3 = files[2]
+      state.carousel4 = files[3]
+      state.activity1 = files[4]
+      state.activity2 = files[5]
+      state.activity3 = files[6]
+      // 推文链接
+      state.carousel1_url = articles[0]
+      state.carousel2_url = articles[1]
+      state.carousel3_url = articles[2]
+      state.carousel4_url = articles[3]
+      state.activity1_url = articles[4]
+      state.activity2_url = articles[5]
+      state.activity3_url = articles[6]
+
     })
   }
 })
