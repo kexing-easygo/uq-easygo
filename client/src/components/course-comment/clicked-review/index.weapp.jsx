@@ -41,7 +41,7 @@ export default function ClickedReview() {
       
       <View className='review-heart'>
         <OthersReviewAction reviewsCount={numOfComments} likesCount={likes.length} 
-         review={clickedReview} clicking={false} />
+         review={clickedReview} type={'double-review'} />
       </View>
     </View>
   )

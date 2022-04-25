@@ -166,7 +166,7 @@ export default function AddReview() {
           border={false} placeholder='成绩不会以任何方式泄漏' value={mark}
           onChange={(value) => {setMark(value)}} />
         <View className='text-area' >
-          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={300} 
+          <AtTextarea maxLength={150} placeholder='请写下你的评论' height={220} 
           value={reviewContent} showConfirmBar={true} 
           onChange={(value) => {setReviewContent(value)}} />
         </View>

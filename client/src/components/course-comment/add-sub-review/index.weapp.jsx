@@ -174,7 +174,7 @@ export default function AddSubReview() {
           onChange={(value) => {setAuthorName(value)}} />
         <Image src={starIcon} className='first-star-icon' />
         <View className='text-area' >
-          <AtTextarea maxLength={150} placeholder={placeholder} height={300} value={reviewContent} 
+          <AtTextarea maxLength={150} placeholder={placeholder} height={220} value={reviewContent} 
           showConfirmBar={true} onChange={(value) => {setReviewContent(value)}}  />
         </View>
         <AtButton type='primary'  size='small'  className='button1' 
