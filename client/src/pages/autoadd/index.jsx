@@ -23,8 +23,7 @@ export default function AutoAdd() {
     const { currentSemester } = useSelector(state => state.course)
     const { classMode } = useSelector(state => state.user)
     const dispatch = useDispatch()
-    // 页面传参，判断是从哪个页面过来的
-    const { paramTransferred } = getCurrentInstance();
+    
 
     /**
      * 点击搜索后，调取本门课的所有assessments
@@ -64,7 +63,7 @@ export default function AutoAdd() {
         dispatch(autoAppendAssignments({ assignments: selectedAssessments }))
 
         if (Current.router.params.from === "timetable") { 
-            Taro.redirectTo({ url: '/pages/timetable/index'});
+            Taro.reLaunch({ url: '/pages/timetable/index'});
         } else {
             Taro.navigateBack();
         }        
