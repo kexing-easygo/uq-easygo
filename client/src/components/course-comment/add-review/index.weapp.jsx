@@ -17,7 +17,7 @@ export default function AddReview() {
   const { showContent, floatTitle, modalTitle } = useSelector(state => state.review);
   const { nickName, avatarUrl } = useSelector(state => state.user);
   const [authorName, setAuthorName] = useState(nickName); // 作者名字
-  const [semester, setSemester] = useState('Semester 2，2021'); // 学习学期
+  const [semester, setSemester] = useState('请选择学期'); // 学习学期
   const [mark, setMark] = useState(''); // 分数
   const [reviewContent, setReviewContent] = useState(''); // 评论内容
   const [editReview, setEditReview] = useState(false); // 修改模式开关
@@ -46,6 +46,9 @@ export default function AddReview() {
       setReminderText('不可以这样写名字哦'); // 名字只有‘我‘ 
       setEmptyName(true);
       setToastState(true);
+    } else if (semester.indexOf('请') == 0) {
+      setReminderText('请选择学期');
+      setToastState(true);
     } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
      ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
@@ -64,7 +67,7 @@ export default function AddReview() {
   // 清空所填内容
   const clearContent = () => {
     setAuthorName(nickName);
-    setSemester('Semester 2，2021');
+    setSemester('请选择学期');
     setMark('');
     setReviewContent('');
     setEmptyName(false);
