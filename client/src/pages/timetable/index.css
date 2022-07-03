@@ -1,0 +1,62 @@
+page {
+  background-color: #e5eaf4;
+}
+page .fab {
+  position: fixed;
+  bottom: 88rpx;
+  right: 40px;
+}
+page .active {
+  opacity: 1;
+  visibility: visible;
+  transition: all 500ms ease;
+}
+page .inactive {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 500ms ease;
+}
+page .info-text {
+  color: #808080;
+}
+page .title-text {
+  color: #2c405a;
+  font-size: 28rpx;
+}
+page .center-text {
+  text-align: center;
+}
+page .empty-page-text {
+  margin-top: 30vh;
+}
+page .at-modal__content {
+  min-height: auto;
+  text-align: center;
+}
+page {
+  font-size: 30px;
+}
+page .auto-import-fab {
+  position: fixed;
+  right: 40rpx;
+  bottom: 88rpx;
+}
+page .icon {
+  margin-left: 4rpx;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.container .time-course-view {
+  display: flex;
+  flex-grow: 1;
+}
+.cell {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
