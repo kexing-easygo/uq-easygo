@@ -15,10 +15,7 @@ export const fetchUncheckedReviews = createAsyncThunk(
     return res.result
   }
 )
-// export const fetchUncheckedReviews = async () => {
-//     const res = await callCloud('review', 'getAllUncheckedReview', {});   
-//     return res.result
-// }
+
 
 export const markReviewAsPassed = createAsyncThunk(
   'review/markReviewAsPassed',
@@ -26,11 +23,13 @@ export const markReviewAsPassed = createAsyncThunk(
     const {
       openid,
       review_id,
-      courseCode
+      courseCode,
+      isBonus
     } = param
-    const res = await callCloud('review', 'markReviewAsPassed', {
+    await callCloud('review', 'markReviewAsPassed', {
       openid: openid,
       review_id: review_id,
+      isBonus: isBonus
     })
     return [courseCode, review_id]
   }
