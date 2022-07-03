@@ -61,7 +61,7 @@ export default function Profile() {
           onClick={() => Taro.navigateTo({ url: '/pages/course-management/index' })}
         />
         <AtListItem
-          title='卡片管理'
+          title='卡片管理2'
           arrow='right'
           iconInfo={getIcon('bookmark')}
           onClick={() => Taro.navigateTo({ url: '/pages/card-management/index' })}
