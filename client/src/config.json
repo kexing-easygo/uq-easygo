@@ -6,18 +6,26 @@
   "SUMMER_WEEKS": 7,
   "SUMMER_START_DATE_STRING": "Mon Jan 3 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
   "SEMESTER_WEEKS": 14,
-  "SEMESTER_START_DATE_STRING": "Mon Feb 21 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
-  "SEMESTERS": [
-    "Summer Semester",
+  "SEMESTER_START_DATE_STRING": "Mon Jul 25 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
+  "REVIEW_SEMESTER": [
+    "Semester 1, 2019",
+    "Semester 2, 2019",
+    "Semester 1, 2020",
+    "Semester 2, 2020",
+    "Semester 1, 2021",
+    "Semester 2, 2021",
     "Semester 1, 2022"
   ],
-  "CURRENT_SEMESTER": "Semester 1, 2022",
-  "CLASS_MODE_OPTIONS": [
-    "澳洲境内",
-    "中国境内"
+  "SEMESTERS": [
+    "Summer Semester, 2021",
+    "Semester 1, 2022",
+    "Winter Semester, 2022",
+    "Semester 2, 2022"
   ],
+  "CURRENT_SEMESTER": "Semester 2, 2022",
+  "CLASS_MODE_OPTIONS": ["澳洲境内", "中国境内"],
   "AU_TIME_ZONE": "AEST",
-  "SEMESTER_BREAK": 9,
+  "SEMESTER_BREAK": 10,
   "WELCOME_MESSAGE": "UQ校园通!!!",
   "SEARCHBAR_DEFAULT_PLACEHOLDER": "CSSE1001",
   "CAROUSEL1_URL": "",
@@ -32,7 +40,7 @@
   "WECHAT_ACCOUNT": "UQ校园通",
   "VERSION": "Version 1.1.5",
   "SUBSCRIBE_TEMPLATE_ID": "3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U",
-  "UTC_START_TIME": "2022-02-21 00:00:00",
+  "UTC_START_TIME": "2022-07-25 00:00:00",
   "TIMETABLE_TEACHING_ARTICLE_LINK": "https://mp.weixin.qq.com/s/ZbfqSCF80isyL0Fc78N57w",
   "REVIEW_CHECKED_TEMPLATE_ID": "YfOxsAF8UcHcqsda2vC41fJbuj-gNNJJ8ZNrFwUfCcA"
 }

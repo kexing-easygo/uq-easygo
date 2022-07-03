@@ -45,5 +45,15 @@
   "compileType": "miniprogram",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
-  "condition": {}
+  "condition": {},
+  "libVersion": "2.23.4",
+  "srcMiniprogramRoot": "client/dist/",
+  "packOptions": {
+    "ignore": [],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  }
 }

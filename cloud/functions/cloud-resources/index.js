@@ -40,10 +40,10 @@ const FILE_LIST_BY_BRANCH = {
     "articles": [
       "",
       "",
-      "",
+      "https://mp.weixin.qq.com/s/gWhnWg42eHs7PX-zxiKYEg",
       "https://mp.weixin.qq.com/s/WSZx8E1KfwV2DW5SVVixPA",
       "",
-      "https://mp.weixin.qq.com/s/WSZx8E1KfwV2DW5SVVixPA",
+      "https://mp.weixin.qq.com/s/gWhnWg42eHs7PX-zxiKYEg",
       "",
     ]
   },
@@ -61,10 +61,10 @@ const FILE_LIST_BY_BRANCH = {
       "",
       "",
       "https://mp.weixin.qq.com/s/zhn9aWAkVuvOnPB3v_HrKA",
-      "https://mp.weixin.qq.com/s/cSzW-G6bt5EwfEKZBCU0gQ",
+      "https://mp.weixin.qq.com/s/ic6wXlIIpt-cRTiVEdHfnw",
       "https://mp.weixin.qq.com/s/H6-CzRMTegCOZuiCkfvfwA",
       "https://mp.weixin.qq.com/s/zhn9aWAkVuvOnPB3v_HrKA",
-      "https://mp.weixin.qq.com/s/cSzW-G6bt5EwfEKZBCU0gQ",
+      "https://mp.weixin.qq.com/s/ic6wXlIIpt-cRTiVEdHfnw",
     ]
   }
 }
