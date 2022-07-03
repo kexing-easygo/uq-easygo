@@ -33,15 +33,9 @@ export default function AddReview() {
   );
   const { nickName, avatarUrl } = useSelector(state => state.user);
   const [authorName, setAuthorName] = useState(nickName); // 作者名字
-<<<<<<< Updated upstream
   const [semester, setSemester] = useState('请选择学期'); // 学习学期
   const [mark, setMark] = useState(''); // 分数
   const [reviewContent, setReviewContent] = useState(''); // 评论内容
-=======
-  const [semester, setSemester] = useState("Semester 2，2021"); // 学习学期
-  const [mark, setMark] = useState(""); // 分数
-  const [reviewContent, setReviewContent] = useState(""); // 评论内容
->>>>>>> Stashed changes
   const [editReview, setEditReview] = useState(false); // 修改模式开关
   // const [showContent, showContentState] = useState(false); // float layout 开关
   const [showSemester, showSemesterState] = useState(false); // 学期选项action sheet开关
@@ -72,21 +66,12 @@ export default function AddReview() {
       setReminderText("不可以这样写名字哦"); // 名字只有‘我‘
       setEmptyName(true);
       setToastState(true);
-<<<<<<< Updated upstream
     } else if (semester.indexOf('请') == 0) {
       setReminderText('请选择学期');
       setToastState(true);
     } else if (reviewContent.length == 0 || reviewContent.replace(/ /g,'').replace(/\n/g,'').length == 0 
      ) { // 评论内容没填 or 填入空白字符
       setReminderText('请写下你的评论');
-=======
-    } else if (
-      reviewContent.length == 0 ||
-      reviewContent.replace(/ /g, "").replace(/\n/g, "").length == 0
-    ) {
-      // 评论内容没填 or 填入空白字符
-      setReminderText("请写下你的评论");
->>>>>>> Stashed changes
       setToastState(true);
     } else if (
       editReview &&
@@ -107,15 +92,9 @@ export default function AddReview() {
   // 清空所填内容
   const clearContent = () => {
     setAuthorName(nickName);
-<<<<<<< Updated upstream
     setSemester('请选择学期');
     setMark('');
     setReviewContent('');
-=======
-    setSemester("Semester 2，2021");
-    setMark("");
-    setReviewContent("");
->>>>>>> Stashed changes
     setEmptyName(false);
     setEditReview(false);
   };
