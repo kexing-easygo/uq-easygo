@@ -122,6 +122,7 @@ async function addSubReview(
       .digest("hex"),
     postDate: dateTime.date,
     postTime: dateTime.time,
+    checked:"pending",
     ...subReviewObj,
   };
   await db
@@ -220,6 +221,7 @@ async function updateSubReview(
   updatedSubreview.content = content;
   updatedSubreview.postDate = dateTime.date;
   updatedSubreview.postTime = dateTime.time;
+  updatedSubreview.checked = "pending";
   await db
     .collection(collectionName)
     .where({
@@ -418,6 +420,87 @@ const getAllSubReview = async (collectionName, courseName, reviewId) => {
   });
   return subReviews;
 };
+
+const fetchAllSubReviews = async (collectionName) => {
+  const res = await await db
+    .collection(collectionName)
+    .where({
+      "review":_.neq([]),
+      // "review.sub_review":_.neq([])
+    })
+    .get();
+  let result = []
+  res.data.map((course)=>{
+    course.review.map((review)=>{
+      review.sub_review.map((sub_review=>{
+        var id = review.review_id;
+        var result2={
+          mainReview_id:id,
+          mainReview_content:review.content,
+          ...sub_review
+        }
+        result.push(result2)
+      }))
+    })
+  })
+  return result;
+  // return "1111";
+}
+
+const markSubReviewAsPassed = async (collection, review_id,mainReview_id) => {
+  const res = await db
+  .collection(collection)
+  .where({
+    "review.sub_review.review_id": review_id,
+  }).get();
+  const reviews = res.data[0].review;
+  const reviewIndex = reviews.findIndex((c) => c.review_id == mainReview_id);
+  const subReviews = reviews[reviewIndex].sub_review;
+  const subReviewIndex = subReviews.findIndex(
+    (c1) => c1.review_id == review_id
+  );
+  const updatedSubreview = subReviews[subReviewIndex];
+  updatedSubreview.checked = "pass";
+  await db
+  .collection(collection)
+  .where({
+    "review.sub_review.review_id": review_id,
+  })
+  .update({
+    data: {
+      review: reviews,
+    },
+  });
+  return "passed 成功";
+}
+
+const markSubReviewAsFailed = async (collection, review_id,mainReview_id) => {
+  // const collectionName = branch + REVIEW_SUFFIX;
+  const res = await db
+  .collection(collection)
+  .where({
+    "review.sub_review.review_id": review_id,
+  }).get();
+  const reviews = res.data[0].review;
+  const reviewIndex = reviews.findIndex((c) => c.review_id == mainReview_id);
+  const subReviews = reviews[reviewIndex].sub_review;
+  const subReviewIndex = subReviews.findIndex(
+    (c1) => c1.review_id == review_id
+  );
+  const updatedSubreview = subReviews[subReviewIndex];
+  updatedSubreview.checked = "failed";
+  await db
+  .collection(collection)
+  .where({
+    "review.sub_review.review_id": review_id,
+  })
+  .update({
+    data: {
+      review: reviews,
+    },
+  });
+  return "failed 成功";
+}
 
 /**
  * 返回某门课的基本课程信息
@@ -773,4 +856,18 @@ exports.main = async (event, context) => {
     return await getAllReviewRegex(branch + "_Courses", payload);
   }
 
+  if(method == "fetchAllSubReviews"){
+    return await fetchAllSubReviews(collectionName);
+  }
+
+  if(method == "markSubReviewAsPassed"){
+    const { review_id,mainReview_id} = event;
+    return await markSubReviewAsPassed(collectionName,review_id,mainReview_id);
+  }
+
+  if(method == "markSubReviewAsFailed"){
+    const { review_id,mainReview_id} = event;
+
+    return await markSubReviewAsFailed(collectionName,review_id,mainReview_id);
+  }
 };
