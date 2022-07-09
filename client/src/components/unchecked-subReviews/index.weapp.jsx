@@ -15,7 +15,8 @@ export default function UncheckedList(props) {
     postTime,
     content,
     review_id,
-    mainReview_id
+    mainReview_id,
+    mainReview_content
   } = props.review;
 
   const dispatch = useDispatch();
@@ -43,7 +44,8 @@ export default function UncheckedList(props) {
       title={` ${postDate} ${postTime}`}
       className="uncheckedReview"
     >
-      <View className="uncheckedReview__content">{content}</View>
+      <View className="uncheckedReview__content">主评： {mainReview_content}</View>
+      <View className="uncheckedReview__content">追评： {content}</View>
       <View className="uncheckedReview__buttons">
         <AtButton
           onClick={handlePass}

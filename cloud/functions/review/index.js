@@ -389,6 +389,7 @@ const fetchAllSubReviews = async (collectionName) => {
         var id = review.review_id;
         var result2={
           mainReview_id:id,
+          mainReview_content:review.content,
           ...sub_review
         }
         result.push(result2)
@@ -412,7 +413,7 @@ const markSubReviewAsPassed = async (collection, review_id,mainReview_id) => {
     (c1) => c1.review_id == review_id
   );
   const updatedSubreview = subReviews[subReviewIndex];
-  updatedSubreview.checked = "passed";
+  updatedSubreview.checked = "pass";
   await db
   .collection(collection)
   .where({
