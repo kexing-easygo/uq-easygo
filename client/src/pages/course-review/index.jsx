@@ -20,6 +20,7 @@ export default function Review() {
   const { loginStatus } = useSelector(state => state.user);
   let courses = []; // 猜你想搜 列表 = 选课 + 热搜课
   const [showModal, setShowModal] = useState(!loginStatus); // 有无登录
+  const [showAutocomplete, setAutocomplete] = useState('none'); // 是否展示联想框
   const modalContent = { // 登录提示框 
     title: '尚未登录', 
     onConfirm: () => {
@@ -52,14 +53,8 @@ export default function Review() {
   // 处理搜索的课程
   const handleSearchCourse = async () => {
     if (handleLoginStatus()) {
-      if (courseCode.length == 0 ) {
-        await Taro.showToast({
-          title: "请输入课程代码",
-          icon: "none"
-        })
-        return;
-      } 
-      getData(courseCode.slice().replace(/ /g,''));
+      
+      setAutocomplete('block');
   }}
 
   // 处理点击的热搜课程
@@ -96,8 +91,12 @@ export default function Review() {
           placeholder='输入课程代码'
           actionName='搜索'
           value={courseCode}
-          onChange={(value) => {setCourseCode(value.toUpperCase())}}
-          onActionClick={debounce(handleSearchCourse, 1000)} />
+          onChange={(value) => {setCourseCode(value.toUpperCase());setAutocomplete('none');}}
+          onActionClick={debounce(handleSearchCourse, 1000)}
+          />
+      </View>
+      <View className='autocomplete' style={{display:showAutocomplete}}>
+        <Text className='title'>csse1001</Text>
       </View>
       <View className='courseSuggestion'>
         <View className = 'guess-background'>
@@ -109,7 +108,7 @@ export default function Review() {
             return(
               <AtListItem className='course-list' 
               title={value} hasBorder={false} arrow='right'
-              onClick={() => {debounce(handleClickCourse(value), 1000)}} />
+              onClick={() => {debounce(handleClickCourse(value), 1000);setAutocomplete('none');}} />
           )})}
         </AtList>
       </View>
