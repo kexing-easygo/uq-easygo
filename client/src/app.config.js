@@ -21,7 +21,8 @@ export default {
     "pages/countingdown/index",
     "pages/autoadd/index",
     "pages/double-review/index",
-    "pages/check-reviews/index"
+    "pages/check-reviews/index",
+    "pages/check-subReviews/index"
   ],
   window: {
     backgroundTextStyle: "light",

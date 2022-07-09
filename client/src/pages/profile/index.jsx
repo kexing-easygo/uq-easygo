@@ -61,7 +61,7 @@ export default function Profile() {
           onClick={() => Taro.navigateTo({ url: '/pages/course-management/index' })}
         />
         <AtListItem
-          title='卡片管理2'
+          title='卡片管理'
           arrow='right'
           iconInfo={getIcon('bookmark')}
           onClick={() => Taro.navigateTo({ url: '/pages/card-management/index' })}
@@ -73,7 +73,12 @@ export default function Profile() {
           iconInfo={getIcon('filter')}
           onClick={() => Taro.navigateTo({ url: '/pages/check-reviews/index' })}
         />}
-        
+        { <AtListItem
+          title='追评审核'
+          arrow='right'
+          iconInfo={getIcon('filter')}
+          onClick={() => Taro.navigateTo({ url: '/pages/check-subReviews/index' })}
+        />}
       </AtList>
       <AtList hasBorder={false}>
         <AtListItem
