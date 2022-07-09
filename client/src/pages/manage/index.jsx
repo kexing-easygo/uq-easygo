@@ -5,5 +5,9 @@ import { View, Text, Button, Image } from "@tarojs/components";
 import ManageCarousel from "../../components/manage/manage-carousel";
 
 export default function Manage() {
-  return <ManageCarousel />;
+  return (
+    <View>
+      <ManageCarousel />
+    </View>
+  );
 }

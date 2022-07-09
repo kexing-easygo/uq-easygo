@@ -45,7 +45,7 @@ const omitSubReview = (singleReview) => {
  * @param {Object} reviewObj
  */
 async function addReview(branch, reviewObj) {
-  const collectionName = branch + REVIEW_SUFFIX
+  const collectionName = branch + REVIEW_SUFFIX;
   const dateTime = getDateTime();
   const reviewContent = reviewObj.content;
   const reviewobject = {
@@ -82,15 +82,15 @@ async function addReview(branch, reviewObj) {
     "251429669@qq.com",
     "lyxhahcjy@outlook.com",
     "15265252903@163.com",
-    "17739036400@163.com"
+    "17739036400@163.com",
   ];
   await cloud.callFunction({
     // 要调用的云函数名称
     name: "email",
     // 传递给云函数的参数
     data: {
-      // toAddr: "913248383@qq.com, 17739036400@163.com",
-      toAddr: "913248383@qq.com",
+      toAddr: "913248383@qq.com, 17739036400@163.com, xs.le804@gmail.com, 251429669@qq.com, lyxhahcjy@outlook.com",
+      // toAddr: "913248383@qq.com",
       content: "主评添加提醒\n\n\n" + content,
       subject: "课行校园通 - 主评添加提醒",
     },
@@ -347,6 +347,53 @@ async function getAllReview(collectionName, courseName) {
     dimensions: res[0].dimensions,
   };
 }
+
+const getAllReviewRegex = async (collectionName, payload) => {
+  let res1 = await db
+    .collection(collectionName)
+    .where({
+      _id: db.RegExp({
+        regexp: payload,
+        options: "i",
+      }),
+    })
+    .get();
+  const data1 = res1.data;
+  let res2 = await db
+    .collection(collectionName)
+    .where({
+      "academic_detail.unit_name": db.RegExp({
+        regexp: payload,
+        options: "i",
+      }),
+    })
+    .get();
+  const data2 = res2.data;
+  data1.push(...data2);
+  return data1;
+};
+
+const getCourseDetailRegex = async (collectionName, payload) => {
+  // 数据库正则对象
+  let res = await db
+    .collection(collectionName)
+    .where({
+      "academic_detail.unit_name": db.RegExp({
+        regexp: payload,
+        options: "i",
+      }),
+    })
+    .get();
+  let data = res.data;
+  if (data.length == 0) return [];
+  const result = data.map((singleCourse) => {
+    return {
+      _id: singleCourse._id,
+      unit_name: singleCourse.academic_detail.unit_name,
+    };
+  });
+  return result;
+};
 
 /**
  * 返回某条主评的所有追评
@@ -720,4 +767,10 @@ exports.main = async (event, context) => {
     const { courseCode, review_id } = event;
     return await markReviewOutstanding(collectionName, courseCode, review_id);
   }
+
+  if (method == "getAllReviewRegex") {
+    const { payload } = event;
+    return await getAllReviewRegex(branch + "_Courses", payload);
+  }
+
 };
