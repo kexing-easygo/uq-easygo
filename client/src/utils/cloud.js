@@ -24,9 +24,8 @@ export const initCloud = async () => {
 export const callCloud = async (name, method, args = {}) => {
   const _data = {
     method: method,
-    // branch: BRANCH_NAME
-    branch: "Test"
-  }
+    branch: BRANCH_NAME
+  };
   switch (BRANCH_NAME) {
     case "UQ":
       return await Taro.cloud.callFunction({

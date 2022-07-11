@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchHotResearches,  fetchCourseInfo, addReviewDimensions } from '../services/review'
 import { fetchReviews, deleteReview, addReview, updateReview } from '../services/review'
 import { fetchSubReviews, addSubReview ,updateSubReview, deleteSubReview } from '../services/review'
-import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed,fetchAllSubReviews,markSubReviewAsFailed,markSubReviewAsPassed } from "../services/checkReviews";
+import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed } from "../services/checkReviews";
 import { updateLikes } from '../services/review'
 import { REVIEW_CHECKED_TEMPLATE_ID } from "../config.json";
 
@@ -25,8 +25,7 @@ const initialState = {
   uncheckedReviews: [] ,
   showContent: false,
   floatTitle: false,
-  modalTitle: false,
-  allSubReviews:[]
+  modalTitle: false
 }
 
 export const reviewSlice = createSlice({
@@ -261,22 +260,6 @@ export const reviewSlice = createSlice({
         const index = state.uncheckedReviews.findIndex(c => c.courseCode == courseCode && c.review_id == review_id)
         state.uncheckedReviews.splice(index, 1)
         Taro.showToast({ title: '不通过成功', icon: 'success' })
-      })
-      .addCase(markSubReviewAsFailed.fulfilled, (state, action) => {
-        const review_id = action.payload
-        const index = state.uncheckedReviews.findIndex(c => c.review_id == review_id)
-        state.allSubReviews.splice(index, 1)
-        Taro.showToast({ title: '不通过成功', icon: 'success' })
-      })
-      .addCase(markSubReviewAsPassed.fulfilled, (state, action) => {
-        const review_id = action.payload
-        const index = state.uncheckedReviews.findIndex(c => c.review_id == review_id)
-        state.allSubReviews.splice(index, 1)
-        Taro.showToast({ title: '通过成功', icon: 'success' })
-      })
-      .addCase(fetchAllSubReviews.fulfilled,(state,action)=>{
-        state.allSubReviews = action.payload;
-        Taro.showToast({ title: '拉取成功', icon: 'success' })
       })
 }})
 
