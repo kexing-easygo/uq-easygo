@@ -7,19 +7,19 @@ import { getUserProfile } from "../../services/login";
 import { useSelector, useDispatch } from "react-redux";
 import "./index.less";
 import { getIcon } from "../../utils/profile";
-// import { callCloud } from "../../utils/cloud";
+import { callCloud } from "../../utils/cloud";
 
 export default function Profile() {
   const dispatch = useDispatch();
   const { avatarUrl, loginStatus, nickName, admin } = useSelector(
     state => state.user
   );
-  // useEffect(async () => {
-  //   const res = await callCloud("review", "getCourseDetailRegex", {
-  //     payload: "Introduction"
-  //   });
-  //   console.log(res);
-  // }, []);
+  useEffect(async () => {
+    const res = await callCloud("review", "getAllReviewRegex", {
+      payload: "CSSE1001"
+    });
+    console.log(res);
+  }, []);
 
   return (
     <View className="container">

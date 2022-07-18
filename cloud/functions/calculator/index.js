@@ -10,7 +10,9 @@ const HIGH_DISTINCTION = 7
 
 
 
-cloud.init()
+cloud.init({
+  env: "cloudbase-prepaid-8eqh90441a925f"
+})
 const db = cloud.database();
 const _ = db.command
 
