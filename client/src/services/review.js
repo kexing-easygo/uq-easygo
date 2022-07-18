@@ -152,3 +152,20 @@ export const updateSubReview = createAsyncThunk(
     return result
   }
 )
+
+// search relevent courses
+export const searchCourses = createAsyncThunk(
+  'review/searchCourses',
+  async (param) => {
+    const res = await callCloud('review', 'getAllReviewRegex', param);
+    let courseCode = [];
+    if (res.result.length == 0){
+      return [];
+    } else {
+      for (var key in res.result) {
+        courseCode.push(res.result[key].academic_detail.unit_code);
+      }
+      return courseCode;
+    }
+  }
+)

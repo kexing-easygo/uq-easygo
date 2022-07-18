@@ -1,7 +1,7 @@
 import Taro from '@tarojs/taro'
 import { createSlice } from '@reduxjs/toolkit'
 import { fetchHotResearches,  fetchCourseInfo, addReviewDimensions } from '../services/review'
-import { fetchReviews, deleteReview, addReview, updateReview } from '../services/review'
+import { fetchReviews, deleteReview, addReview, updateReview, searchCourses } from '../services/review'
 import { fetchSubReviews, addSubReview ,updateSubReview, deleteSubReview } from '../services/review'
 import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed,fetchAllSubReviews,markSubReviewAsFailed,markSubReviewAsPassed } from "../services/checkReviews";
 import { updateLikes } from '../services/review'
@@ -26,7 +26,9 @@ const initialState = {
   showContent: false,
   floatTitle: false,
   modalTitle: false,
-  allSubReviews:[]
+  allSubReviews:[],
+  relevantCourse: [], // 搜索到的 相关的 课程代码
+  searchedCourse: null, // 有无 相关课程
 }
 
 export const reviewSlice = createSlice({
@@ -74,6 +76,10 @@ export const reviewSlice = createSlice({
     },
     setModalTitle: (state, action) => {
       state.modalTitle = action.payload
+    },
+    // 清除搜索的相关课程
+    setRelevantCourse: (state, action) => {
+      state.relevantCourse = action.payload
     }
   },
   extraReducers: (builder) => {
@@ -278,10 +284,22 @@ export const reviewSlice = createSlice({
         state.allSubReviews = action.payload;
         Taro.showToast({ title: '拉取成功', icon: 'success' })
       })
+      // 获取相关课程代码
+      .addCase(searchCourses.pending, () => {
+        Taro.showToast({ title: '搜索中', icon: 'loading', mask: true})
+      })
+      .addCase(searchCourses.fulfilled, (state, action) => {
+        state.relevantCourse = action.payload;
+        if( state.relevantCourse.length == 0){
+          state.searchedCourse = false;
+        } else {
+          state.searchedCourse = true;
+        }
+      })
 }})
 
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions
 export const { setEditModal, setSubReviewEdit, setClickedSubReview } = reviewSlice.actions
-export const { setTurnPage, setReplySubReview } = reviewSlice.actions
+export const { setTurnPage, setReplySubReview, setRelevantCourse } = reviewSlice.actions
 export const { showContentState, setFloatTitle, setModalTitle } = reviewSlice.actions
 export default reviewSlice.reducer
