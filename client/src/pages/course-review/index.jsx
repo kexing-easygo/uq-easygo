@@ -76,6 +76,7 @@ export default function Review() {
     // dispatch(fetchCourseInfo(param));
     dispatch(fetchReviews(param));
     setCourseCode('');
+    setAutocomplete('none');
   }
 
    // 没登录 展示提示
@@ -102,12 +103,12 @@ export default function Review() {
 
       <View className='autocomplete' style={{display:showAutocomplete}}>
         <View style={{display:(searchedCourse? 'none':'block')}}>
-          <Text className='title'>暂无相关课程</Text>
+          <Text className='no-course'>暂无相关课程</Text>
         </View>
         {relevantCourse.map((courseCode) => {
           return ( 
             <View>
-              <Button className='title' onClick={debounce(handleClickCourse(courseCode), 1000)}>{courseCode}</Button>
+              <Text className='title' onClick={() =>{debounce(handleClickCourse(courseCode), 1000)}}>{courseCode}</Text>
             </View>
         )})}
       </View>
