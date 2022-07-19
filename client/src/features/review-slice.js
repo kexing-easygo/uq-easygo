@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { fetchHotResearches,  fetchCourseInfo, addReviewDimensions } from '../services/review'
 import { fetchReviews, deleteReview, addReview, updateReview, searchCourses } from '../services/review'
 import { fetchSubReviews, addSubReview ,updateSubReview, deleteSubReview } from '../services/review'
-import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed,fetchAllSubReviews,markSubReviewAsFailed,markSubReviewAsPassed } from "../services/checkReviews";
+import { fetchUncheckedReviews, markReviewAsFailed, markReviewAsPassed } from "../services/checkReviews";
 import { updateLikes } from '../services/review'
 import { REVIEW_CHECKED_TEMPLATE_ID } from "../config.json";
 
@@ -268,6 +268,7 @@ export const reviewSlice = createSlice({
         state.uncheckedReviews.splice(index, 1)
         Taro.showToast({ title: '不通过成功', icon: 'success' })
       })
+<<<<<<< HEAD
       .addCase(markSubReviewAsFailed.fulfilled, (state, action) => {
         const review_id = action.payload
         const index = state.uncheckedReviews.findIndex(c => c.review_id == review_id)
@@ -296,6 +297,8 @@ export const reviewSlice = createSlice({
           state.searchedCourse = true;
         }
       })
+=======
+>>>>>>> origin/library-unfinished
 }})
 
 export const { setSearchedCourse, setClickedReview, setClickedIconReview } = reviewSlice.actions

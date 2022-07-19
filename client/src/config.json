@@ -3,6 +3,8 @@
   "PROGRAM_NAME": "UQ校园通",
   "RESOURCE_ENV": "cloudbase-prepaid-8eqh90441a925f",
   "BRANCH_NAME": "UQ",
+  "SUMMER_WEEKS": 7,
+  "SUMMER_START_DATE_STRING": "Mon Jan 3 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
   "SEMESTER_WEEKS": 14,
   "SEMESTER_START_DATE_STRING": "Mon Jul 25 2022 00:00:00 GMT+1000 (Australian Eastern Standard Time)",
   "REVIEW_SEMESTER": [
@@ -15,7 +17,9 @@
     "Semester 1, 2022"
   ],
   "SEMESTERS": [
+    "Summer Semester, 2021",
     "Semester 1, 2022",
+    "Winter Semester, 2022",
     "Semester 2, 2022"
   ],
   "CURRENT_SEMESTER": "Semester 2, 2022",
