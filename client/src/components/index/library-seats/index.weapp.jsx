@@ -3,6 +3,7 @@ import { View, Image } from "@tarojs/components";
 import { callCloud } from "../../../utils/cloud";
 import { memo, useEffect, useState } from "react";
 import "./index.less";
+import Taro from "@tarojs/taro";
 
 function LibrarySeats(props) {
     // lost seats
@@ -103,7 +104,7 @@ function LibrarySeats(props) {
                 document.getElementById("last-seats-central").style.display = "none";
                 // when the percentage exceeds 70%, hide the display of "lost seats" while there are no space to display contents
                 (widthPer > 70) ? document.getElementById("last-seats-central").style.display = "none" :
-                    document.getElementById("last-seats-cental").style.display = "block";
+                    document.getElementById("last-seats-central").style.display = "block";
             } else if (libraryName == "Biological Sciences Library") { 
                 // set data
                 setLostSeatsBio(calcLostSeats(usedSeats, totalSeats));
@@ -133,16 +134,12 @@ function LibrarySeats(props) {
 
     // update all seat status after load finished
     useEffect(() => {
-        refreshAll();
+        updateAllComponents();
     });
 
     return (
         <AtCard title="图书馆座位">
             <View className="library-card">
-                <View className="lib-operation-cell">
-                    <AtButton className="operation-btn" id="detail">DETAIL</AtButton>
-                    <AtButton className="operation-btn" id="refresh" onClick={ updateAllComponents() }>REFRESH</AtButton>
-                </View>
                 <View className="lib-cell" id="first">
                     <View className="cell-title">CENTRAL LIBRARY</View>
                     <View className="cell-content">
@@ -163,6 +160,21 @@ function LibrarySeats(props) {
                         <View className="percentage-info" id="percentage-doro">{ percentageDoro }%</View>
                         <View className="last-seats-info" id="last-seats-doro">余位：{ lostSeatsDoro }</View>
                     </View>
+                </View>
+                <View className="lib-operation-cell">
+                    <AtButton className="operation-btn" id="detail-btn" onClick={
+                        () => {
+                            Taro.navigateTo({
+                                url: "/pages/library-seats/index"
+                            });
+                        }
+                    }>DETAIL</AtButton>
+                    <AtButton className="operation-btn" id="refresh-btn" onClick={
+                        () => { 
+                            updateAllComponents();
+                            Taro.showToast({ title: "已刷新~", duration: 2000 });
+                        } 
+                    }>REFRESH</AtButton>
                 </View>
             </View>
         </AtCard>
