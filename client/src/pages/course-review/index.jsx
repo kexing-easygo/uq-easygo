@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
+import { View, Text, Button } from '@tarojs/components'
 import NavBar from '../../components/navbar'
 import './index.less'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchedCourse, setTurnPage } from "../../features/review-slice";
+import { setSearchedCourse, setTurnPage, setRelevantCourse } from "../../features/review-slice";
 import { AtList, AtListItem, AtSearchBar, AtModalAction, AtIcon} from "taro-ui"
 import { AtModalContent, AtModalHeader, AtModal, AtButton} from "taro-ui"
 import { debounce } from "../../utils/opt";
-import { fetchReviews, fetchHotResearches, fetchCourseInfo } from "../../services/review";
+import { fetchReviews, fetchHotResearches, fetchCourseInfo, searchCourses } from "../../services/review";
 import { getUserProfile } from '../../services/login'
 
 
 export default function Review() {
   const dispatch = useDispatch();
   const [courseCode, setCourseCode] = useState(''); // 搜索框输入的课程代码
-  const { hotCourses } = useSelector(state => state.review);
+  const { hotCourses, relevantCourse, searchedCourse } = useSelector(state => state.review);
   const { selectedCourses } = useSelector(state => state.course);
   const { loginStatus } = useSelector(state => state.user);
   let courses = []; // 猜你想搜 列表 = 选课 + 热搜课
@@ -51,10 +51,14 @@ export default function Review() {
   }})}
 
   // 处理搜索的课程
-  const handleSearchCourse = async () => {
+  const handleSearchCourse = () => {
+    dispatch(setRelevantCourse([]));
     if (handleLoginStatus()) {
-      
-      setAutocomplete('block');
+      const param = {
+        payload: courseCode,
+      }
+    dispatch(searchCourses(param));
+    setAutocomplete('block');
   }}
 
   // 处理点击的热搜课程
@@ -72,6 +76,7 @@ export default function Review() {
     // dispatch(fetchCourseInfo(param));
     dispatch(fetchReviews(param));
     setCourseCode('');
+    setAutocomplete('none');
   }
 
    // 没登录 展示提示
@@ -81,7 +86,7 @@ export default function Review() {
       return false;
     }
     return true;
-  }
+  } 
 
   return (
     <View className='selector-container'>
@@ -95,9 +100,19 @@ export default function Review() {
           onActionClick={debounce(handleSearchCourse, 1000)}
           />
       </View>
+
       <View className='autocomplete' style={{display:showAutocomplete}}>
-        <Text className='title'>csse1001</Text>
+        <View style={{display:(searchedCourse? 'none':'block')}}>
+          <Text className='no-course'>暂无相关课程</Text>
+        </View>
+        {relevantCourse.map((courseCode) => {
+          return ( 
+            <View>
+              <Text className='title' onClick={() =>{debounce(handleClickCourse(courseCode), 1000)}}>{courseCode}</Text>
+            </View>
+        )})}
       </View>
+
       <View className='courseSuggestion'>
         <View className = 'guess-background'>
           <View className='blue-block'></View>

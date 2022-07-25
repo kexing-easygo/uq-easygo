@@ -18,7 +18,7 @@ const UMEL_APP_ID = "wxb3dbe1326db6d6d2";
 // 初始化 cloud
 cloud.init({
   // API 调用都保持和云函数当前所在环境一致
-  env: cloud.DYNAMIC_CURRENT_ENV,
+  env: "cloudbase-prepaid-8eqh90441a925f",
 });
 
 const db = cloud.database();

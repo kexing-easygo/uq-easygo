@@ -21,8 +21,14 @@ export default function ManageCarousel(props) {
   const [url2, setUrl2] = useState("");
   const [url3, setUrl3] = useState("");
   const [url4, setUrl4] = useState("");
+  // 轮播图四张图片的文件链接
+  const [carousel1, setCarousel1] = useState([]);
+  const [carousel2, setCarousel2] = useState([]);
+  const [carousel3, setCarousel3] = useState([]);
+  const [carousel4, setCarousel4] = useState([]);
   return (
-    <View className="manage-carousel">
+    <View>
+      <View class="title1">更换首页轮播图跳转链接</View>
       <AtInput
         name="url1"
         title="轮播图一"
@@ -95,6 +101,59 @@ export default function ManageCarousel(props) {
           确认修改
         </AtButton>
       </AtInput>
+      <View class="title2">更换首页轮播显示的图片</View>
+      <View class="manage-carousel">
+        <View class="image-picker">
+          <View>第一张</View>
+          <AtImagePicker
+            files={carousel1}
+            mode="aspectFit"
+            showAddBtn={true}
+            onChange={(files, operationType, index) => {
+              setCarousel1(files);
+            }}
+            onImageClick={(index, file) => {}}
+          ></AtImagePicker>
+        </View>
+        <View class="image-picker">
+          <View>第二张</View>
+          <AtImagePicker
+            files={carousel2}
+            mode="aspectFit"
+            showAddBtn={true}
+            onChange={(files, operationType, index) => {
+              setCarousel2(files);
+            }}
+            onImageClick={(index, file) => {}}
+          ></AtImagePicker>
+        </View>
+
+        <View class="image-picker">
+          <View>第三张</View>
+          <AtImagePicker
+            files={carousel3}
+            mode="aspectFit"
+            showAddBtn={true}
+            onChange={(files, operationType, index) => {
+              setCarousel3(files);
+            }}
+            onImageClick={(index, file) => {}}
+          ></AtImagePicker>
+        </View>
+
+        <View class="image-picker">
+          <View>第四张</View>
+          <AtImagePicker
+            files={carousel4}
+            mode="aspectFit"
+            showAddBtn={true}
+            onChange={(files, operationType, index) => {
+              setCarousel4(files);
+            }}
+            onImageClick={(index, file) => {}}
+          ></AtImagePicker>
+        </View>
+      </View>
     </View>
   );
 }

@@ -1,6 +1,6 @@
 const cloud = require('wx-server-sdk')
 cloud.init({
-  env: cloud.DYNAMIC_CURRENT_ENV
+  env: "cloudbase-prepaid-8eqh90441a925f"
 })
 
 // 云函数入口函数

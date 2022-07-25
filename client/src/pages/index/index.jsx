@@ -17,6 +17,7 @@ import TodayCourse from "../../components/index/today-course/index";
 import NewActivities from "../../components/index/new-activities/index";
 import LibrarySeats from "../../components/index/library-seats/index.weapp"
 import { PROGRAM_NAME } from "../../config.json";
+import { TaroCanvas } from 'taro-canvas'
 
 export default function Index() {
     const { newActivities, todayClasses, recentAssignments, librarySeats } = useSelector(
@@ -190,6 +191,7 @@ export default function Index() {
             {todayClasses && <TodayCourse />}
             {newActivities && <NewActivities />}
             {librarySeats && <LibrarySeats />}
+            <TaroCanvasDrawer />
         </View>
     );
 }
