@@ -48,7 +48,7 @@ export default function Launch() {
           dispatch(fetchAllCountDown()); //拉取用户countdown条目
           dispatch(getNotifications());
         }
-        Taro.switchTab({ url: "/pages/profile/index" });
+        Taro.switchTab({ url: "/pages/index/index" });
         // Taro.navigateTo({ url: "/pages/check-reviews/index" });
       }
     })();
