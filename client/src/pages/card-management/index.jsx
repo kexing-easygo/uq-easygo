@@ -42,14 +42,14 @@ export default function CardManagement() {
           checked={newActivities}
           onChange={value => dispatch(manageCards({ newActivities: value }))}
         />
-        {BRANCH_NAME === "UQ" && (
+        {/* {BRANCH_NAME === "UQ" && (
           <AtSwitch
             disabled={!loginStatus}
             title="图书馆座位概览"
             checked={librarySeats}
             onChange={value => dispatch(manageCards({ librarySeats: value }))}
           />
-        )}
+        )} */}
       </AtList>
 
       <View className="info-text center-text">

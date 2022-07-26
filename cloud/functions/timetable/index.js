@@ -4,7 +4,7 @@ var moment = require('moment-timezone');
 const cloud = require('wx-server-sdk')
 const MAIN_USER_SUFFIX = "_MainUser"
 const TIMETABLE_USER_SUFFIX = "_Timetable"
-const CURRENT_SEMESTER = "Semester 1, 2022"
+const CURRENT_SEMESTER = "Semester 2, 2022"
 const COURSE_CODE_REGEX = /\w{4}\d{4,}/
 const ical = require("cal-parser");
 const requestPromise = require("request-promise")
@@ -100,6 +100,7 @@ async function __fetchCourseIdBySemester(openid, branch, semester) {
  */
 async function fetchCourseInfo(collectionName, courseId) {
   let courseCode = courseId.match(COURSE_CODE_REGEX)[0]
+  console.log("1: " + collectionName)
   var res = await db.collection(collectionName).where({
     name: courseCode // 根据courseCode搜索
   }).get();
@@ -151,10 +152,11 @@ async function appendUserClasses(event) {
  */
 async function fetchUserClasses(openid, branch, semester) {
   const classes = await __fetchCourseIdBySemester(openid, branch, semester);
-  const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
-  const classesInfo = await Promise.all(
-      classes.map(cl => cl.subscribed == undefined ? __fetchClassById(timetableCollection, cl._id) : cl)
-    );
+  // const timetableCollection = branch + TIMETABLE_USER_SUFFIX;
+  // const classesInfo = await Promise.all(
+      // classes.map(cl => cl.subscribed == undefined ? __fetchClassById(timetableCollection, cl._id) : cl)
+    // );
+  const classesInfo = classes;
   // 与用户自定义的内容合并
   const merged = classesInfo.map(classInfo => ({
     ...classes.find(c => c._id === classInfo._id),
@@ -273,6 +275,7 @@ const fetchToday = async (openid, branch) => {
   const today = `${todayDate.get('date')}/${todayDate.get('month') + 1}/${todayDate.get('year')}`.split('/').map(n => parseInt(n)).join('/');
   if (allCourses == undefined) return [];
   allCourses.map(course => {
+    if (course.activitiesDays === undefined) return;
     if (course.activitiesDays.includes(today)) {
       // startTime和endTime默认为澳洲院校当地时间
       let startTime = getStartTime(todayDate, course, branch)
@@ -294,6 +297,7 @@ const fetchToday = async (openid, branch) => {
 }
 
 async function getSelectedCourses(openid, collectionName) {
+  console.log("2: " + collectionName)
   const result = await db.collection(collectionName)
     .where({
       _openid: openid
@@ -440,6 +444,10 @@ function _analyseData(calender) {
   const coursesTime = [];
   const classes = [];
   calender.forEach((element) => {
+    const descriptionValue = element.description.value
+    if (descriptionValue.indexOf("unimelb.zoom.us") !== -1) {
+        return
+    }
     const {
       _id,
       subject_code,
