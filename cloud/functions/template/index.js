@@ -1,7 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init({env: "cloudbase-prepaid-8eqh90441a925f"})
+cloud.init({env: cloud.DYNAMIC_CURRENT_ENV})
 
 const UQ_TEMPLATE_ID = '3xHIgiW1ROp8ig_32dTjPqVjNVsY-J4e6dekyW2Wn7U'
 const USYD_TEMPLATE_ID = 'rfESwtmr4JlaNCNgMuXNbMKS6Tc8pto2w1slBHM_pSQ'

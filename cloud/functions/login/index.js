@@ -1,9 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init({
-  env: "cloudbase-prepaid-8eqh90441a925f"
-})
+cloud.init()
 
 // 云函数入口函数
 exports.main = async (event, context) => {

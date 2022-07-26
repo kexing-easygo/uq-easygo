@@ -2,9 +2,7 @@ import Taro from "@tarojs/taro";
 import { APPID, RESOURCE_APP_ID, RESOURCE_ENV, BRANCH_NAME } from "./constant";
 
 export const initCloud = async () => {
-  Taro.cloud.init({
-    env: "cloudbase-prepaid-8eqh90441a925f"
-  });
+  Taro.cloud.init();
   var c1 = new Taro.cloud.Cloud({
     appid: APPID,
     // 资源方 AppID

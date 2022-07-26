@@ -1,9 +1,7 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 const nodemailer = require('nodemailer')
-cloud.init({
-  env: "cloudbase-prepaid-8eqh90441a925f"
-})
+cloud.init()
 
 const sendEmail = (param) => {
   const {

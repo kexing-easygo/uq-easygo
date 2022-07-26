@@ -2,20 +2,20 @@
 const cloud = require('wx-server-sdk')
 
 cloud.init({
-  env: "cloudbase-prepaid-8eqh90441a925f"
+  env: cloud.DYNAMIC_CURRENT_ENV
 })
 
 const db = cloud.database();
 const FILE_LIST_BY_BRANCH = {
   "UQ": {
     "images": [
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/轮播图1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/轮播图2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/轮播图3.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/轮播图4.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/最新活动1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/最新活动2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UQ/最新活动3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/轮播图4.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UQ/最新活动3.png',
     ],
     "articles": [
       "",
@@ -29,13 +29,13 @@ const FILE_LIST_BY_BRANCH = {
   },
   "USYD": {
     "images": [
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/轮播图1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/轮播图2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/轮播图3.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/轮播图4.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/最新活动1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/最新活动2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/USYD/最新活动3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/轮播图1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/轮播图2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/轮播图3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/轮播图4.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/最新活动1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/最新活动2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/USYD/最新活动3.png',
     ],
     "articles": [
       "",
@@ -49,13 +49,13 @@ const FILE_LIST_BY_BRANCH = {
   },
   "UMEL": {
     "images": [
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/轮播图1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/轮播图2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/轮播图3.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/轮播图4.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/最新活动1.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/最新活动2.png',
-      'cloud://cloudbase-prepaid-8eqh90441a925f.636c-cloudbase-prepaid-8eqh90441a925f-1302668990/UMEL/最新活动3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/轮播图1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/轮播图2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/轮播图3.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/轮播图4.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/最新活动1.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/最新活动2.png',
+      'cloud://uqeasygo1.7571-uqeasygo1-1302668990/UMEL/最新活动3.png',
     ],
     "articles": [
       "",

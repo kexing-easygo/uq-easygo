@@ -8,6 +8,45 @@ cloud.init()
 const db = cloud.database();
 const _ = db.command;
 
+const URLs = {
+    "Architecture": {
+        URL: "https://l.vemcount.com/embed/data/SXO0AZgR6y9jDdN?state=prod",
+        name: "Architecture and Music Library"
+    },
+    "Biological": {
+        URL: "https://l.vemcount.com/embed/data/paaPDlMginYuHMx?state=prod",
+        name: "Biological Sciences Library"
+    },
+    "Dorothy": {
+        URL: "https://l.vemcount.com/embed/data/c2JHW7feDz0xVik?state=prod",
+        name: "Dorothy Hill Engineering and Sciences Library"
+    },
+    "Duhig": {
+        URL: "https://l.vemcount.com/embed/data/RNEF5b016mfJou3?state=prod",
+        name: "Duhig Tower"
+    },
+    "Gatton": {
+        URL: "https://l.vemcount.com/embed/data/BTp0IbGs2IR6Oh9?state=prod",
+        name: "Gatton Library"
+    },
+    "Herston": {
+        URL: "https://l.vemcount.com/embed/data/O0ZCHv8lyaiKNiu?state=prod",
+        name: "Herston Health Sciences Library"
+    },
+    "Law": {
+        URL: "https://l.vemcount.com/embed/data/hMxSjYuk4v3kuIx?state=prod",
+        name: "Law Library"
+    },
+    "PACE": {
+        URL: "https://l.vemcount.com/embed/data/kw8OF8iJWJJUTC1?state=prod",
+        name: "PACE Health Sciences Library"
+    },
+    "Central": {
+        URL: "https://l.vemcount.com/embed/data/8DXPwOaTWeBYNbS?state=prod",
+        name: "Central Library",
+    }
+}
+
 // retrieve data set from database
 async function retrieveSeatData(libraryName) {
     const dataSet = await db.collection('UQ_Library_Seats').where({
@@ -30,9 +69,9 @@ async function retrieveSeatData(libraryName) {
 }
 
 // calculate percentage
-const calcPercentage = (used, total) => {
-    return Math.round(used / total * 10000) / 100;
-}
+// const calcPercentage = (used, total) => {
+//     return Math.round(used / total);
+// }
 
 // update seat status of a library
 const updateSeatPercentage = (libraryName, totalSeats, usedSeats) => {
@@ -40,8 +79,8 @@ const updateSeatPercentage = (libraryName, totalSeats, usedSeats) => {
         name: libraryName
     }).update({
         data: {
-            usedSeats: usedSeats,
-            percentage: calcPercentage(usedSeats, totalSeats)
+            usedSeats: usedSeats
+            // percentage: calcPercentage(usedSeats, totalSeats)
         },
         success: function (res) {
             console.log("Library updated successfully.");
@@ -71,12 +110,35 @@ const httpReqSeatData = async (libraryName, url) => {
         request.end();
     }).then(async (result) => {
         const value = result.value;
-        const dataSet = await db.collection('UQ_Library_Seats').where({
+        const dataSet = db.collection('UQ_Library_Seats').where({
             name: libraryName
-        }).get().then((dataSet) => { 
-            updateSeatPercentage(libraryName, dataSet.data[0].totalSeats, value);
-        });
+        }).update({
+            data: {
+                usedSeats: value
+            }
+        })
+        //     .get().then((dataSet) => { 
+        //     const totalSeats = dataSet.data[0].totalSeats;
+        //     updateSeatPercentage(libraryName, totalSeats, value);
+        // });
     });
+}
+
+const reqAllSeatData = async() => {
+    await httpReqSeatData("Architecture and Music Library", "https://l.vemcount.com/embed/data/SXO0AZgR6y9jDdN?state=prod");
+    await httpReqSeatData("Biological Sciences Library", "https://l.vemcount.com/embed/data/paaPDlMginYuHMx?state=prod");
+    await httpReqSeatData("Central Library", "https://l.vemcount.com/embed/data/8DXPwOaTWeBYNbS?state=prod");
+    await httpReqSeatData("Dorothy Hill Engineering and Sciences Library", "https://l.vemcount.com/embed/data/c2JHW7feDz0xVik?state=prod");
+    await httpReqSeatData("Duhig Tower", "https://l.vemcount.com/embed/data/RNEF5b016mfJou3?state=prod");
+    await httpReqSeatData("Gatton Library", "https://l.vemcount.com/embed/data/BTp0IbGs2IR6Oh9?state=prod");
+    await httpReqSeatData("Herston Health Sciences Library", "https://l.vemcount.com/embed/data/O0ZCHv8lyaiKNiu?state=prod");
+    await httpReqSeatData("Law Library", "https://l.vemcount.com/embed/data/hMxSjYuk4v3kuIx?state=prod");
+    await httpReqSeatData("PACE Health Sciences Library", "https://l.vemcount.com/embed/data/kw8OF8iJWJJUTC1?state=prod");
+}
+
+const retrieveAllSeatData = async () => { 
+    const dataSet = await db.collection('UQ_Library_Seats').get();
+    return dataSet;
 }
 
 // 云函数入口函数
@@ -96,4 +158,10 @@ exports.main = async (event, context) => {
         const { name, url } = event;
         return await httpReqSeatData(name, url);
     }
-}
+    if (method == "reqAllSeatData") {
+        return await reqAllSeatData();
+    }
+    if (method == "retrieveAllSeatData") { 
+        return await retrieveAllSeatData();
+    }
+} 

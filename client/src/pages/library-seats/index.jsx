@@ -130,42 +130,7 @@ export default function Library() {
      * update all the functions via https requests
      */
     function refreshAll() {
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[0].name,
-            url: libInfos[0].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[1].name,
-            url: libInfos[1].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[2].name,
-            url: libInfos[2].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[3].name,
-            url: libInfos[3].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[4].name,
-            url: libInfos[4].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[5].name,
-            url: libInfos[5].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[6].name,
-            url: libInfos[6].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[7].name,
-            url: libInfos[7].URL
-        });
-        callCloud("library", "httpReqSeatData", {
-            name: libInfos[8].name,
-            url: libInfos[8].URL
-        });
+        callCloud("library", "reqAllSeatData");
     }
 
     // count lost seats of each library
@@ -205,53 +170,48 @@ export default function Library() {
         }
     }
 
-    function updateLibComponents(i) { 
-        callCloud("library", "retrieveSeatData", {
-            name: libInfos[i].name
-        }).then((dataSet) => {
-            const usedSeats = dataSet.result.usedSeats;
-            const totalSeats = dataSet.result.totalSeats;
-            const remainingSeats = totalSeats - usedSeats;
-            const percentage = dataSet.result.percentage;
-            // change front-end components here
-            // 1. change the seat-icons-cell, property change
-            const roughPercentage = defineRoughPercentage(percentage);
-            for (let index = 1; index <= 10; index++) {
-                const element = document.getElementById(libInfos[i].id + "-no" + index);
-                if (index <= roughPercentage) {
-                    element.setAttribute("src", "../../assets/images/chair-black-small.png");
-                } else {
-                    element.setAttribute("src", "../../assets/images/chair-white-small.png");
-                }
+    function updateLibComponents(i, dataSet) { 
+        const libSet = dataSet.result.data[i];
+        const usedSeats = libSet.usedSeats;
+        const totalSeats = libSet.totalSeats;
+        const remainingSeats = totalSeats - usedSeats;
+        const percentage = Math.round((usedSeats/totalSeats) * 100);
+        // change front-end components here
+        // 1. change the seat-icons-cell, property change
+        const roughPercentage = defineRoughPercentage(percentage);
+        for (let index = 1; index <= 10; index++) {
+            const element = document.getElementById(libInfos[i].id + "-no" + index);
+            if (index <= roughPercentage) {
+                element.setAttribute("src", "../../assets/images/chair-black-small.png");
+            } else {
+                element.setAttribute("src", "../../assets/images/chair-white-small.png");
             }
-            // 2. change the extended-info-cards, value change
-            const lib = libInfos[i];
-            lib.usedSeatsAPI(usedSeats);
-            lib.totalSeatsAPI(totalSeats);
-            lib.remainSeatsAPI(remainingSeats);
-            // hide some elements
-            // const expCard = document.getElementById(lib.id + "-ecard").style.display = "none";
-            // lib.ecardStatus = false;
-        });
+        }
+        // 2. change the extended-info-cards, value change
+        const lib = libInfos[i];
+        lib.usedSeatsAPI(usedSeats);
+        lib.totalSeatsAPI(totalSeats);
+        lib.remainSeatsAPI(remainingSeats);
     }
 
-    function updateAllInfos() { 
+    async function updateAllInfos() { 
         refreshAll();
-        updateLibComponents(0);
-        updateLibComponents(1);
-        updateLibComponents(2);
-        updateLibComponents(3);
-        updateLibComponents(4);
-        updateLibComponents(5);
-        updateLibComponents(6);
-        updateLibComponents(7);
-        updateLibComponents(8);
+        const dataSet = await callCloud("library", "retrieveAllSeatData");
+        updateLibComponents(0, dataSet);
+        updateLibComponents(1, dataSet);
+        updateLibComponents(2, dataSet);
+        updateLibComponents(3, dataSet);
+        updateLibComponents(4, dataSet);
+        updateLibComponents(5, dataSet);
+        updateLibComponents(6, dataSet);
+        updateLibComponents(7, dataSet);
+        updateLibComponents(8, dataSet);
         // console.log("Success");
     }
 
     useEffect(() => { 
         updateAllInfos();
-    });
+    }, []);
 
     
     return (
