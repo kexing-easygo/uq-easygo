@@ -70,6 +70,7 @@ export default function CourseManagement() {
 
       {/* 已登录时按照学期展示所有已选课程 */}
       {Object.keys(selectedCourses).map(semester => {
+        {console.log(semester);}
         // 本学期选过课程但课程都被删除时不予展示
         if (!selectedCourses[semester] || selectedCourses[semester].length === 0) return null;
         return <View
@@ -81,7 +82,7 @@ export default function CourseManagement() {
             <View className='operation-icons'>
               <Text
                 className='at-icon at-icon-add'
-                onClick={() => Taro.navigateTo({ url: `/pages/add-class/index?semester=${semester}` })}
+                onClick={() => Taro.navigateTo({ url: "/pages/timetable/index" })}
               ></Text>
               <Text
                 className='at-icon at-icon-list'
@@ -140,7 +141,7 @@ export default function CourseManagement() {
         </View> :
         <View
           className='new-semester'
-          onClick={() => Taro.navigateTo({ url: `/pages/add-class/index?semester=${currentSemester}` })}>
+          onClick={() => Taro.navigateTo({ url: "/pages/timetable/index" })}>
           <Text className='at-icon at-icon-add info-text'></Text>
           <Text className='info-text'>添加课程</Text>
         </View>}

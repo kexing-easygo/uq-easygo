@@ -61,11 +61,8 @@ export default function SessionDetails(props) {
       })
       return;
     }
-    const _classInfo = {
-      _id: clickedClass._id,
-      background: currentBackground,
-      remark: remark
-    }
+    const _classInfo = {...clickedClass}
+    _classInfo["remark"] = remark;
     const courseCode = clickedClass.subject_code.split("_")[0]
     dispatch(updateClass({
       semester: CURRENT_SEMESTER,

@@ -36,8 +36,6 @@ function LibrarySeats(props) {
         let widthPer = "15%";
         const usedSeats = dataSet.usedSeats;
         const totalSeats = dataSet.totalSeats;
-        console.log(usedSeats);
-        console.log(totalSeats);
         const percentage = Math.round((usedSeats / totalSeats) * 100);
         if (percentage > 15) {
             widthPer = percentage + "%";
